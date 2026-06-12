@@ -1,0 +1,277 @@
+// ============================================================
+// MODALS - FluentUI 2 Modal Dialog Styles
+// Radius: 8px, Overlay: rgba(0,0,0,0.4)
+// ============================================================
+@use "../mixins" as *;
+@use "../icons" as *;
+
+// Modal overlay
+#modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--fluent-modal-overlay);
+  z-index: var(--fluent-zindex-modal);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--fluent-space-md);
+  box-sizing: border-box;
+}
+
+body.modal-overlay-active {
+  overflow: hidden;
+  height: 100vh;
+
+  #modal_overlay {
+    display: flex;
+    @include fade-in;
+  }
+}
+
+// Modal container
+.modal {
+  display: flex;
+  flex-direction: column;
+  background: var(--fluent-modal-bg);
+  border-radius: var(--fluent-modal-radius);
+  box-shadow: var(--fluent-shadow-xl);
+  padding: 0; // Removed padding to allow content to scroll edge-to-edge horizontally and fit header/footer perfectly
+  width: 90%;
+  min-width: 280px;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow: hidden; // Prevent scrolling on the modal container itself
+  position: relative;
+  @include slide-in-up;
+
+  // Support both h4 (standard LuCI) and .modal-header (custom)
+  h4,
+  .modal-header {
+    flex: 0 0 auto;
+    background: var(--fluent-modal-bg);
+    padding: var(--fluent-modal-padding) var(--fluent-modal-padding) var(--fluent-space-md);
+    font-size: var(--fluent-font-size-lg);
+    font-weight: var(--fluent-font-weight-semibold);
+    color: var(--fluent-text);
+    margin: 0;
+
+    h3 {
+      font-size: var(--fluent-font-size-lg);
+      font-weight: var(--fluent-font-weight-semibold);
+      color: var(--fluent-text);
+      margin: 0;
+    }
+  }
+
+  // Support both .button-row (standard LuCI) and .modal-footer (custom)
+  .button-row,
+  .modal-footer {
+    flex: 0 0 auto;
+    background: var(--fluent-modal-bg);
+    padding: var(--fluent-space-lg) var(--fluent-modal-padding) var(--fluent-modal-padding);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--fluent-space-xs);
+    margin: 0;
+
+    > :nth-child(2) {
+      margin-left: auto;
+    }
+  }
+
+  // Content area: make any direct child that is not a header, footer, or close button scrollable
+  > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.close):not(.modal-close):not(style):not(script) {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0; // Essential for nested flexbox scrolling
+    padding: 0 var(--fluent-modal-padding);
+    @include custom-scrollbar;
+  }
+
+  .modal-body {
+    margin-bottom: var(--fluent-space-lg);
+    font-size: var(--fluent-font-size-base);
+    color: var(--fluent-text);
+    line-height: var(--fluent-line-height-normal);
+  }
+
+  // Close button
+  .modal-close,
+  .close {
+    @include button-base;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--fluent-text-secondary);
+    position: absolute;
+    top: var(--fluent-space-lg);
+    right: var(--fluent-space-lg);
+    z-index: 11;
+
+    &::before {
+      @include fluent-icon-content($fluent-icon-dismiss, 20px);
+    }
+
+    &:hover {
+      background: var(--fluent-bg-hover);
+      color: var(--fluent-text);
+    }
+  }
+}
+
+// Wide modal variant
+.modal-wide {
+  max-width: 1000px;
+}
+
+// Remove duplicate borders and padding when cbi-section is placed inside a modal/dialog
+.modal,
+.uci-dialog {
+  .cbi-section {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+}
+
+// ============================================================
+// TOAST / ALERT MODAL OVERRIDES
+// Transform notice/apply modals into top Toasts,
+// remove the dark overlay, and allow page scroll.
+// If the modal is active and spinning (saving), disable page inputs.
+// ============================================================
+
+// 1. Override body restriction to allow page scrolling for all non-interactive alert/notice modals
+body.modal-overlay-active:has(#modal_overlay .modal.alert-message:not(:has(.button-row)):not(:has(button))) {
+  overflow: auto !important;
+  height: auto !important;
+}
+
+// 2. Temporarily disable all form interaction on the page ONLY during saving/spinning
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) {
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  .cbi-button,
+  .cbi-dropdown,
+  .cbi-checkbox,
+  .drag-handle,
+  a.btn {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    filter: grayscale(0.5) opacity(0.6) !important;
+  }
+
+  // Ensure the Toast itself is still clickable if needed
+  #modal_overlay .modal.spinning {
+    button,
+    input,
+    select,
+    textarea,
+    label,
+    .cbi-button {
+      pointer-events: auto !important;
+      cursor: default !important;
+      filter: none !important;
+    }
+  }
+}
+
+// 3. Transform modal overlay to a transparent top-aligned container for all non-interactive alert modals
+body.modal-overlay-active:has(#modal_overlay .modal.alert-message:not(:has(.button-row)):not(:has(button))) #modal_overlay {
+  background: transparent !important;
+  pointer-events: none !important;
+  align-items: flex-start !important;
+  padding-top: var(--fluent-space-xl) !important;
+}
+
+// 4. Style all non-interactive alert/notice/spinning modals as top Toasts
+.modal.alert-message:not(:has(.button-row)):not(:has(button)),
+.modal.spinning {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: var(--fluent-space-md) !important;
+  pointer-events: auto !important;
+  max-width: 480px !important;
+  width: auto !important;
+  margin: 0 auto !important;
+  box-shadow: var(--fluent-shadow-lg) !important;
+  border: 1px solid var(--fluent-border) !important;
+  background: var(--fluent-bg-card) !important;
+
+  p {
+    margin: 0 !important;
+  }
+}
+
+// 5. Style interactive alert/notice modals that have buttons/button-row as proper modal dialogs
+.modal.alert-message:has(.button-row),
+.modal.alert-message:has(button) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  max-width: 600px !important;
+  width: 90% !important;
+  margin: 0 auto !important;
+  background: var(--fluent-modal-bg) !important;
+  border-radius: var(--fluent-modal-radius) !important;
+  padding: var(--fluent-modal-padding) !important;
+  box-shadow: var(--fluent-shadow-xl) !important;
+  border: 1px solid var(--fluent-border) !important;
+  position: relative !important;
+
+  // Position warning/danger/info icon next to the title
+  &::before {
+    position: absolute !important;
+    top: calc(var(--fluent-modal-padding) + 4px) !important;
+    left: var(--fluent-modal-padding) !important;
+    margin: 0 !important;
+    z-index: 11 !important;
+  }
+
+  h4 {
+    padding-left: 28px !important;
+    font-size: var(--fluent-font-size-lg) !important;
+    font-weight: var(--fluent-font-weight-semibold) !important;
+    color: var(--fluent-text) !important;
+    margin: 0 0 var(--fluent-space-md) 0 !important;
+  }
+
+  p {
+    margin: 0 0 var(--fluent-space-lg) 0 !important;
+    color: var(--fluent-text-secondary) !important;
+    font-size: var(--fluent-font-size-base) !important;
+    line-height: var(--fluent-line-height-relaxed) !important;
+  }
+
+  .button-row {
+    position: static !important;
+    margin: var(--fluent-space-lg) 0 0 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    gap: var(--fluent-space-xs) !important;
+    border-top: none !important;
+
+    > :nth-child(2) {
+      margin-left: auto !important;
+    }
+  }
+}

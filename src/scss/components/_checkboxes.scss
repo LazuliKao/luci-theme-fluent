@@ -1,0 +1,333 @@
+// ============================================================
+// CHECKBOXES - FluentUI 2 Checkbox and Switch Styles
+// ============================================================
+
+// Checkmark SVG for table/context checkboxes
+// Data URIs cannot reference CSS variables, so fill colors are hardcoded
+$checkmark-svg-white: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e');
+$checkmark-svg-disabled: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="%236b6b6b" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e');
+
+// ============================================================
+// FLUENT UI SWITCH (default for checkboxes outside tables)
+// Width: 40px, Height: 20px, Thumb: 12px
+// ============================================================
+input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  position: relative !important;
+  width: 40px !important;
+  height: 20px !important;
+  min-width: 40px !important;
+  min-height: 20px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--fluent-checkbox-border) !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  background-color: var(--fluent-bg) !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  cursor: pointer !important;
+  transition:
+    background-color 0.1s cubic-bezier(0.33, 0, 0.67, 1),
+    border-color 0.1s cubic-bezier(0.33, 0, 0.67, 1) !important;
+  outline: none !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+
+  // --------------------------------------------------------
+  // Switch thumb (indicator)
+  // 12px circle, 3px offset from top-left
+  // --------------------------------------------------------
+  &::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    top: 3px !important;
+    left: 3px !important;
+    width: 12px !important;
+    height: 12px !important;
+    min-width: 12px !important;
+    min-height: 12px !important;
+    border-radius: 50% !important;
+    background-color: var(--fluent-text-secondary) !important;
+    background-image: none !important;
+    transition:
+      transform 0.1s cubic-bezier(0.33, 0, 0.67, 1),
+      background-color 0.1s cubic-bezier(0.33, 0, 0.67, 1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14) !important;
+    box-sizing: border-box !important;
+  }
+
+  // --------------------------------------------------------
+  // Checked state
+  // --------------------------------------------------------
+  &:checked {
+    background-color: var(--fluent-primary) !important;
+    border-color: var(--fluent-primary) !important;
+    background-image: none !important;
+    background-size: auto !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+
+    &::before {
+      transform: translateX(20px) !important;
+      background-color: var(--fluent-white) !important;
+      background-image: none !important;
+    }
+  }
+
+  // --------------------------------------------------------
+  // Hover states
+  // --------------------------------------------------------
+  &:hover:not(:disabled) {
+    background-color: var(--fluent-bg-hover) !important;
+    border-color: var(--fluent-text) !important;
+    background-image: none !important;
+
+    &:checked {
+      background-color: var(--fluent-primary-hover) !important;
+      border-color: var(--fluent-primary-hover) !important;
+      background-image: none !important;
+    }
+  }
+
+  // --------------------------------------------------------
+  // Focus state (FluentUI: 2px outline)
+  // --------------------------------------------------------
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--fluent-focus-color) !important;
+    outline-offset: 2px !important;
+    outline-style: solid !important;
+  }
+
+  // --------------------------------------------------------
+  // Active / Pressed state
+  // --------------------------------------------------------
+  &:active:not(:disabled)::before {
+    width: 14px !important;
+    background-image: none !important;
+  }
+
+  &:checked:active:not(:disabled)::before {
+    transform: translateX(18px) !important;
+    width: 14px !important;
+    background-image: none !important;
+  }
+
+  // --------------------------------------------------------
+  // Disabled state
+  // --------------------------------------------------------
+  &:disabled {
+    cursor: not-allowed !important;
+    background-color: var(--fluent-bg-hover) !important;
+    border-color: var(--fluent-border-hover) !important;
+    opacity: 0.6 !important;
+    background-image: none !important;
+
+    &::before {
+      background-color: var(--fluent-border-hover) !important;
+      background-image: none !important;
+    }
+
+    &:checked {
+      background-color: var(--fluent-border-hover) !important;
+      border-color: var(--fluent-border-hover) !important;
+      background-image: none !important;
+
+      &::before {
+        background-color: var(--fluent-bg-hover) !important;
+        background-image: none !important;
+        transform: translateX(20px) !important;
+      }
+    }
+  }
+}
+
+// ============================================================
+// CHECKBOX OVERRIDES FOR TABLES AND SPECIAL CONTEXTS
+// Restores square checkbox appearance inside tables, modals,
+// dropdowns, and other contextual containers
+// ============================================================
+$table-checkbox-contexts: (".table", ".cbi-section-table", ".cbi-dropdown", "td", "th", ".tr .td", ".tr .th");
+
+@each $context in $table-checkbox-contexts {
+  #{$context} input[type="checkbox"] {
+    // Reset to square checkbox style (20x20px, radius 4px)
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--fluent-checkbox-border) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    background-color: var(--fluent-checkbox-bg) !important;
+    background-image: none !important;
+    background-size: auto !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    margin: 0 auto !important;
+    margin-right: 3px !important;
+    margin-bottom: 0 !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+
+    // Hide switch thumb - checkboxes don't have one
+    &::before {
+      content: none !important;
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    // Checked: show checkmark SVG
+    &:checked {
+      background-color: var(--fluent-primary) !important;
+      border-color: var(--fluent-primary) !important;
+      background-image: $checkmark-svg-white !important;
+      background-size: 12px 12px !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+
+      &::before {
+        content: none !important;
+        display: none !important;
+        transform: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+    }
+
+    // Hover state
+    &:hover:not(:disabled) {
+      background-color: var(--fluent-bg-hover) !important;
+      border-color: var(--fluent-checkbox-hover-border) !important;
+      background-image: none !important;
+
+      &:checked {
+        background-color: var(--fluent-primary-hover) !important;
+        border-color: var(--fluent-primary-hover) !important;
+        background-image: $checkmark-svg-white !important;
+      }
+    }
+
+    // Disabled state
+    &:disabled {
+      background-color: var(--fluent-input-bg-disabled) !important;
+      border-color: var(--fluent-border-hover) !important;
+      opacity: 0.6 !important;
+      cursor: not-allowed !important;
+      background-image: none !important;
+
+      &:checked {
+        background-color: var(--fluent-border-hover) !important;
+        border-color: var(--fluent-border-hover) !important;
+        background-image: $checkmark-svg-disabled !important;
+      }
+    }
+  }
+}
+
+// ============================================================
+// RADIO BUTTONS
+// ============================================================
+label:has(input[type="radio"]) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--fluent-space-sm) !important;
+  cursor: pointer !important;
+  color: var(--fluent-text-secondary);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  user-select: none;
+
+  &:has(input[type="radio"]:checked) {
+    color: var(--fluent-text) !important;
+  }
+
+  &:hover:not(:has(input[type="radio"]:disabled)) {
+    color: var(--fluent-text);
+
+    input[type="radio"] {
+      border-color: var(--fluent-checkbox-hover-border);
+
+      &:checked {
+        border-color: var(--fluent-primary-hover);
+        &::before {
+          background: var(--fluent-primary-hover);
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px !important;
+  height: 16px !important;
+  inline-size: 16px !important;
+  block-size: 16px !important;
+  border: 1.5px solid var(--fluent-checkbox-border);
+  border-radius: var(--fluent-radius-round);
+  background: var(--fluent-checkbox-bg);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--fluent-checkbox-checked-bg);
+    border-radius: var(--fluent-radius-round);
+    transform: translate(-50%, -50%) scale(0);
+    transition:
+      transform var(--fluent-duration-fast) var(--fluent-easing-standard),
+      background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  }
+
+  &:checked {
+    border-color: var(--fluent-checkbox-checked-bg);
+
+    &::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &:hover {
+    border-color: var(--fluent-checkbox-hover-border);
+
+    &:checked {
+      border-color: var(--fluent-primary-hover);
+      &::before {
+        background: var(--fluent-primary-hover);
+      }
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--fluent-focus-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

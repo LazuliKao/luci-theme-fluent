@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - cpu-features
+  - esbuild
+  - ssh2
+  - sharp

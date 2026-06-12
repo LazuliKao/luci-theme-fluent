@@ -1,0 +1,170 @@
+@use "overrides-utils" as *;
+
+// ============================================================
+// LCI-MOD-DASHBOARD — FluentUI style overrides
+// Target: the luci-mod-dashboard plugin's dashboard page
+// Scoped via body[data-page="admin-dashboard"]
+// ============================================================
+
+@include plugin("admin-dashboard") {
+  // ──────────────────────────────────────────────────────────
+  // DASHBOARD CARD LAYOUT
+  // ──────────────────────────────────────────────────────────
+  --text-color-high: var(--fluent-text);
+  --text-color-medium: var(--fluent-text-secondary);
+  --text-color-low: var(--fluent-text-secondary);
+
+  // .section-content {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   gap: var(--fluent-space-lg);
+  // }
+
+  .dashboard-bg {
+    background: var(--fluent-card-bg);
+    border: 1px solid var(--fluent-card-border);
+    border-radius: var(--fluent-card-radius);
+    box-shadow: var(--fluent-card-shadow);
+    padding: var(--fluent-card-padding);
+    flex: 1 1 calc(50% - var(--fluent-space-lg));
+    min-width: 320px;
+    box-sizing: border-box;
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // RADIO INFO GRID  (wireless radios)
+  // ──────────────────────────────────────────────────────────
+
+  .router-status-wifi .settings-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--fluent-space-md);
+  }
+
+  .radio-info {
+    background: var(--fluent-bg);
+    border: 1px solid var(--fluent-table-border);
+    border-radius: var(--fluent-radius-md);
+    padding: var(--fluent-space-sm) var(--fluent-space-md);
+    font-size: var(--fluent-font-size-sm);
+
+    p {
+      margin: 3px 0;
+      line-height: var(--fluent-line-height-normal);
+    }
+
+    p > span:first-child {
+      color: var(--fluent-text-secondary);
+      display: inline-block;
+      min-width: 100px;
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // STATUS LABELS  (label-success / label-danger)
+  // ──────────────────────────────────────────────────────────
+
+  .label {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: var(--fluent-radius-sm);
+    font-size: var(--fluent-font-size-xs);
+    font-weight: var(--fluent-font-weight-semibold);
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .label-success {
+    background: var(--fluent-success-light);
+    color: var(--fluent-success);
+  }
+
+  .label-danger {
+    background: var(--fluent-error-light);
+    color: var(--fluent-error);
+  }
+
+  .label-warning {
+    background: var(--fluent-warning-light);
+    color: #866b00;
+  }
+
+  // // ──────────────────────────────────────────────────────────
+  // // TABLE STYLES  (DHCP devices / wireless clients)
+  // // Uses existing .Dashboard table overrides from _dashboard.scss,
+  // // but we add specific dashboard-card table refinements here.
+  // // ──────────────────────────────────────────────────────────
+
+  .devices-list {
+    .table.assoclist {
+      width: 100%;
+      border-collapse: collapse;
+
+      .thead {
+        background: var(--fluent-table-header-bg);
+      }
+
+      .th {
+        padding: 8px 12px;
+        font-size: var(--fluent-font-size-sm);
+        font-weight: var(--fluent-font-weight-semibold);
+        color: var(--fluent-text-secondary);
+        border-bottom: 2px solid var(--fluent-table-border);
+        white-space: nowrap;
+        text-align: left;
+      }
+
+      .td {
+        padding: 8px 12px;
+        font-size: var(--fluent-font-size-sm);
+        color: var(--fluent-text);
+        border-bottom: 1px solid var(--fluent-table-border);
+        vertical-align: middle;
+      }
+
+      .tr:hover .td {
+        background: var(--fluent-table-row-hover);
+      }
+
+      .tfoot {
+        .td {
+          font-weight: var(--fluent-font-weight-semibold);
+          border-top: 2px solid var(--fluent-table-border);
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // Transmitted data (up/down in wireless clients table)
+  .wireless-table-transfer {
+    br + span {
+      font-size: var(--fluent-font-size-xs);
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // PROGRESS BAR  (signal strength)
+  // Matches _progress.scss but in dashboard context
+  // ──────────────────────────────────────────────────────────
+
+  .cbi-progressbar {
+    height: 12px;
+  }
+
+  // ──────────────────────────────────────────────────────────
+  // RESPONSIVE
+  // ──────────────────────────────────────────────────────────
+
+  @media (max-width: 768px) {
+    .dashboard-bg {
+      min-width: 0;
+      flex: 1 1 100%;
+    }
+
+    .settings-info {
+      grid-template-columns: 1fr !important;
+    }
+  }
+}

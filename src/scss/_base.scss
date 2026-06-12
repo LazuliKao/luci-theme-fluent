@@ -1,0 +1,437 @@
+// FluentUI 2 Base Styles
+// CSS reset and foundational styles
+@use "mixins" as *;
+
+// ============================================================
+// CSS RESET
+// ============================================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  line-height: var(--fluent-line-height-normal);
+  color: var(--fluent-text);
+  background: var(--fluent-bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================================
+// TYPOGRAPHY
+// ============================================================
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fluent-font-weight-semibold);
+  line-height: var(--fluent-line-height-tight);
+  color: var(--fluent-text);
+}
+
+h1 {
+  font-size: var(--fluent-font-size-xxxl);
+}
+
+h2 {
+  font-size: var(--fluent-font-size-xxl);
+}
+
+h3 {
+  font-size: var(--fluent-font-size-xl);
+}
+
+h4 {
+  font-size: var(--fluent-font-size-lg);
+}
+
+h5 {
+  font-size: var(--fluent-font-size-md);
+}
+
+h6 {
+  font-size: var(--fluent-font-size-base);
+}
+
+p {
+  margin-bottom: var(--fluent-space-lg);
+}
+
+a {
+  color: var(--fluent-text-link);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--fluent-text-link-hover);
+    text-decoration: underline;
+  }
+}
+
+// ============================================================
+// LISTS
+// ============================================================
+ul,
+ol {
+  padding-left: var(--fluent-space-xl);
+}
+
+li {
+  margin-bottom: var(--fluent-space-xxs);
+}
+
+// ============================================================
+// IMAGES
+// ============================================================
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// ============================================================
+// TABLES
+// ============================================================
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+// ============================================================
+// FORM ELEMENTS
+// ============================================================
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  appearance: button;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+// ============================================================
+// SELECTION
+// ============================================================
+::selection {
+  background: var(--fluent-primary-light);
+  color: var(--fluent-text);
+}
+
+// ============================================================
+// FOCUS (FluentUI: 2px black outline, 2px offset)
+// ============================================================
+:focus-visible {
+  outline: 2px solid var(--fluent-focus-color);
+  outline-offset: 2px;
+}
+
+// ============================================================
+// SCROLLBAR
+// ============================================================
+body {
+  @include custom-scrollbar;
+}
+
+// ============================================================
+// UTILITY CLASSES
+// ============================================================
+.sr-only {
+  @include visually-hidden;
+}
+
+.text-truncate {
+  @include text-truncate;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block;
+}
+
+.nowrap {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+// ============================================================
+// RESPONSIVE UTILITY CLASSES (Hiding elements on smaller viewports)
+// ============================================================
+@media (max-width: 575.98px) {
+  .hide-xs {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hide-sm {
+    display: none !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .hide-md {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .hide-lg {
+    display: none !important;
+  }
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// ============================================================
+// FLUENTUI SPINNER ANIMATIONS
+// ============================================================
+@keyframes fluent-spin-swing {
+  0% {
+    transform: translateY(-50%) rotate(-135deg);
+  }
+  50% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(225deg);
+  }
+}
+
+// Inline spinner (not in main view)
+div:not([id="view"]) > .spinning {
+  position: relative;
+  padding-left: 40px;
+
+  &::before {
+    position: absolute;
+    background: none;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    content: "";
+    --duration: 1s;
+    --indicator-size: 3px;
+    --size: 24px;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: var(--indicator-size) solid rgba(0, 120, 212, 0.2);
+    border-top-color: var(--fluent-primary);
+    border-right-color: var(--fluent-primary);
+    animation: fluent-spin-swing var(--duration) infinite ease;
+  }
+}
+
+// Full view spinner (loading screen layout optimization)
+@keyframes fluent-spin-swing-clean {
+  0% {
+    transform: rotate(-135deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(225deg);
+  }
+}
+
+div[id="view"] > .spinning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-md, 16px);
+  color: var(--fluent-text-secondary);
+  gap: var(--fluent-space-md, 12px);
+  padding: var(--fluent-space-xxl) 0;
+
+  &::before {
+    content: "";
+    display: block;
+    --spinner-size: 48px;
+    --indicator-size: 4px;
+    height: var(--spinner-size);
+    width: var(--spinner-size);
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: var(--indicator-size) solid rgba(0, 120, 212, 0.15);
+    border-top-color: var(--fluent-primary);
+    border-right-color: var(--fluent-primary);
+    animation: fluent-spin-swing-clean 1.5s infinite ease;
+    background: none;
+    position: static;
+    margin-bottom: var(--fluent-space-sm, 8px);
+  }
+}
+
+// Loaded view page fade-in animation
+@keyframes fluent-view-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+div[id="view"] > *:not(.spinning) {
+  animation: fluent-view-fade-in var(--fluent-duration-slow) var(--fluent-easing-decelerate) forwards;
+}
+
+// Login form fade-in animation
+@keyframes fluent-login-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Tooltip show animation
+@keyframes fluent-tooltip-show {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,540 @@
+{% include('themes/fluent/out_header_login'); %}
+{#
+  FluentUI Theme for LuCI - Login Page
+  Licensed to the public under the Apache License 2.0
+#}
+
+{%
+  import { access, glob, popen } from 'fs';
+  import { cursor } from 'uci';
+
+  // System info
+  let boardinfo = ubus.call('system', 'board');
+  let hostname = boardinfo && boardinfo.hostname ? boardinfo.hostname : '?';
+
+  // UCI config
+  let cfg = cursor();
+  let mode = 'normal';
+  let primary = '#0078d4';
+  let dark_primary = '#1a1a2e';
+  let blur_radius = '0';
+  let blur_radius_dark = '0';
+  let blur_opacity = '0';
+  let blur_opacity_dark = '0';
+  let bar_color = primary;
+
+  if (access('/etc/config/fluent')) {
+    mode = cfg.get_first('fluent', 'global', 'mode') || 'normal';
+    primary = cfg.get_first('fluent', 'global', 'primary') || '#0078d4';
+    dark_primary = cfg.get_first('fluent', 'global', 'dark_primary') || '#1a1a2e';
+    blur_radius = cfg.get_first('fluent', 'global', 'blur') || '0';
+    blur_radius_dark = cfg.get_first('fluent', 'global', 'blur_dark') || '0';
+    blur_opacity = cfg.get_first('fluent', 'global', 'transparency') || '0';
+    blur_opacity_dark = cfg.get_first('fluent', 'global', 'transparency_dark') || '0';
+
+    bar_color = mode === 'dark' ? dark_primary : primary;
+  }
+
+  // Background image handling
+  let imageTypes = {
+    jpg: true, png: true, gif: true, webp: true
+  };
+  let videoTypes = {
+    mp4: true, webm: true
+  };
+
+  function fetchMedia(path, themeDir) {
+    let backgroundTable = [];
+    let backgroundCount = 0;
+
+    try {
+      let files = glob(path);
+      for (let f in files) {
+        let m = match(f, regexp('.+\\.([A-Za-z0-9]+)$'));
+        let ext = m ? m[1] : null;
+
+        if (ext in imageTypes || ext in videoTypes) {
+          push(backgroundTable, {
+            type: ext,
+            is_video: ext in videoTypes,
+            url: themeDir + f
+          });
+          backgroundCount++;
+        }
+      }
+    } catch (e) {}
+
+    return [backgroundTable, backgroundCount];
+  }
+
+  function selectBackground(themeDir) {
+    let bgUrl = media + '/img/bg1.jpg';
+    let backgroundType = 'Image';
+    let mimeType = '';
+    let login_bg = 'builtin';
+
+    if (access('/etc/config/fluent')) {
+      login_bg = cfg.get_first('fluent', 'global', 'login_bg') || 'builtin';
+    }
+
+    if (login_bg === 'microsoft') {
+      return ['', 'MicrosoftDynamic', ''];
+    }
+
+    if (login_bg === 'bing' || login_bg === 'unsplash') {
+      try {
+        let proc = popen('/usr/libexec/fluent/online_wallpaper');
+        let picurl = proc ? trim(proc.read('all')) : '';
+        if (proc)
+          proc.close();
+        if (picurl) {
+          return [picurl, 'Image', ''];
+        }
+      } catch (e) {}
+    }
+
+    // Custom or Built-in modes (fallback/scan directory)
+    let mediaFiles = fetchMedia('/www' + themeDir + '*', themeDir);
+    let backgroundTable = mediaFiles[0];
+    let backgroundCount = mediaFiles[1];
+    if (backgroundCount > 0) {
+      let currentBg = backgroundTable[time() % backgroundCount];
+      bgUrl = currentBg.url;
+      if (currentBg.is_video) {
+        backgroundType = 'Video';
+        mimeType = 'video/' + currentBg.type;
+      }
+    }
+
+    return [bgUrl, backgroundType, mimeType];
+  }
+
+  let themeDir = media + '/background/';
+  let selectedBg = selectBackground(themeDir);
+  let bgUrl = selectedBg[0];
+  let backgroundType = selectedBg[1];
+  let mimeType = selectedBg[2];
+%}
+
+<!-- Login Page Start -->
+<div class="login-page">
+  {% if (backgroundType === 'Video') { %}
+  <!-- Video Player Start -->
+  <div class="video">
+    <video autoplay loop muted id="video">
+      <source src="{{ bgUrl }}" type="{{ mimeType }}">
+    </video>
+  </div>
+  <div class="volume-control mute"></div>
+  <script>
+    document.querySelector(".volume-control").addEventListener("click", function(){
+      var video = document.getElementById("video");
+      if(this.classList.contains("mute")){
+        this.classList.remove("mute");
+        video.muted = false;
+      } else {
+        this.classList.add("mute");
+        video.muted = true;
+      }
+    });
+  </script>
+  <!-- Video Player End -->
+  {% } else if (backgroundType === 'MicrosoftDynamic') { %}
+  <!-- Microsoft-style Dynamic Canvas Background -->
+  <canvas id="login-canvas" class="main-bg"></canvas>
+  <script type="text/javascript">//<![CDATA[
+    (function() {
+      const canvas = document.getElementById('login-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      
+      let w = canvas.width = window.innerWidth;
+      let h = canvas.height = window.innerHeight;
+      
+      // Determine light/dark mode
+      const isDark = document.body.getAttribute('data-theme-mode') === 'dark' || 
+                     (document.body.getAttribute('data-theme-mode') === 'normal' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      // Dynamic color options based on theme
+      const colors = isDark ? {
+        bgStart: '#090a10',
+        bgEnd: '#030406',
+        ribbons: [
+          {
+            y1: 0.6, y2: 0.1, thicknessStart: 0.35, thicknessEnd: 0.3, thicknessMid: 0.5,
+            cp1x: 0.3, cp1y: 0.4, cp2x: 0.7, cp2y: 0.2, speed: 0.0004, phase: 0,
+            c1: 'rgba(10, 24, 72, 0.45)', c2: 'rgba(3, 8, 28, 0)'
+          },
+          {
+            y1: 0.75, y2: 0.2, thicknessStart: 0.25, thicknessEnd: 0.2, thicknessMid: 0.4,
+            cp1x: 0.4, cp1y: 0.55, cp2x: 0.8, cp2y: 0.35, speed: 0.0006, phase: 1.8,
+            c1: 'rgba(0, 72, 160, 0.35)', c2: 'rgba(0, 10, 40, 0)'
+          },
+          {
+            y1: 0.5, y2: 0.35, thicknessStart: 0.15, thicknessEnd: 0.15, thicknessMid: 0.3,
+            cp1x: 0.2, cp1y: 0.65, cp2x: 0.6, cp2y: 0.45, speed: 0.0005, phase: 3.5,
+            c1: 'rgba(84, 32, 140, 0.25)', c2: 'rgba(12, 4, 28, 0)'
+          },
+          {
+            y1: 0.5, y2: 0.35, thicknessStart: 0.02, thicknessEnd: 0.02, thicknessMid: 0.04,
+            cp1x: 0.2, cp1y: 0.65, cp2x: 0.6, cp2y: 0.45, speed: 0.0005, phase: 3.5,
+            c1: 'rgba(0, 180, 255, 0.25)', c2: 'rgba(0, 0, 0, 0)'
+          }
+        ]
+      } : {
+        bgStart: '#eef3fa',
+        bgEnd: '#f4f6f9',
+        ribbons: [
+          {
+            y1: 0.6, y2: 0.1, thicknessStart: 0.35, thicknessEnd: 0.3, thicknessMid: 0.5,
+            cp1x: 0.3, cp1y: 0.4, cp2x: 0.7, cp2y: 0.2, speed: 0.0004, phase: 0,
+            c1: 'rgba(0, 120, 215, 0.08)', c2: 'rgba(0, 120, 215, 0)'
+          },
+          {
+            y1: 0.75, y2: 0.2, thicknessStart: 0.25, thicknessEnd: 0.2, thicknessMid: 0.4,
+            cp1x: 0.4, cp1y: 0.55, cp2x: 0.8, cp2y: 0.35, speed: 0.0006, phase: 1.8,
+            c1: 'rgba(112, 48, 160, 0.06)', c2: 'rgba(112, 48, 160, 0)'
+          },
+          {
+            y1: 0.5, y2: 0.35, thicknessStart: 0.15, thicknessEnd: 0.15, thicknessMid: 0.3,
+            cp1x: 0.2, cp1y: 0.65, cp2x: 0.6, cp2y: 0.45, speed: 0.0005, phase: 3.5,
+            c1: 'rgba(0, 130, 114, 0.07)', c2: 'rgba(0, 130, 114, 0)'
+          },
+          {
+            y1: 0.5, y2: 0.35, thicknessStart: 0.02, thicknessEnd: 0.02, thicknessMid: 0.04,
+            cp1x: 0.2, cp1y: 0.65, cp2x: 0.6, cp2y: 0.45, speed: 0.0005, phase: 3.5,
+            c1: 'rgba(255, 255, 255, 0.65)', c2: 'rgba(255, 255, 255, 0)'
+          }
+        ]
+      };
+
+      // Random particles (stardust / micro-particles)
+      let particles = [];
+      const particleCount = isDark ? 65 : 30;
+
+      function initParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 1.5 + 0.4,
+            alpha: Math.random() * 0.7 + 0.1,
+            targetAlpha: Math.random() * 0.7 + 0.1,
+            dx: (Math.random() - 0.5) * 0.06,
+            dy: (Math.random() - 0.5) * 0.06,
+            flicker: Math.random() * 0.008 + 0.002
+          });
+        }
+      }
+
+      initParticles();
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        initParticles();
+      });
+
+      function drawRibbon(time, opt) {
+        ctx.beginPath();
+        
+        // Calculate dynamic start/end points using sine/cosine waves for gentle floating motion
+        const startX1 = -w * 0.2;
+        const startY1 = h * (opt.y1 + Math.sin(time * opt.speed + opt.phase) * 0.04);
+        
+        const cp1x = w * (opt.cp1x + Math.cos(time * opt.speed * 0.8 + opt.phase) * 0.04);
+        const cp1y = h * (opt.cp1y + Math.sin(time * opt.speed * 1.1 + opt.phase) * 0.05);
+        
+        const cp2x = w * (opt.cp2x + Math.sin(time * opt.speed * 0.9 + opt.phase * 1.5) * 0.04);
+        const cp2y = h * (opt.cp2y + Math.cos(time * opt.speed * 1.2 + opt.phase * 1.5) * 0.04);
+        
+        const endX1 = w * 1.2;
+        const endY1 = h * (opt.y2 + Math.cos(time * opt.speed * 0.7 + opt.phase * 2) * 0.04);
+        
+        ctx.moveTo(startX1, startY1);
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX1, endY1);
+        
+        // Line down to start of bottom edge of the ribbon
+        const endX2 = w * 1.2;
+        const endY2 = endY1 + h * opt.thicknessEnd;
+        ctx.lineTo(endX2, endY2);
+        
+        // Bezier curves back to left side
+        const cp3x = cp2x;
+        const cp3y = cp2y + h * opt.thicknessMid;
+        const cp4x = cp1x;
+        const cp4y = cp1y + h * opt.thicknessMid;
+        
+        const startX2 = startX1;
+        const startY2 = startY1 + h * opt.thicknessStart;
+        
+        ctx.bezierCurveTo(cp3x, cp3y, cp4x, cp4y, startX2, startY2);
+        ctx.closePath();
+        
+        const grad = ctx.createLinearGradient(0, h * opt.y1, w, h * opt.y2);
+        grad.addColorStop(0, opt.c1);
+        grad.addColorStop(1, opt.c2);
+        
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      function animate(time) {
+        // 1. Draw base gradient background
+        const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+        bgGrad.addColorStop(0, colors.bgStart);
+        bgGrad.addColorStop(1, colors.bgEnd);
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // 2. Draw dynamic ribbons/waves
+        colors.ribbons.forEach(opt => {
+          drawRibbon(time, opt);
+        });
+
+        // 3. Draw particles
+        particles.forEach(p => {
+          // Update position
+          p.x += p.dx;
+          p.y += p.dy;
+
+          // Loop screen edges
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          // Twinkle/Flicker alpha
+          if (Math.abs(p.alpha - p.targetAlpha) < 0.02) {
+            p.targetAlpha = Math.random() * (isDark ? 0.7 : 0.4) + 0.1;
+          }
+          p.alpha += (p.targetAlpha - p.alpha) * p.flicker;
+
+          // Draw
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = isDark ? `rgba(255, 255, 255, ${p.alpha})` : `rgba(0, 120, 215, ${p.alpha * 0.7})`;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
+    })();
+  //]]></script>
+  {% } else { %}
+  <!-- Image Background Start -->
+  <div class="main-bg" id="main-bg" style="background-image:url({{ bgUrl }})"></div>
+  <!-- Image Background End -->
+  {% } %}
+  <!-- Login Container Start -->
+  <div class="login-container">
+    <div class="login-form">
+      <!-- Card Header Start -->
+      <div class="ms-card-header">
+        <button type="button" class="ms-back-button" id="ms-back-btn" style="display: none;" aria-label="Back">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+        <a class="brand" href="/">
+          <img src="{{ media }}/img/fluent.svg" class="icon" />
+          <span class="brand-text">{{ hostname }}</span>
+        </a>
+      </div>
+      <!-- Card Header End -->
+
+      <!-- Login Form Start -->
+      <form class="form-login" method="post" action="">
+        <!-- Step 1: Username -->
+        <div id="step-username" class="step-container">
+          <h2 class="login-title">{{ _('Authorization Required') }}</h2>
+          <p class="login-subtitle">{{ _('Please enter your username.') }}</p>
+          
+          <div class="input-container">
+            <div class="ms-input-wrapper">
+              <input class="ms-input{% if (fuser) { %} cbi-input-invalid{% } %}" id="cbi-input-user" type="text" name="luci_username" value="{{ entityencode(duser, true) }}" placeholder=" " />
+              <label class="ms-label" for="cbi-input-user">{{ _('Username') }}</label>
+              <div class="ms-input-underline"></div>
+            </div>
+          </div>
+          
+          <div class="button-container">
+            <button type="button" class="ms-button" id="btn-next">{{ _('Next') }}</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Password -->
+        <div id="step-password" class="step-container">
+          <div class="login-account-pill-wrapper">
+            <div class="login-account-pill" id="login-account-pill">
+              <span class="login-account-pill__text" id="login-account-pill-text">{{ entityencode(duser, true) }}</span>
+            </div>
+          </div>
+          
+          <h2 class="login-title">{{ _('Authorization Required') }}</h2>
+          <p class="login-subtitle">{{ _('Please enter your password.') }}</p>
+          
+          <div class="input-container">
+            <div class="ms-input-wrapper password-wrapper">
+              <input class="ms-input{% if (fuser) { %} cbi-input-invalid{% } %}" id="cbi-input-password" type="password" name="luci_password" placeholder=" " />
+              <label class="ms-label" for="cbi-input-password">{{ _('Password') }}</label>
+              <button type="button" class="ms-password-toggle" id="ms-password-toggle" tabindex="-1" aria-label="Toggle password visibility">
+                <svg class="eye-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <div class="ms-input-underline"></div>
+            </div>
+            {%- if (fuser) { %}
+            <div class="errorbox">{{ _('Invalid username and/or password! Please try again.') }}</div>
+            {%- } %}
+          </div>
+
+          <div class="button-container">
+            <input type="submit" value="{{ _('Login') }}" class="ms-button" id="btn-login" />
+          </div>
+        </div>
+      </form>
+      <!-- Login Form End -->
+      <script type="text/javascript">//<![CDATA[
+        (function() {
+          var userInput = document.getElementById('cbi-input-user');
+          var passInput = document.getElementById('cbi-input-password');
+          var stepUsername = document.getElementById('step-username');
+          var stepPassword = document.getElementById('step-password');
+          var backBtn = document.getElementById('ms-back-btn');
+          var btnNext = document.getElementById('btn-next');
+          var accountPillText = document.getElementById('login-account-pill-text');
+          var passwordToggle = document.getElementById('ms-password-toggle');
+          var errorBox = document.querySelector('.errorbox');
+
+          function clearError() {
+            if (errorBox) errorBox.style.display = 'none';
+            if (userInput) userInput.classList.remove('cbi-input-invalid');
+            if (passInput) passInput.classList.remove('cbi-input-invalid');
+          }
+
+          if (userInput) {
+            userInput.addEventListener('input', clearError);
+          }
+          if (passInput) {
+            passInput.addEventListener('input', clearError);
+          }
+
+          var loginFormEl = document.querySelector('.form-login');
+
+          function showStep2() {
+            if (loginFormEl) loginFormEl.classList.add('show-step2');
+            if (backBtn) backBtn.style.display = 'flex';
+            if (passInput) {
+              setTimeout(function() {
+                passInput.focus();
+              }, 50);
+            }
+          }
+
+          function showStep1() {
+            if (loginFormEl) loginFormEl.classList.remove('show-step2');
+            if (backBtn) backBtn.style.display = 'none';
+            if (userInput) {
+              setTimeout(function() {
+                userInput.focus();
+              }, 50);
+            }
+          }
+
+          if (btnNext && userInput) {
+            btnNext.addEventListener('click', function(e) {
+              e.preventDefault();
+              if (userInput.value.trim() !== '') {
+                if (accountPillText) {
+                  accountPillText.textContent = userInput.value.trim();
+                }
+                showStep2();
+              } else {
+                if (typeof userInput.reportValidity === 'function') {
+                  userInput.reportValidity();
+                } else {
+                  alert('{{ _('Username is required.') }}');
+                }
+              }
+            });
+
+            userInput.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                btnNext.click();
+              }
+            });
+          }
+
+          if (backBtn) {
+            backBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              showStep1();
+            });
+          }
+
+          if (passwordToggle && passInput) {
+            passwordToggle.addEventListener('click', function(e) {
+              e.preventDefault();
+              if (passInput.type === 'password') {
+                passInput.type = 'text';
+                passwordToggle.innerHTML = '<svg class="eye-off-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+              } else {
+                passInput.type = 'password';
+                passwordToggle.innerHTML = '<svg class="eye-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+              }
+            });
+          }
+
+          // Initial router: If username is already populated, go straight to Step 2.
+          if (userInput && userInput.value.trim() !== '') {
+            if (accountPillText) {
+              accountPillText.textContent = userInput.value.trim();
+            }
+            if (loginFormEl) {
+              loginFormEl.classList.add('no-transition');
+              showStep2();
+              // Force reflow to flush styles before removing no-transition
+              var reflow = loginFormEl.offsetHeight;
+              loginFormEl.classList.remove('no-transition');
+            } else {
+              showStep2();
+            }
+          } else {
+            showStep1();
+          }
+        })();
+      //]]></script>
+      {%
+        let https_key = cfg.get('uhttpd', 'main', 'key');
+        let https_port = cfg.get('uhttpd', 'main', 'listen_https');
+
+        if (type(https_port) === 'object') {
+          https_port = https_port[0];
+        }
+
+        if (https_port && access(https_key)) {
+          let m = match(https_port, regexp('(\\d+)$'));
+          https_port = m ? m[1] : null;
+      %}
+      <script type="text/javascript">//<![CDATA[
+        if (document.location.protocol != 'https:') {
+          var url = 'https://' + window.location.hostname + ':' + '{{ https_port }}' + window.location.pathname;
+          var img = new Image;
+          img.onload = function () { window.location = url };
+          img.src = 'https://' + window.location.hostname + ':' + '{{ https_port }}' + '{{ resource }}/cbi/up.gif?' + Math.random();
+          setTimeout(function () {
+            img.src = ''
+          }, 5000);
+        }
+      //]]></script>
+      {% } %}
+{% include('themes/fluent/footer_login'); %}
+<!-- Login Page End -->

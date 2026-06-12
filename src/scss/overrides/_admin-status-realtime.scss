@@ -1,0 +1,13 @@
+@use "overrides-utils" as *;
+@include plugin-prefix("admin-status-realtime") {
+  .cbi-section {
+    div[style*="background:#fff"] {
+      background: var(--fluent-card-bg) !important;
+      border: none !important;
+      border-radius: var(--fluent-card-radius) !important;
+    }
+    svg line[style*="stroke:black"] {
+      stroke: var(--fluent-text-secondary) !important;
+    }
+  }
+}

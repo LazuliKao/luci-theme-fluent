@@ -1,0 +1,324 @@
+// FluentUI 2 SCSS Mixins
+// Aligned with official @fluentui/tokens v2
+
+// ============================================================
+// RESPONSIVE BREAKPOINTS
+// ============================================================
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == "md" {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == "lg" {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == "xl" {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == "xxl" {
+    @media (min-width: $breakpoint-xxl) {
+      @content;
+    }
+  }
+}
+
+// ============================================================
+// FLEXBOX HELPERS
+// ============================================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// ============================================================
+// TEXT TRUNCATION
+// ============================================================
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// ============================================================
+// BUTTON BASE (FluentUI Button)
+// Height: 32px, Radius: 4px, Padding: 0 16px
+// ============================================================
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--fluent-btn-height);
+  padding: 0 16px;
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--fluent-radius-md);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    background var(--fluent-duration-fast) var(--fluent-easing-standard),
+    border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+    color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &:disabled {
+    color: var(--fluent-text-disabled);
+    background: var(--fluent-bg-active);
+    border-color: var(--fluent-bg-active);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // FluentUI focus indicator
+  &:focus-visible {
+    outline: 2px solid var(--fluent-focus-color);
+    outline-offset: 2px;
+  }
+}
+
+// ============================================================
+// BUTTON VARIANTS (FluentUI)
+// ============================================================
+@mixin button-primary {
+  @include button-base;
+  background: var(--fluent-btn-primary-bg);
+  color: var(--fluent-text-on-primary);
+  border-color: var(--fluent-btn-primary-bg);
+
+  &:hover {
+    background: var(--fluent-btn-primary-bg-hover);
+    border-color: var(--fluent-btn-primary-bg-hover);
+  }
+
+  &:active {
+    background: var(--fluent-btn-primary-bg-active);
+    border-color: var(--fluent-btn-primary-bg-active);
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: var(--fluent-btn-secondary-bg);
+  color: var(--fluent-text);
+  border-color: var(--fluent-btn-secondary-border);
+
+  &:hover {
+    background: var(--fluent-btn-secondary-bg-hover);
+    border-color: var(--fluent-btn-secondary-border-hover);
+  }
+
+  &:active {
+    background: var(--fluent-btn-secondary-bg-active);
+    border-color: var(--fluent-btn-secondary-border-active);
+  }
+}
+
+@mixin button-text {
+  @include button-base;
+  background: transparent;
+  color: var(--fluent-text);
+  border-color: transparent;
+
+  &:hover {
+    background: var(--fluent-bg-hover);
+  }
+
+  &:active {
+    background: var(--fluent-bg-active);
+  }
+}
+
+// ============================================================
+// INPUT BASE (FluentUI Input)
+// Height: 32px, Radius: 4px, Bottom-border indicator
+// ============================================================
+@mixin input-base {
+  height: var(--fluent-input-height);
+  padding: 0 var(--fluent-space-sm);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+  color: var(--fluent-text);
+  background: var(--fluent-input-bg);
+  border: 1px solid var(--fluent-input-border);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--fluent-input-border-bottom);
+  border-radius: var(--fluent-radius-md);
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  padding-bottom: 1px;
+
+  &:hover {
+    border-bottom-width: 2px;
+    padding-bottom: 0px;
+    border-bottom-color: var(--fluent-input-border-hover);
+  }
+
+  &:focus {
+    border-bottom-width: 2px;
+    padding-bottom: 0px;
+    border-bottom-color: var(--fluent-input-border-focus);
+    outline: none;
+  }
+
+  &:disabled {
+    background: var(--fluent-input-bg-disabled);
+    color: var(--fluent-text-disabled);
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: var(--fluent-text-disabled);
+  }
+}
+
+// ============================================================
+// CARD (FluentUI Card)
+// Radius: 8px, Border: None, Shadow: sm
+// ============================================================
+@mixin card {
+  background: var(--fluent-card-bg);
+  border: none; // FluentUI / Windows 11 style: no borders on cards
+  border-radius: var(--fluent-card-radius);
+  box-shadow: var(--fluent-card-shadow);
+  padding: var(--fluent-card-padding);
+}
+
+// ============================================================
+// TABLE (FluentUI Table)
+// ============================================================
+@mixin table-base {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: var(--fluent-table-header-bg);
+    font-weight: var(--fluent-font-weight-semibold);
+    text-align: center;
+  }
+
+  td,
+  th {
+    padding: var(--fluent-space-xs) var(--fluent-space-sm);
+    border-bottom: 1px solid var(--fluent-table-border);
+  }
+
+  tr:hover td {
+    background: var(--fluent-table-row-hover);
+  }
+}
+
+// ============================================================
+// SCROLLBAR (FluentUI custom scrollbar)
+// ============================================================
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: var(--fluent-scrollbar-width);
+    height: var(--fluent-scrollbar-width);
+
+    &:horizontal {
+      height: var(--fluent-scrollbar-horizontal-height, 5px);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--fluent-scrollbar-track-bg);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--fluent-scrollbar-thumb-bg);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--fluent-scrollbar-thumb-bg-hover);
+    }
+
+    &:horizontal {
+      background: var(--fluent-scrollbar-thumb-horizontal-bg, rgba(0, 0, 0, 0.15));
+
+      &:hover {
+        background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, rgba(0, 0, 0, 0.35));
+      }
+    }
+  }
+}
+
+// ============================================================
+// ANIMATIONS
+// ============================================================
+@mixin fade-in($duration: var(--fluent-duration-normal)) {
+  animation: fadeIn $duration var(--fluent-easing-decelerate);
+}
+
+@mixin slide-in-up($duration: var(--fluent-duration-normal)) {
+  animation: slideInUp $duration var(--fluent-easing-decelerate);
+}
+
+@mixin slide-in-down($duration: var(--fluent-duration-normal)) {
+  animation: slideInDown $duration var(--fluent-easing-decelerate);
+}
+
+// ============================================================
+// FOCUS VISIBLE (FluentUI focus indicator)
+// 2px solid black outline, 2px offset
+// ============================================================
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid var(--fluent-focus-color);
+    outline-offset: 2px;
+  }
+}
+
+// ============================================================
+// VISUALLY HIDDEN (SR ONLY)
+// ============================================================
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

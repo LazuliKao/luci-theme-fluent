@@ -1,0 +1,197 @@
+// ============================================================
+// ALERT MESSAGES (FluentUI MessageBar)
+// Clean layout, soft borders, inline status icons via ::before
+// ============================================================
+@use "../mixins" as *;
+@use "../icons" as *;
+
+// SVG Icon Data URIs for MessageBar Statuses (Official Fluent UI 2 System Icons)
+$fluent-alert-icon-info: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M18 10a8 8 0 1 0-16 0 8 8 0 0 0 16 0ZM9.5 8.91a.5.5 0 0 1 1 0V13.6a.5.5 0 0 1-1 0V8.9Zm-.25-2.16a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0Z' fill='%23212121'/></svg>";
+
+$fluent-alert-icon-success: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M10 2a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm3.36 5.65a.5.5 0 0 0-.64-.06l-.07.06L9 11.3 7.35 9.65l-.07-.06a.5.5 0 0 0-.7.7l.07.07 2 2 .07.06c.17.11.4.11.56 0l.07-.06 4-4 .07-.08a.5.5 0 0 0-.06-.63Z' fill='%23212121'/></svg>";
+
+$fluent-alert-icon-warning: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M8.68 2.79a1.5 1.5 0 0 1 2.64 0l6.5 12a1.5 1.5 0 0 1-1.32 2.21h-13a1.5 1.5 0 0 1-1.32-2.21l6.5-12ZM10.5 7.5a.5.5 0 0 0-1 0v4a.5.5 0 0 0 1 0v-4Zm.25 6.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z' fill='%23212121'/></svg>";
+
+$fluent-alert-icon-error: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path d='M7.88 2.88a3 3 0 0 1 4.24 0l5 5a3 3 0 0 1 0 4.24l-5 5a3 3 0 0 1-4.24 0l-5-5a3 3 0 0 1 0-4.24l5-5Zm-.03 4.27a.5.5 0 1 0-.7.7L9.29 10l-2.14 2.15a.5.5 0 0 0 .7.7L10 10.71l2.15 2.14a.5.5 0 0 0 .7-.7L10.71 10l2.14-2.15a.5.5 0 0 0-.7-.7L10 9.29 7.85 7.15Z' fill='%23212121'/></svg>";
+
+.alert,
+.alert-message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fluent-space-md);
+  margin: 0 0 var(--fluent-space-lg);
+  padding: var(--fluent-space-md) var(--fluent-space-lg);
+  border: 1px solid;
+  border-radius: var(--fluent-radius-md);
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border);
+  color: var(--fluent-text);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+
+  // Fallback / default icon (informative info)
+  &::before {
+    @include fluent-icon-content($fluent-alert-icon-info, 18px, #616161);
+    margin-top: 2px;
+  }
+
+  // Content area container alignment
+  > div:first-of-type {
+    display: flex;
+    flex: unset !important; // Don't let this container grow with flex like the content container
+    flex-direction: column;
+    width: 100%;
+    flex: 10;
+
+    // Action buttons inside content container (align to the bottom right of the text area)
+    .cbi-button,
+    .btn.cbi-button {
+      @include button-secondary;
+      height: 28px;
+      line-height: 1;
+      font-size: var(--fluent-font-size-sm);
+      padding: 0 var(--fluent-space-sm);
+      border-radius: var(--fluent-radius-md);
+      margin-top: var(--fluent-space-sm);
+      align-self: flex-end; // Pushes the action button to the bottom right
+    }
+  }
+  position: relative;
+  // Dismiss / close button container (aligns button to top right)
+  > div:last-child {
+    // float to top right of the alert box and do not take any space
+    position: absolute;
+    display: flex;
+    top: 8px;
+    right: 8px;
+
+    .btn:not(.cbi-button) {
+      &::after {
+        content: "";
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        flex: 0 0 20px;
+
+        background:
+          linear-gradient(
+            45deg,
+            transparent calc(50% - 0.75px),
+            var(--fluent-text-secondary) calc(50% - 0.75px),
+            var(--fluent-text-secondary) calc(50% + 0.75px),
+            transparent calc(50% + 0.75px)
+          ),
+          linear-gradient(
+            -45deg,
+            transparent calc(50% - 0.75px),
+            var(--fluent-text-secondary) calc(50% - 0.75px),
+            var(--fluent-text-secondary) calc(50% + 0.75px),
+            transparent calc(50% + 0.75px)
+          );
+
+        background-size: 8px 8px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      @include button-text;
+      font-size: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0; // 清除原本的左右 padding，防止叉叉偏心
+
+      line-height: 1;
+      color: var(--fluent-text-secondary);
+      border-radius: var(--fluent-radius-md);
+      margin-top: 0 !important;
+      margin-left: auto !important;
+      align-self: flex-start;
+      background: transparent;
+      border: none;
+
+      &:hover {
+        background: var(--fluent-bg-hover);
+        color: var(--fluent-text);
+      }
+
+      &:active {
+        background: var(--fluent-bg-active);
+      }
+    }
+  }
+
+  // Titles
+  h4 {
+    margin: 0 0 var(--fluent-space-xs) 0;
+    padding: 0;
+    background: transparent;
+    color: var(--fluent-text);
+    font-size: var(--fluent-font-size-base);
+    font-weight: var(--fluent-font-weight-semibold);
+  }
+
+  // Paragraphs / details
+  p {
+    margin: 0 0 var(--fluent-space-sm) 0;
+    color: var(--fluent-text-secondary);
+    font-size: var(--fluent-font-size-base);
+    line-height: var(--fluent-line-height-relaxed);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // STATUS VARIATIONS
+  // ----------------------------------------------------------
+
+  // Success / Notice
+  &.success,
+  &.alert-success,
+  &.notice {
+    background: var(--fluent-success-light);
+    border-color: color-mix(in srgb, var(--fluent-success) 35%, transparent);
+
+    &::before {
+      @include fluent-icon-content($fluent-alert-icon-success, 18px, #107c10);
+    }
+  }
+
+  // Warning
+  &.warning,
+  &.alert-warning {
+    background: var(--fluent-warning-light);
+    border-color: color-mix(in srgb, var(--fluent-warning) 45%, transparent);
+
+    &::before {
+      @include fluent-icon-content($fluent-alert-icon-warning, 18px, #d83b01);
+    }
+  }
+
+  // Error / Danger
+  &.error,
+  &.alert-danger,
+  &.danger {
+    background: var(--fluent-error-light);
+    border-color: color-mix(in srgb, var(--fluent-error) 35%, transparent);
+
+    &::before {
+      @include fluent-icon-content($fluent-alert-icon-error, 18px, #d13438);
+    }
+  }
+
+  // Info
+  &.info,
+  &.alert-info {
+    background: var(--fluent-info-light);
+    border-color: color-mix(in srgb, var(--fluent-info) 35%, transparent);
+
+    &::before {
+      @include fluent-icon-content($fluent-alert-icon-info, 18px, #0078d4);
+    }
+  }
+}

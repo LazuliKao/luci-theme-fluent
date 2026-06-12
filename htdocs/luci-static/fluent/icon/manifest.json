@@ -1,0 +1,10 @@
+{
+  "name": "OpenWrt",
+  "icons": [
+    {
+      "src": "/luci-static/fluent/icon/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{#
+  FluentUI Theme for LuCI - Login Page Header
+  Licensed to the public under the Apache License 2.0
+#}
+
+{%
+  import { access } from 'fs';
+  import { cursor } from 'uci';
+  import { srand } from 'math';
+
+  // System info
+  let boardinfo = ubus.call('system', 'board');
+  let hostname = boardinfo && boardinfo.hostname ? boardinfo.hostname : '?';
+
+  let cfg = cursor();
+
+  //send as HTML5
+  http.prepare_content('text/html; charset=UTF-8');
+
+  srand(+substr(reverse(time() + ""), 0, 8));
+
+  // Custom settings
+  let mode = 'normal';
+  let primary = '#0078d4';
+  let dark_primary = '#1a1a2e';
+  let blur_radius = '0';
+  let blur_radius_dark = '0';
+  let blur_opacity = '1';
+  let blur_opacity_dark = '1';
+  let bar_color = primary;
+
+  if (access('/etc/config/fluent')) {
+    primary = cfg.get_first('fluent', 'global', 'primary') || '#0078d4';
+    dark_primary = cfg.get_first('fluent', 'global', 'dark_primary') || '#1a1a2e';
+    mode = cfg.get_first('fluent', 'global', 'mode') || 'normal';
+    blur_radius = cfg.get_first('fluent', 'global', 'blur') || '0';
+    blur_radius_dark = cfg.get_first('fluent', 'global', 'blur_dark') || '0';
+    blur_opacity = cfg.get_first('fluent', 'global', 'transparency') || '1';
+    blur_opacity_dark = cfg.get_first('fluent', 'global', 'transparency_dark') || '1';
+    bar_color = (mode === 'dark') ? dark_primary : primary;
+  }
+%}
+<!DOCTYPE html>
+<html lang="{{ dispatcher.lang }}">
+
+<head>
+	<meta charset="utf-8">
+	<title>{{ hostname }} - LuCI</title>
+  <!-- SEO and Description -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Security -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="full-screen" content="yes">
+	<meta name="x5-page-mode" content="app">
+	<meta name="browsermode" content="application">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="msapplication-TileColor" content="{{ bar_color }}">
+	<meta name="application-name" content="{{ hostname }} - LuCI">
+	<meta name="apple-mobile-web-app-title" content="{{ hostname }} - LuCI">
+	<link rel="apple-touch-icon" href="{{ media }}/icon/icon-192.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ media }}/icon/icon-192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ media }}/icon/favicon-32.png">
+	<link rel="icon" type="image/svg+xml" href="{{ media }}/img/fluent.svg">
+	<link rel="manifest" href="{{ media }}/icon/manifest.json" crossorigin="use-credentials">
+	<meta name="msapplication-TileColor" content="{{ bar_color }}">
+	<meta name="msapplication-TileImage" content="{{ media }}/icon/icon-192.png">
+
+	{% if (mode === 'normal') { %}
+	<meta name="theme-color" content="{{ bar_color }}">
+	<script type="text/javascript">
+		let prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		if (prefersDarkMode) {
+			viewport = document.querySelector("meta[name=theme-color]");
+			viewport.setAttribute('content', '#444950');
+		}
+	</script>
+	{% } else if (mode === 'dark') { %}
+	<meta name="theme-color" content="#444950">
+	{% } else if (mode === 'light') { %}
+	<meta name="theme-color" content="{{ bar_color }}">
+	{% } %}
+
+	<link rel="stylesheet" href="{{ media }}/css/fluent.css">
+
+	<style title="text/css">
+		{# Default light values - must come FIRST so dark overrides can take precedence #}
+		:root {
+			--fluent-primary: {{ primary }};
+			--fluent-blur-radius: {{ blur_radius }}px;
+			--fluent-blur-opacity: {{ blur_opacity }};
+			--fluent-blur-radius-dark: {{ blur_radius_dark }}px;
+			--fluent-blur-opacity-dark: {{ blur_opacity_dark }};
+		}
+
+		{# Dark mode overrides - must come AFTER default values #}
+		{% if (mode === 'normal') { %}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--fluent-primary: {{ dark_primary }};
+				}
+			}
+		{% } else if (mode === 'dark') { %}
+			:root {
+				--fluent-primary: {{ dark_primary }};
+			}
+		{% } %}
+	</style>
+
+	<link rel="shortcut icon" type="image/ico" href="{{ media }}/favicon.ico">
+	<script src="{{ resource }}/cbi.js?v={{ version.luciversion }}"></script>
+	<script src="{{ resource }}/luci.js?v={{ version.luciversion }}"></script>
+</head>
+<body class="lang_{{ dispatcher.lang }} login-page" data-theme-mode="{{ mode }}">

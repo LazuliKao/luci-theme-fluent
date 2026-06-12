@@ -1,0 +1,7 @@
+@use "overrides-utils" as *;
+@include plugin("admin-status-nftables-iptables") {
+  #view > div.right {
+    margin-top: 4px;
+    margin-bottom: 0 !important;
+  }
+}

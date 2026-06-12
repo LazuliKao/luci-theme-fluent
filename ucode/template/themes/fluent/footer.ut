@@ -1,0 +1,39 @@
+{#
+  FluentUI Theme for LuCI - Footer
+  Licensed to the public under the Apache License 2.0
+#}
+
+
+{% if (!ctx._fluent_login_shown) { %}
+</div>
+{% if (!ctx.authsession) { %}
+<footer>
+  <div class="mobile-hide">
+    <a class="luci-link" href="https://github.com/openwrt/luci">Powered by {{ version.luciname }} ({{ version.luciversion }})</a> /
+                    {{ version.distversion }}
+    <ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>
+  </div>
+</footer>
+{% } %}
+</div>
+</div>
+<script>
+  // thanks for Jo-Philipp Wich <jow@openwrt.org>
+  var luciLocation = {{ ctx.path }};
+  var winHeight = window.innerHeight;
+  window.addEventListener('resize', function () {
+    var winWidth = window.innerWidth;
+    if(winWidth < 600){
+      var newHeight = window.innerHeight;
+      var keyboradHeight = newHeight - winHeight;
+      var ftcElement = document.querySelector(".ftc");
+      if (ftcElement) {
+        ftcElement.style.bottom = (keyboradHeight + 30) + "px";
+      }
+    }
+  });
+</script>
+<script type="text/javascript">L.require('menu-fluent')</script>
+</body>
+</html>
+{% } %}

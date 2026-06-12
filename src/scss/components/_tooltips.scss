@@ -1,0 +1,313 @@
+// ============================================================
+// TOOLTIPS - FluentUI 2 Tooltip Styles
+// Single-source styles for plain tooltips and popover tooltips.
+// ============================================================
+@use "../mixins" as *;
+
+$indicator-left-offset: 30px;
+// ============================================================
+// 1. ABBREVIATION (ABBR) PLAIN TEXT TOOLTIPS
+// ============================================================
+.cbi-value-description abbr[title] {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  color: var(--fluent-text-link);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--fluent-border-hover);
+}
+
+// Tooltip body
+.cbi-value-description abbr[title]::after {
+  content: attr(title);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(4px);
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 280px;
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  border-radius: var(--fluent-radius-md);
+  background: var(--fluent-tooltip-bg);
+  color: var(--fluent-tooltip-text);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-sm);
+  line-height: 1.4;
+  font-weight: var(--fluent-font-weight-regular);
+  text-align: left;
+  box-shadow: var(--fluent-shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: var(--fluent-zindex-tooltip);
+  transition:
+    opacity 120ms var(--fluent-easing-standard),
+    transform 120ms var(--fluent-easing-standard),
+    visibility 120ms var(--fluent-easing-standard);
+}
+
+// Arrow indicator (pointing down)
+.cbi-value-description abbr[title]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%) translateY(4px) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--fluent-tooltip-bg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: calc(var(--fluent-zindex-tooltip) - 1);
+  transition:
+    opacity 120ms var(--fluent-easing-standard),
+    transform 120ms var(--fluent-easing-standard),
+    visibility 120ms var(--fluent-easing-standard);
+}
+
+// Hover trigger
+.cbi-value-description abbr[title]:hover::after,
+.cbi-value-description abbr[title]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cbi-value-description abbr[title]:hover::after {
+  transform: translateX(-50%) translateY(0);
+}
+
+.cbi-value-description abbr[title]:hover::before {
+  transform: translateX(-50%) translateY(0) rotate(45deg);
+}
+
+// ============================================================
+// 2. CBI POP-OVER TOOLTIPS
+// ============================================================
+.cbi-tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fluent-space-xs);
+}
+
+.cbi-tooltip {
+  position: absolute;
+  top: calc(100% + var(--fluent-space-xs));
+  left: 0;
+  min-width: 12rem;
+  max-width: min(20rem, 80vw);
+  padding: var(--fluent-space-sm) var(--fluent-space-md);
+  background: var(--fluent-bg-card);
+  border: 1px solid var(--fluent-border);
+  border-radius: var(--fluent-radius-md);
+  box-shadow: var(--fluent-shadow-md);
+  color: var(--fluent-text);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-sm);
+  line-height: var(--fluent-line-height-normal);
+
+  /* Collapses layout space when hidden to prevent vertical scrollbars */
+  display: none;
+  opacity: 0;
+  transform: translateY(var(--fluent-space-xs));
+  transition:
+    opacity var(--fluent-duration-fast) var(--fluent-easing-standard),
+    transform var(--fluent-duration-fast) var(--fluent-easing-standard),
+    display var(--fluent-duration-fast) var(--fluent-easing-standard) allow-discrete;
+  pointer-events: none;
+  z-index: var(--fluent-zindex-tooltip);
+
+  // Top pointing arrow for dropdown-style tooltip
+  &::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: $indicator-left-offset;
+    width: 8px;
+    height: 8px;
+    background-color: var(--fluent-bg-card);
+    border-left: 1px solid var(--fluent-border);
+    border-top: 1px solid var(--fluent-border);
+    transform: rotate(45deg);
+  }
+}
+
+.cbi-tooltip-container:hover .cbi-tooltip:not(:empty) {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(var(--fluent-space-xs));
+  }
+}
+
+span[data-tooltip] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fluent-space-xs);
+  position: relative;
+  cursor: help;
+  color: var(--fluent-text-secondary);
+}
+
+span[data-tooltip] .label {
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-sm);
+  line-height: var(--fluent-line-height-normal);
+  border-bottom: 1px dashed var(--fluent-border-hover);
+}
+
+// ============================================================
+// 3. LABEL DATA-TOOLTIPS (Checkbox/Radio Labels)
+// ============================================================
+label[data-tooltip] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fluent-space-xs);
+  min-height: var(--fluent-checkbox-size);
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-sm);
+  line-height: var(--fluent-line-height-normal);
+  cursor: help;
+
+  > input[type="radio"],
+  > input[type="checkbox"] {
+    flex: 0 0 auto;
+    margin: 0;
+    inline-size: var(--fluent-checkbox-size);
+    block-size: var(--fluent-checkbox-size);
+  }
+
+  // Tooltip body
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + var(--fluent-space-xs));
+    left: 0;
+    min-width: 12rem;
+    max-width: min(20rem, 80vw);
+    padding: var(--fluent-space-sm) var(--fluent-space-md);
+    background: var(--fluent-bg-card);
+    border: 1px solid var(--fluent-border);
+    border-radius: var(--fluent-radius-md);
+    box-shadow: var(--fluent-shadow-md);
+    color: var(--fluent-text);
+    font-size: var(--fluent-font-size-sm);
+    line-height: var(--fluent-line-height-normal);
+    white-space: normal;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(var(--fluent-space-xs));
+    transition:
+      opacity var(--fluent-duration-fast) var(--fluent-easing-standard),
+      transform var(--fluent-duration-fast) var(--fluent-easing-standard),
+      visibility var(--fluent-duration-fast) var(--fluent-easing-standard);
+    pointer-events: none;
+    z-index: var(--fluent-zindex-tooltip);
+  }
+
+  // Tooltip pointer arrow
+  &::before {
+    content: "";
+    position: absolute;
+    top: calc(100% + var(--fluent-space-xs) - 4px);
+    left: $indicator-left-offset;
+    width: 8px;
+    height: 8px;
+    background-color: var(--fluent-bg-card);
+    border-left: 1px solid var(--fluent-border);
+    border-top: 1px solid var(--fluent-border);
+    transform: rotate(45deg);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--fluent-duration-fast) var(--fluent-easing-standard),
+      visibility var(--fluent-duration-fast) var(--fluent-easing-standard);
+    pointer-events: none;
+    z-index: calc(var(--fluent-zindex-tooltip) + 1);
+  }
+
+  &:hover::after,
+  &:focus-within::after,
+  &:hover::before,
+  &:focus-within::before {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover::after,
+  &:focus-within::after {
+    transform: translateY(0);
+  }
+}
+
+// ============================================================
+// 4. ZONEBADGE TOOLTIPS
+// ============================================================
+.zonebadge .cbi-tooltip {
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--fluent-space-xs));
+
+  &::before {
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+.zonebadge:hover .cbi-tooltip:not(:empty) {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateX(-50%) translateY(var(--fluent-space-xs));
+  }
+}
+
+// ============================================================
+// 5. RESPONSIVE OVERRIDES
+// ============================================================
+@include respond-to("md") {
+  .zonebadge .cbi-tooltip {
+    left: 0;
+    transform: translateY(var(--fluent-space-xs));
+
+    &::before {
+      left: $indicator-left-offset;
+      transform: rotate(45deg);
+    }
+  }
+
+  .zonebadge:hover .cbi-tooltip:not(:empty) {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(var(--fluent-space-xs));
+    }
+  }
+}
+
+label[data-tooltip] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: var(--fluent-space-sm) !important;
+  cursor: help !important;
+  color: var(--fluent-text-secondary) !important;
+}
+
+.cbi-section:has(.cbi-tooltip-container:hover),
+.controls:has(label[data-tooltip]:hover) {
+  z-index: 100 !important;
+}

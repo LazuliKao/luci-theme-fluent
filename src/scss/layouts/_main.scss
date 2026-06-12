@@ -1,0 +1,34 @@
+.main {
+  > .main-right {
+    > #maincontent {
+      flex-grow: 1;
+      overflow: auto;
+      width: 100%;
+      padding: 10px;
+      // Title styling for content pages
+      > .container {
+        > h2[name="content"] {
+          margin-bottom: 15px;
+        }
+        &,
+        #view,
+        #view > div {
+          > h2 {
+            position: relative;
+            padding-left: 12px;
+            &::before {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 4px;
+              bottom: 4px;
+              width: 4px;
+              background-color: var(--fluent-primary);
+              border-radius: var(--fluent-radius-sm, 2px);
+            }
+          }
+        }
+      }
+    }
+  }
+}

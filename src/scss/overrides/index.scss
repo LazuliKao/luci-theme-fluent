@@ -1,0 +1,8 @@
+// Directory entry point — manually maintained.
+// Add a @forward line for each new override partial.
+
+@forward "overrides-utils";
+@forward "luci-mod-dashboard";
+@forward "luci-app-firewall";
+@forward "system-channel_analysis";
+@forward "admin-status-realtime";

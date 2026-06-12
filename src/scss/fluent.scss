@@ -1,0 +1,47 @@
+// Luci-Theme-Fluent Main Entry Point
+// This file uses @use/@forward (modern Sass syntax)
+
+// This file imports all partials and compiles to fluent.css
+
+// Base
+@use "variables";
+@use "mixins" as *;
+@use "icons";
+@use "base";
+
+// Components
+@use "components/buttons";
+@use "components/inputs";
+@use "components/cards";
+@use "components/tables";
+@use "components/navigation";
+@use "components/modals";
+@use "components/cbi-forms";
+@use "components/cbi-dialogs";
+@use "components/alert-message";
+@use "components/cbi-network";
+@use "components/cbi-widgets";
+@use "components/tabs";
+@use "components/checkboxes";
+@use "components/scrollbars";
+@use "components/progress";
+@use "components/dropdown";
+@use "components/menu-button";
+@use "components/dynlist";
+@use "components/password";
+@use "components/errors";
+@use "components/textarea";
+@use "components/select";
+@use "components/dashboard";
+@use "components/tooltips";
+@use "overrides/index";
+
+// Layouts
+@use "layouts/login";
+@use "layouts/sidebar";
+@use "layouts/header";
+@use "layouts/main";
+
+// Theme variations
+@use "themes/light";
+@use "themes/dark";

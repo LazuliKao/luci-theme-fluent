@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+    <defs>
+        <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00F5FF" />
+            <stop offset="40%" stop-color="#0072FF" />
+            <stop offset="100%" stop-color="#001B36" />
+        </linearGradient>
+
+        <filter id="shadow1" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#001224" flood-opacity="0.5" />
+        </filter>
+
+        <filter id="micaSim" x="-50%" y="-50%" width="200%" height="200%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1"
+                stitchTiles="stitch" result="noise" />
+            <feColorMatrix in="noise" type="colorMatrix"
+                values="0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0.5 0" result="desaturatedNoise" />
+            <feGaussianBlur in="desaturatedNoise" stdDeviation="2" result="blurredNoise" />
+            <feComposite in="blurredNoise" in2="SourceGraphic" operator="in" />
+        </filter>
+
+        <linearGradient id="borderGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7" />
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.0" />
+        </linearGradient>
+
+        <linearGradient id="panelBorderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.1" />
+        </linearGradient>
+
+        <filter id="panelShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000914"
+                flood-opacity="0.45" />
+        </filter>
+
+        <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <filter id="terminalBadgeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+
+    <rect x="44" y="44" width="424" height="424" rx="96" fill="url(#bgGrad1)" filter="url(#shadow1)" />
+
+    <rect x="44" y="44" width="424" height="424" rx="96" fill="#FFFFFF" fill-opacity="0.2"
+        filter="url(#micaSim)" />
+
+    <rect x="44" y="44" width="424" height="424" rx="96" fill="none" stroke="url(#borderGrad1)"
+        stroke-width="3" />
+
+    <g id="OpenWrt-Waves" filter="url(#neonGlow)">
+        <circle cx="256" cy="350" r="22" fill="#E0E0E0" opacity="0.8" />
+        <path d="M 199.4 293.4 A 80 80 0 0 1 312.6 293.4" fill="none" stroke="#E0E0E0"
+            stroke-width="24" stroke-linecap="round" opacity="0.7" />
+        <path d="M 157.0 251.0 A 140 140 0 0 1 355.0 251.0" fill="none" stroke="#E0E0E0"
+            stroke-width="24" stroke-linecap="round" opacity="0.5" />
+        <path d="M 114.6 208.6 A 200 200 0 0 1 397.4 208.6" fill="none" stroke="#E0E0E0"
+            stroke-width="24" stroke-linecap="round" opacity="0.3" />
+    </g>
+
+    <g id="Terminal-Window-Box" filter="url(#panelShadow)">
+        <rect x="105" y="105" width="300" height="300" rx="24" fill="#ffffff" fill-opacity="0.5"
+            filter="url(#micaSim)" />
+        <rect x="105" y="105" width="300" height="300" rx="24" fill="#0055ff" fill-opacity="0.3" />
+        <rect x="105" y="105" width="300" height="300" rx="24" fill="none"
+            stroke="url(#panelBorderGrad)" stroke-width="2" />
+
+        <circle cx="136" cy="156" r="4.5" fill="#FFFFFF" opacity=".5" />
+        <circle cx="152" cy="156" r="4.5" fill="#FFFFFF" opacity=".5" />
+        <circle cx="168" cy="156" r="4.5" fill="#FFFFFF" opacity=".5" />
+    </g>
+
+    <g id="Centered-Terminal-Badge" filter="url(#terminalBadgeGlow)">
+        <path d="M 146 165 L 221 240 L 146 315"
+            fill="none"
+            stroke="#ffeeaa"
+            stroke-width="22"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-opacity="1.0" />
+        <line x1="256" y1="315" x2="366" y2="315"
+            stroke="#ffeeaa"
+            stroke-width="22"
+            stroke-linecap="round"
+            stroke-opacity="1.0" />
+    </g>
+</svg>

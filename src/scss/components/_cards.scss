@@ -1,0 +1,121 @@
+// ============================================================
+// CARDS - FluentUI 2 Card and Section Styles
+// Radius: 8px, Shadow: sm, Border: Grey88
+// ============================================================
+@use "../mixins" as *;
+
+// Main section card
+.cbi-section {
+  @include card;
+  position: relative;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  > * .cbi-section {
+    // Override nested sections (e.g. in Portweaver)
+    padding: 0;
+  }
+  .cbi-section-node {
+    padding-top: var(--fluent-space-lg);
+  }
+  .cbi-section-remove.right + .cbi-section-node:has(+ .cbi-section-remove.right + .cbi-section-node) {
+    border-bottom: 2px solid var(--fluent-card-border);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  // Top-right section remove button
+  .cbi-section-remove {
+    float: right;
+    position: relative;
+    z-index: 10;
+    margin: 8px 8px 0 0;
+    .cbi-button {
+      background: var(--fluent-error);
+      border-color: var(--fluent-error);
+      color: var(--fluent-button-text);
+
+      &:hover,
+      &:focus {
+        background: var(--fluent-error-dark);
+        border-color: var(--fluent-error-dark);
+      }
+    }
+  }
+  .cbi-section-create {
+    margin-top: var(--fluent-space-sm);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--fluent-space-sm);
+
+    margin-right: var(--fluent-space-sm);
+    margin-bottom: var(--fluent-space-sm);
+
+    .cbi-button {
+      background: var(--fluent-primary);
+      border-color: var(--fluent-primary);
+      color: var(--fluent-button-text);
+
+      &:hover,
+      &:focus {
+        background: var(--fluent-primary-dark);
+        border-color: var(--fluent-primary-dark);
+      }
+    }
+  }
+}
+
+// Section error state
+.cbi-section-error {
+  background: var(--fluent-error-light);
+  border: 1px solid var(--fluent-error);
+  border-radius: var(--fluent-card-radius);
+  padding: var(--fluent-space-lg);
+  margin-bottom: var(--fluent-space-lg);
+  color: var(--fluent-error);
+}
+
+// Section title
+.cbi-section-table-titles {
+  h3 {
+    font-size: var(--fluent-font-size-md);
+    font-weight: var(--fluent-font-weight-semibold);
+    color: var(--fluent-text);
+    margin: 0;
+    padding: var(--fluent-space-lg) 0;
+  }
+}
+
+// Panel / widget containers
+.panel {
+  @include card;
+  margin-bottom: var(--fluent-space-lg);
+
+  .panel-title {
+    font-size: var(--fluent-font-size-md);
+    font-weight: var(--fluent-font-weight-semibold);
+    color: var(--fluent-text);
+    padding-bottom: var(--fluent-space-sm);
+    margin-bottom: var(--fluent-space-lg);
+    border-bottom: 1px solid var(--fluent-card-border);
+  }
+}
+
+// Network/Interface section overrides
+#cbi-network > .cbi-section-node {
+  padding: 0;
+}
+
+// Card with actions (exclude table cells which have their own rule)
+.cbi-section-actions:not(.th):not(.td) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--fluent-space-xs);
+  padding: var(--fluent-space-lg) 0 0;
+  border-top: 1px solid var(--fluent-card-border);
+  margin-top: var(--fluent-space-lg);
+}

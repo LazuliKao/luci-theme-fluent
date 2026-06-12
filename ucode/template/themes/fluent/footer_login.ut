@@ -1,0 +1,17 @@
+{#
+  FluentUI Theme for LuCI - Login Footer
+  Licensed to the public under the Apache License 2.0
+#}
+
+</div>
+<footer class="mobile-hide">
+  <div>
+    <a class="luci-link" href="https://github.com/openwrt/luci">Powered by {{ version.luciname }} ({{ version.luciversion }})</a> /
+                    {{ version.distversion }}
+    <ul class="breadcrumb pull-right" id="modemenu" style="display:none"></ul>
+  </div>
+</footer>
+</div>
+</div>
+</body>
+</html>

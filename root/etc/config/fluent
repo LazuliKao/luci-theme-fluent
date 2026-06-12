@@ -1,0 +1,45 @@
+config global
+	# Theme Mode: normal (follow system), light, dark
+	option mode 'normal'
+	
+	# Primary Colors
+	option primary '#0078D4'
+	option dark_primary '#4da6ff'
+	
+	# Font Settings
+	option font_weight '400'
+	option font_size '14'
+	
+	# Border Radius: 2, 4, 8, 12
+	option border_radius '4'
+	
+	# Control Height: 32, 42
+	option control_height '32'
+	
+	# Sidebar Settings
+	option sidebar_width '260'
+	option sidebar_style 'default'
+	option sidebar_icons '1'
+	
+	# Header Settings
+	option header_height '48'
+	option header_style 'default'
+	
+	# Login Page Settings
+	option login_bg 'builtin'
+	option login_blur '40'
+	option login_transparency '0.92'
+	option login_animation '1'
+	
+	# Card Settings
+	option card_shadow 'small'
+	option card_border '1'
+	
+	# Transition Settings
+	option transition_speed 'normal'
+	
+	# Advanced Settings
+	option custom_css ''
+	option dark_sidebar_bg ''
+	option dark_card_bg ''
+	option dark_page_bg ''

@@ -1,0 +1,111 @@
+// ============================================================
+// BUTTONS - FluentUI 2 Button Styles
+// Height: 32px, Radius: 4px, Focus: 2px black outline
+// ============================================================
+@use "../mixins" as *;
+@use "../icons" as *;
+
+// Base .cbi-button applied to all LuCI buttons
+.cbi-button,
+.btn {
+  @include button-secondary;
+
+  &.cbi-button-save,
+  &.cbi-button-apply,
+  &.cbi-button-positive {
+    @include button-primary;
+  }
+
+  &.cbi-button-add,
+  &.cbi-button-neutral,
+  &.cbi-button-reset {
+    @include button-secondary;
+  }
+
+  &.cbi-button-remove,
+  &.cbi-button-negative {
+    @include button-base;
+    background: var(--fluent-error);
+    color: var(--fluent-text-on-primary);
+    border-color: var(--fluent-error);
+
+    &:hover {
+      background: var(--fluent-error-hover);
+      border-color: var(--fluent-error-hover);
+    }
+
+    &:active {
+      background: var(--fluent-error-active);
+      border-color: var(--fluent-error-active);
+    }
+  }
+
+  &.cbi-button-link {
+    @include button-text;
+    color: var(--fluent-text-link);
+
+    &:hover {
+      color: var(--fluent-text-link-hover);
+      text-decoration: underline;
+    }
+  }
+
+  &.cbi-button-up,
+  &.cbi-button-down {
+    @include button-secondary;
+    padding: 0;
+    width: var(--fluent-btn-height);
+    font-size: 0;
+
+    &::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--fluent-text-secondary);
+      border-bottom: 2px solid var(--fluent-text-secondary);
+      transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+    }
+
+    &:hover::before {
+      border-color: var(--fluent-text);
+    }
+  }
+
+  &.cbi-button-up::before {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+  }
+
+  &.cbi-button-down::before {
+    transform: rotate(45deg);
+    margin-bottom: 3px;
+  }
+
+  &.cbi-button-find {
+    @include button-secondary;
+
+    &::before {
+      @include fluent-icon-content($fluent-icon-arrow-right, 16px);
+    }
+  }
+}
+
+// Icon button spacing
+.cbi-button svg,
+.cbi-button img {
+  width: 16px;
+  height: 16px;
+  margin-right: var(--fluent-space-xs);
+  flex-shrink: 0;
+}
+
+// Button group
+.cbi-button-up + .cbi-button-down {
+  margin-left: 2px;
+}
+.btns:has(> .cbi-button) {
+  display: inline-flex;
+  gap: var(--fluent-space-sm);
+  margin-bottom: var(--fluent-space-md);
+}

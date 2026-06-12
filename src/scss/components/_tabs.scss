@@ -1,0 +1,210 @@
+// ============================================================
+// TABS - FluentUI 2 Tab / Pivot Styles
+// Clean transparent background, underline indicators on hover/active
+// ============================================================
+
+ul.tabs,
+ul.cbi-tabmenu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  gap: var(--fluent-space-sm, 8px);
+  list-style: none;
+  border-bottom: none !important; // Clean floating look, no divider line
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  line-height: var(--fluent-line-height-normal);
+
+  // Horizontal scrolling for overflow
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fluent-scrollbar-thumb-horizontal-bg, var(--fluent-scrollbar-thumb-bg)) transparent;
+
+  // Horizontal scrollbar styling - Webkit
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--fluent-scrollbar-thumb-horizontal-bg, var(--fluent-scrollbar-thumb-bg));
+    border-radius: var(--fluent-radius-md);
+    &:hover {
+      background-color: var(--fluent-scrollbar-thumb-horizontal-bg-hover, var(--fluent-scrollbar-thumb-bg-hover));
+    }
+  }
+
+  .fluent-tab-slider {
+    position: absolute;
+    bottom: 0;
+    height: var(--fluent-tab-indicator-height, 3px);
+    background-color: var(--fluent-primary);
+    border-radius: calc(var(--fluent-tab-indicator-height, 3px) / 2);
+    transition:
+      left var(--fluent-duration-normal) var(--fluent-easing-standard),
+      width var(--fluent-duration-normal) var(--fluent-easing-standard);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  > li {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0; // Prevent tabs from squishing
+
+    > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      position: relative;
+      min-height: var(--fluent-tab-height, 44px);
+      padding: var(--fluent-space-xs, 4px) var(--fluent-space-lg, 16px);
+      background-color: transparent !important;
+      border: none;
+      font-family: var(--fluent-font-family);
+      font-size: var(--fluent-font-size-base);
+      font-weight: var(--fluent-font-weight-regular);
+      line-height: var(--fluent-line-height-normal);
+      color: var(--fluent-text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition:
+        color var(--fluent-duration-fast) var(--fluent-easing-standard),
+        font-weight var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      // FluentUI 2 Pivot indicator (underlines matching text width)
+      &::after {
+        content: "";
+        position: absolute;
+        left: var(--fluent-space-lg, 16px);
+        right: var(--fluent-space-lg, 16px);
+        bottom: 0;
+        height: var(--fluent-tab-indicator-height, 3px);
+        background-color: transparent;
+        border-radius: calc(var(--fluent-tab-indicator-height, 3px) / 2);
+        transform: scaleX(0);
+        transform-origin: center;
+        transition:
+          transform var(--fluent-duration-fast) var(--fluent-easing-standard),
+          background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+      }
+
+      // Hover state
+      &:hover {
+        color: var(--fluent-text);
+        background-color: transparent !important;
+
+        &::after {
+          transform: scaleX(1);
+          background-color: var(--fluent-border-hover);
+        }
+      }
+
+      // Focus indicator
+      &:focus-visible {
+        outline: 2px solid var(--fluent-focus-color);
+        outline-offset: -2px;
+      }
+    }
+
+    // Active/selected state (.cbi-tab, .active)
+    &.cbi-tab > a,
+    &.active > a {
+      color: var(--fluent-text);
+      font-weight: var(--fluent-font-weight-semibold);
+      background-color: transparent !important;
+
+      &::after {
+        display: none !important; // Handled by sliding .fluent-tab-slider
+      }
+
+      &:hover {
+        color: var(--fluent-text);
+        background-color: transparent !important;
+
+        &::after {
+          display: none !important;
+        }
+      }
+    }
+
+    // Unselected state (.cbi-tab-disabled)
+    &.cbi-tab-disabled > a {
+      color: var(--fluent-text-secondary);
+      cursor: pointer;
+
+      &:hover {
+        color: var(--fluent-text);
+        background-color: transparent !important;
+      }
+    }
+
+    // Truly disabled state
+    &.disabled > a,
+    &[disabled] > a {
+      color: var(--fluent-text-disabled);
+      cursor: not-allowed;
+      pointer-events: none;
+
+      &::after {
+        display: none !important;
+      }
+    }
+  }
+}
+
+// ============================================================
+// STRUCTURE 2: #tabmenu / .tabmenu > ul.tabs (header tabs)
+// Shared layout structure, keep wrapper constraints if any
+// ============================================================
+
+#tabmenu,
+.tabmenu {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+// ============================================================
+// Tab content panels
+// ============================================================
+
+[data-tab-title] {
+  padding: var(--fluent-space-sm);
+}
+
+[data-tab-active="false"] {
+  display: none !important;
+}
+
+[data-tab-active="true"] {
+  display: block;
+  overflow: visible;
+  height: auto;
+  opacity: 1;
+}
+
+.cbi-tabcontainer {
+  padding: var(--fluent-space-lg) 0;
+}

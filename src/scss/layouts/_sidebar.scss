@@ -1,0 +1,461 @@
+// Layouts - Sidebar
+// FluentUI 2 Tree/Nav pattern with Win11-inspired styling
+// Aligned with @fluentui/react-nav, @fluentui/react-tree
+@use "../mixins" as *;
+@use "../icons" as *;
+
+// ============================================================
+// SIDEBAR CONTAINER
+// FluentUI Nav: 260px width, white background, 1px border
+// ============================================================
+.main-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--fluent-sidebar-width, 260px);
+  height: 100vh;
+  background: var(--fluent-sidebar-bg);
+  border-right: 1px solid var(--fluent-border);
+  z-index: var(--fluent-zindex-menu);
+  overflow-y: auto;
+  transition: transform var(--fluent-duration-normal) var(--fluent-easing-standard);
+
+  @include custom-scrollbar;
+
+  // Sidenav logo header area
+  .sidenav-header {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--fluent-space-lg);
+    height: var(--fluent-header-height, 48px);
+    border-bottom: 1px solid var(--fluent-border);
+    flex-shrink: 0;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--fluent-space-sm, 8px);
+      text-decoration: none;
+      min-width: 0;
+      flex: 1;
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+
+      .brand-text {
+        font-family: var(--fluent-font-family);
+        font-size: var(--fluent-font-size-md, 16px);
+        font-weight: var(--fluent-font-weight-bold, 700);
+        color: var(--fluent-text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        max-width: 100%;
+        transition: font-size var(--fluent-duration-fast) var(--fluent-easing-standard);
+      }
+    }
+
+    .ml-auto {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ============================================================
+// MAIN CONTENT AREA
+// ============================================================
+.main-right {
+  margin-left: var(--fluent-sidebar-width, 260px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: margin-left var(--fluent-duration-normal) var(--fluent-easing-standard);
+}
+
+// ============================================================
+// NAVIGATION CONTAINER
+// FluentUI Nav: top-level items with subtle interactions
+// ============================================================
+.main-left .nav {
+  margin-top: var(--fluent-space-xs);
+  padding: 0 var(--fluent-space-xs);
+  transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
+
+  // ============================================================
+  // TOP-LEVEL MENU ITEMS
+  // FluentUI NavItem: 36px height, 4px radius, subtle hover
+  // ============================================================
+  > li > a:first-child {
+    display: flex;
+    align-items: center;
+    margin: 2px 0;
+    padding: 0 var(--fluent-space-sm);
+    height: 36px;
+    border-radius: var(--fluent-radius-md);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: var(--fluent-font-size-base);
+    font-weight: var(--fluent-font-weight-regular);
+    color: var(--fluent-text);
+    background: transparent;
+    box-shadow: none;
+    position: relative;
+    transition:
+      background var(--fluent-duration-fast) var(--fluent-easing-standard),
+      color var(--fluent-duration-fast) var(--fluent-easing-standard),
+      border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    // Icon positioning (via ::before pseudo-element)
+    &::before {
+      position: relative;
+      left: 0;
+      margin-right: var(--fluent-space-sm);
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--fluent-text-secondary);
+      transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+    }
+
+    // Subtle FluentUI hover
+    &:hover {
+      background: var(--fluent-sidebar-item-hover);
+      color: var(--fluent-text);
+
+      &::before {
+        color: var(--fluent-text);
+      }
+    }
+
+    // FluentUI focus indicator (2px outline)
+    &:focus-visible {
+      outline: 2px solid var(--fluent-focus-color);
+      outline-offset: -2px;
+    }
+
+    // Active state - FluentUI selected: subtle bg + primary text + left accent
+    &.active {
+      color: var(--fluent-text);
+      background: var(--fluent-sidebar-item-active);
+      font-weight: var(--fluent-font-weight-semibold);
+
+      // Left accent bar (FluentUI Nav selected indicator)
+      border-left: 3px solid var(--fluent-primary);
+      padding-left: calc(var(--fluent-space-sm) - 3px);
+
+      &::before {
+        color: var(--fluent-primary);
+      }
+    }
+  }
+
+  // ============================================================
+  // LIST ITEMS BASE
+  // ============================================================
+  li {
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
+
+    a {
+      display: block;
+      color: var(--fluent-text);
+      font-weight: var(--fluent-font-weight-regular);
+      box-shadow: none;
+    }
+
+    // ============================================================
+    // EXPANDABLE (SLIDE) MENU CONTAINER
+    // ============================================================
+    &.slide {
+      padding: 0;
+
+      &:hover {
+        background: none;
+      }
+
+      // Hidden submenu by default
+      ul {
+        display: none;
+        overflow: hidden;
+      }
+
+      // ============================================================
+      // SUBMENU (SLIDE-MENU)
+      // FluentUI TreeItem: 32px height, left indicator
+      // ============================================================
+      .slide-menu {
+        margin: 0 0 0 20px;
+        padding: 0 var(--fluent-space-xs);
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: var(--fluent-radius-md);
+        transition: all var(--fluent-duration-normal) var(--fluent-easing-standard);
+
+        // Active submenu - visible
+        &.active {
+          display: block;
+        }
+
+        // ============================================================
+        // SUBMENU ITEMS
+        // FluentUI TreeItem: 32px, left accent indicator
+        // ============================================================
+        li {
+          position: relative;
+          border-radius: var(--fluent-radius-md);
+          margin: 2px 0;
+          background: none;
+          list-style: none;
+          transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+          // Left indicator bar (FluentUI selected indicator)
+          &::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background-color: transparent;
+            border-radius: 2px;
+            transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+          }
+
+          // Remove underline animation from submenu items
+          &::after {
+            content: none;
+            display: none;
+          }
+
+          a {
+            text-decoration: none;
+            padding: var(--fluent-space-xs) var(--fluent-space-sm);
+            padding-left: var(--fluent-space-md);
+            border-radius: var(--fluent-radius-md);
+            display: flex;
+            align-items: center;
+            height: 32px;
+            box-shadow: none;
+            transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+          }
+
+          // Submenu item hover
+          &:hover {
+            background: var(--fluent-sidebar-item-hover);
+
+            &::before {
+              background-color: rgba(0, 120, 212, 0.3);
+            }
+
+            a {
+              color: var(--fluent-text);
+            }
+
+            &::after {
+              width: 0;
+              display: none;
+            }
+          }
+
+          // ============================================================
+          // ACTIVE SUBMENU ITEM
+          // FluentUI: left accent bar + primary text
+          // ============================================================
+          &.active {
+            background: var(--fluent-sidebar-item-active);
+            color: var(--fluent-text);
+
+            &::before {
+              background-color: var(--fluent-primary);
+            }
+
+            a {
+              color: var(--fluent-primary);
+              font-weight: var(--fluent-font-weight-semibold);
+            }
+
+            &::after {
+              content: none;
+              display: none;
+            }
+
+            // Active + hover state
+            &:hover {
+              background: rgba(0, 120, 212, 0.08);
+
+              &::before {
+                background-color: var(--fluent-primary);
+              }
+
+              &::after {
+                width: 0;
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // ============================================================
+    // EXPANDABLE MENU (PARENT ITEMS WITH CHILDREN)
+    // FluentUI NavItem with disclosure button
+    // ============================================================
+    .menu {
+      display: flex;
+      align-items: center;
+      margin: 2px 0;
+      padding: 0 var(--fluent-space-sm);
+      height: 36px;
+      border-radius: var(--fluent-radius-md);
+      text-decoration: none;
+      cursor: pointer;
+      font-size: var(--fluent-font-size-base);
+      font-weight: var(--fluent-font-weight-regular);
+      color: var(--fluent-text);
+      background: transparent;
+      box-shadow: none;
+      position: relative;
+      transition:
+        background var(--fluent-duration-fast) var(--fluent-easing-standard),
+        color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      // Icon (via ::before pseudo-element)
+      &::before {
+        position: relative;
+        left: 0;
+        margin-right: var(--fluent-space-sm);
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: var(--fluent-text-secondary);
+        transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+      }
+
+      // Expand/collapse arrow (FluentUI ChevronRight)
+      &::after {
+        position: absolute;
+        right: var(--fluent-space-sm);
+        top: 50%;
+        transform: translateY(-50%) rotate(-90deg);
+        transition:
+          transform var(--fluent-duration-fast) var(--fluent-easing-standard),
+          background-image var(--fluent-duration-fast) var(--fluent-easing-standard);
+        @include fluent-icon-content($fluent-icon-chevron-down, 14px, #605e5c);
+
+        [data-theme="dark"] & {
+          @include fluent-icon($fluent-icon-chevron-down, 14px, #a0a0a0);
+        }
+
+        @media (prefers-color-scheme: dark) {
+          :root:not([data-theme="light"]) & {
+            @include fluent-icon($fluent-icon-chevron-down, 14px, #a0a0a0);
+          }
+        }
+      }
+
+      // Hover state
+      &:hover {
+        cursor: pointer;
+        color: var(--fluent-text);
+        background: var(--fluent-sidebar-item-hover);
+
+        &::before {
+          color: var(--fluent-text);
+        }
+      }
+
+      // Focus indicator
+      &:focus-visible {
+        outline: 2px solid var(--fluent-focus-color);
+        outline-offset: -2px;
+      }
+
+      // Active state - expanded
+      &.active {
+        color: var(--fluent-text);
+        background: var(--fluent-sidebar-item-active);
+        font-weight: var(--fluent-font-weight-semibold);
+
+        // Left accent bar
+        border-left: 3px solid var(--fluent-primary);
+        padding-left: calc(var(--fluent-space-sm) - 3px);
+
+        &::before {
+          color: var(--fluent-primary);
+        }
+
+        // Rotate arrow when expanded
+        &::after {
+          transform: translateY(-50%) rotate(0deg);
+          @include fluent-icon($fluent-icon-chevron-down, 14px, #0078d4);
+
+          [data-theme="dark"] & {
+            @include fluent-icon($fluent-icon-chevron-down, 14px, #4da6ff);
+          }
+
+          @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) & {
+              @include fluent-icon($fluent-icon-chevron-down, 14px, #4da6ff);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Active slide submenu margin adjustment
+#mainmenu > ul > li.slide.active > ul.slide-menu {
+  margin-left: 20px;
+}
+
+// ============================================================
+// MOBILE RESPONSIVE
+// ============================================================
+@media (max-width: 768px) {
+  .main-left {
+    transform: translateX(-100%);
+    z-index: calc(var(--fluent-zindex-modal) + 150); // 1250 (above modals and page action footers)
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  .main-right {
+    margin-left: 0;
+  }
+
+  .darkMask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: calc(var(--fluent-zindex-modal) + 149); // 1249
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--fluent-duration-normal) var(--fluent-easing-standard);
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@use "overrides-utils" as *;
+@include plugin("admin-status-channel_analysis") {
+  #view > div > div.cbi-title-section {
+    display: flex;
+    > div {
+      margin-left: auto;
+    }
+  }
+  #channel_graph {
+    background: var(--fluent-card-bg) !important;
+    border: 1px solid var(--fluent-card-border);
+    border-radius: var(--fluent-card-radius);
+    svg line[style*="stroke:black"] {
+      stroke: var(--fluent-text-secondary) !important;
+    }
+  }
+}

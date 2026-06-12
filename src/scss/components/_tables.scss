@@ -1,0 +1,189 @@
+// ============================================================
+// TABLES - FluentUI 2 Table Styles
+// Content-based column width, centered cells, mobile scroll
+// ============================================================
+@use "../mixins" as *;
+
+// Standard table
+.table {
+  @include table-base;
+}
+
+// Table section wrapper — enables horizontal scrolling on mobile
+.cbi-tblsection,
+.cbi-section.cbi-tblsection {
+  overflow-x: visible;
+  overflow-y: visible;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 767px) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    @include custom-scrollbar;
+  }
+}
+
+// LuCI table structure (visual styles for all tables)
+.tr {
+  border-bottom: 1px solid var(--fluent-table-border);
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &:hover {
+    background: var(--fluent-table-row-hover);
+  }
+}
+
+.td,
+.th {
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  font-size: var(--fluent-font-size-base);
+  color: var(--fluent-text);
+  line-height: var(--fluent-line-height-normal);
+  text-align: center;
+  vertical-align: middle;
+
+  // Avoid text being squeezed into a single column (Option 3)
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  min-width: 120px;
+  max-width: 320px;
+
+  &.nowrap,
+  &:has(.ifacebadge),
+  &:has(input[type="checkbox"]),
+  &:has(input[type="radio"]),
+  &:has(.cbi-button),
+  &:has(.btn),
+  &:has(button),
+  &[data-widget="CBI.ButtonValue"],
+  &[data-widget="CBI.FlagValue"],
+  &.cbi-section-actions {
+    white-space: nowrap !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    min-width: auto;
+    max-width: none;
+  }
+
+  // Ensure cell content/wrapper height does not exceed width using aspect-ratio
+  .cell-content,
+  .td-content {
+    aspect-ratio: 1 / 1;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  &.left {
+    text-align: left;
+    justify-content: flex-start;
+  }
+  &.right {
+    text-align: right;
+    justify-content: flex-end;
+  }
+  &.center {
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+// Structural Flexbox layout ONLY for div-based tables
+div.tr {
+  display: flex;
+  align-items: stretch;
+}
+
+div.td,
+div.th {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: var(--fluent-space-xs);
+}
+
+.th {
+  background: var(--fluent-table-header-bg);
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text);
+  border-bottom: 2px solid var(--fluent-table-border);
+  white-space: nowrap;
+}
+
+// Section table
+.cbi-section-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  .tr.cbi-section-table-titles {
+    .th {
+      font-size: var(--fluent-font-size-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fluent-text-secondary);
+      background: var(--fluent-table-header-bg);
+      border-bottom: 2px solid var(--fluent-table-border);
+    }
+  }
+
+  .tr.cbi-section-table-row {
+    transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    &:hover {
+      background: var(--fluent-table-row-hover);
+    }
+
+    .td {
+      padding: var(--fluent-space-xs) var(--fluent-space-sm);
+    }
+  }
+}
+
+// Alternating row colors
+.cbi-rowstyle-1 {
+  background: var(--fluent-bg);
+}
+
+.cbi-rowstyle-2 {
+  background: var(--fluent-bg-page);
+}
+
+// Table placeholder row
+.tr.placeholder {
+  padding: var(--fluent-space-lg);
+  text-align: center;
+  color: var(--fluent-text-disabled);
+  font-style: italic;
+}
+
+// Table actions column — buttons in a row, no wrapping
+.cbi-section-table .cbi-section-actions,
+td.cbi-section-actions {
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  white-space: nowrap;
+  text-align: right;
+  vertical-align: middle;
+  align-self: center !important;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    flex-wrap: nowrap;
+  }
+}
+@media (max-width: 767px) {
+  .table,
+  .cbi-section-table {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    @include custom-scrollbar;
+  }
+}

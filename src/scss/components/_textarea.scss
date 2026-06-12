@@ -1,0 +1,67 @@
+// ============================================================
+// TEXTAREA - FluentUI Textarea Styles
+// ============================================================
+@use "../mixins" as *;
+
+textarea {
+  @include input-base;
+  width: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  padding: var(--fluent-space-sm);
+  resize: vertical;
+  box-sizing: border-box;
+  line-height: var(--fluent-line-height-relaxed);
+  background-image: linear-gradient(var(--fluent-primary), var(--fluent-primary)), linear-gradient(var(--fluent-primary), var(--fluent-primary));
+  background-size:
+    0 2px,
+    100% 1px;
+  background-position:
+    center bottom,
+    center calc(100% - 1px);
+  background-repeat: no-repeat;
+  transition:
+    background-size var(--fluent-duration-fast) var(--fluent-easing-standard),
+    border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &:focus {
+    background-size:
+      100% 2px,
+      100% 1px;
+    border-color: var(--fluent-input-border-focus);
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+// LuCI-specific textarea class
+.cbi-input-textarea {
+  @extend textarea;
+}
+
+// Disabled textarea
+textarea:disabled {
+  background: var(--fluent-input-bg-disabled);
+  color: var(--fluent-text-disabled);
+  cursor: not-allowed;
+  border-color: var(--fluent-border);
+  background-image: none;
+  resize: none;
+}
+
+// Auto-resize wrapper
+.textarea-wrapper {
+  position: relative;
+
+  textarea {
+    padding-bottom: calc(var(--fluent-space-xl) + var(--fluent-space-xs));
+  }
+
+  .char-count {
+    position: absolute;
+    bottom: var(--fluent-space-xs);
+    right: var(--fluent-space-sm);
+    font-size: var(--fluent-font-size-xs);
+    color: var(--fluent-text-disabled);
+  }
+}

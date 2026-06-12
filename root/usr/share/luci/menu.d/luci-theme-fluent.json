@@ -1,0 +1,14 @@
+{
+	"admin/system/fluent-config": {
+		"title": "Fluent Theme",
+		"order": 90,
+		"action": {
+			"type": "view",
+			"path": "fluent-config"
+		},
+		"depends": {
+			"acl": [ "luci-theme-fluent" ],
+			"uci": { "fluent": true }
+		}
+	}
+}

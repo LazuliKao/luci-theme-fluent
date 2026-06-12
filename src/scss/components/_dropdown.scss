@@ -1,0 +1,805 @@
+// ============================================================
+// DROPDOWN - FluentUI Dropdown and Combobox Styles
+// Complete FluentUI dropdown with animated bottom indicator,
+// preview list, listbox options, and scrollbar styling.
+// ============================================================
+@use "../mixins" as *;
+
+// ============================================================
+// DROPDOWN KEYFRAMES
+// ============================================================
+@keyframes fluent-dropdown-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scaleY(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes fluent-dropdown-slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scaleY(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+// ============================================================
+// DROPDOWN CONTAINER
+// ============================================================
+.cbi-dropdown {
+  @include input-base;
+
+  // Layout: inline-flex for proper alignment with other form elements
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  vertical-align: middle;
+
+  // Size overrides for dropdown layout
+  padding: 0 var(--fluent-space-xs);
+  gap: var(--fluent-space-xxs);
+  min-width: 120px;
+
+  // Typography & cursor overrides
+  line-height: 20px;
+  outline-style: none;
+  cursor: pointer;
+
+  // ----------------------------------------------------------
+  // Bottom indicator (::after) - FluentUI focus animation
+  // Starts scaleX(0), animates to scaleX(1) on focus/open
+  // ----------------------------------------------------------
+  &::after {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    left: -1px;
+    bottom: -2px;
+    right: -1px;
+    height: max(2px, 4px);
+    border-bottom-left-radius: var(--fluent-radius-md);
+    border-bottom-right-radius: var(--fluent-radius-md);
+    border-bottom: 2px solid var(--fluent-primary);
+    clip-path: inset(calc(100% - 2px) 0 0 0);
+    transform: scaleX(0);
+    transition-property: transform;
+    transition-duration: var(--fluent-duration-fast);
+    transition-timing-function: var(--fluent-easing-standard);
+  }
+
+  // ----------------------------------------------------------
+  // HOVER STATE
+  // ----------------------------------------------------------
+  &:hover:not([disabled]) {
+    border-bottom-color: var(--fluent-input-border-hover);
+  }
+
+  // ----------------------------------------------------------
+  // FOCUS / OPEN STATE
+  // ----------------------------------------------------------
+  &:focus,
+  &.focus,
+  &[open] {
+    border-bottom-color: var(--fluent-input-border-focus);
+    outline: none;
+  }
+
+  &[open] {
+    z-index: var(--fluent-zindex-dropdown);
+  }
+
+  &:focus::after,
+  &.focus::after,
+  &[open]::after {
+    transform: scaleX(1);
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.23, 1);
+  }
+
+  // ----------------------------------------------------------
+  // ACTIVE STATE
+  // ----------------------------------------------------------
+  &:active:not([disabled]) {
+    border-bottom-color: var(--fluent-input-border-focus);
+  }
+
+  // ----------------------------------------------------------
+  // DISABLED STATE
+  // ----------------------------------------------------------
+  &[disabled] {
+    cursor: not-allowed;
+    background: var(--fluent-input-bg-disabled);
+    border-color: var(--fluent-border);
+    border-bottom-color: var(--fluent-border);
+    color: var(--fluent-text-disabled);
+    opacity: 1;
+
+    // Hide bottom indicator when disabled
+    &::after {
+      content: none;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // PREVIEW AREA (selected items display)
+  // ----------------------------------------------------------
+  > ul:not(.dropdown) {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    padding: 0 0 0 3.5px;
+    margin: 0;
+    list-style: none;
+    gap: var(--fluent-space-xxs);
+    pointer-events: none;
+    height: 100%;
+    min-height: unset;
+
+    > li {
+      display: none;
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 20px;
+      vertical-align: middle;
+
+      // Hide checkboxes/forms inside preview items
+      form,
+      input[type="checkbox"] {
+        display: none !important;
+      }
+
+      // Reset any legacy left border
+      border-left: none !important;
+
+      // Show only selected or displayed items in preview
+      &[selected],
+      &[display] {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      // Separate multiple selected items in the preview list with a comma and space
+      &[display]:not([display="0"])::before {
+        content: ", ";
+        margin-right: 4px;
+        color: var(--fluent-text-secondary);
+      }
+    }
+
+    // Show placeholder only when no selection exists
+    &:not(:has(li[selected])):not(:has(li[display])) > li[placeholder] {
+      display: inline;
+      color: var(--fluent-text-disabled);
+    }
+
+    // Fallback for browsers without :has() support
+    > li[placeholder]:only-of-type {
+      display: inline;
+      color: var(--fluent-text-disabled);
+    }
+  }
+
+  // Hide placeholder when there's any selection (parent-level :has())
+  &:has(ul:not(.dropdown) > li[selected]) > ul:not(.dropdown) > li[placeholder],
+  &:has(ul:not(.dropdown) > li[display]) > ul:not(.dropdown) > li[placeholder] {
+    display: none;
+  }
+
+  // ----------------------------------------------------------
+  // OPEN / EXPAND INDICATOR (chevron)
+  // ----------------------------------------------------------
+  > span.open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-left: var(--fluent-space-xs);
+    margin-right: 0;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.23, 1);
+    position: relative;
+    font-size: 0 !important; // Hide original text node ("▾")
+
+    // FluentUI Chevron Down Icon
+    &::before {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid var(--fluent-text-secondary);
+      border-bottom: 1.5px solid var(--fluent-text-secondary);
+      transform: rotate(45deg) translateY(-1px);
+      transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+      fill: currentColor;
+      color: var(--fluent-text-secondary);
+      transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      path {
+        fill: currentColor;
+      }
+    }
+
+    &:has(svg)::before {
+      display: none !important;
+    }
+  }
+
+  // Chevron hover color
+  &:hover > span.open {
+    &::before {
+      border-color: var(--fluent-text);
+    }
+    svg {
+      color: var(--fluent-text);
+    }
+  }
+
+  // Chevron disabled color
+  &[disabled] > span.open {
+    &::before {
+      border-color: var(--fluent-border-hover);
+    }
+    svg {
+      color: var(--fluent-border-hover);
+    }
+  }
+
+  // Rotate chevron when open
+  &[open] > span.open {
+    transform: rotate(180deg);
+  }
+
+  // ----------------------------------------------------------
+  // MORE INDICATOR (empty/no selection text)
+  // ----------------------------------------------------------
+  > span.more {
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--fluent-text-disabled);
+    padding: 0 0 0 3.5px;
+    pointer-events: none;
+    font-size: var(--fluent-font-size-base);
+    line-height: 20px;
+  }
+
+  // Hide more indicator when preview has content
+  &:not([empty]) > span.more {
+    display: none;
+  }
+
+  // Hide preview when empty
+  &[empty] > ul:not(.dropdown) {
+    display: none;
+  }
+
+  // ----------------------------------------------------------
+  // DROPDOWN LIST (Listbox)
+  // ----------------------------------------------------------
+  &[open] > ul.dropdown {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    // min-width: 100%;
+    max-width: 80vw !important;
+    overflow-y: auto;
+    max-height: min(800px, 80vh);
+    // Appearance
+    background-color: var(--fluent-dropdown-bg);
+    border: 1px solid var(--fluent-dropdown-border);
+    border-radius: var(--fluent-radius-md);
+    outline: 1px solid transparent;
+
+    // Shadow
+    box-shadow: var(--fluent-dropdown-shadow);
+
+    // Position
+    position: absolute;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    z-index: var(--fluent-zindex-dropdown);
+
+    // Padding
+    padding: var(--fluent-space-xxs);
+    margin: 0;
+    margin-top: var(--fluent-space-xxs);
+    list-style: none;
+
+    // Animation
+    animation: fluent-dropdown-slide-in 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards;
+    transform-origin: top;
+
+    // --------------------------------------------------------
+    // SCROLLBAR STYLING
+    // --------------------------------------------------------
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--fluent-scrollbar-thumb-bg);
+      border-radius: var(--fluent-radius-md);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+
+      &:hover {
+        background-color: var(--fluent-scrollbar-thumb-bg-hover);
+      }
+    }
+
+    // --------------------------------------------------------
+    // LIST OPTIONS (li items)
+    // --------------------------------------------------------
+    > li {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative;
+      width: 100%;
+
+      // Size
+      min-height: var(--fluent-input-height);
+      padding: 5px var(--fluent-space-xs);
+
+      // Appearance
+      border-radius: var(--fluent-radius-md);
+      color: var(--fluent-text);
+      cursor: pointer;
+      user-select: none;
+
+      // Typography
+      font-family: var(--fluent-font-family);
+      font-size: var(--fluent-font-size-base);
+      font-weight: var(--fluent-font-weight-regular);
+      line-height: 20px;
+
+      // Text overflow
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      // Transition
+      transition:
+        background-color 0.05s var(--fluent-easing-standard),
+        color 0.05s var(--fluent-easing-standard);
+
+      // Ensure inner spans and badges fill width
+      > span,
+      > .ifacebadge {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: var(--fluent-space-xxs);
+      }
+
+      // Placeholder option
+      &[placeholder] {
+        color: var(--fluent-text-disabled);
+      }
+
+      // Hide placeholder in dropdown when something is selected
+      &[placeholder]:not(:only-child) {
+        display: none;
+      }
+
+      // Hover state
+      &:hover {
+        background-color: var(--fluent-dropdown-option-hover);
+        color: var(--fluent-text);
+      }
+
+      // Selected state
+      &[selected] {
+        background-color: var(--fluent-dropdown-option-selected);
+        color: var(--fluent-text);
+        font-weight: var(--fluent-font-weight-semibold);
+      }
+
+      // Selected + hover
+      &[selected]:hover {
+        background-color: var(--fluent-primary-lighter);
+      }
+
+      // Focus / Active state
+      &.focus,
+      &:active {
+        background-color: var(--fluent-bg-active);
+        color: var(--fluent-text);
+      }
+
+      // Disabled state
+      &[disabled],
+      &[unselectable] {
+        color: var(--fluent-text-disabled);
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      // Custom input in dropdown (data-value="-")
+      &[data-value="-"] {
+        padding: var(--fluent-space-xxs) !important;
+        background-color: transparent !important;
+        cursor: default;
+        pointer-events: all;
+
+        // Hide checkbox / form inside multi-select custom item
+        form,
+        input[type="checkbox"] {
+          display: none !important;
+        }
+
+        // Hide checkmark space and checkmark symbol for single-select custom item
+        padding-left: var(--fluent-space-xxs) !important;
+
+        &::before,
+        &::after {
+          content: none !important;
+          display: none !important;
+        }
+      }
+
+      // Create item input field
+      .create-item-input {
+        width: 100%;
+        min-height: 24px;
+        padding: 2px var(--fluent-space-xs);
+        box-sizing: border-box;
+
+        background-color: var(--fluent-bg);
+        border: 1px solid var(--fluent-input-border);
+        border-radius: var(--fluent-radius-sm);
+
+        font-family: var(--fluent-font-family);
+        font-size: var(--fluent-font-size-base);
+        color: var(--fluent-text);
+
+        outline: none;
+        transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+      }
+    }
+  }
+
+  // ----------------------------------------------------------
+  // LEGACY SELECT / INPUT-SELECT (kept for compatibility)
+  // ----------------------------------------------------------
+  > select,
+  > .cbi-input-select {
+    @include input-base;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: var(--fluent-space-xl);
+    cursor: pointer;
+  }
+
+  // Remove border, background and padding of ifacebadge inside dropdown to keep text inline and clean
+  .ifacebadge {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    min-height: unset !important;
+  }
+
+  // Support for LuCI's hide-open and hide-close elements in dropdown lists
+  li .hide-close {
+    display: none !important;
+  }
+  li .hide-open {
+    display: inline-block;
+  }
+  &[open] > ul.dropdown > li {
+    .hide-open {
+      display: none !important;
+    }
+    .hide-close {
+      display: block !important;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // MULTI-SELECT DROPDOWN OPTIMIZATION (FluentUI Style Checkboxes)
+  // ----------------------------------------------------------
+  ul.dropdown > li {
+    form {
+      display: inline-flex !important;
+      align-items: center !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      flex-shrink: 0;
+    }
+
+    label {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex: 1;
+      margin: 0 !important;
+      padding: 0 !important;
+      cursor: pointer !important;
+      font-weight: inherit;
+      color: inherit;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    input[type="checkbox"] {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      position: relative !important;
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      min-height: 16px !important;
+      border: 1px solid var(--fluent-checkbox-border) !important;
+      border-radius: 4px !important;
+      background-color: var(--fluent-checkbox-bg) !important;
+      margin: 0 !important;
+      margin-right: var(--fluent-space-sm) !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      vertical-align: middle !important;
+      box-sizing: border-box !important;
+      background-image: none !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+      transition:
+        background-color 0.1s ease,
+        border-color 0.1s ease !important;
+
+      &::before {
+        content: none !important;
+        display: none !important;
+      }
+
+      &:hover:not(:disabled) {
+        border-color: var(--fluent-checkbox-hover-border) !important;
+        background-color: var(--fluent-bg-hover) !important;
+        background-image: none !important;
+      }
+
+      &:disabled {
+        background-color: var(--fluent-input-bg-disabled) !important;
+        border-color: var(--fluent-border-hover) !important;
+        cursor: not-allowed !important;
+        opacity: 1 !important; // Prevent double fading of the checkmark
+        background-image: none !important;
+      }
+    }
+    input[type="checkbox"] {
+      pointer-events: none;
+    }
+    // Selected state: applied if the checkbox itself is checked, OR if the parent li is selected.
+    // Explicitly define background-image for hover, focus, active, and parent focus/hover states to prevent the tick from disappearing.
+    &[selected] input[type="checkbox"],
+    input[type="checkbox"]:checked,
+    &[selected] input[type="checkbox"]:hover,
+    input[type="checkbox"]:checked:hover,
+    &[selected] input[type="checkbox"]:focus,
+    input[type="checkbox"]:checked:focus,
+    &[selected] input[type="checkbox"]:active,
+    input[type="checkbox"]:checked:active,
+    &:hover input[type="checkbox"]:checked,
+    &[selected]:hover input[type="checkbox"],
+    &.focus input[type="checkbox"]:checked,
+    &[selected].focus input[type="checkbox"] {
+      border: 1px solid var(--fluent-primary) !important;
+      background-color: var(--fluent-primary) !important;
+      background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
+      background-size: 12px 12px !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+
+    // Selected + Hover state (darker primary color)
+    &[selected] input[type="checkbox"]:hover:not(:disabled),
+    input[type="checkbox"]:checked:hover:not(:disabled),
+    &[selected]:hover input[type="checkbox"]:not(:disabled),
+    &:hover input[type="checkbox"]:checked:not(:disabled),
+    &[selected].focus input[type="checkbox"]:not(:disabled),
+    &.focus input[type="checkbox"]:checked:not(:disabled) {
+      background-color: var(--fluent-primary-hover) !important;
+      border-color: var(--fluent-primary-hover) !important;
+      background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
+    }
+
+    // Selected + Disabled state (grey background with white checkmark for high contrast)
+    &[selected] input[type="checkbox"]:disabled,
+    input[type="checkbox"]:checked:disabled {
+      background-color: var(--fluent-border-hover) !important;
+      border-color: var(--fluent-border-hover) !important;
+      background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
+      background-size: 12px 12px !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+    }
+  }
+
+  // Single-select dropdown option checkmark (FluentUI style)
+  &:not([multiple]) > ul.dropdown > li {
+    position: relative !important;
+    padding-left: 32px !important;
+
+    &::before {
+      content: "" !important;
+      position: absolute !important;
+      left: 8px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: 16px !important;
+      height: 16px !important;
+      background-color: transparent !important;
+      transition: background-color 0.1s ease !important;
+      z-index: 2 !important; // Ensure checkmark is always on top of the zonebadge background
+    }
+
+    &[selected]::before {
+      background-color: var(--fluent-text) !important;
+      -webkit-mask-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
+      mask-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
+      -webkit-mask-size: contain !important;
+      mask-size: contain !important;
+      -webkit-mask-repeat: no-repeat !important;
+      mask-repeat: no-repeat !important;
+      -webkit-mask-position: center !important;
+      mask-position: center !important;
+    }
+
+    &[disabled][selected]::before,
+    &[unselectable][selected]::before {
+      background-color: var(--fluent-text-disabled) !important;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ZONEBADGE STYLING SPECIAL ADAPTATION
+  // ----------------------------------------------------------
+  // Style zonebadge elements inside the dropdown options list
+  ul.dropdown > li:has(.zonebadge) {
+    padding: 0 !important;
+    background: transparent !important;
+
+    .zonebadge {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: var(--fluent-space-sm) !important; // Add gap spacing between badge name and interface badges
+      width: 100% !important;
+      height: 100% !important;
+      min-height: var(--fluent-input-height) !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      border: none !important;
+      border-radius: inherit !important;
+      box-shadow: none !important;
+      padding: 5px var(--fluent-space-xs) !important;
+      color: #111 !important; // Dark text for pastel contrast
+
+      strong,
+      em,
+      span {
+        color: #111 !important;
+      }
+
+      .ifacebadge {
+        color: var(--fluent-text) !important;
+        background: rgba(255, 255, 255, 0.6) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 2px !important;
+        padding: 1px 4px !important;
+        border-radius: var(--fluent-radius-sm) !important;
+        font-size: var(--fluent-font-size-xs) !important;
+
+        img {
+          background: transparent !important; // Remove black square background
+        }
+      }
+    }
+
+    &:hover .zonebadge {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)) !important;
+    }
+    &.focus .zonebadge {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08)) !important;
+    }
+  }
+
+  // Adjust padding for checkmark space in single-select zonebadge options
+  &:not([multiple]) > ul.dropdown > li:has(.zonebadge) {
+    .zonebadge {
+      padding-left: 32px !important;
+    }
+
+    &[selected]::before {
+      background-color: #111 !important; // Force dark checkmark color on pastel background
+    }
+  }
+
+  // Style selected zone badges inside the collapsed preview bar as neat tags
+  > ul:not(.dropdown) > li:has(.zonebadge) {
+    display: none; // Unselected items stay hidden
+
+    &[selected],
+    &[display] {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 0 !important;
+      margin: 2px !important;
+      border-radius: var(--fluent-radius-sm) !important;
+      border: none !important;
+      background: transparent !important;
+    }
+
+    .zonebadge {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 2px var(--fluent-space-sm) !important;
+      min-height: 20px !important;
+      height: 20px !important;
+      border-radius: var(--fluent-radius-sm) !important;
+      font-size: var(--fluent-font-size-sm) !important;
+      box-shadow: none !important;
+      border: none !important;
+      color: #111 !important;
+
+      strong,
+      em,
+      span {
+        color: #111 !important;
+        font-size: inherit !important;
+      }
+
+      .ifacebadge {
+        display: none !important; // Hide interface list inside collapsed preview
+      }
+    }
+  }
+}
+// Elevate the stacking context of the dropdown parent elements when a dropdown is open
+// so that the dropdown list renders on top of the sticky .cbi-page-actions footer.
+.cbi-value-field.cbi-dropdown-open,
+.cbi-value:has(.cbi-dropdown-open),
+.cbi-section:has(.cbi-dropdown-open),
+.cbi-map:has(.cbi-dropdown-open) {
+  position: relative;
+  z-index: 2000 !important;
+}

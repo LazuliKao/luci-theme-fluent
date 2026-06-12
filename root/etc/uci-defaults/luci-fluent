@@ -1,0 +1,33 @@
+#!/bin/sh
+# Register luci-theme-fluent in LuCI and set up theme config defaults
+
+uci batch <<EOF
+set luci.themes.fluent=/luci-static/fluent
+commit luci
+EOF
+
+# Ensure the fluent config exists
+if ! uci -q get fluent.@global[0] > /dev/null 2>&1; then
+	uci batch << 'EOF'
+	set fluent.global=global
+	set fluent.global.mode='normal'
+	set fluent.global.primary='#0078D4'
+	set fluent.global.dark_primary='#4da6ff'
+	set fluent.global.font_weight='400'
+	set fluent.global.font_size='14'
+	set fluent.global.border_radius='4'
+	set fluent.global.sidebar_width='260'
+	set fluent.global.sidebar_style='default'
+	set fluent.global.header_height='48'
+	set fluent.global.login_bg='builtin'
+	set fluent.global.login_blur='40'
+	set fluent.global.login_transparency='0.92'
+	set fluent.global.login_animation='1'
+	set fluent.global.card_shadow='small'
+	set fluent.global.card_border='1'
+	set fluent.global.transition_speed='normal'
+EOF
+	uci commit fluent
+fi
+
+exit 0

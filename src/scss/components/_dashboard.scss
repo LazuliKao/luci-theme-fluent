@@ -1,0 +1,62 @@
+// ============================================================
+// DASHBOARD - FluentUI Dashboard Layout and Component Styles
+// Reverts card layout styles to default and applies table display fixes.
+// ============================================================
+
+.Dashboard {
+  // Force tables to expand to full width and follow standard widths
+  table.table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    display: table !important;
+    table-layout: auto !important;
+    box-sizing: border-box;
+
+    thead,
+    tbody,
+    tfoot {
+      display: table-header-group !important;
+    }
+
+    tr,
+    .tr {
+      display: table-row !important;
+      background: transparent;
+
+      &:hover {
+        background-color: var(--fluent-table-row-hover);
+      }
+    }
+
+    th,
+    .th,
+    td,
+    .td {
+      display: table-cell !important;
+      padding: 8px 12px !important; // Tighter padding
+      font-size: var(--fluent-font-size-sm) !important;
+      color: var(--fluent-text) !important;
+      border-bottom: 1px solid var(--fluent-table-border) !important;
+      vertical-align: middle !important;
+      text-align: left !important;
+      white-space: nowrap !important; // Prevent column squeezing and vertical text wrapping
+    }
+
+    th {
+      background: var(--fluent-table-header-bg) !important;
+      font-weight: var(--fluent-font-weight-semibold) !important;
+      border-bottom: 2px solid var(--fluent-table-border) !important;
+      color: var(--fluent-text-secondary) !important;
+    }
+
+    tfoot {
+      display: table-footer-group !important;
+
+      td {
+        font-weight: var(--fluent-font-weight-semibold) !important;
+        border-top: 2px solid var(--fluent-table-border) !important;
+        border-bottom: none !important;
+      }
+    }
+  }
+}

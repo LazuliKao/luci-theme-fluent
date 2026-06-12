@@ -1,0 +1,113 @@
+// ============================================================
+// ERRORS - FluentUI Error States and Tooltips
+// ============================================================
+@use "../mixins" as *;
+
+// ============================================================
+// ERROR INPUT SELECTORS
+// All input types that receive .cbi-input-invalid from LuCI
+// ============================================================
+$fluent-error-inputs: (
+  'input[type="text"]',
+  'input[type="password"]',
+  'input[type="email"]',
+  'input[type="number"]',
+  'input[type="search"]',
+  'input[type="tel"]',
+  'input[type="url"]',
+  "select",
+  ".cbi-dropdown",
+  ".cbi-input-text",
+  ".cbi-input-password",
+  ".password-input"
+);
+
+// ============================================================
+// ERROR INPUT STYLING
+// FluentUI bottom-accent border on invalid inputs
+// ============================================================
+@each $selector in $fluent-error-inputs {
+  #{$selector}.cbi-input-invalid {
+    border-color: var(--fluent-error) !important;
+    border-bottom-color: var(--fluent-error) !important;
+    background-image: linear-gradient(0deg, color-mix(in srgb, var(--fluent-error) 25%, transparent) 0%, color-mix(in srgb, var(--fluent-error) 25%, transparent) 100%) !important;
+    background-size: 100% 4px !important;
+  }
+
+  // Error input field on hover
+  #{$selector}.cbi-input-invalid:hover:not(:focus) {
+    border-color: var(--fluent-error) !important;
+    border-bottom-color: var(--fluent-error) !important;
+  }
+
+  // Error input field on focus
+  #{$selector}.cbi-input-invalid:focus {
+    border-color: var(--fluent-error) !important;
+    border-bottom-color: var(--fluent-error) !important;
+    background-size: 100% 4px !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--fluent-error) 12%, transparent) !important;
+  }
+}
+
+// ============================================================
+// FLUENTUI INLINE ERROR MESSAGE
+// ============================================================
+.fluent-error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fluent-error);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-regular);
+  line-height: 16px;
+  margin-top: 4px;
+  animation: fluent-error-fade-in 0.15s var(--fluent-easing-standard) forwards;
+
+  svg {
+    flex-shrink: 0;
+    color: var(--fluent-error);
+  }
+}
+
+// ============================================================
+// ERROR ANIMATION
+// ============================================================
+@keyframes fluent-error-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================
+// ALTERNATIVE: data-tooltip-style="error" (Luci compatibility)
+// Some LuCI versions use this attribute instead of .cbi-input-invalid
+// ============================================================
+input[data-tooltip-style="error"],
+.cbi-input-invalid[data-tooltip-style="error"] {
+  border-color: var(--fluent-error) !important;
+  border-bottom-color: var(--fluent-error) !important;
+}
+
+// ============================================================
+// ERROR BOX (form-level errors)
+// ============================================================
+.errorbox {
+  background: var(--fluent-error-light);
+  border: 1px solid var(--fluent-error);
+  border-radius: var(--fluent-radius-md);
+  padding: var(--fluent-space-md);
+  margin-bottom: var(--fluent-space-md);
+  color: var(--fluent-error);
+  font-size: var(--fluent-font-size-base);
+
+  h4 {
+    font-weight: var(--fluent-font-weight-semibold);
+    margin: 0 0 var(--fluent-space-xs);
+  }
+}

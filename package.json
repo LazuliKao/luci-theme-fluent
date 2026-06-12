@@ -1,0 +1,33 @@
+{
+  "name": "luci-theme-fluent",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "FluentUI theme for OpenWrt LuCI",
+  "scripts": {
+    "css:build": "sass --no-source-map src/scss/fluent.scss htdocs/luci-static/fluent/css/fluent.css",
+    "css:watch": "sass --no-source-map --watch src/scss/fluent.scss htdocs/luci-static/fluent/css/fluent.css",
+    "build:js": "cd src/web && pnpm run build",
+    "build": "pnpm run css:build && pnpm run build:js",
+    "watch:css": "sass --no-source-map --watch src/scss/fluent.scss htdocs/luci-static/fluent/css/fluent.css",
+    "watch:js": "cd src/web && pnpm run watch",
+    "watch": "pnpm run /^watch:/",
+    "lint": "biome lint --no-errors-on-unmatched htdocs src/web/src",
+    "format": "biome format --write --no-errors-on-unmatched htdocs src/web/src",
+    "test": "echo \"No tests yet\" && exit 0",
+    "dev:remote": "luci-types dev",
+    "icons:generate": "tsx src/script/generate-icons.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "@lazulikao/luci-types": "github:LazuliKao/luci-types#8fc5d1a370992d411c2c2c2c27b77cad189d0b6b",
+    "@types/node": "^22.19.21",
+    "sass": "^1.101.0",
+    "sharp": "^0.33.5",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.12.4"
+}

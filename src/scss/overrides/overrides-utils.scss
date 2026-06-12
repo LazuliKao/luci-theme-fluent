@@ -1,0 +1,24 @@
+// ============================================================
+// OVERRIDES UTILITIES — shared scope helpers for plugin overrides
+// ============================================================
+
+// Root container selector shared by all override partials.
+$override-root: ".main > .main-right > #maincontent";
+
+// ── Exact page match ────────────────────────────────────────
+// @include plugin("admin-dashboard") { … }
+// → body[data-page="admin-dashboard"] .main > .main-right > #maincontent { … }
+@mixin plugin($page) {
+  body[data-page="#{$page}"] #{$override-root} {
+    @content;
+  }
+}
+
+// ── Prefix page match ──────────────────────────────────────
+// @include plugin-prefix("admin-status-realtime") { … }
+// → body[data-page^="admin-status-realtime"] .main > .main-right > #maincontent { … }
+@mixin plugin-prefix($prefix) {
+  body[data-page^="#{$prefix}"] #{$override-root} {
+    @content;
+  }
+}

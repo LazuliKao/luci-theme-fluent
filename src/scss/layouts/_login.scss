@@ -1,0 +1,773 @@
+// Layouts - Login Page
+// Microsoft-style Login Page Design for FluentUI 2
+@use "../icons" as *;
+
+body.login-page {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+}
+
+// ============================================================
+// KEYFRAME ANIMATIONS
+// ============================================================
+@keyframes fluent-login-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+// ============================================================
+// LOGIN PAGE - BASE LAYOUT
+// ============================================================
+.login-page {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+
+  // Microsoft-style radial gradient background
+  background: radial-gradient(circle at 50% 50%, #f3f4f6 0%, #d1d5db 100%) !important;
+
+  // ============================================================
+  // BACKGROUND LAYERS (Static Image / Video)
+  // ============================================================
+  .main-bg {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: cover !important;
+    z-index: 1 !important;
+  }
+
+  .video {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: var(--fluent-black) !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+
+    video {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      object-fit: cover !important;
+      height: 100% !important;
+      width: 100% !important;
+    }
+  }
+
+  .volume-control {
+    position: fixed !important;
+    right: 20px !important;
+    top: 20px !important;
+    width: 24px !important;
+    height: 24px !important;
+    z-index: 5000 !important;
+    cursor: pointer !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-image: url(../img/volume_high.svg) !important;
+    opacity: 0.6 !important;
+    transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+    &:hover {
+      opacity: 1 !important;
+    }
+
+    &.mute {
+      background-image: url(../img/volume_off.svg) !important;
+    }
+  }
+
+  // LOGIN CONTAINER - Centers the login box within the remaining viewport
+  .login-container {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    flex: 1 1 auto !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 488px !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 2 !important;
+    background: transparent !important;
+    padding: 24px 24px 104px !important;
+    box-sizing: border-box !important;
+
+    // ============================================================
+    // LOGIN FORM - Microsoft Sign-In Card
+    // ============================================================
+    .login-form {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      min-height: 386px !important;
+      padding: 40px !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+
+      // Microsoft sign-in card token alignment
+      background: var(--fluent-bg-card) !important;
+      border: 1px solid var(--fluent-border) !important;
+      border-radius: 12px !important;
+      box-shadow:
+        0 0 2px rgba(0, 0, 0, 0.12),
+        0 8px 16px rgba(0, 0, 0, 0.14) !important;
+      will-change: transform, opacity;
+      animation: fluent-login-fade-in var(--fluent-duration-slow) var(--fluent-easing-easy-ease);
+
+      // ============================================================
+      // CARD HEADER & LOGO
+      // ============================================================
+      .ms-card-header {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 28px !important;
+        min-height: 48px !important;
+        width: 100% !important;
+      }
+
+      .ms-back-button {
+        position: absolute !important;
+        left: -12px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 8px !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+        color: var(--fluent-text) !important;
+        transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+        svg {
+          width: 20px !important;
+          height: 24px !important;
+        }
+
+        &:hover {
+          background-color: rgba(128, 128, 128, 0.15) !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--fluent-focus-color) !important;
+          background-color: rgba(128, 128, 128, 0.15) !important;
+        }
+      }
+
+      .brand {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        text-decoration: none !important;
+
+        .icon {
+          width: 48px !important;
+          height: 48px !important;
+        }
+
+        .brand-text {
+          font-family: var(--fluent-font-family) !important;
+          font-size: 26px !important;
+          font-weight: var(--fluent-font-weight-bold, 700) !important;
+          color: var(--fluent-text-secondary) !important;
+          margin: 0 !important;
+          line-height: 1.1 !important;
+        }
+      }
+
+      // ============================================================
+      // STEP CONTAINER & ANIMATION
+      // ============================================================
+
+      // ============================================================
+      // TYPOGRAPHY (Centered headers)
+      // ============================================================
+      .login-title {
+        font-family: var(--fluent-font-family) !important;
+        font-size: 24px !important; // Microsoft H1
+        font-weight: var(--fluent-font-weight-semibold) !important;
+        color: var(--fluent-text) !important;
+        margin: 0 0 10px 0 !important;
+        text-align: center !important;
+        line-height: 30px !important;
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+
+      .login-subtitle {
+        font-family: var(--fluent-font-family) !important;
+        font-size: 13px !important;
+        color: var(--fluent-text-secondary) !important;
+        margin: 0 0 24px 0 !important;
+        text-align: center !important;
+        line-height: 18px !important;
+      }
+
+      // ============================================================
+      // FORM LOGIN - Inner Form wrapper
+      // ============================================================
+      .form-login {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+        overflow: hidden !important;
+        position: relative !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+
+        // Both steps stack in the same grid cell
+        .step-container {
+          grid-column: 1 / -1 !important;
+          grid-row: 1 / -1 !important;
+          width: 100% !important;
+          transition:
+            transform 0.35s cubic-bezier(0.1, 0.9, 0.2, 1),
+            opacity 0.25s cubic-bezier(0.1, 0.9, 0.2, 1) !important;
+        }
+
+        // Default state: Step 1 visible, Step 2 off to the right
+        #step-username {
+          transform: translateX(0) !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        #step-password {
+          transform: translateX(40px) !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+        }
+
+        // Active state: Step 2 visible, Step 1 off to the left
+        &.show-step2 {
+          #step-username {
+            transform: translateX(-40px) !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+          }
+          #step-password {
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+          }
+        }
+
+        &.no-transition {
+          .step-container {
+            transition: none !important;
+          }
+        }
+
+        // ERROR BOX (Microsoft style)
+        .errorbox {
+          position: relative !important;
+          padding: 0 0 0 16px !important;
+          margin: 2px 0 0 0 !important;
+          border-radius: 0 !important;
+          display: block !important;
+          text-align: left !important;
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          color: #e81123 !important;
+
+          font-family: var(--fluent-font-family) !important;
+          font-size: 12px !important;
+          font-weight: var(--fluent-font-weight-regular) !important;
+          line-height: 16px !important;
+          box-sizing: border-box !important;
+
+          &::before {
+            display: none !important;
+          }
+
+          // Warning icon (Microsoft-style red circle with white exclamation point)
+          &::after {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 1px !important;
+            width: 14px !important;
+            height: 14px !important;
+            display: block !important;
+            flex-shrink: 0 !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z' fill='%23e81123'/%3E%3Cpath d='M8 4a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 8 4zm0 8.25a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+          }
+        }
+
+        // INPUT CONTAINER
+        .input-container {
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 0 !important;
+          margin-bottom: 0 !important;
+        }
+
+        // INPUT WRAPPER & OUTLINE FLOATING LABELS
+        .ms-input-wrapper {
+          position: relative !important;
+          width: 100% !important;
+
+          .ms-input {
+            display: block !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            padding: 0 10px !important;
+
+            background-color: var(--fluent-input-bg) !important;
+            border: 1px solid var(--fluent-input-border) !important;
+            border-bottom: 1px solid var(--fluent-input-border) !important;
+            border-radius: 4px !important;
+
+            font-family: var(--fluent-font-family) !important;
+            font-size: 14px !important;
+            color: var(--fluent-text) !important;
+            line-height: normal !important;
+
+            box-shadow: none !important;
+            outline: none !important;
+            margin: 0 !important;
+
+            // Focus Bottom Line Transition
+            background-image: linear-gradient(0deg, var(--fluent-primary) 0%, var(--fluent-primary) 100%) !important;
+            background-position: bottom !important;
+            background-size: 0 2px !important;
+            background-repeat: no-repeat !important;
+
+            transition:
+              border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+              background-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+              background-size var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+            &:hover:not(:focus):not(:disabled) {
+              border-color: var(--fluent-input-border-hover) !important;
+              border-bottom-color: var(--fluent-text) !important;
+            }
+
+            &:focus {
+              border-color: var(--fluent-input-border) !important;
+              border-bottom-color: var(--fluent-primary) !important;
+              background-size: 100% 2px !important;
+              box-shadow: 0 0 0 1px var(--fluent-primary) inset !important;
+            }
+
+            &.cbi-input-invalid {
+              border-color: #e81123 !important;
+              border-bottom-color: #e81123 !important;
+              background-image: linear-gradient(0deg, #e81123 0%, #e81123 100%) !important;
+
+              &:hover:not(:focus):not(:disabled) {
+                border-color: #e81123 !important;
+                border-bottom-color: #e81123 !important;
+              }
+
+              &:focus {
+                border-color: #e81123 !important;
+                border-bottom-color: #e81123 !important;
+                background-size: 100% 2px !important;
+                box-shadow: 0 0 0 1px #e81123 inset !important;
+              }
+            }
+          }
+
+          // Floating Label
+          .ms-label {
+            position: absolute !important;
+            left: 10px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            background-color: var(--fluent-bg-card) !important;
+            padding: 0 4px !important;
+            color: var(--fluent-text-secondary) !important;
+            font-family: var(--fluent-font-family) !important;
+            font-size: 14px !important;
+            pointer-events: none !important;
+            transition: all var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+          }
+
+          // Float states
+          .ms-input:focus ~ .ms-label,
+          .ms-input:not(:placeholder-shown) ~ .ms-label {
+            top: 0 !important;
+            font-size: 12px !important;
+            color: var(--fluent-primary) !important;
+          }
+
+          // Keep faded color when not focused but has content
+          .ms-input:not(:focus):not(:placeholder-shown) ~ .ms-label {
+            color: var(--fluent-text-secondary) !important;
+          }
+
+          // Invalid float label color
+          .ms-input.cbi-input-invalid:focus ~ .ms-label {
+            color: #e81123 !important;
+          }
+          .ms-input.cbi-input-invalid:not(:placeholder-shown) ~ .ms-label {
+            color: #e81123 !important;
+          }
+        }
+
+        // Password Wrapper (to give spacing for eye icon)
+        .password-wrapper {
+          .ms-input {
+            padding: 0 36px 0 10px !important;
+          }
+        }
+
+        // ============================================================
+        // PASSWORD EYE TOGGLE BUTTON
+        // ============================================================
+        .ms-password-toggle {
+          position: absolute !important;
+          right: 1px !important;
+          top: 1px !important;
+          bottom: 2px !important;
+          width: 32px !important;
+          background: transparent !important;
+          border: none !important;
+          border-radius: 0 1px 1px 0 !important;
+          cursor: pointer !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          color: var(--fluent-text-secondary) !important;
+          outline: none !important;
+          transition:
+            background-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+            color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+          &:hover {
+            background-color: rgba(128, 128, 128, 0.1) !important;
+            color: var(--fluent-text) !important;
+          }
+
+          &:focus-visible {
+            outline: 1px solid var(--fluent-primary) !important;
+            background-color: rgba(128, 128, 128, 0.1) !important;
+          }
+
+          svg {
+            color: inherit !important;
+            stroke: currentColor !important;
+            pointer-events: none !important;
+          }
+        }
+      }
+
+      // ============================================================
+      // BUTTONS
+      // ============================================================
+      .button-container {
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 20px !important;
+        width: 100% !important;
+      }
+
+      .ms-button {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 38px !important;
+        padding: 8px 16px !important;
+        background: #0067b8 !important;
+        border: 1px solid #0067b8 !important;
+        border-radius: 4px !important;
+        color: #ffffff !important;
+
+        font-family: var(--fluent-font-family) !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        text-align: center !important;
+        line-height: 20px !important;
+        cursor: pointer !important;
+        outline: none !important;
+        transition:
+          background var(--fluent-duration-fast) var(--fluent-easing-standard),
+          border-color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+        &:hover {
+          background: #005da6 !important;
+          border-color: #005da6 !important;
+        }
+
+        &:active {
+          background: #005292 !important;
+          border-color: #005292 !important;
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--fluent-focus-color) !important;
+          outline-offset: 2px !important;
+        }
+      }
+
+      // ============================================================
+      // USER ACCOUNT PILL
+      // ============================================================
+      .login-account-pill-wrapper {
+        display: flex !important;
+        justify-content: center !important;
+        margin-bottom: 18px !important;
+        width: 100% !important;
+      }
+
+      .login-account-pill {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        max-width: 100% !important;
+        height: 32px !important;
+        padding: 0 12px !important;
+        background: transparent !important;
+        border: 1px solid rgba(0, 0, 0, 0.25) !important;
+        border-radius: 100px !important;
+        box-sizing: border-box !important;
+        color: var(--fluent-text) !important;
+        font-size: 12px !important;
+        transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        &__text {
+          display: block !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          white-space: nowrap !important;
+          font-family: var(--fluent-font-family) !important;
+          font-size: 13px !important;
+          font-weight: 400 !important;
+          line-height: 1.5 !important;
+          color: var(--fluent-text) !important;
+        }
+      }
+    }
+  }
+
+  // FOOTER - Pinned to the bottom of the login page flow
+  footer {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 18px !important;
+    width: 100% !important;
+    text-align: center !important;
+    z-index: 10 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 24px !important;
+    margin: 0 !important;
+
+    div {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 16px !important;
+      font-size: 12px !important;
+      color: var(--fluent-text-secondary) !important;
+      opacity: 0.75 !important;
+      width: auto !important;
+      max-width: 100% !important;
+    }
+
+    a.luci-link {
+      color: var(--fluent-text-secondary) !important;
+      text-decoration: none !important;
+      font-weight: normal !important;
+      transition: color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+      &:hover {
+        color: var(--fluent-text) !important;
+        text-decoration: underline !important;
+      }
+    }
+  }
+}
+
+@mixin login-page-dark-styles {
+  background: radial-gradient(circle at 50% 50%, #171c26 0%, #0b0e14 100%) !important;
+
+  .login-container .login-form {
+    background: #292929 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow:
+      0 0 2px rgba(0, 0, 0, 0.24),
+      0 8px 16px rgba(0, 0, 0, 0.28) !important;
+
+    .brand .brand-text {
+      color: #a3a3a3 !important;
+    }
+
+    .form-login {
+      .errorbox {
+        color: #e37d80 !important;
+
+        &::after {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z' fill='%23e37d80'/%3E%3Cpath d='M8 4a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 8 4zm0 8.25a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75z' fill='%23292929'/%3E%3C/svg%3E") !important;
+        }
+      }
+
+      .ms-input-wrapper {
+        .ms-input {
+          &.cbi-input-invalid {
+            border-color: #e37d80 !important;
+            border-bottom-color: #e37d80 !important;
+            background-image: linear-gradient(0deg, #e37d80 0%, #e37d80 100%) !important;
+
+            &:hover:not(:focus):not(:disabled) {
+              border-color: #e37d80 !important;
+              border-bottom-color: #e37d80 !important;
+            }
+
+            &:focus {
+              border-color: #e37d80 !important;
+              border-bottom-color: #e37d80 !important;
+              background-size: 100% 2px !important;
+              box-shadow: 0 0 0 1px #e37d80 inset !important;
+            }
+          }
+        }
+      }
+
+      .login-account-pill {
+        border-color: rgba(255, 255, 255, 0.25) !important;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+      }
+    }
+  }
+}
+
+// ============================================================
+// DARK MODE STYLES
+// ============================================================
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    .login-page {
+      @include login-page-dark-styles;
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .login-page {
+    @include login-page-dark-styles;
+  }
+}
+
+// ============================================================
+// RESPONSIVE DESIGN
+// ============================================================
+@media screen and (max-width: 576px) {
+  .login-page {
+    padding: 0 !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+
+    .login-container {
+      max-width: 100% !important;
+      min-height: 100vh !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      padding: 0 0 112px !important;
+
+      .login-form {
+        min-height: auto !important;
+        padding: 22px 24px 24px !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: var(--fluent-bg-card) !important;
+
+        .ms-card-header {
+          margin-bottom: 24px !important;
+        }
+
+        .login-account-pill-wrapper {
+          margin-bottom: 12px !important;
+        }
+
+        .login-title {
+          font-size: 20px !important;
+          line-height: 26px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .login-subtitle {
+          margin-bottom: 20px !important;
+        }
+
+        .form-login .input-container {
+          gap: 0 !important;
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+
+    footer {
+      bottom: 12px !important;
+      padding: 0 16px !important;
+
+      div {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+      }
+    }
+  }
+}

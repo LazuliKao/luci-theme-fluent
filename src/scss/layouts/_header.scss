@@ -1,0 +1,286 @@
+// Layouts - Header
+// FluentUI 2 Toolbar pattern with brand, actions, mobile toggle
+@use "../mixins" as *;
+@use "../icons" as *;
+body > div.main > div.main-right > header {
+  // ============================================================
+  // HEADER CONTAINER
+  // FluentUI Toolbar: 48px height, flex layout, bottom border
+  // ============================================================
+  & {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--fluent-space-lg);
+    background: var(--fluent-bg);
+    border-bottom: 1px solid var(--fluent-border);
+    height: var(--fluent-header-height, 48px);
+    position: sticky;
+    top: 0;
+    z-index: var(--fluent-zindex-actions, 1000);
+    transition: background var(--fluent-duration-normal) var(--fluent-easing-standard);
+  }
+  .header {
+    // ============================================================
+    // BRAND AREA (logo + title)
+    // ============================================================
+    &__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--fluent-space-sm);
+    }
+
+    &__logo {
+      height: 28px;
+      width: auto;
+    }
+
+    &__title {
+      font-size: var(--fluent-font-size-md);
+      font-weight: var(--fluent-font-weight-bold, 700);
+      color: var(--fluent-text);
+      line-height: var(--fluent-line-height-tight);
+    }
+
+    // ============================================================
+    // ACTIONS AREA (right side)
+    // ============================================================
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--fluent-space-sm);
+    }
+
+    // ============================================================
+    // MOBILE TOGGLE BUTTON
+    // ============================================================
+    &__toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--fluent-text);
+      cursor: pointer;
+      border-radius: var(--fluent-radius-md);
+      transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      &::before {
+        @include fluent-icon-content($fluent-icon-menu, 20px, #323130);
+      }
+
+      &:hover {
+        background: var(--fluent-bg-hover);
+      }
+
+      // In dark mode or on bg-primary (blue header), icon should be white
+      [data-theme="dark"] &::before {
+        @include fluent-icon($fluent-icon-menu, 20px, #ffffff);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) &::before {
+          @include fluent-icon($fluent-icon-menu, 20px, #ffffff);
+        }
+      }
+
+      @media (max-width: 768px) {
+        display: flex;
+      }
+    }
+  }
+
+  // ============================================================
+  // HEADER RESPONSIVE
+  // ============================================================
+
+  // ============================================================
+  // THEME TOGGLE BUTTON
+  // Sun/moon icon toggle for dark mode
+  // ============================================================
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--fluent-text-secondary, #605e5c);
+    cursor: pointer;
+    border-radius: var(--fluent-radius-sm, 4px);
+    transition: all var(--fluent-transition-fast, 150ms ease);
+    position: relative;
+
+    &:hover {
+      background: var(--fluent-bg-hover, #f3f2f1);
+      color: var(--fluent-text, #323130);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    .theme-toggle-icon {
+      width: 18px;
+      height: 18px;
+      transition:
+        opacity var(--fluent-transition-fast, 150ms ease),
+        transform var(--fluent-transition-fast, 150ms ease);
+    }
+
+    // Default: show sun, hide moon
+    .theme-toggle-icon.sun {
+      opacity: 1;
+      transform: rotate(0deg);
+    }
+    .theme-toggle-icon.moon {
+      opacity: 0;
+      transform: rotate(-90deg);
+      position: absolute;
+    }
+
+    // When dark theme is active: hide sun, show moon
+    &[data-active-theme="dark"] {
+      .theme-toggle-icon.sun {
+        opacity: 0;
+        transform: rotate(90deg);
+        position: absolute;
+      }
+      .theme-toggle-icon.moon {
+        opacity: 1;
+        transform: rotate(0deg);
+        position: relative;
+      }
+    }
+  }
+
+  // Header actions container
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--fluent-space-sm, 8px);
+  }
+
+  // Polling status indicators
+  .status {
+    display: flex;
+    align-items: center;
+    // gap: var(--fluent-space-sm);
+
+    #xhr_poll_status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: var(--fluent-font-size-sm);
+      font-weight: var(--fluent-font-weight-semibold);
+      padding: 2px 8px;
+      height: 24px;
+      border-radius: var(--fluent-radius-sm);
+      user-select: none;
+      transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      // Active state (polling running)
+      &[data-style="active"] {
+        background-color: var(--fluent-bg-hover, #f3f2f1);
+        color: var(--fluent-primary);
+        border: 1px solid var(--fluent-border);
+
+        &:hover {
+          background-color: var(--fluent-primary-lightest, #eff6fc);
+        }
+      }
+
+      // Inactive state (polling paused)
+      &[data-style="inactive"] {
+        background-color: var(--fluent-warning-light, #fff4ce);
+        color: var(--fluent-warning, #795707);
+        border: 1px solid var(--fluent-warning, #795707);
+
+        &:hover {
+          background-color: #fde7aa;
+        }
+      }
+    }
+  }
+
+  // Dark mode overrides for status indicators
+  [data-theme="dark"] {
+    .status #xhr_poll_status {
+      &[data-style="active"] {
+        background-color: rgba(255, 255, 255, 0.06);
+        color: var(--fluent-primary);
+        border-color: rgba(255, 255, 255, 0.15);
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      &[data-style="inactive"] {
+        background-color: rgba(251, 99, 64, 0.15);
+        color: #ff8f73;
+        border-color: #ff8f73;
+
+        &:hover {
+          background-color: rgba(251, 99, 64, 0.25);
+        }
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      .status #xhr_poll_status {
+        &[data-style="active"] {
+          background-color: rgba(255, 255, 255, 0.06);
+          color: var(--fluent-primary);
+          border-color: rgba(255, 255, 255, 0.15);
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        }
+
+        &[data-style="inactive"] {
+          background-color: rgba(251, 99, 64, 0.15);
+          color: #ff8f73;
+          border-color: #ff8f73;
+
+          &:hover {
+            background-color: rgba(251, 99, 64, 0.25);
+          }
+        }
+      }
+    }
+  }
+
+  // Dark mode overrides for theme toggle
+  [data-theme="dark"] .theme-toggle,
+  .theme-toggle[data-active-theme="dark"] {
+    color: var(--fluent-text-secondary, #a0a0a0);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--fluent-text, #f3f2f1);
+    }
+  }
+
+  // ============================================================
+  // RESPONSIVE
+  // ============================================================
+  @media (max-width: 768px) {
+    & {
+      padding: 0 var(--fluent-space-sm);
+    }
+    .theme-toggle {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
