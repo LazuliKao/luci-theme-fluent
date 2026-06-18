@@ -42,6 +42,7 @@
   let control_height = '32';
   let transition_speed = 'normal';
   let custom_css = '';
+  let custom_select = '1';
   let dark_sidebar_bg = '';
   let dark_card_bg = '';
   let dark_page_bg = '';
@@ -83,6 +84,7 @@
     dark_sidebar_bg = cfg.get_first('fluent', 'global', 'dark_sidebar_bg') || '';
     dark_card_bg = cfg.get_first('fluent', 'global', 'dark_card_bg') || '';
     dark_page_bg = cfg.get_first('fluent', 'global', 'dark_page_bg') || '';
+    custom_select = cfg.get_first('fluent', 'global', 'custom_select') || '1';
 
     bar_color = mode === 'dark' ? dark_primary : primary;
     main_left_font_color = font_weight === 'normal' ? '#5f6368' : '#69758c';
@@ -343,7 +345,8 @@
 <body
   class="lang_{{ dispatcher.lang }} {{ node ? entityencode(node.title, true) : '' }} {{ ctx.authsession ? 'logged-in' : '' }}"
   data-page="{{ entityencode(join('-', ctx.request_path), true) }}"
-  data-theme-mode="{{ mode }}">
+  data-theme-mode="{{ mode }}"
+  data-theme-custom-select="{{ custom_select }}">
 
   <div class="main">
     {% if (ctx.authsession) { %}

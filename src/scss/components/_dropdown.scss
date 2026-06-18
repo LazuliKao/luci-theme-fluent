@@ -209,8 +209,8 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     margin-left: var(--fluent-space-xs);
     margin-right: 0;
@@ -226,13 +226,13 @@
       height: 6px;
       border-right: 1.5px solid var(--fluent-text-secondary);
       border-bottom: 1.5px solid var(--fluent-text-secondary);
-      transform: rotate(45deg) translateY(-1px);
+      transform: rotate(45deg);
       transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
     }
 
     svg {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       fill: currentColor;
       color: var(--fluent-text-secondary);
       transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
@@ -302,6 +302,13 @@
   // ----------------------------------------------------------
   // DROPDOWN LIST (Listbox)
   // ----------------------------------------------------------
+  > ul.dropdown {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
   &[open] > ul.dropdown {
     display: flex;
     flex-direction: column;
@@ -668,10 +675,6 @@
       background-color: transparent !important;
       transition: background-color 0.1s ease !important;
       z-index: 2 !important; // Ensure checkmark is always on top of the zonebadge background
-    }
-
-    &[selected]::before {
-      background-color: var(--fluent-text) !important;
       -webkit-mask-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
       mask-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"%3e%3cpath d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/%3e%3c/svg%3e') !important;
       -webkit-mask-size: contain !important;
@@ -680,6 +683,10 @@
       mask-repeat: no-repeat !important;
       -webkit-mask-position: center !important;
       mask-position: center !important;
+    }
+
+    &[selected]::before {
+      background-color: var(--fluent-text) !important;
     }
 
     &[disabled][selected]::before,
@@ -791,6 +798,26 @@
       .ifacebadge {
         display: none !important; // Hide interface list inside collapsed preview
       }
+    }
+  }
+
+  // Position custom select options list based on direction
+  &.fluent-custom-select {
+    &[data-open-direction="up"][open] > ul.dropdown {
+      bottom: 100%;
+      top: auto !important;
+      margin-top: 0 !important;
+      margin-bottom: var(--fluent-space-xxs) !important;
+      transform-origin: bottom !important;
+      animation: fluent-dropdown-slide-in-up 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
+    }
+    &[data-open-direction="down"][open] > ul.dropdown {
+      top: 100%;
+      bottom: auto !important;
+      margin-bottom: 0 !important;
+      margin-top: var(--fluent-space-xxs) !important;
+      transform-origin: top !important;
+      animation: fluent-dropdown-slide-in 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
     }
   }
 }

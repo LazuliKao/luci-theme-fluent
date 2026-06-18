@@ -330,7 +330,209 @@ const SlideAnimations = {
     }
 };
 
+;// CONCATENATED MODULE: ./src/resources/utils/select-dropdown.tsx
+
+function setupFluentSelects() {
+    "0" === document.body.getAttribute("data-theme-custom-select") || (document.querySelectorAll("select").forEach((e)=>{
+        select_dropdown_r(e);
+    }), document.querySelectorAll("cbi-dropdown").forEach((e)=>{
+        select_dropdown_l(e);
+    }), new MutationObserver((e)=>{
+        e.forEach((e)=>{
+            e.addedNodes.forEach((e)=>{
+                e.nodeType === Node.ELEMENT_NODE && ("SELECT" === e.tagName ? select_dropdown_r(e) : "CBI-DROPDOWN" === e.tagName ? select_dropdown_l(e) : (e.querySelectorAll("select").forEach((e)=>{
+                    select_dropdown_r(e);
+                }), e.querySelectorAll("cbi-dropdown").forEach((e)=>{
+                    select_dropdown_l(e);
+                })));
+            });
+        });
+    }).observe(document.body, {
+        childList: !0,
+        subtree: !0
+    }));
+}
+function select_dropdown_l(e) {
+    let t = e.querySelector("span.open");
+    t && !t.querySelector("svg") && (t.innerHTML = '<svg fill="currentColor" class="___9ctc0p0 f1w7gpdv fez10in f1dd5bof" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.85 7.65c.2.2.2.5 0 .7l-5.46 5.49a.55.55 0 0 1-.78 0L4.15 8.35a.5.5 0 1 1 .7-.7L10 12.8l5.15-5.16c.2-.2.5-.2.7 0Z" fill="currentColor"></path></svg>');
+}
+function select_dropdown_r(l) {
+    var r;
+    if ((null == l ? void 0 : l.tagName) !== "SELECT" || "true" === l.getAttribute("data-fluent-transformed") || l.closest(".cbi-dropdown") || l.multiple) return;
+    let i = l.getAttribute("style");
+    l.setAttribute("data-fluent-transformed", "true"), l.style.setProperty("display", "none", "important");
+    let o = jsx("li", {});
+    o.setAttribute("selected", "");
+    let n = jsx("ul", {
+        class: "dropdown"
+    }), s = jsx("span", {
+        class: "open"
+    });
+    s.innerHTML = '<svg fill="currentColor" class="___9ctc0p0 f1w7gpdv fez10in f1dd5bof" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.85 7.65c.2.2.2.5 0 .7l-5.46 5.49a.55.55 0 0 1-.78 0L4.15 8.35a.5.5 0 1 1 .7-.7L10 12.8l5.15-5.16c.2-.2.5-.2.7 0Z" fill="currentColor"></path></svg>';
+    let a = jsxs("div", {
+        class: "cbi-dropdown fluent-custom-select",
+        children: [
+            jsx("ul", {
+                children: o
+            }),
+            s,
+            n
+        ]
+    });
+    if (a.setAttribute("tabindex", "0"), i) {
+        let e = i.replace(/\bdisplay\s*:\s*[^;]+(;|$)/gi, "").trim();
+        e && a.setAttribute("style", e);
+    }
+    l.disabled && (a.setAttribute("disabled", ""), a.removeAttribute("tabindex"));
+    let c = ()=>{
+        n.innerHTML = "";
+        let t = "", r = !1;
+        if (Array.from(l.options).forEach((l)=>{
+            let i = jsx("li", {
+                children: l.text
+            });
+            i.setAttribute("data-value", l.value), l.selected && (i.setAttribute("selected", ""), t = l.text, r = !0), l.disabled && i.setAttribute("disabled", ""), n.appendChild(i);
+        }), !r && l.options.length > 0) {
+            let e = l.options[l.selectedIndex >= 0 ? l.selectedIndex : 0];
+            t = e.text;
+            let r = n.querySelector('li[data-value="'.concat(e.value, '"]'));
+            null == r || r.setAttribute("selected", "");
+        }
+        o.textContent = t;
+    };
+    c(), null == (r = l.parentNode) || r.insertBefore(a, l.nextSibling), a.addEventListener("click", (e)=>{
+        var t, r, i;
+        if (a.hasAttribute("disabled")) return;
+        let o = e.target.closest("ul.dropdown > li");
+        if (o) {
+            let r = o.getAttribute("data-value");
+            null === r || o.hasAttribute("disabled") || (l.value = r, l.dispatchEvent(new Event("change", {
+                bubbles: !0
+            })), l.dispatchEvent(new Event("input", {
+                bubbles: !0
+            }))), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open"), e.stopPropagation();
+            return;
+        }
+        if (a.hasAttribute("open")) a.removeAttribute("open"), null == (r = a.closest(".cbi-value-field, .cbi-value")) || r.classList.remove("cbi-dropdown-open");
+        else {
+            document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((e)=>{
+                var t;
+                e.removeAttribute("open"), null == (t = e.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
+            });
+            let e = a.getBoundingClientRect(), t = window.innerHeight - e.bottom, r = e.top;
+            t < Math.min(32 * l.options.length + 10, 250) && r > t ? a.setAttribute("data-open-direction", "up") : a.setAttribute("data-open-direction", "down"), a.setAttribute("open", ""), null == (i = a.closest(".cbi-value-field, .cbi-value")) || i.classList.add("cbi-dropdown-open");
+            let o = n.querySelector("li[selected]");
+            o && o.scrollIntoView({
+                block: "nearest"
+            });
+        }
+        e.stopPropagation();
+    });
+    let d = (e)=>{
+        if (!a.contains(e.target) && a.hasAttribute("open")) {
+            var t;
+            a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
+        }
+    };
+    document.addEventListener("click", d, !0), a.addEventListener("keydown", (e)=>{
+        var t, r;
+        if (a.hasAttribute("disabled")) return;
+        let i = a.hasAttribute("open"), o = Array.from(n.querySelectorAll("li:not([disabled])")), s = o.findIndex((e)=>e.hasAttribute("selected"));
+        switch(e.key){
+            case "Enter":
+            case " ":
+                if (e.preventDefault(), i) {
+                    let e = o[s];
+                    e && e.click();
+                } else a.click();
+                break;
+            case "Escape":
+                i && (e.preventDefault(), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open"));
+                break;
+            case "ArrowDown":
+                if (e.preventDefault(), i) {
+                    if (o.length > 0) {
+                        let e = (s + 1) % o.length;
+                        o.forEach((t, r)=>{
+                            if (r === e) {
+                                t.setAttribute("selected", ""), t.scrollIntoView({
+                                    block: "nearest"
+                                });
+                                let e = t.getAttribute("data-value");
+                                null !== e && (l.value = e, l.dispatchEvent(new Event("change", {
+                                    bubbles: !0
+                                })), l.dispatchEvent(new Event("input", {
+                                    bubbles: !0
+                                })));
+                            } else t.removeAttribute("selected");
+                        });
+                    }
+                } else a.click();
+                break;
+            case "ArrowUp":
+                if (e.preventDefault(), i) {
+                    if (o.length > 0) {
+                        let e = (s - 1 + o.length) % o.length;
+                        o.forEach((t, r)=>{
+                            if (r === e) {
+                                t.setAttribute("selected", ""), t.scrollIntoView({
+                                    block: "nearest"
+                                });
+                                let e = t.getAttribute("data-value");
+                                null !== e && (l.value = e, l.dispatchEvent(new Event("change", {
+                                    bubbles: !0
+                                })), l.dispatchEvent(new Event("input", {
+                                    bubbles: !0
+                                })));
+                            } else t.removeAttribute("selected");
+                        });
+                    }
+                } else a.click();
+                break;
+            case "Tab":
+                i && (a.removeAttribute("open"), null == (r = a.closest(".cbi-value-field, .cbi-value")) || r.classList.remove("cbi-dropdown-open"));
+        }
+    }), l.addEventListener("change", ()=>{
+        let e = l.value, t = Array.from(n.querySelectorAll("li")), r = "";
+        t.forEach((t)=>{
+            t.getAttribute("data-value") === e ? (t.setAttribute("selected", ""), r = t.textContent || "") : t.removeAttribute("selected");
+        }), o.textContent = r;
+    });
+    let u = new MutationObserver(()=>{
+        c();
+    });
+    u.observe(l, {
+        childList: !0
+    });
+    let b = new MutationObserver((e)=>{
+        e.forEach((e)=>{
+            if ("disabled" === e.attributeName) if (l.disabled) {
+                var t;
+                a.setAttribute("disabled", ""), a.removeAttribute("tabindex"), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
+            } else a.removeAttribute("disabled"), a.setAttribute("tabindex", "0");
+        });
+    });
+    b.observe(l, {
+        attributes: !0,
+        attributeFilter: [
+            "disabled"
+        ]
+    });
+    let v = new MutationObserver((e)=>{
+        e.forEach((e)=>{
+            e.removedNodes.forEach((e)=>{
+                var t;
+                (e === l || (null == (t = e.contains) ? void 0 : t.call(e, l))) && (document.removeEventListener("click", d, !0), u.disconnect(), b.disconnect(), v.disconnect(), a.remove());
+            });
+        });
+    });
+    l.parentNode && v.observe(l.parentNode, {
+        childList: !0
+    });
+}
+
 ;// CONCATENATED MODULE: ./src/resources/menu-fluent.tsx
+
 
 
 
@@ -338,7 +540,7 @@ const SlideAnimations = {
 const main = baseclass.extend({
     async __init__ () {
         let e = await ui.menu.load();
-        this.render(e), setupSelectionPause(), setupErrorTooltips();
+        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects();
     },
     render (e) {
         var t, n, a;

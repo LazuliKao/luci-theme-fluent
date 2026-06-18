@@ -96,6 +96,10 @@ class fluent_config_o extends L.view {
             e.value("32", _("Compact (32px)")), e.value("42", _("Default (42px)")), e.default = "32", e.rmempty = !1;
         }
         {
+            let e = o.option(fluent_config_t.Flag, "custom_select", _("Fluent Select Dropdown"), _("Transform native select elements into FluentUI-styled custom dropdowns."));
+            e.default = e.enabled, e.rmempty = !1;
+        }
+        {
             let e = o.option(fluent_config_t.Value, "primary", _("[Light mode] Primary Color"), _("A HEX color (default: #0078d4)."));
             e.default = "#0078d4", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (r, l, o)=>{
                 let n = fluent_config_t.Value.prototype.render.call(e, r, l, o);

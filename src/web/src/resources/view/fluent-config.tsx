@@ -60,6 +60,11 @@ class mainImpl extends L.view {
       o.rmempty = false;
     }
     {
+      const o = s.option(form.Flag, "custom_select", _("Fluent Select Dropdown"), _("Transform native select elements into FluentUI-styled custom dropdowns."));
+      o.default = o.enabled;
+      o.rmempty = false;
+    }
+    {
       const o = s.option(form.Value, "primary", _("[Light mode] Primary Color"), _("A HEX color (default: #0078d4)."));
       o.default = "#0078d4";
       o.rmempty = false;

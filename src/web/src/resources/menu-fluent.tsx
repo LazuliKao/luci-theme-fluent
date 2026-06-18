@@ -1,6 +1,7 @@
 import { setupErrorTooltips } from "./utils/error-tooltips";
 import { setupSelectionPause } from "./utils/poll-pause";
 import { SlideAnimations } from "./utils/slide-animations";
+import { setupFluentSelects } from "./utils/select-dropdown";
 
 interface Module {
   __init__: () => void;
@@ -28,6 +29,7 @@ const module: Module = {
     this.render(data);
     setupSelectionPause();
     setupErrorTooltips();
+    setupFluentSelects();
   },
 
   /**
