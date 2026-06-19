@@ -62,12 +62,68 @@ function upgradeDropdownChevron(dropdown: HTMLElement) {
   }
 }
 
+function isSelectElementHidden(selectEl: HTMLSelectElement): boolean {
+  // 1. Check inline style attribute
+  const styleAttr = selectEl.getAttribute("style") || "";
+  if (/\bdisplay\s*:\s*none/i.test(styleAttr)) {
+    return true;
+  }
+
+  // 2. Check inline style property
+  if (selectEl.style.display === "none") {
+    return true;
+  }
+
+  // 3. If element is not connected to the DOM, we can only check inline styles
+  if (!selectEl.isConnected) {
+    return false;
+  }
+
+  // 4. Check computed style
+  try {
+    const computedStyle = window.getComputedStyle(selectEl);
+    if (computedStyle.display === "none") {
+      // If computed display is none, it might be hidden because of an ancestor (like an inactive tab).
+      // Let's traverse up the parent chain to see if any parent is display: none.
+      let parent = selectEl.parentElement;
+      let parentIsHidden = false;
+      while (parent) {
+        const parentStyle = window.getComputedStyle(parent);
+        if (parentStyle.display === "none") {
+          parentIsHidden = true;
+          break;
+        }
+        parent = parent.parentElement;
+      }
+
+      if (!parentIsHidden) {
+        // Parent is visible, but the select itself is display: none.
+        return true;
+      }
+
+      // Parent is hidden (e.g. inactive tab). Check if the select itself is hidden by CSS rules.
+      const clone = selectEl.cloneNode(false) as HTMLSelectElement;
+      clone.style.display = ""; // Clear inline display if any
+      document.body.appendChild(clone);
+      const cloneStyle = window.getComputedStyle(clone);
+      const isCloneHidden = cloneStyle.display === "none";
+      document.body.removeChild(clone);
+      return isCloneHidden;
+    }
+  } catch (_e) {
+    return false;
+  }
+
+  return false;
+}
+
 function transformSelect(selectEl: HTMLSelectElement) {
   // Safety checks
   if (selectEl?.tagName !== "SELECT") return;
   if (selectEl.getAttribute("data-fluent-transformed") === "true") return;
   if (selectEl.closest(".cbi-dropdown")) return;
   if (selectEl.multiple) return; // Only transform single-select dropdowns
+  if (isSelectElementHidden(selectEl)) return;
 
   // Copy style/classes if applicable (read before hiding to avoid copying our own display: none)
   const nativeStyle = selectEl.getAttribute("style");

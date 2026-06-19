@@ -8143,6 +8143,12 @@ body > div.main > div.main-right > header .theme-toggle {
   border-radius: var(--fluent-radius-sm, 4px);
   transition: all var(--fluent-transition-fast, 150ms ease);
   position: relative;
+  opacity: 0;
+  pointer-events: none;
+}
+body > div.main > div.main-right > header .theme-toggle.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 body > div.main > div.main-right > header .theme-toggle:hover {
   background: var(--fluent-bg-hover, #f3f2f1);

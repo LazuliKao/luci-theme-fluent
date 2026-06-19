@@ -358,7 +358,31 @@ function select_dropdown_l(e) {
 }
 function select_dropdown_r(l) {
     var r;
-    if ((null == l ? void 0 : l.tagName) !== "SELECT" || "true" === l.getAttribute("data-fluent-transformed") || l.closest(".cbi-dropdown") || l.multiple) return;
+    if ((null == l ? void 0 : l.tagName) !== "SELECT" || "true" === l.getAttribute("data-fluent-transformed") || l.closest(".cbi-dropdown") || l.multiple || function(e) {
+        let t = e.getAttribute("style") || "";
+        if (/\bdisplay\s*:\s*none/i.test(t) || "none" === e.style.display) return !0;
+        if (!e.isConnected) return !1;
+        try {
+            let t = window.getComputedStyle(e);
+            if ("none" === t.display) {
+                let t = e.parentElement, l = !1;
+                for(; t;){
+                    let e = window.getComputedStyle(t);
+                    if ("none" === e.display) {
+                        l = !0;
+                        break;
+                    }
+                    t = t.parentElement;
+                }
+                if (!l) return !0;
+                let r = e.cloneNode(!1);
+                r.style.display = "", document.body.appendChild(r);
+                let i = window.getComputedStyle(r), n = "none" === i.display;
+                return document.body.removeChild(r), n;
+            }
+        } catch (e) {}
+        return !1;
+    }(l)) return;
     let i = l.getAttribute("style");
     l.setAttribute("data-fluent-transformed", "true"), l.style.setProperty("display", "none", "important");
     let n = jsx("li", {});
@@ -384,7 +408,7 @@ function select_dropdown_r(l) {
         e && a.setAttribute("style", e);
     }
     l.disabled && (a.setAttribute("disabled", ""), a.removeAttribute("tabindex"));
-    let c = ()=>{
+    let d = ()=>{
         o.innerHTML = "";
         let t = "", r = !1;
         if (Array.from(l.options).forEach((l)=>{
@@ -400,7 +424,7 @@ function select_dropdown_r(l) {
         }
         n.textContent = t;
     };
-    c(), null == (r = l.parentNode) || r.insertBefore(a, l.nextSibling), a.addEventListener("click", (e)=>{
+    d(), null == (r = l.parentNode) || r.insertBefore(a, l.nextSibling), a.addEventListener("click", (e)=>{
         var t, r, i;
         if (a.hasAttribute("disabled")) return;
         let n = e.target.closest("ul.dropdown > li");
@@ -428,13 +452,13 @@ function select_dropdown_r(l) {
         }
         e.stopPropagation();
     });
-    let d = (e)=>{
+    let c = (e)=>{
         if (!a.contains(e.target) && a.hasAttribute("open")) {
             var t;
             a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
         }
     };
-    document.addEventListener("click", d, !0), a.addEventListener("keydown", (e)=>{
+    document.addEventListener("click", c, !0), a.addEventListener("keydown", (e)=>{
         var t, r;
         if (a.hasAttribute("disabled")) return;
         let i = a.hasAttribute("open"), n = Array.from(o.querySelectorAll("li:not([disabled])")), s = n.findIndex((e)=>e.hasAttribute("selected"));
@@ -499,7 +523,7 @@ function select_dropdown_r(l) {
         }), n.textContent = r;
     });
     let u = new MutationObserver(()=>{
-        c();
+        d();
     });
     u.observe(l, {
         childList: !0
@@ -518,15 +542,15 @@ function select_dropdown_r(l) {
             "disabled"
         ]
     });
-    let v = new MutationObserver((e)=>{
+    let p = new MutationObserver((e)=>{
         e.forEach((e)=>{
             e.removedNodes.forEach((e)=>{
                 var t;
-                (e === l || (null == (t = e.contains) ? void 0 : t.call(e, l))) && (document.removeEventListener("click", d, !0), u.disconnect(), b.disconnect(), v.disconnect(), a.remove());
+                (e === l || (null == (t = e.contains) ? void 0 : t.call(e, l))) && (document.removeEventListener("click", c, !0), u.disconnect(), b.disconnect(), p.disconnect(), a.remove());
             });
         });
     });
-    l.parentNode && v.observe(l.parentNode, {
+    l.parentNode && p.observe(l.parentNode, {
         childList: !0
     });
 }

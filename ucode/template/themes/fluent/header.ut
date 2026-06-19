@@ -329,6 +329,11 @@
         if (!toggle) return;
 
         toggle.setAttribute('data-active-theme', isDark ? 'dark' : 'light');
+        
+        // Show toggle button with a smooth fade-in animation
+        requestAnimationFrame(function() {
+          toggle.classList.add('visible');
+        });
 
         // Toggle click handler
         toggle.addEventListener('click', function() {
