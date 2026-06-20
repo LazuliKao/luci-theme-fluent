@@ -124,7 +124,7 @@
   --fluent-modal-bg: #fff;
   --fluent-modal-overlay: #0006;
   --fluent-modal-radius: var(--fluent-radius-lg);
-  --fluent-modal-padding: var(--fluent-space-lg);
+  --fluent-modal-padding: var(--fluent-space-xl);
   --fluent-tab-height: 44px;
   --fluent-tab-indicator-height: 3px;
   --fluent-tab-indicator-color: #0078d4;
@@ -1867,7 +1867,7 @@ body.modal-overlay-active #modal_overlay {
 
 .modal h4, .modal .modal-header {
   background: var(--fluent-modal-bg);
-  padding: var(--fluent-modal-padding) var(--fluent-modal-padding) var(--fluent-space-md);
+  padding-bottom: var(--fluent-space-md);
   font-size: var(--fluent-font-size-lg);
   font-weight: var(--fluent-font-weight-semibold);
   color: var(--fluent-text);
@@ -1884,7 +1884,7 @@ body.modal-overlay-active #modal_overlay {
 
 .modal .button-row, .modal .modal-footer, .modal > .right {
   background: var(--fluent-modal-bg);
-  padding: var(--fluent-space-lg) var(--fluent-modal-padding) var(--fluent-modal-padding);
+  padding-top: var(--fluent-space-md);
   justify-content: flex-end;
   align-items: center;
   gap: var(--fluent-space-xs);
@@ -1899,9 +1899,8 @@ body.modal-overlay-active #modal_overlay {
 }
 
 .modal > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script) {
-  min-height: 0;
-  padding: 0 var(--fluent-modal-padding);
   flex: auto;
+  min-height: 20px;
   overflow-y: auto;
 }
 
@@ -2014,28 +2013,35 @@ body.modal-overlay-active #modal_overlay {
 }
 
 .modal:not(.spinning) > .spinning {
+  margin-top: var(--fluent-space-lg);
+  margin-bottom: var(--fluent-space-lg);
   position: relative;
-  padding-left: calc(var(--fluent-modal-padding) + 32px) !important;
-}
-
-.modal:not(.spinning) > .spinning:before {
-  left: var(--fluent-modal-padding) !important;
 }
 
 .modal-wide {
   max-width: 1000px;
 }
 
+.modal, .uci-dialog {
+  padding: var(--fluent-modal-padding);
+}
+
+.modal .button-row, .uci-dialog .button-row {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.modal .button-row > .btn, .uci-dialog .button-row > .btn {
+  min-width: 96px;
+}
+
 .modal > .cbi-section, .uci-dialog > .cbi-section {
   box-shadow: none !important;
   background: none !important;
   border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
   overflow: visible !important;
-}
-
-.modal > .cbi-section > .button-row, .uci-dialog > .cbi-section > .button-row {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
 }
 
 :is(body.modal-overlay-active:has(#modal_overlay .modal.notice), body.modal-overlay-active:has(#modal_overlay .modal.spinning)) {

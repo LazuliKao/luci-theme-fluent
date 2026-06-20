@@ -79,7 +79,8 @@ body.modal-overlay-active {
   .modal-header {
     flex: 0 0 auto;
     background: var(--fluent-modal-bg);
-    padding: var(--fluent-modal-padding) var(--fluent-modal-padding) var(--fluent-space-md);
+    // padding: var(--fluent-modal-padding) var(--fluent-modal-padding) var(--fluent-space-md);
+    padding-bottom: var(--fluent-space-md);
     font-size: var(--fluent-font-size-lg);
     font-weight: var(--fluent-font-weight-semibold);
     color: var(--fluent-text);
@@ -99,7 +100,7 @@ body.modal-overlay-active {
   > .right {
     flex: 0 0 auto;
     background: var(--fluent-modal-bg);
-    padding: var(--fluent-space-lg) var(--fluent-modal-padding) var(--fluent-modal-padding);
+    padding-top: var(--fluent-space-md);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -113,11 +114,13 @@ body.modal-overlay-active {
   }
 
   // Content area: make any direct child that is not a header, footer, or close button scrollable
-  > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script) {
+  > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(
+      style
+    ):not(script) {
     flex: 1 1 auto;
     overflow-y: auto;
-    min-height: 0; // Essential for nested flexbox scrolling
-    padding: 0 var(--fluent-modal-padding);
+    min-height: 20px; // Essential for nested flexbox scrolling
+    // padding: 0 var(--fluent-modal-padding);
     @include custom-scrollbar;
   }
 
@@ -152,6 +155,17 @@ body.modal-overlay-active {
       color: var(--fluent-text);
     }
   }
+
+  // Ensure inline spinning elements direct child of modal have proper alignment and spacing
+  &:not(.spinning) > .spinning {
+    position: relative;
+    margin-top: var(--fluent-space-lg);
+    margin-bottom: var(--fluent-space-lg);
+    &::before {
+      
+       //spinning icon is here
+    }
+  }
 }
 
 // Wide modal variant
@@ -162,7 +176,15 @@ body.modal-overlay-active {
 // Remove duplicate borders and padding when cbi-section is placed inside a modal/dialog
 .modal,
 .uci-dialog {
-  .cbi-section {
+  padding: var(--fluent-modal-padding);
+  .button-row {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    > .btn {
+      min-width: 96px;
+    }
+  }
+  > .cbi-section {
     border: none !important;
     background: transparent !important;
     box-shadow: none !important;

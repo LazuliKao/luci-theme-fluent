@@ -71,8 +71,8 @@ $fluent-icon-eye-off: "<svg xmlns='http://www.w3.org/2000/svg' width='20' height
   @if $color != null {
     $color-str: "#{$color}";
     // Strip leading # if present (Sass colors interpolate with #)
-    @if str-slice($color-str, 1, 1) == "#" {
-      $color-str: str-slice($color-str, 2);
+    @if string.slice($color-str, 1, 1) == "#" {
+      $color-str: string.slice($color-str, 2);
     }
     $encoded: str-replace($encoded, "%23212121", "%23" + $color-str);
   }
