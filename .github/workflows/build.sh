@@ -87,7 +87,10 @@ for pkg_dir in ${PACKAGES_DIR}/*/; do
   echo "    -> $pkg_name"
   cp -r "$pkg_dir" "./package/$pkg_name"
   chmod 755 -R "./package/$pkg_name"
+  # Remove dev sources (src/) — CSS/JS is pre-built and placed via CI artifact
+  rm -rf "./package/$pkg_name/src"
 done
+
 
 # Configure
 echo ">>> Running defconfig..."
