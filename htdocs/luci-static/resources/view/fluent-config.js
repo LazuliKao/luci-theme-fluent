@@ -43,19 +43,31 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@swc+helpers@0.5.23/node_modules/@swc/helpers/esm/_define_property.js
-function _define_property(obj, key, value) {
-    if (key in obj) {
-        Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
-    } else obj[key] = value;
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/animation.ts
+let animation_e = L.form;
+const registerAnimationTab = (n)=>{
+    n.tab("animation", _("Animation"), _("Control page transitions, tab underline animation, and the top loading indicator."));
+    {
+        let t = n.taboption("animation", animation_e.Flag, "view_transition", _("Enable page transition animation"), _("Use the browser View Transition API to animate navigation between LuCI pages when supported."));
+        t.default = t.enabled, t.rmempty = !1;
+    }
+    {
+        let t = n.taboption("animation", animation_e.Flag, "tab_animation", _("Enable tab underline animation"), _("Animate the active underline when switching between native LuCI tabs and themed tab menus."));
+        t.default = t.enabled, t.rmempty = !1;
+    }
+    {
+        let t = n.taboption("animation", animation_e.Flag, "prefers_reduced_motion", _("Respect reduced-motion preference"), _("When enabled, Fluent animations follow the browser or operating system reduced-motion preference."));
+        t.default = t.enabled, t.rmempty = !1, t.depends("tab_animation", "1");
+    }
+    {
+        let t = n.taboption("animation", animation_e.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
+        t.default = t.enabled, t.rmempty = !1;
+    }
+};
 
-    return obj;
-}
-
-
-;// CONCATENATED MODULE: ./web/resources/view/fluent-config.tsx
-
-let fluent_config_t = L.form, fluent_config_a = L.uci, fluent_config_r = [
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/shared.ts
+let shared_e = L.form;
+const transparencySteps = [
     0,
     0.1,
     0.2,
@@ -67,113 +79,125 @@ let fluent_config_t = L.form, fluent_config_a = L.uci, fluent_config_r = [
     0.8,
     0.9,
     1
-], l = (e)=>{
-    var t;
-    let a = document.createElement("input");
-    a.type = "color", a.value = e.value, a.style.width = "24px", a.style.height = "24px", a.style.padding = "0px", a.style.marginLeft = "5px", a.style.borderRadius = "4px", a.style.border = "1px solid #d9d9d9", null == (t = e.parentNode) || t.insertBefore(a, e.nextSibling), a.addEventListener("input", ()=>{
-        e.value = a.value;
-    }), e.addEventListener("input", ()=>{
-        a.value = e.value;
-    });
+];
+const configureHexColorValue = function(t, l) {
+    let r = arguments.length > 2 && void 0 !== arguments[2] && arguments[2];
+    t.rmempty = !1, t.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), t.render = (o, a, n)=>{
+        let c = shared_e.Value.prototype.render.call(t, o, a, n), i = ()=>{
+            let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".'.concat(l, '"]'));
+            e && ((e)=>{
+                if ("true" === e.dataset.fluentColorPicker) return;
+                let t = e.parentElement;
+                if (!t) return;
+                e.dataset.fluentColorPicker = "true", e.classList.add("fluent-color-field__text");
+                let l = document.createElement("div");
+                l.className = "fluent-color-field";
+                let r = document.createElement("label");
+                r.className = "fluent-color-swatch", r.title = _("Choose color");
+                let o = document.createElement("input");
+                o.type = "color", o.className = "fluent-color-swatch__input", o.setAttribute("aria-label", _("Choose color"));
+                let a = document.createElement("span");
+                a.className = "fluent-color-swatch__preview";
+                let n = (e)=>{
+                    /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e) && (o.value = e, a.style.backgroundColor = e);
+                };
+                n(e.value), o.addEventListener("input", ()=>{
+                    e.value = o.value, a.style.backgroundColor = o.value;
+                }), e.addEventListener("input", ()=>{
+                    n(e.value);
+                }), r.appendChild(o), r.appendChild(a), t.insertBefore(l, e), l.appendChild(e), l.appendChild(r);
+            })(e);
+        };
+        return r ? requestAnimationFrame(i) : setTimeout(i, 0), c;
+    };
 };
-class fluent_config_n extends L.view {
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/colors.ts
+let colors_e = L.form;
+
+const registerColorsTab = (o)=>{
+    o.tab("colors", _("Colors"), _("Set separate accent and progress-bar label colors for light and dark mode."));
+    {
+        let a = o.taboption("colors", colors_e.Value, "primary", _("Light mode accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in light mode."));
+        a.default = "#0078d4", configureHexColorValue(a, "primary");
+    }
+    {
+        let a = o.taboption("colors", colors_e.Value, "dark_primary", _("Dark mode accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in dark mode."));
+        a.default = "#1a1a2e", configureHexColorValue(a, "dark_primary", !0);
+    }
+    {
+        let a = o.taboption("colors", colors_e.Value, "progressbar_font", _("Light mode progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in light mode."));
+        a.default = "#2e2b60", configureHexColorValue(a, "progressbar_font");
+    }
+    {
+        let a = o.taboption("colors", colors_e.Value, "dark_progressbar_font", _("Dark mode progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in dark mode."));
+        a.default = "#d6d9e5", configureHexColorValue(a, "dark_progressbar_font", !0);
+    }
+};
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/general.ts
+let general_e = L.form;
+const registerGeneralTab = (t)=>{
+    t.tab("general", _("General"), _("Choose how the theme selects its mode and how large core controls should render."));
+    {
+        let o = t.taboption("general", general_e.ListValue, "mode", _("Color mode"));
+        o.value("normal", _("Follow system")), o.value("light", _("Force light mode")), o.value("dark", _("Force dark mode")), o.default = "normal", o.rmempty = !1, o.description = _("Use the system/browser preference, or always render the Fluent theme in a fixed light or dark palette.");
+    }
+    {
+        let o = t.taboption("general", general_e.ListValue, "font_weight", _("Navigation font weight"));
+        o.value("normal", _("Normal")), o.value("600", _("Semibold")), o.default = "600", o.rmempty = !1, o.description = _("Controls the font weight used by main navigation labels and related theme text accents.");
+    }
+    {
+        let o = t.taboption("general", general_e.ListValue, "control_height", _("Control height"));
+        o.value("32", _("Compact (32px)")), o.value("42", _("Comfortable (42px)")), o.default = "32", o.rmempty = !1, o.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
+    }
+    {
+        let o = t.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
+        o.default = o.enabled, o.rmempty = !1;
+    }
+};
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/login.ts
+let login_a = L.form;
+
+const registerLoginTab = (e)=>{
+    e.tab("login", _("Login page"), _("Adjust login card opacity and blur separately for light and dark mode."));
+    {
+        let l = e.taboption("login", login_a.ListValue, "transparency", _("Light mode login card opacity"), _("Opacity of the login card in light mode. 0 is fully transparent and 1 is fully opaque."));
+        for (let a of transparencySteps)l.value(String(a));
+        l.default = "0.5", l.rmempty = !1;
+    }
+    {
+        let t = e.taboption("login", login_a.Value, "blur", _("Light mode backdrop blur radius"), _("Blur radius in pixels behind the login card in light mode. Use 0 to disable blur."));
+        t.datatype = "ufloat", t.default = "0", t.rmempty = !1;
+    }
+    {
+        let l = e.taboption("login", login_a.ListValue, "transparency_dark", _("Dark mode login card opacity"), _("Opacity of the login card in dark mode. 0 is fully transparent and 1 is fully opaque."));
+        for (let a of transparencySteps)l.value(String(a));
+        l.default = "0.5", l.rmempty = !1;
+    }
+    {
+        let t = e.taboption("login", login_a.Value, "blur_dark", _("Dark mode backdrop blur radius"), _("Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."));
+        t.datatype = "ufloat", t.default = "0", t.rmempty = !1;
+    }
+};
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config.tsx
+let fluent_config_e = L.form, fluent_config_n = L.uci;
+
+
+
+
+class fluent_config_i extends L.view {
     load() {
-        return fluent_config_a.load("fluent");
+        return fluent_config_n.load("fluent");
     }
-    render(e) {
-        let a = new fluent_config_t.Map("fluent", _("Fluent theme configuration"), _("Here you can set the primary color, theme mode, font weight, blur and transparency of the Fluent theme.")), n = a.section(fluent_config_t.TypedSection, "global", _("Theme configuration"));
-        n.addremove = !1, n.anonymous = !0;
-        {
-            let e = n.option(fluent_config_t.ListValue, "mode", _("Theme mode"));
-            e.value("normal", _("Follow system")), e.value("light", _("Light mode")), e.value("dark", _("Dark mode")), e.default = "normal", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.ListValue, "font_weight", _("Font"));
-            e.value("normal", _("Normal")), e.value("600", _("Semibold")), e.default = "600", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.ListValue, "control_height", _("Control Height"));
-            e.value("32", _("Compact (32px)")), e.value("42", _("Default (42px)")), e.default = "32", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Flag, "custom_select", _("Fluent Select Dropdown"), _("Transform native select elements into FluentUI-styled custom dropdowns."));
-            e.default = e.enabled, e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Flag, "view_transition", _("Page Transition Animation"), _("Enable smooth fade-out/fade-in transitions between page loads using the View Transition API."));
-            e.default = e.enabled, e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Flag, "tab_animation", _("Tab Slide Animation"), _("Enable sliding animation for tab menu underline indicators."));
-            e.default = e.enabled, e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Flag, "prefers_reduced_motion", _("Respect System Animation Settings"), _("When enabled, respects the browser/OS-level 'reduced motion' animation preferences. When disabled, ignores them and forces sliding tab animations."));
-            e.default = e.enabled, e.rmempty = !1, e.depends("tab_animation", "1");
-        }
-        {
-            let e = n.option(fluent_config_t.Flag, "loading_bar", _("Top Loading Bar"), _("Display a FluentUI-styled indeterminate progress bar at the top of the page during page loads and transitions."));
-            e.default = e.enabled, e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Value, "primary", _("[Light mode] Primary Color"), _("A HEX color (default: #0078d4)."));
-            e.default = "#0078d4", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
-                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
-                return setTimeout(()=>{
-                    let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".primary"]');
-                    e && l(e);
-                }, 0), o;
-            };
-        }
-        {
-            let e = n.option(fluent_config_t.ListValue, "transparency", _("[Light mode] Transparency"), _("0 transparent - 1 opaque (suggest: transparent: 0 or translucent preset: 0.5)."));
-            for (let t of fluent_config_r)e.value(String(t));
-            e.default = "0.5", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Value, "blur", _("[Light mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
-            e.datatype = "ufloat", e.default = "0", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Value, "progressbar_font", _("[Light mode] Progress bar Font Color"), _("A HEX color (default: #2e2b60)."));
-            e.default = "#2e2b60", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
-                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
-                return setTimeout(()=>{
-                    let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".progressbar_font"]');
-                    e && l(e);
-                }, 0), o;
-            };
-        }
-        {
-            let e = n.option(fluent_config_t.Value, "dark_primary", _("[Dark mode] Primary Color"), _("A HEX Color (default: #1a1a2e)."));
-            e.default = "#1a1a2e", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
-                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
-                return requestAnimationFrame(()=>{
-                    let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".dark_primary"]');
-                    e && l(e);
-                }), o;
-            };
-        }
-        {
-            let e = n.option(fluent_config_t.ListValue, "transparency_dark", _("[Dark mode] Transparency"), _("0 transparent - 1 opaque (suggest: black translucent preset: 0.5)."));
-            for (let t of fluent_config_r)e.value(String(t));
-            e.default = "0.5", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Value, "blur_dark", _("[Dark mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
-            e.datatype = "ufloat", e.default = "0", e.rmempty = !1;
-        }
-        {
-            let e = n.option(fluent_config_t.Button, "_save", _("Save settings"));
-            e.inputstyle = "apply", e.inputtitle = _("Save current settings"), e.onclick = ()=>(ui.changes.apply(!0), a.save(void 0, !0));
-        }
-        return a.render();
-    }
-    constructor(...t){
-        super(...t), _define_property(this, "handleSaveApply", null), _define_property(this, "handleSave", null), _define_property(this, "handleReset", null);
+    render(n) {
+        let i = new fluent_config_e.Map("fluent", _("Fluent theme settings"), _("Configure color mode, accent colors, animation behavior, and login-page appearance for luci-theme-fluent.")), l = i.section(fluent_config_e.TypedSection, "global", _("Theme settings"));
+        return l.addremove = !1, l.anonymous = !0, registerGeneralTab(l), registerColorsTab(l), registerAnimationTab(l), registerLoginTab(l), i.render();
     }
 }
-const main = fluent_config_n;
+const main = fluent_config_i;
 
 
 return main;

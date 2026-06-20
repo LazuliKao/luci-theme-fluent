@@ -962,6 +962,101 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
   display: flex;
 }
 
+.fluent-color-field {
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  width: min(100%, 420px);
+  display: flex;
+}
+
+.fluent-color-field > .fluent-color-field__text {
+  flex: auto;
+  min-width: 0;
+}
+
+.fluent-color-swatch {
+  height: var(--fluent-btn-height);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  border-radius: var(--fluent-radius-md);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard),color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border: 1px solid #0000;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.fluent-color-swatch:disabled {
+  color: var(--fluent-text-disabled);
+  background: var(--fluent-bg-active);
+  border-color: var(--fluent-bg-active);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.fluent-color-swatch:focus-visible {
+  outline: 2px solid var(--fluent-focus-color);
+  outline-offset: 2px;
+}
+
+.fluent-color-swatch {
+  background: var(--fluent-btn-secondary-bg);
+  color: var(--fluent-text);
+  border-color: var(--fluent-btn-secondary-border);
+}
+
+.fluent-color-swatch:hover {
+  background: var(--fluent-btn-secondary-bg-hover);
+  border-color: var(--fluent-btn-secondary-border-hover);
+}
+
+.fluent-color-swatch:active {
+  background: var(--fluent-btn-secondary-bg-active);
+  border-color: var(--fluent-btn-secondary-border-active);
+}
+
+.fluent-color-swatch {
+  width: var(--fluent-input-height);
+  min-width: var(--fluent-input-height);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.fluent-color-swatch:focus-within {
+  outline: 2px solid var(--fluent-focus-color);
+  outline-offset: 2px;
+}
+
+.fluent-color-swatch__input {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  inset: 0;
+}
+
+.fluent-color-swatch__preview {
+  width: calc(var(--fluent-input-height) - var(--fluent-space-xs)*2);
+  height: calc(var(--fluent-input-height) - var(--fluent-space-xs)*2);
+  border-radius: var(--fluent-radius-sm);
+  border: 1px solid var(--fluent-input-border);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.fluent-color-swatch__input:disabled + .fluent-color-swatch__preview {
+  opacity: .5;
+}
+
 input:disabled, .cbi-input-text:disabled, .cbi-input-password:disabled, .cbi-input-date:disabled, .cbi-input-time:disabled, .cbi-input-datetime:disabled {
   background-color: var(--fluent-input-bg-disabled);
   color: var(--fluent-text-disabled);

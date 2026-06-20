@@ -33,6 +33,7 @@
   let font_weight = '400';
   let font_size = '14';
   let progressbar_font = '#2e2b60';
+  let dark_progressbar_font = '#d6d9e5';
   let main_left_font_color = '#69758c';
   let bar_color = primary;
   let sidebar_width = '260';
@@ -78,6 +79,7 @@
     blur_opacity = cfg.get_first('fluent', 'global', 'transparency') || '0';
     blur_opacity_dark = cfg.get_first('fluent', 'global', 'transparency_dark') || '0';
     progressbar_font = cfg.get_first('fluent', 'global', 'progressbar_font') || '#2e2b60';
+    dark_progressbar_font = cfg.get_first('fluent', 'global', 'dark_progressbar_font') || '#d6d9e5';
     sidebar_width = cfg.get_first('fluent', 'global', 'sidebar_width') || '260';
     header_height = cfg.get_first('fluent', 'global', 'header_height') || '48';
     border_radius = cfg.get_first('fluent', 'global', 'border_radius') || '4';
@@ -178,6 +180,7 @@
           --fluent-text: #f3f2f1;
           --fluent-text-secondary: #a0a0a0;
           --fluent-border: #404040;
+          --fluent-progressbar-font-color: {{ dark_progressbar_font }};
           {% if (dark_sidebar_bg) { %}--fluent-sidebar-bg: {{ dark_sidebar_bg }};{% } %}
           {% if (dark_card_bg) { %}--fluent-bg-card: {{ dark_card_bg }};{% } %}
           {% if (dark_page_bg) { %}--fluent-bg: {{ dark_page_bg }};{% } %}
@@ -191,6 +194,7 @@
         --fluent-text: #f3f2f1;
         --fluent-text-secondary: #a0a0a0;
         --fluent-border: #404040;
+        --fluent-progressbar-font-color: {{ dark_progressbar_font }};
         {% if (dark_sidebar_bg) { %}--fluent-sidebar-bg: {{ dark_sidebar_bg }};{% } %}
         {% if (dark_card_bg) { %}--fluent-bg-card: {{ dark_card_bg }};{% } %}
         {% if (dark_page_bg) { %}--fluent-bg: {{ dark_page_bg }};{% } %}

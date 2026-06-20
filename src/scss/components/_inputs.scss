@@ -38,6 +38,56 @@ input[type="week"],
   gap: var(--fluent-space-xs);
 }
 
+// Fluent-styled color field used by theme settings
+.fluent-color-field {
+  display: flex;
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  width: min(100%, 420px);
+
+  > .fluent-color-field__text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.fluent-color-swatch {
+  @include button-secondary;
+
+  position: relative;
+  width: var(--fluent-input-height);
+  min-width: var(--fluent-input-height);
+  padding: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  &:focus-within {
+    outline: 2px solid var(--fluent-focus-color);
+    outline-offset: 2px;
+  }
+}
+
+.fluent-color-swatch__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fluent-color-swatch__preview {
+  width: calc(var(--fluent-input-height) - (var(--fluent-space-xs) * 2));
+  height: calc(var(--fluent-input-height) - (var(--fluent-space-xs) * 2));
+  border-radius: var(--fluent-radius-sm);
+  border: 1px solid var(--fluent-input-border);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.fluent-color-swatch__input:disabled + .fluent-color-swatch__preview {
+  opacity: 0.5;
+}
+
 // Disabled state
 input:disabled,
 .cbi-input-text:disabled,

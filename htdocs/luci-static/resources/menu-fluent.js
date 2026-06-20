@@ -739,9 +739,9 @@ const main = baseclass.extend({
         }
         let s = document.querySelector("a.showSide"), d = document.querySelector(".darkMask");
         s && s.addEventListener("click", null != (t = ui.createHandlerFn(this, "handleSidebarToggle")) ? t : ()=>{
-            console.warn("Sidebar toggle handler not found");
+            console.warn("Fluent menu: missing sidebar toggle handler");
         }), d && d.addEventListener("click", null != (n = ui.createHandlerFn(this, "handleSidebarToggle")) ? n : ()=>{
-            console.warn("Sidebar toggle handler not found");
+            console.warn("Fluent menu: missing sidebar toggle handler");
         }), window.addEventListener("resize", L.bind(this.adjustBrandTextSize, this));
     },
     handleMenuExpand (e) {
@@ -765,15 +765,15 @@ const main = baseclass.extend({
         }), d = ui.menu.getChildren(a);
         if (0 === d.length || r > 2) return jsx(Fragment, {});
         for(let n = 0; n < d.length; n++){
-            let i = d[n], c = L.env.dispatchpath[r] === i.name && L.env.dispatchpath[r - 1] === a.name, o = this.renderMainMenu(i, "".concat(l, "/").concat(i.name), r), u = o.children.length > 0, h = u ? "slide" : null, m = u ? "menu" : "food";
-            c && (s.classList.add("active"), h = h ? "".concat(h, " active") : "null active");
+            let i = d[n], c = L.env.dispatchpath[r] === i.name && L.env.dispatchpath[r - 1] === a.name, o = this.renderMainMenu(i, "".concat(l, "/").concat(i.name), r), u = o.children.length > 0, m = u ? "slide" : null, h = u ? "menu" : "food";
+            c && (s.classList.add("active"), m = m ? "".concat(m, " active") : "null active");
             let p = jsxs("li", {
-                class: null != h ? h : void 0,
+                class: null != m ? m : void 0,
                 children: [
                     jsx("a", {
                         href: L.url(l, i.name),
                         onclick: 1 === r ? ui.createHandlerFn(this, "handleMenuExpand") : null,
-                        class: m,
+                        class: h,
                         "data-title": (i.title || "").replace(/ /g, "_"),
                         children: _(i.title || "")
                     }),
@@ -795,7 +795,7 @@ const main = baseclass.extend({
         if (0 === d.length) return jsx(Fragment, {});
         for(let t = 0; t < d.length; t++){
             let n = d[t], l = L.env.dispatchpath[r + 2] === n.name, i = l ? " active" : "", o = jsx("li", {
-                class: _("tabmenu-item-%s %s").format(n.name, i),
+                class: "tabmenu-item-".concat(n.name).concat(i),
                 children: jsx("a", {
                     href: L.url(a, n.name),
                     children: _(n.title || "")
@@ -824,7 +824,7 @@ const main = baseclass.extend({
     },
     handleSidebarToggle (e) {
         let t = document.querySelector("a.showSide"), n = document.querySelector("#mainmenu"), a = document.querySelector(".darkMask"), l = document.querySelector(".main-right");
-        t && n && a && l ? t.classList.contains("active") ? (t.classList.remove("active"), n.classList.remove("active"), l.classList.remove("active"), a.classList.remove("active")) : (t.classList.add("active"), n.classList.add("active"), l.classList.add("active"), a.classList.add("active"), this.adjustBrandTextSize()) : console.warn("Sidebar toggle elements not found");
+        t && n && a && l ? t.classList.contains("active") ? (t.classList.remove("active"), n.classList.remove("active"), l.classList.remove("active"), a.classList.remove("active")) : (t.classList.add("active"), n.classList.add("active"), l.classList.add("active"), a.classList.add("active"), this.adjustBrandTextSize()) : console.warn("Fluent menu: sidebar toggle elements are unavailable");
     }
 });
 

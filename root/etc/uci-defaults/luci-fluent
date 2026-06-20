@@ -13,6 +13,8 @@ if ! uci -q get fluent.@global[0] > /dev/null 2>&1; then
 	set fluent.global.mode='normal'
 	set fluent.global.primary='#0078D4'
 	set fluent.global.dark_primary='#4da6ff'
+	set fluent.global.progressbar_font='#2e2b60'
+	set fluent.global.dark_progressbar_font='#d6d9e5'
 	set fluent.global.font_weight='400'
 	set fluent.global.font_size='14'
 	set fluent.global.border_radius='4'

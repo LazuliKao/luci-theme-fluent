@@ -77,7 +77,7 @@ const module: Module = {
         "click",
         ui.createHandlerFn(this, "handleSidebarToggle") ??
           (() => {
-            console.warn("Sidebar toggle handler not found");
+            console.warn("Fluent menu: missing sidebar toggle handler");
           }),
       );
     }
@@ -86,7 +86,7 @@ const module: Module = {
         "click",
         ui.createHandlerFn(this, "handleSidebarToggle") ??
           (() => {
-            console.warn("Sidebar toggle handler not found");
+            console.warn("Fluent menu: missing sidebar toggle handler");
           }),
       );
     }
@@ -234,7 +234,7 @@ const module: Module = {
       const child = children[i];
       const isActive = L.env.dispatchpath[currentLevel + 2] === child.name;
       const activeClass = isActive ? " active" : "";
-      const className = _("tabmenu-item-%s %s").format(child.name, activeClass);
+      const className = `tabmenu-item-${child.name}${activeClass}`;
 
       const tabItem = (
         <li class={className}>
@@ -301,7 +301,7 @@ const module: Module = {
 
     // Check if any required elements are missing
     if (!showSideButton || !sidebar || !darkMask || !scrollbarArea) {
-      console.warn("Sidebar toggle elements not found");
+      console.warn("Fluent menu: sidebar toggle elements are unavailable");
       return;
     }
 

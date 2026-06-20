@@ -2,10 +2,11 @@ config global
 	# Theme Mode: normal (follow system), light, dark
 	option mode 'normal'
 	
-	# Primary Colors
+	# Accent and progress-bar label colors
 	option primary '#0078D4'
 	option dark_primary '#4da6ff'
-	
+	option progressbar_font '#2e2b60'
+	option dark_progressbar_font '#d6d9e5'
 	# Font Settings
 	option font_weight '400'
 	option font_size '14'
