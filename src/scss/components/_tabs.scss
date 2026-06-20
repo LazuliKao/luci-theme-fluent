@@ -183,7 +183,7 @@ ul.cbi-tabmenu {
 }
 .cbi-section {
   > .cbi-tabmenu + .cbi-section-node {
-    padding-top: var(--fluent-space-lg);
+    padding-top: 0;
   }
 }
 // ============================================================
@@ -213,11 +213,19 @@ ul.cbi-tabmenu {
       overflow: visible;
       height: auto;
       opacity: 1;
+      padding-top: var(--fluent-space-lg);
     }
     &:not([data-tab-active="true"]) {
       display: none !important;
     }
   }
+}
+
+// Parent active panel with nested active tab panel: no extra spacing
+[data-initialized="true"] > [data-tab][data-tab-title][data-tab-active="true"]:has(
+  .cbi-section-node[data-initialized="true"] > [data-tab][data-tab-title][data-tab-active="true"]
+) {
+  padding-top: 0;
 }
 
 .cbi-tabcontainer {

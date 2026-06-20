@@ -1086,10 +1086,11 @@ input[type="week"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .cbi-section > * .cbi-section {
+  box-shadow: none;
   padding: 0;
 }
 
-.cbi-section > .cbi-section-node {
+.cbi-section .cbi-section-node {
   padding-top: var(--fluent-space-lg);
 }
 
@@ -1753,8 +1754,6 @@ body.modal-overlay-active #modal_overlay {
 .modal .alert, .modal .alert-message {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  padding-left: var(--fluent-modal-padding) !important;
-  padding-right: var(--fluent-modal-padding) !important;
   box-shadow: none !important;
   color: var(--fluent-text) !important;
   background: none !important;
@@ -4068,7 +4067,7 @@ ul.tabs > li.disabled > a:after, ul.tabs > li[disabled] > a:after, ul.cbi-tabmen
 }
 
 .cbi-section > .cbi-tabmenu + .cbi-section-node {
-  padding-top: var(--fluent-space-lg);
+  padding-top: 0;
 }
 
 #tabmenu, .tabmenu {
@@ -4086,12 +4085,17 @@ ul.tabs > li.disabled > a:after, ul.tabs > li[disabled] > a:after, ul.cbi-tabmen
 [data-initialized="true"] > [data-tab][data-tab-title][data-tab-active="true"] {
   opacity: 1;
   height: auto;
+  padding-top: var(--fluent-space-lg);
   display: block;
   overflow: visible;
 }
 
 [data-initialized="true"] > [data-tab][data-tab-title]:not([data-tab-active="true"]) {
   display: none !important;
+}
+
+[data-initialized="true"] > [data-tab][data-tab-title][data-tab-active="true"]:has(.cbi-section-node[data-initialized="true"] > [data-tab][data-tab-title][data-tab-active="true"]) {
+  padding-top: 0;
 }
 
 .cbi-tabcontainer {
