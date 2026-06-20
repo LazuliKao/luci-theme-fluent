@@ -986,7 +986,7 @@ div[id="view"] > :not(.spinning) {
   display: inline-flex;
 }
 
-.control-group:only-child(.cbi-button) {
+.control-group:not(:has( > :not(.cbi-button))) {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;

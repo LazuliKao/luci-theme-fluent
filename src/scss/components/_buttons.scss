@@ -110,3 +110,10 @@
   gap: var(--fluent-space-sm);
   margin-bottom: var(--fluent-space-md);
 }
+
+.control-group:not(:has(> :not(.cbi-button))){
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
