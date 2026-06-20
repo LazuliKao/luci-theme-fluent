@@ -23,7 +23,7 @@ select {
 select.cbi-input-select {
   @include input-base;
   @include input-focus-ripple-v2(
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+    url("../assets/select-chevron.svg"),
     right 10px center,
     10px 6px
   );

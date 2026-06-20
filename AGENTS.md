@@ -33,29 +33,30 @@ cd luci-theme-fluent
 pnpm install          # Install deps (sass, biome, rsbuild for src/web)
 pnpm run build        # Compile SCSS + LuCI JS/TSX
 pnpm run watch        # Auto-rebuild SCSS + LuCI JS/TSX
-pnpm run lint         # Biome lint for htdocs/ and src/web/src/
+pnpm run lint         # Biome lint for htdocs/ and src/web/resources
 ```
 
 ### Build Commands
 | Command              | Action                                                                  |
 | -------------------- | ----------------------------------------------------------------------- |
 | `pnpm run css:build` | Compile `src/scss/fluent.scss` → `htdocs/luci-static/fluent/css/fluent.css` |
-| `pnpm run build:js`  | Build `src/web/` TSX → `htdocs/luci-static/resources/`                 |
+| `pnpm run build:js`  | Build LuCI TSX from `src/web/resources/` → `htdocs/luci-static/resources/` |
 | `pnpm run build`     | Compile SCSS + LuCI JS/TSX                                              |
 | `pnpm run watch`     | Watch mode for SCSS + LuCI JS/TSX                                       |
 | `pnpm run lint`      | Run Biome linter                                                        |
-| `pnpm run typecheck` | Type-check `src/web/`                                                   |
+| `pnpm run typecheck` | Type-check `src/` (`cd src && pnpm run typecheck`)                         |
 ## Project Structure (luci-theme-fluent)
 
 ```
 luci-theme-fluent/
 ├── src/
 │   ├── scss/                    # SCSS stylesheet sources
+│   │   ├── assets/                # SVG sources auto-inlined into compiled CSS
 │   │   ├── fluent.scss          # Entry point (27 @use imports)
 │   │   ├── _variables.scss      # CSS custom properties / design tokens
 │   │   ├── _mixins.scss         # Reusable SCSS mixins
 │   │   ├── _base.scss           # Reset, typography, animations
-│   │   ├── components/          # 20 component partials
+│   │   ├── components/          # 24 component partials
 │   │   │   ├── _buttons.scss    # FluentUI button variants
 │   │   │   ├── _inputs.scss     # Text/number/email inputs
 │   │   │   ├── _textarea.scss   # Textarea
@@ -83,18 +84,17 @@ luci-theme-fluent/
 │   │   └── themes/
 │   │       ├── _light.scss      # Light theme variables
 │   │       └── _dark.scss       # Dark theme variables
-│   ├── web/                     # TypeScript/TSX source code for UI
-│   │   ├── src/
-│   │   │   └── resources/
-│   │   │       ├── menu-fluent.tsx # Menu registration logic
-│   │   │       └── view/
-│   │   │           └── fluent-config.tsx # Configuration settings view
-│   │   ├── package.json         # Rsbuild & TS config/dependencies
-│   │   └── rsbuild.config.ts    # Rsbuild bundler configuration
+│   ├── web/                     # TypeScript/TSX source code for LuCI resources
+│   │   ├── resources/           # Source entrypoints and UI modules
+│   │   │   ├── menu-fluent.tsx  # Menu registration logic
+│   │   │   ├── utils/           # Shared UI helpers
+│   │   │   └── view/
+│   │   │       └── fluent-config.tsx # Configuration settings view
+│   │   └── index.ts             # JS environment entry
 │   └── script/                  # Development scripts (e.g. icon generation)
 ├── htdocs/luci-static/
 │   ├── fluent/                  # Compiled output + static assets
-│   │   ├── css/fluent.css       # Compiled CSS (~176 KB)
+│   │   ├── css/fluent.css       # Compiled CSS output
 │   │   ├── background/          # User-uploaded backgrounds
 │   │   ├── fonts/               # Self-contained fonts
 │   │   ├── icon/                # Favicons & app icons
@@ -158,7 +158,7 @@ uci set fluent.global.transparency='0.92'   # Login card opacity
 uci commit fluent
 ```
 
-Full config options: defined in `src/web/src/resources/view/fluent-config.tsx` (8 sections: mode, colors, typography, layout, cards, animations, login, advanced).
+Full config options: defined in `src/web/resources/view/fluent-config.tsx` (8 sections: mode, colors, typography, layout, cards, animations, login, advanced).
 
 ## CI/CD Pipeline
 

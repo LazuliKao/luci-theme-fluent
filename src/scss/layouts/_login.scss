@@ -335,7 +335,7 @@ body.login-page {
             height: 14px !important;
             display: block !important;
             flex-shrink: 0 !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z' fill='%23e81123'/%3E%3Cpath d='M8 4a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 8 4zm0 8.25a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75z' fill='%23ffffff'/%3E%3C/svg%3E") !important;
+            background-image: url("../assets/login-error-light.svg") !important;
             background-size: contain !important;
             background-repeat: no-repeat !important;
           }
@@ -655,7 +655,7 @@ body.login-page {
         color: #e37d80 !important;
 
         &::after {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14z' fill='%23e37d80'/%3E%3Cpath d='M8 4a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 8 4zm0 8.25a.875.875 0 1 1 0-1.75.875.875 0 0 1 0 1.75z' fill='%23292929'/%3E%3C/svg%3E") !important;
+          background-image: url("../assets/login-error-dark.svg") !important;
         }
       }
 

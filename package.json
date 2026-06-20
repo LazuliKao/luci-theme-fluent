@@ -11,8 +11,8 @@
     "watch:css": "cd src && pnpm exec rsbuild build --environment css --watch",
     "watch:js": "cd src && pnpm exec rsbuild build --environment js --watch",
     "watch": "cd src && pnpm run watch",
-    "lint": "biome lint --no-errors-on-unmatched htdocs src/web/src",
-    "format": "biome format --write --no-errors-on-unmatched htdocs src/web/src",
+    "lint": "biome lint --no-errors-on-unmatched htdocs src/web/resources",
+    "format": "biome format --write --no-errors-on-unmatched htdocs src/web/resources", 
     "test": "echo \"No tests yet\" && exit 0",
     "dev:remote": "luci-types dev",
     "icons:generate": "tsx src/script/generate-icons.ts"

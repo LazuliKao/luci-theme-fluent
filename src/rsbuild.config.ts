@@ -107,8 +107,11 @@ export default defineConfig({
       },
       tools: {
         htmlPlugin: false,
-        cssLoader: {
-          url: false,
+        cssLoader: (config) => {
+          config.url = {
+            filter: (url: string) => url.startsWith("../assets/") || url.startsWith("./assets/"),
+          };
+          return config;
         },
         rspack: (config) => {
           config.plugins = config.plugins || [];
