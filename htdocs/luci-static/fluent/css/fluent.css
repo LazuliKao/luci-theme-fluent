@@ -3960,14 +3960,8 @@ ul.tabs .fluent-tab-slider, ul.cbi-tabmenu .fluent-tab-slider {
   bottom: 0;
 }
 
-body[data-tab-animation="0"] ul.tabs .fluent-tab-slider, body[data-tab-animation="0"] ul.cbi-tabmenu .fluent-tab-slider {
+body[data-tab-animation="0"] ul.tabs .fluent-tab-slider, body[data-tab-animation="0"] ul.cbi-tabmenu .fluent-tab-slider, body[data-reduce-motion="true"] ul.tabs .fluent-tab-slider, body[data-reduce-motion="true"] ul.cbi-tabmenu .fluent-tab-slider {
   transition: none !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ul.tabs .fluent-tab-slider, ul.cbi-tabmenu .fluent-tab-slider {
-    transition: none !important;
-  }
 }
 
 ul.tabs > li, ul.cbi-tabmenu > li {

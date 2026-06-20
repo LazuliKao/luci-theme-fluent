@@ -3,6 +3,8 @@ import { setupSelectionPause } from "./utils/poll-pause";
 import { SlideAnimations } from "./utils/slide-animations";
 import { setupFluentSelects } from "./utils/select-dropdown";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
+import { setupThemeFeatures } from "./utils/theme-features";
+
 
 interface Module {
   __init__: () => void;
@@ -32,6 +34,7 @@ const module: Module = {
     setupErrorTooltips();
     setupFluentSelects();
     setupIfaceboxTooltips();
+    setupThemeFeatures();
   },
 
   /**

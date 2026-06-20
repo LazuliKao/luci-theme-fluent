@@ -580,7 +580,141 @@ function setupIfaceboxTooltips() {
     }, !0);
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/theme-features.ts
+function setupThemeFeatures() {
+    let t = document.body;
+    if (!t) return;
+    let e = t.getAttribute('data-prefers-reduced-motion') || '1';
+    if ('1' === e) {
+        let e = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        t.setAttribute('data-reduce-motion', e ? 'true' : 'false');
+    } else t.setAttribute('data-reduce-motion', 'false');
+    '1' === e && window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e)=>{
+        t.setAttribute('data-reduce-motion', e.matches ? 'true' : 'false');
+    });
+    let a = t.getAttribute('data-theme-mode') || 'normal', n = document.getElementById('theme-toggle');
+    if (n) {
+        let t = 'dark' === document.documentElement.getAttribute('data-theme');
+        n.setAttribute('data-active-theme', t ? 'dark' : 'light'), requestAnimationFrame(()=>{
+            n.classList.add('visible');
+        }), n.addEventListener('click', ()=>{
+            let t = 'dark' === document.documentElement.getAttribute('data-theme') ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', t), n.setAttribute('data-active-theme', t);
+            try {
+                localStorage.setItem('fluent-theme', t);
+            } catch (t) {}
+        }), 'normal' === a && window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (t)=>{
+            try {
+                if (localStorage.getItem('fluent-theme')) return;
+            } catch (t) {}
+            let e = t.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', e), n.setAttribute('data-active-theme', e);
+        });
+    }
+    let i = '1' === t.getAttribute('data-tab-animation');
+    function l(t) {
+        var e;
+        let a = t.querySelector('.fluent-tab-slider');
+        a || ((a = document.createElement('div')).className = 'fluent-tab-slider', t.appendChild(a));
+        let n = t.querySelector('li.cbi-tab, li.active');
+        if (!n) {
+            a.style.width = '0px';
+            return;
+        }
+        let i = n.querySelector('a');
+        if (!i) return;
+        let l = i.getBoundingClientRect(), s = t.getBoundingClientRect(), r = window.getComputedStyle(i), d = parseFloat(r.paddingLeft) || 16, o = parseFloat(r.paddingRight) || 16, u = l.left - s.left + t.scrollLeft + d, c = l.width - d - o, m = "".concat(u, "px"), f = "".concat(c, "px");
+        if (a.style.left === m && a.style.width === f) return;
+        let b = function(t) {
+            if (t.classList.contains('tabs')) return 'header-tabs';
+            let e = t.closest('.cbi-section');
+            return (null == e ? void 0 : e.id) ? "cbi-tabs-".concat(e.id) : 'cbi-tabs-generic';
+        }(t), h = null == (e = window._fluent_last_tab_pos) ? void 0 : e[b];
+        '' === a.style.left && h && Date.now() - h.time < 2000 && (a.style.transition = 'none', a.style.left = h.left, a.style.width = h.width, a.offsetHeight, a.style.transition = ''), a.style.left = m, a.style.width = f, window._fluent_last_tab_pos && (window._fluent_last_tab_pos[b] = {
+            left: m,
+            width: f,
+            time: Date.now()
+        });
+    }
+    function s() {
+        document.querySelectorAll('ul.cbi-tabmenu, ul.tabs').forEach((t)=>{
+            if (t.dataset.sliderInit) return void l(t);
+            t.dataset.sliderInit = 'true';
+            let e = t.querySelector('.fluent-tab-slider');
+            if (e || ((e = document.createElement('div')).className = 'fluent-tab-slider', t.appendChild(e)), i && t.classList.contains('tabs')) {
+                let a = null;
+                try {
+                    a = sessionStorage.getItem('fluent-tab-slider-pos');
+                } catch (t) {}
+                if (a) try {
+                    let n = JSON.parse(a);
+                    sessionStorage.removeItem('fluent-tab-slider-pos'), e.style.transition = 'none', e.style.left = n.left, e.style.width = n.width, e.offsetHeight, e.style.transition = '', l(t);
+                } catch (e) {
+                    l(t);
+                }
+                else l(t), e.style.transition = 'none', e.style.transform = 'scaleX(0)', e.offsetHeight, e.style.transition = '', e.style.transform = 'scaleX(1)';
+                t.querySelectorAll('li > a').forEach((t)=>{
+                    let a = t.getAttribute('href');
+                    a && '#' !== a && t.addEventListener('click', ()=>{
+                        try {
+                            e && sessionStorage.setItem('fluent-tab-slider-pos', JSON.stringify({
+                                left: e.style.left,
+                                width: e.style.width
+                            }));
+                        } catch (t) {}
+                    });
+                });
+            } else l(t);
+            new MutationObserver(()=>{
+                l(t);
+            }).observe(t, {
+                attributes: !0,
+                subtree: !0,
+                attributeFilter: [
+                    'class'
+                ]
+            });
+        });
+    }
+    if (window._fluent_last_tab_pos = window._fluent_last_tab_pos || {}, s(), new MutationObserver(()=>s()).observe(t, {
+        childList: !0,
+        subtree: !0
+    }), window.addEventListener('resize', ()=>{
+        document.querySelectorAll('ul.cbi-tabmenu, ul.tabs').forEach((t)=>{
+            l(t);
+        });
+    }), '1' === t.getAttribute('data-loading-bar')) {
+        let t = !1, e = document.getElementById('fluent-top-loading'), a = ()=>{
+            e && !t && e.classList.add('loaded');
+        }, n = ()=>{
+            e && e.classList.remove('loaded');
+        };
+        'interactive' === document.readyState || 'complete' === document.readyState ? a() : document.addEventListener('DOMContentLoaded', a), window.addEventListener('load', a), window.addEventListener('beforeunload', ()=>{
+            t = !0, n();
+        }), document.addEventListener('click', (t)=>{
+            let e = t.target;
+            if (!e) return;
+            let a = e.closest('a');
+            if (a) {
+                let t = a.getAttribute('href');
+                !t || t.startsWith('#') || t.startsWith("javascript:") || a.getAttribute('target') || a.hostname !== location.hostname || n();
+            }
+        }), document.addEventListener('submit', (t)=>{
+            let e = t.target;
+            if (!e) return;
+            let a = e.closest('form');
+            a && !a.getAttribute('target') && n();
+        }), new MutationObserver(()=>{
+            null !== document.querySelector('.spinning, .loading, #view > .spinning') ? n() : a();
+        }).observe(document.documentElement, {
+            childList: !0,
+            subtree: !0
+        });
+    }
+}
+
 ;// CONCATENATED MODULE: ./web/resources/menu-fluent.tsx
+
 
 
 
@@ -590,7 +724,7 @@ function setupIfaceboxTooltips() {
 const main = baseclass.extend({
     async __init__ () {
         let e = await ui.menu.load();
-        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips();
+        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures();
     },
     render (e) {
         var t, n, a;

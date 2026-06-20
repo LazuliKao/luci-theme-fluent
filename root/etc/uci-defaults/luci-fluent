@@ -29,6 +29,7 @@ if ! uci -q get fluent.@global[0] > /dev/null 2>&1; then
 	set fluent.global.custom_select='1'
 	set fluent.global.view_transition='1'
 	set fluent.global.tab_animation='1'
+	set fluent.global.prefers_reduced_motion='1'
 	set fluent.global.loading_bar='1'
 EOF
 	uci commit fluent

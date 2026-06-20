@@ -75,6 +75,12 @@ class mainImpl extends L.view {
       o.rmempty = false;
     }
     {
+      const o = s.option(form.Flag, "prefers_reduced_motion", _("Respect System Animation Settings"), _("When enabled, respects the browser/OS-level 'reduced motion' animation preferences. When disabled, ignores them and forces sliding tab animations."));
+      o.default = o.enabled;
+      o.rmempty = false;
+      o.depends("tab_animation", "1");
+    }
+    {
       const o = s.option(form.Flag, "loading_bar", _("Top Loading Bar"), _("Display a FluentUI-styled indeterminate progress bar at the top of the page during page loads and transitions."));
       o.default = o.enabled;
       o.rmempty = false;

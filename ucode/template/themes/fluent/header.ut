@@ -45,6 +45,7 @@
   let custom_select = '1';
   let view_transition = '1';
   let tab_animation = '1';
+  let prefers_reduced_motion = '1';
   let loading_bar = '1';
   let dark_sidebar_bg = '';
   let dark_card_bg = '';
@@ -90,6 +91,7 @@
     custom_select = cfg.get_first('fluent', 'global', 'custom_select') || '1';
     view_transition = cfg.get_first('fluent', 'global', 'view_transition') || '1';
     tab_animation = cfg.get_first('fluent', 'global', 'tab_animation') || '1';
+    prefers_reduced_motion = cfg.get_first('fluent', 'global', 'prefers_reduced_motion') || '1';
     loading_bar = cfg.get_first('fluent', 'global', 'loading_bar') || '1';
 
     bar_color = mode === 'dark' ? dark_primary : primary;
@@ -229,17 +231,6 @@
       to { opacity: 1; }
     }
     
-    {% if (tab_animation == '1') { %}
-    /* Native morphing transition for the active tab indicator */
-    .fluent-tab-slider {
-      view-transition-name: fluent-tab-slider;
-      contain: layout;
-    }
-    ::view-transition-group(fluent-tab-slider) {
-      animation-duration: {{ transition_duration }};
-      animation-timing-function: var(--fluent-easing-standard, cubic-bezier(0.8, 0, 0.2, 1));
-    }
-    {% } %}
   </style>
   {% } %}
 
@@ -322,249 +313,6 @@
       } else {
         document.documentElement.setAttribute('data-theme', 'light');
       }
-
-      // Once DOM is loaded, setup toggle behavior
-      window.addEventListener('DOMContentLoaded', function() {
-        var toggle = document.getElementById('theme-toggle');
-        if (!toggle) return;
-
-        toggle.setAttribute('data-active-theme', isDark ? 'dark' : 'light');
-        
-        // Show toggle button with a smooth fade-in animation
-        requestAnimationFrame(function() {
-          toggle.classList.add('visible');
-        });
-
-        // Toggle click handler
-        toggle.addEventListener('click', function() {
-          var current = document.documentElement.getAttribute('data-theme');
-          var newTheme = (current === 'dark') ? 'light' : 'dark';
-          
-          if (newTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-          toggle.setAttribute('data-active-theme', newTheme);
-          
-          try { localStorage.setItem('fluent-theme', newTheme); } catch(e) {}
-        });
-
-        // If in 'normal' mode, listen to system color scheme changes
-        if (mode === 'normal') {
-          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            // Only follow system changes if the user hasn't set a manual preference
-            try {
-              if (localStorage.getItem('fluent-theme')) return;
-            } catch(err) {}
-            var dark = e.matches;
-            document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-            toggle.setAttribute('data-active-theme', dark ? 'dark' : 'light');
-          });
-        }
-      });
-    })();
-  </script>
-  <script>
-    // FluentUI 2 sliding tab indicator logic
-    (function() {
-      var tabAnimationEnabled = '{{ tab_animation }}' === '1';
-      var viewTransitionEnabled = '{{ view_transition }}' === '1';
-      
-      // Check if browser supports View Transition API and it's enabled by user
-      var hasViewTransition = viewTransitionEnabled 
-        && Boolean(document.startViewTransition) 
-        && CSS.supports('view-transition-name', 'test');
-
-      function updateSlider(ul) {
-        let slider = ul.querySelector('.fluent-tab-slider');
-        if (!slider) {
-          slider = document.createElement('div');
-          slider.className = 'fluent-tab-slider';
-          ul.appendChild(slider);
-        }
-        
-        const activeLi = ul.querySelector('li.cbi-tab, li.active');
-        if (!activeLi) {
-          slider.style.width = '0px';
-          return;
-        }
-        
-        const activeA = activeLi.querySelector('a');
-        if (!activeA) return;
-        
-        const rectA = activeA.getBoundingClientRect();
-        const rectUl = ul.getBoundingClientRect();
-        
-        const style = window.getComputedStyle(activeA);
-        const paddingLeft = parseFloat(style.paddingLeft) || 16;
-        const paddingRight = parseFloat(style.paddingRight) || 16;
-        
-        // Calculate offset relative to the ul scroll container boundary
-        const left = rectA.left - rectUl.left + ul.scrollLeft + paddingLeft;
-        const width = rectA.width - paddingLeft - paddingRight;
-        
-        slider.style.left = left + 'px';
-        slider.style.width = width + 'px';
-      }
-
-      function initTabs() {
-        const tabLists = document.querySelectorAll('ul.cbi-tabmenu, ul.tabs');
-        tabLists.forEach(ul => {
-          if (ul.dataset.sliderInit) {
-            updateSlider(ul);
-            return;
-          }
-          ul.dataset.sliderInit = 'true';
-          
-          let slider = ul.querySelector('.fluent-tab-slider');
-          if (!slider) {
-            slider = document.createElement('div');
-            slider.className = 'fluent-tab-slider';
-            ul.appendChild(slider);
-          }
-
-          // sessionStorage fallback: only if tab_animation is enabled AND View Transition is not active
-          if (tabAnimationEnabled && !hasViewTransition && ul.classList.contains('tabs')) {
-            var saved = null;
-            try { saved = sessionStorage.getItem('fluent-tab-slider-pos'); } catch(e) {}
-            
-            if (saved) {
-              try {
-                var pos = JSON.parse(saved);
-                sessionStorage.removeItem('fluent-tab-slider-pos');
-                
-                // Position instantly at old position
-                slider.style.transition = 'none';
-                slider.style.left = pos.left;
-                slider.style.width = pos.width;
-                slider.offsetHeight; // force reflow
-                
-                // Restore transition and slide to new active position
-                slider.style.transition = '';
-                updateSlider(ul);
-              } catch(e) {
-                updateSlider(ul);
-              }
-            } else {
-              // Initial load animation: scaleX
-              updateSlider(ul);
-              slider.style.transition = 'none';
-              slider.style.transform = 'scaleX(0)';
-              slider.offsetHeight; // force reflow
-              slider.style.transition = '';
-              slider.style.transform = 'scaleX(1)';
-            }
-
-            // Click listener to save position
-            ul.querySelectorAll('li > a').forEach(function(a) {
-              if (a.getAttribute('href') && a.getAttribute('href') !== '#') {
-                a.addEventListener('click', function() {
-                  try {
-                    sessionStorage.setItem('fluent-tab-slider-pos', JSON.stringify({
-                      left: slider.style.left,
-                      width: slider.style.width
-                    }));
-                  } catch(e) {}
-                });
-              }
-            });
-          } else {
-            updateSlider(ul);
-          }
-          
-          ul.addEventListener('click', () => {
-            setTimeout(() => updateSlider(ul), 10);
-          });
-          
-          const observer = new MutationObserver(() => {
-            updateSlider(ul);
-          });
-          observer.observe(ul, { attributes: true, subtree: true, attributeFilter: ['class'] });
-        });
-      }
-
-      window.addEventListener('DOMContentLoaded', () => {
-        initTabs();
-        const bodyObserver = new MutationObserver(() => initTabs());
-        bodyObserver.observe(document.body, { childList: true, subtree: true });
-      });
-
-      window.addEventListener('resize', () => {
-        document.querySelectorAll('ul.cbi-tabmenu, ul.tabs').forEach(updateSlider);
-      });
-    })();
-  </script>
-
-  <script>
-    // FluentUI loading bar behavior
-    (function() {
-      var loadingBarEnabled = '{{ loading_bar }}' === '1';
-      if (!loadingBarEnabled) return;
-
-      var isUnloading = false;
-
-      function hideLoading() {
-        var loader = document.getElementById('fluent-top-loading');
-        if (loader && !isUnloading) {
-          loader.classList.add('loaded');
-        }
-      }
-
-      function showLoading() {
-        var loader = document.getElementById('fluent-top-loading');
-        if (loader) {
-          loader.classList.remove('loaded');
-        }
-      }
-
-      // Hide loading bar when DOM is interactive
-      if (document.readyState === 'interactive' || document.readyState === 'complete') {
-        hideLoading();
-      } else {
-        document.addEventListener('DOMContentLoaded', hideLoading);
-      }
-
-      // Hide loading bar on window load as a fallback
-      window.addEventListener('load', hideLoading);
-
-      // Show loading bar when user navigates away
-      window.addEventListener('beforeunload', function() {
-        isUnloading = true;
-        showLoading();
-      });
-      
-      // Also listen to click events on links to show it immediately (since beforeunload can sometimes be delayed)
-      document.addEventListener('click', function(e) {
-        var a = e.target.closest('a');
-        if (a) {
-          var href = a.getAttribute('href');
-          if (href && !href.startsWith('#') && !href.startsWith('javascript:') && !a.getAttribute('target')) {
-            if (a.hostname === location.hostname) {
-              showLoading();
-            }
-          }
-        }
-      });
-      
-      // Also show loading bar on form submissions
-      document.addEventListener('submit', function(e) {
-        var form = e.target.closest('form');
-        if (form && !form.getAttribute('target')) {
-          showLoading();
-        }
-      });
-
-      // MutationObserver to watch for client-side AJAX view loading (e.g. .spinning element)
-      var observer = new MutationObserver(function() {
-        var hasSpinner = document.querySelector('.spinning, .loading, #view > .spinning') !== null;
-        if (hasSpinner) {
-          showLoading();
-        } else {
-          hideLoading();
-        }
-      });
-      observer.observe(document.documentElement, { childList: true, subtree: true });
     })();
   </script>
 </head>
@@ -576,6 +324,7 @@
   data-theme-custom-select="{{ custom_select }}"
   data-view-transition="{{ view_transition }}"
   data-tab-animation="{{ tab_animation }}"
+  data-prefers-reduced-motion="{{ prefers_reduced_motion }}"
   data-loading-bar="{{ loading_bar }}">
 
   {% if (loading_bar == '1') { %}

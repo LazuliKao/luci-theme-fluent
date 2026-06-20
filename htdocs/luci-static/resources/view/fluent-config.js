@@ -76,91 +76,95 @@ let fluent_config_t = L.form, fluent_config_a = L.uci, fluent_config_r = [
         a.value = e.value;
     });
 };
-class fluent_config_o extends L.view {
+class fluent_config_n extends L.view {
     load() {
         return fluent_config_a.load("fluent");
     }
     render(e) {
-        let a = new fluent_config_t.Map("fluent", _("Fluent theme configuration"), _("Here you can set the primary color, theme mode, font weight, blur and transparency of the Fluent theme.")), o = a.section(fluent_config_t.TypedSection, "global", _("Theme configuration"));
-        o.addremove = !1, o.anonymous = !0;
+        let a = new fluent_config_t.Map("fluent", _("Fluent theme configuration"), _("Here you can set the primary color, theme mode, font weight, blur and transparency of the Fluent theme.")), n = a.section(fluent_config_t.TypedSection, "global", _("Theme configuration"));
+        n.addremove = !1, n.anonymous = !0;
         {
-            let e = o.option(fluent_config_t.ListValue, "mode", _("Theme mode"));
+            let e = n.option(fluent_config_t.ListValue, "mode", _("Theme mode"));
             e.value("normal", _("Follow system")), e.value("light", _("Light mode")), e.value("dark", _("Dark mode")), e.default = "normal", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.ListValue, "font_weight", _("Font"));
+            let e = n.option(fluent_config_t.ListValue, "font_weight", _("Font"));
             e.value("normal", _("Normal")), e.value("600", _("Semibold")), e.default = "600", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.ListValue, "control_height", _("Control Height"));
+            let e = n.option(fluent_config_t.ListValue, "control_height", _("Control Height"));
             e.value("32", _("Compact (32px)")), e.value("42", _("Default (42px)")), e.default = "32", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Flag, "custom_select", _("Fluent Select Dropdown"), _("Transform native select elements into FluentUI-styled custom dropdowns."));
+            let e = n.option(fluent_config_t.Flag, "custom_select", _("Fluent Select Dropdown"), _("Transform native select elements into FluentUI-styled custom dropdowns."));
             e.default = e.enabled, e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Flag, "view_transition", _("Page Transition Animation"), _("Enable smooth fade-out/fade-in transitions between page loads using the View Transition API."));
+            let e = n.option(fluent_config_t.Flag, "view_transition", _("Page Transition Animation"), _("Enable smooth fade-out/fade-in transitions between page loads using the View Transition API."));
             e.default = e.enabled, e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Flag, "tab_animation", _("Tab Slide Animation"), _("Enable sliding animation for tab menu underline indicators."));
+            let e = n.option(fluent_config_t.Flag, "tab_animation", _("Tab Slide Animation"), _("Enable sliding animation for tab menu underline indicators."));
             e.default = e.enabled, e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Flag, "loading_bar", _("Top Loading Bar"), _("Display a FluentUI-styled indeterminate progress bar at the top of the page during page loads and transitions."));
+            let e = n.option(fluent_config_t.Flag, "prefers_reduced_motion", _("Respect System Animation Settings"), _("When enabled, respects the browser/OS-level 'reduced motion' animation preferences. When disabled, ignores them and forces sliding tab animations."));
+            e.default = e.enabled, e.rmempty = !1, e.depends("tab_animation", "1");
+        }
+        {
+            let e = n.option(fluent_config_t.Flag, "loading_bar", _("Top Loading Bar"), _("Display a FluentUI-styled indeterminate progress bar at the top of the page during page loads and transitions."));
             e.default = e.enabled, e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Value, "primary", _("[Light mode] Primary Color"), _("A HEX color (default: #0078d4)."));
-            e.default = "#0078d4", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, o)=>{
-                let n = fluent_config_t.Value.prototype.render.call(e, a, r, o);
+            let e = n.option(fluent_config_t.Value, "primary", _("[Light mode] Primary Color"), _("A HEX color (default: #0078d4)."));
+            e.default = "#0078d4", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
+                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
                 return setTimeout(()=>{
                     let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".primary"]');
                     e && l(e);
-                }, 0), n;
+                }, 0), o;
             };
         }
         {
-            let e = o.option(fluent_config_t.ListValue, "transparency", _("[Light mode] Transparency"), _("0 transparent - 1 opaque (suggest: transparent: 0 or translucent preset: 0.5)."));
+            let e = n.option(fluent_config_t.ListValue, "transparency", _("[Light mode] Transparency"), _("0 transparent - 1 opaque (suggest: transparent: 0 or translucent preset: 0.5)."));
             for (let t of fluent_config_r)e.value(String(t));
             e.default = "0.5", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Value, "blur", _("[Light mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
+            let e = n.option(fluent_config_t.Value, "blur", _("[Light mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
             e.datatype = "ufloat", e.default = "0", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Value, "progressbar_font", _("[Light mode] Progress bar Font Color"), _("A HEX color (default: #2e2b60)."));
-            e.default = "#2e2b60", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, o)=>{
-                let n = fluent_config_t.Value.prototype.render.call(e, a, r, o);
+            let e = n.option(fluent_config_t.Value, "progressbar_font", _("[Light mode] Progress bar Font Color"), _("A HEX color (default: #2e2b60)."));
+            e.default = "#2e2b60", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
+                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
                 return setTimeout(()=>{
                     let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".progressbar_font"]');
                     e && l(e);
-                }, 0), n;
+                }, 0), o;
             };
         }
         {
-            let e = o.option(fluent_config_t.Value, "dark_primary", _("[Dark mode] Primary Color"), _("A HEX Color (default: #1a1a2e)."));
-            e.default = "#1a1a2e", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, o)=>{
-                let n = fluent_config_t.Value.prototype.render.call(e, a, r, o);
+            let e = n.option(fluent_config_t.Value, "dark_primary", _("[Dark mode] Primary Color"), _("A HEX Color (default: #1a1a2e)."));
+            e.default = "#1a1a2e", e.rmempty = !1, e.validate = (e, t)=>!e || /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), e.render = (a, r, n)=>{
+                let o = fluent_config_t.Value.prototype.render.call(e, a, r, n);
                 return requestAnimationFrame(()=>{
                     let e = document.querySelector('[id^="widget.cbid.fluent."][id$=".dark_primary"]');
                     e && l(e);
-                }), n;
+                }), o;
             };
         }
         {
-            let e = o.option(fluent_config_t.ListValue, "transparency_dark", _("[Dark mode] Transparency"), _("0 transparent - 1 opaque (suggest: black translucent preset: 0.5)."));
+            let e = n.option(fluent_config_t.ListValue, "transparency_dark", _("[Dark mode] Transparency"), _("0 transparent - 1 opaque (suggest: black translucent preset: 0.5)."));
             for (let t of fluent_config_r)e.value(String(t));
             e.default = "0.5", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Value, "blur_dark", _("[Dark mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
+            let e = n.option(fluent_config_t.Value, "blur_dark", _("[Dark mode] Frosted Glass Radius"), _("Larger value will more blurred (suggest: clear: 0 or blur preset: 10)."));
             e.datatype = "ufloat", e.default = "0", e.rmempty = !1;
         }
         {
-            let e = o.option(fluent_config_t.Button, "_save", _("Save settings"));
+            let e = n.option(fluent_config_t.Button, "_save", _("Save settings"));
             e.inputstyle = "apply", e.inputtitle = _("Save current settings"), e.onclick = ()=>(ui.changes.apply(!0), a.save(void 0, !0));
         }
         return a.render();
@@ -169,7 +173,7 @@ class fluent_config_o extends L.view {
         super(...t), _define_property(this, "handleSaveApply", null), _define_property(this, "handleSave", null), _define_property(this, "handleReset", null);
     }
 }
-const main = fluent_config_o;
+const main = fluent_config_n;
 
 
 return main;
