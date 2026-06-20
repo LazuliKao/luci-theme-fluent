@@ -2,58 +2,6 @@
 // Aligned with official @fluentui/tokens v2
 
 :root {
-  color-scheme: light;
-
-  // ============================================================
-  // BRAND / PRIMARY COLORS (BrandBlue)
-  // ============================================================
-  --fluent-primary: #0078d4;
-  --fluent-primary-hover: #106ebe;
-  --fluent-primary-active: #005a9e;
-  --fluent-primary-light: #c7e0f4;
-  --fluent-primary-lighter: #deecf9;
-  --fluent-primary-lightest: #eff6fc;
-
-  // ============================================================
-  // NEUTRAL COLORS (Grey14 / Grey98)
-  // ============================================================
-  --fluent-white: #ffffff;
-  --fluent-black: #000000;
-
-  // Background - FluentUI uses Grey98 for page, White for cards
-  --fluent-bg: #ffffff;
-  --fluent-bg-hover: #f5f5f5; // Grey96
-  --fluent-bg-active: #ebebeb; // Grey92
-  --fluent-bg-card: #ffffff;
-  --fluent-bg-page: #fafafa; // Grey98
-
-  // Text - FluentUI NeutralForeground
-  --fluent-text: #242424; // Grey14
-  --fluent-text-secondary: #616161; // Grey38
-  --fluent-text-disabled: #a0a0a0; // Grey62
-  --fluent-text-on-primary: #ffffff;
-  --fluent-text-link: #0078d4; // BrandBlue
-  --fluent-text-link-hover: #006cbd; // BrandBlueHover
-
-  // Border - FluentUI NeutralStroke
-  --fluent-border: #d1d1d1; // Grey82
-  --fluent-border-hover: #a0a0a0; // Grey62
-  --fluent-border-active: #0078d4; // BrandBlue
-
-  // ============================================================
-  // STATUS COLORS (FluentUI Status)
-  // ============================================================
-  --fluent-success: #107c10; // Green primary
-  --fluent-success-light: #f1faf1; // Green tint60
-  --fluent-warning: #ffb900; // Marigold primary
-  --fluent-warning-light: #fff4ce; // Marigold tint50
-  --fluent-error: #d13438; // Red primary
-  --fluent-error-hover: #b42b2f; // Red shade10
-  --fluent-error-active: #9a2226; // Red shade20
-  --fluent-error-light: #fde7e9; // Red tint50
-  --fluent-info: #0078d4; // BrandBlue
-  --fluent-info-light: #f3f9fd; // BrandBlue tint60
-
   // ============================================================
   // TYPOGRAPHY (FluentUI font tokens)
   // ============================================================
@@ -104,13 +52,7 @@
   --fluent-radius-round: 50%; // Round (circle)
 
   // ============================================================
-  // SHADOWS (FluentUI shadow tokens - soft multi-layer Windows 11 style)
-  // ============================================================
-  --fluent-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 0, 0, 0.06);
-  --fluent-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.06), 0 4px 18px rgba(0, 0, 0, 0.08);
-  --fluent-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.1);
-  --fluent-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.08);
-
+  // SHADOW REFERENCES
   // ============================================================
   // DURATION & EASING (FluentUI duration & curve tokens)
   // ============================================================
@@ -140,74 +82,32 @@
   // Sidebar
   --fluent-sidebar-width: 260px;
   --fluent-sidebar-collapsed-width: 48px;
-  --fluent-sidebar-bg: #ffffff;
-  --fluent-sidebar-item-hover: rgba(0, 0, 0, 0.04);
-  --fluent-sidebar-item-active: rgba(0, 120, 212, 0.06);
 
   // Header
   --fluent-header-height: 48px;
-  --fluent-header-bg: #0078d4;
-  --fluent-header-text: #ffffff;
 
   // Control height
   --fluent-control-height: 42px;
+  --fluent-btn-height: var(--fluent-control-height, 42px);
+  --fluent-btn-padding: 0 16px;
 
   // Input
   --fluent-input-height: var(--fluent-control-height, 42px);
-  --fluent-input-border: #d1d1d1; // --colorNeutralStroke1: #d1d1d1;
-  --fluent-input-border-bottom: #616161; // Grey38 (FluentUI default)
-  --fluent-input-border-hover: #c7c7c7;  
-  --fluent-input-border-bottom-hover: #575757;  
-  --fluent-input-border-bottom-focus: var(--fluent-primary); // BrandBlue
-  --fluent-input-bg: #ffffff;
-  --fluent-input-bg-disabled: #f0f0f0; // Grey94
-  --fluent-input-bg-hover: #f5f5f5; // Grey96
-  --fluent-calendar-picker-invert: 0;
-
-  // Button
-  --fluent-btn-height: var(--fluent-control-height, 42px);
-  --fluent-btn-padding: 0 16px;
-  --fluent-btn-primary-bg: #0078d4;
-  --fluent-btn-primary-bg-hover: #106ebe;
-  --fluent-btn-primary-bg-active: #005a9e;
-  --fluent-btn-secondary-bg: #ffffff;
-  --fluent-btn-secondary-bg-hover: #f5f5f5;
-  --fluent-btn-secondary-bg-active: #e0e0e0;
-  --fluent-btn-secondary-border: #d1d1d1; // Grey82
-  --fluent-btn-secondary-border-hover: #d1d1d1;
-  --fluent-btn-secondary-border-active: #d1d1d1;
 
   // Card
-  --fluent-card-bg: #ffffff;
-  --fluent-card-border: #e0e0e0; // Grey88
-  --fluent-card-shadow: var(--fluent-shadow-sm);
   --fluent-card-radius: var(--fluent-radius-lg);
   --fluent-card-padding: var(--fluent-space-lg);
 
-  // Table
-  --fluent-table-header-bg: #f5f5f5; // Grey96
-  --fluent-table-row-hover: #f5f5f5; // Grey96
-  --fluent-table-row-selected: #e6f2fb; // BrandBlue tint40
-  --fluent-table-border: #e0e0e0; // Grey88
-
   // Modal
-  --fluent-modal-bg: #ffffff;
-  --fluent-modal-overlay: rgba(0, 0, 0, 0.4);
   --fluent-modal-radius: var(--fluent-radius-lg);
   --fluent-modal-padding: var(--fluent-space-xl);
 
   // Tab
   --fluent-tab-height: 44px;
   --fluent-tab-indicator-height: 3px;
-  --fluent-tab-indicator-color: #0078d4;
 
   // Checkbox & Radio
   --fluent-checkbox-size: 20px;
-  --fluent-checkbox-border: #616161; // Grey38
-  --fluent-checkbox-bg: #ffffff;
-  --fluent-checkbox-checked-bg: #0078d4;
-  --fluent-checkbox-checked-border: #0078d4;
-  --fluent-checkbox-hover-border: #242424; // Grey14
 
   // Switch
   --fluent-switch-width: 40px;
@@ -218,45 +118,15 @@
   // Scrollbar
   --fluent-scrollbar-width: 6px;
   --fluent-scrollbar-track-bg: transparent;
-  --fluent-scrollbar-thumb-bg: #c2c2c2; // Grey76
-  --fluent-scrollbar-thumb-bg-hover: #a0a0a0; // Grey62
-  --fluent-scrollbar-thumb-horizontal-bg: rgba(0, 0, 0, 0.15);
-  --fluent-scrollbar-thumb-horizontal-bg-hover: rgba(0, 0, 0, 0.35);
 
   // Progress
   --fluent-progress-height: 4px;
-  --fluent-progress-bg: #e0e0e0; // Grey88
-  --fluent-progress-bar-bg: #0078d4;
 
   // Badge
-  --fluent-badge-bg: #0078d4;
-  --fluent-badge-text: #ffffff;
   --fluent-badge-radius: 10px;
 
   // Toast
-  --fluent-toast-bg: #ffffff;
-  --fluent-toast-shadow: var(--fluent-shadow-lg);
   --fluent-toast-radius: var(--fluent-radius-lg);
-
-  // Login
-  --fluent-login-bg: rgba(255, 255, 255, 0.92);
-  --fluent-login-border: rgba(255, 255, 255, 0.7);
-  --fluent-login-icon-color: var(--fluent-text-secondary);
-
-  // Tooltip
-  --fluent-tooltip-bg: #242424;
-  --fluent-tooltip-text: #ffffff;
-
-  // Dropdown
-  --fluent-dropdown-bg: var(--fluent-bg-card);
-  --fluent-dropdown-border: var(--fluent-input-border);
-  --fluent-dropdown-shadow: 0 8px 16px rgba(0, 0, 0, 0.14), 0 0 2px rgba(0, 0, 0, 0.12);
-  --fluent-dropdown-option-hover: var(--fluent-bg-hover);
-  --fluent-dropdown-option-selected: var(--fluent-primary-lightest);
-
-  // Focus indicator (adapts to theme)
-  --fluent-focus-color: #000000;
-  --fluent-focus-inner-color: #ffffff;
 }
 
 // ============================================================

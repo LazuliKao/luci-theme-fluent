@@ -1,39 +1,4 @@
 :root {
-  --lightningcss-light: initial;
-  --lightningcss-dark: ;
-  color-scheme: light;
-  --fluent-primary: #0078d4;
-  --fluent-primary-hover: #106ebe;
-  --fluent-primary-active: #005a9e;
-  --fluent-primary-light: #c7e0f4;
-  --fluent-primary-lighter: #deecf9;
-  --fluent-primary-lightest: #eff6fc;
-  --fluent-white: #fff;
-  --fluent-black: #000;
-  --fluent-bg: #fff;
-  --fluent-bg-hover: #f5f5f5;
-  --fluent-bg-active: #ebebeb;
-  --fluent-bg-card: #fff;
-  --fluent-bg-page: #fafafa;
-  --fluent-text: #242424;
-  --fluent-text-secondary: #616161;
-  --fluent-text-disabled: #a0a0a0;
-  --fluent-text-on-primary: #fff;
-  --fluent-text-link: #0078d4;
-  --fluent-text-link-hover: #006cbd;
-  --fluent-border: #d1d1d1;
-  --fluent-border-hover: #a0a0a0;
-  --fluent-border-active: #0078d4;
-  --fluent-success: #107c10;
-  --fluent-success-light: #f1faf1;
-  --fluent-warning: #ffb900;
-  --fluent-warning-light: #fff4ce;
-  --fluent-error: #d13438;
-  --fluent-error-hover: #b42b2f;
-  --fluent-error-active: #9a2226;
-  --fluent-error-light: #fde7e9;
-  --fluent-info: #0078d4;
-  --fluent-info-light: #f3f9fd;
   --fluent-font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
   --fluent-font-size-base: 14px;
   --fluent-font-size-xs: 10px;
@@ -64,10 +29,6 @@
   --fluent-radius-xl: 12px;
   --fluent-radius-circular: 10000px;
   --fluent-radius-round: 50%;
-  --fluent-shadow-sm: 0 2px 4px #0000000a, 0 2px 10px #0000000f;
-  --fluent-shadow-md: 0 4px 8px #0000000f, 0 4px 18px #00000014;
-  --fluent-shadow-lg: 0 8px 16px #00000014, 0 8px 32px #0000001a;
-  --fluent-shadow-xl: 0 20px 40px #0000001f, 0 10px 20px #00000014;
   --fluent-duration-fast: .15s;
   --fluent-duration-normal: .25s;
   --fluent-duration-slow: .4s;
@@ -84,87 +45,27 @@
   --fluent-zindex-menu: 1050;
   --fluent-sidebar-width: 260px;
   --fluent-sidebar-collapsed-width: 48px;
-  --fluent-sidebar-bg: #fff;
-  --fluent-sidebar-item-hover: #0000000a;
-  --fluent-sidebar-item-active: #0078d40f;
   --fluent-header-height: 48px;
-  --fluent-header-bg: #0078d4;
-  --fluent-header-text: #fff;
   --fluent-control-height: 42px;
-  --fluent-input-height: var(--fluent-control-height, 42px);
-  --fluent-input-border: #d1d1d1;
-  --fluent-input-border-bottom: #616161;
-  --fluent-input-border-hover: #c7c7c7;
-  --fluent-input-border-bottom-hover: #575757;
-  --fluent-input-border-bottom-focus: var(--fluent-primary);
-  --fluent-input-bg: #fff;
-  --fluent-input-bg-disabled: #f0f0f0;
-  --fluent-input-bg-hover: #f5f5f5;
-  --fluent-calendar-picker-invert: 0;
   --fluent-btn-height: var(--fluent-control-height, 42px);
   --fluent-btn-padding: 0 16px;
-  --fluent-btn-primary-bg: #0078d4;
-  --fluent-btn-primary-bg-hover: #106ebe;
-  --fluent-btn-primary-bg-active: #005a9e;
-  --fluent-btn-secondary-bg: #fff;
-  --fluent-btn-secondary-bg-hover: #f5f5f5;
-  --fluent-btn-secondary-bg-active: #e0e0e0;
-  --fluent-btn-secondary-border: #d1d1d1;
-  --fluent-btn-secondary-border-hover: #d1d1d1;
-  --fluent-btn-secondary-border-active: #d1d1d1;
-  --fluent-card-bg: #fff;
-  --fluent-card-border: #e0e0e0;
-  --fluent-card-shadow: var(--fluent-shadow-sm);
+  --fluent-input-height: var(--fluent-control-height, 42px);
   --fluent-card-radius: var(--fluent-radius-lg);
   --fluent-card-padding: var(--fluent-space-lg);
-  --fluent-table-header-bg: #f5f5f5;
-  --fluent-table-row-hover: #f5f5f5;
-  --fluent-table-row-selected: #e6f2fb;
-  --fluent-table-border: #e0e0e0;
-  --fluent-modal-bg: #fff;
-  --fluent-modal-overlay: #0006;
   --fluent-modal-radius: var(--fluent-radius-lg);
   --fluent-modal-padding: var(--fluent-space-xl);
   --fluent-tab-height: 44px;
   --fluent-tab-indicator-height: 3px;
-  --fluent-tab-indicator-color: #0078d4;
   --fluent-checkbox-size: 20px;
-  --fluent-checkbox-border: #616161;
-  --fluent-checkbox-bg: #fff;
-  --fluent-checkbox-checked-bg: #0078d4;
-  --fluent-checkbox-checked-border: #0078d4;
-  --fluent-checkbox-hover-border: #242424;
   --fluent-switch-width: 40px;
   --fluent-switch-height: 20px;
   --fluent-switch-thumb-size: 12px;
   --fluent-switch-thumb-offset: 3px;
   --fluent-scrollbar-width: 6px;
   --fluent-scrollbar-track-bg: transparent;
-  --fluent-scrollbar-thumb-bg: #c2c2c2;
-  --fluent-scrollbar-thumb-bg-hover: #a0a0a0;
-  --fluent-scrollbar-thumb-horizontal-bg: #00000026;
-  --fluent-scrollbar-thumb-horizontal-bg-hover: #00000059;
   --fluent-progress-height: 4px;
-  --fluent-progress-bg: #e0e0e0;
-  --fluent-progress-bar-bg: #0078d4;
-  --fluent-badge-bg: #0078d4;
-  --fluent-badge-text: #fff;
   --fluent-badge-radius: 10px;
-  --fluent-toast-bg: #fff;
-  --fluent-toast-shadow: var(--fluent-shadow-lg);
   --fluent-toast-radius: var(--fluent-radius-lg);
-  --fluent-login-bg: #ffffffeb;
-  --fluent-login-border: #ffffffb3;
-  --fluent-login-icon-color: var(--fluent-text-secondary);
-  --fluent-tooltip-bg: #242424;
-  --fluent-tooltip-text: #fff;
-  --fluent-dropdown-bg: var(--fluent-bg-card);
-  --fluent-dropdown-border: var(--fluent-input-border);
-  --fluent-dropdown-shadow: 0 8px 16px #00000024, 0 0 2px #0000001f;
-  --fluent-dropdown-option-hover: var(--fluent-bg-hover);
-  --fluent-dropdown-option-selected: var(--fluent-primary-lightest);
-  --fluent-focus-color: #000;
-  --fluent-focus-inner-color: #fff;
 }
 
 *, :before, :after {
@@ -2016,6 +1917,7 @@ body.modal-overlay-active #modal_overlay {
   margin-top: var(--fluent-space-lg);
   margin-bottom: var(--fluent-space-lg);
   position: relative;
+  overflow: visible !important;
 }
 
 .modal-wide {
@@ -2035,7 +1937,7 @@ body.modal-overlay-active #modal_overlay {
   min-width: 96px;
 }
 
-.modal > .cbi-section, .uci-dialog > .cbi-section {
+.modal .cbi-section, .uci-dialog .cbi-section {
   box-shadow: none !important;
   background: none !important;
   border: none !important;
@@ -3620,17 +3522,98 @@ td[data-name="_ifacebox"] .ifacebox .ifacebox-body, .td[data-name="_ifacebox"] .
   box-sizing: border-box;
   width: 100%;
   padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  white-space: nowrap;
   display: block;
-  overflow: visible;
+  overflow-x: auto;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-resizer {
+  background: none;
+}
+
+.td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-resizer {
+  background: none;
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container {
   vertical-align: middle;
   display: inline-flex;
+  position: static;
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body small, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body small {
   margin-top: var(--fluent-space-xxs);
+  white-space: normal;
   display: inline-block;
 }
 
@@ -4078,19 +4061,19 @@ ul.tabs > li.disabled > a:after, ul.tabs > li[disabled] > a:after, ul.cbi-tabmen
   padding: 0;
 }
 
-[data-tab-title] {
+.cbi-map-tabbed > .cbi-tblsection [data-tab-title] {
   padding: var(--fluent-space-sm);
 }
 
-[data-tab-active="false"] {
-  display: none !important;
-}
-
-[data-tab-active="true"] {
+.cbi-map-tabbed > .cbi-tblsection [data-tab-active="true"] {
   opacity: 1;
   height: auto;
   display: block;
   overflow: visible;
+}
+
+.cbi-map-tabbed > .cbi-tblsection:not([data-tab-active="true"]) {
+  display: none !important;
 }
 
 .cbi-tabcontainer {
@@ -9805,6 +9788,108 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   left: 0;
 }
 
+:root, [data-theme="light"] {
+  --lightningcss-light: initial;
+  --lightningcss-dark: ;
+  color-scheme: light;
+  --fluent-primary: #0078d4;
+  --fluent-primary-hover: #106ebe;
+  --fluent-primary-active: #005a9e;
+  --fluent-primary-light: #c7e0f4;
+  --fluent-primary-lighter: #deecf9;
+  --fluent-primary-lightest: #eff6fc;
+  --fluent-white: #fff;
+  --fluent-black: #000;
+  --fluent-bg: #fff;
+  --fluent-bg-hover: #f5f5f5;
+  --fluent-bg-active: #ebebeb;
+  --fluent-bg-card: #fff;
+  --fluent-bg-page: #fafafa;
+  --fluent-text: #242424;
+  --fluent-text-secondary: #616161;
+  --fluent-text-disabled: #a0a0a0;
+  --fluent-text-on-primary: #fff;
+  --fluent-text-link: #0078d4;
+  --fluent-text-link-hover: #006cbd;
+  --fluent-border: #d1d1d1;
+  --fluent-border-hover: #a0a0a0;
+  --fluent-border-active: #0078d4;
+  --fluent-success: #107c10;
+  --fluent-success-light: #f1faf1;
+  --fluent-warning: #ffb900;
+  --fluent-warning-light: #fff4ce;
+  --fluent-error: #d13438;
+  --fluent-error-hover: #b42b2f;
+  --fluent-error-active: #9a2226;
+  --fluent-error-light: #fde7e9;
+  --fluent-info: #0078d4;
+  --fluent-info-light: #f3f9fd;
+  --fluent-shadow-sm: 0 2px 4px #0000000a, 0 2px 10px #0000000f;
+  --fluent-shadow-md: 0 4px 8px #0000000f, 0 4px 18px #00000014;
+  --fluent-shadow-lg: 0 8px 16px #00000014, 0 8px 32px #0000001a;
+  --fluent-shadow-xl: 0 20px 40px #0000001f, 0 10px 20px #00000014;
+  --fluent-sidebar-bg: #fff;
+  --fluent-sidebar-item-hover: #0000000a;
+  --fluent-sidebar-item-active: #0078d40f;
+  --fluent-header-bg: #0078d4;
+  --fluent-header-text: #fff;
+  --fluent-input-border: #d1d1d1;
+  --fluent-input-border-bottom: #616161;
+  --fluent-input-border-hover: #c7c7c7;
+  --fluent-input-border-bottom-hover: #575757;
+  --fluent-input-border-bottom-focus: var(--fluent-primary);
+  --fluent-input-bg: #fff;
+  --fluent-input-bg-disabled: #f0f0f0;
+  --fluent-input-bg-hover: #f5f5f5;
+  --fluent-calendar-picker-invert: 0;
+  --fluent-btn-primary-bg: #0078d4;
+  --fluent-btn-primary-bg-hover: #106ebe;
+  --fluent-btn-primary-bg-active: #005a9e;
+  --fluent-btn-secondary-bg: #fff;
+  --fluent-btn-secondary-bg-hover: #f5f5f5;
+  --fluent-btn-secondary-bg-active: #e0e0e0;
+  --fluent-btn-secondary-border: #d1d1d1;
+  --fluent-btn-secondary-border-hover: #d1d1d1;
+  --fluent-btn-secondary-border-active: #d1d1d1;
+  --fluent-card-bg: #fff;
+  --fluent-card-border: #e0e0e0;
+  --fluent-card-shadow: var(--fluent-shadow-sm);
+  --fluent-table-header-bg: #f5f5f5;
+  --fluent-table-row-hover: #f5f5f5;
+  --fluent-table-row-selected: #e6f2fb;
+  --fluent-table-border: #e0e0e0;
+  --fluent-modal-bg: #fff;
+  --fluent-modal-overlay: #0006;
+  --fluent-tab-indicator-color: #0078d4;
+  --fluent-checkbox-border: #616161;
+  --fluent-checkbox-bg: #fff;
+  --fluent-checkbox-checked-bg: #0078d4;
+  --fluent-checkbox-checked-border: #0078d4;
+  --fluent-checkbox-hover-border: #242424;
+  --fluent-scrollbar-thumb-bg: #c2c2c2;
+  --fluent-scrollbar-thumb-bg-hover: #a0a0a0;
+  --fluent-scrollbar-thumb-horizontal-bg: #00000026;
+  --fluent-scrollbar-thumb-horizontal-bg-hover: #00000059;
+  --fluent-progress-bg: #e0e0e0;
+  --fluent-progress-bar-bg: #0078d4;
+  --fluent-badge-bg: #0078d4;
+  --fluent-badge-text: #fff;
+  --fluent-toast-bg: #fff;
+  --fluent-toast-shadow: var(--fluent-shadow-lg);
+  --fluent-login-bg: #ffffffeb;
+  --fluent-login-border: #ffffffb3;
+  --fluent-login-icon-color: var(--fluent-text-secondary);
+  --fluent-tooltip-bg: #242424;
+  --fluent-tooltip-text: #fff;
+  --fluent-dropdown-bg: var(--fluent-bg-card);
+  --fluent-dropdown-border: var(--fluent-input-border);
+  --fluent-dropdown-shadow: 0 8px 16px #00000024, 0 0 2px #0000001f;
+  --fluent-dropdown-option-hover: var(--fluent-bg-hover);
+  --fluent-dropdown-option-selected: var(--fluent-primary-lightest);
+  --fluent-focus-color: #000;
+  --fluent-focus-inner-color: #fff;
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --lightningcss-light: ;
@@ -9858,15 +9943,15 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
     --fluent-input-bg-disabled: #333;
     --fluent-input-bg-hover: #333;
     --fluent-calendar-picker-invert: 1;
-    --fluent-btn-primary-bg: #4da6ff;
-    --fluent-btn-primary-bg-hover: #80c4ff;
-    --fluent-btn-primary-bg-active: #b3d9ff;
+    --fluent-btn-primary-bg: #115ea3;
+    --fluent-btn-primary-bg-hover: #0f6cbd;
+    --fluent-btn-primary-bg-active: #0c3b5e;
     --fluent-btn-secondary-bg: #292929;
     --fluent-btn-secondary-bg-hover: #3d3d3d;
     --fluent-btn-secondary-bg-active: #1f1f1f;
     --fluent-btn-secondary-border: #666;
-    --fluent-btn-secondary-border-hover: #666;
-    --fluent-btn-secondary-border-active: #666;
+    --fluent-btn-secondary-border-hover: #757575;
+    --fluent-btn-secondary-border-active: #757575;
     --fluent-card-bg: #292929;
     --fluent-card-border: #3d3d3d;
     --fluent-table-header-bg: #292929;
@@ -9953,15 +10038,15 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-input-bg-disabled: #333;
   --fluent-input-bg-hover: #333;
   --fluent-calendar-picker-invert: 1;
-  --fluent-btn-primary-bg: #4da6ff;
-  --fluent-btn-primary-bg-hover: #80c4ff;
-  --fluent-btn-primary-bg-active: #b3d9ff;
+  --fluent-btn-primary-bg: #115ea3;
+  --fluent-btn-primary-bg-hover: #0f6cbd;
+  --fluent-btn-primary-bg-active: #0c3b5e;
   --fluent-btn-secondary-bg: #292929;
-  --fluent-btn-secondary-bg-hover: #383838;
-  --fluent-btn-secondary-bg-active: #242424;
-  --fluent-btn-secondary-border: #adadad;
-  --fluent-btn-secondary-border-hover: #fff;
-  --fluent-btn-secondary-border-active: #4da6ff;
+  --fluent-btn-secondary-bg-hover: #3d3d3d;
+  --fluent-btn-secondary-bg-active: #1f1f1f;
+  --fluent-btn-secondary-border: #666;
+  --fluent-btn-secondary-border-hover: #757575;
+  --fluent-btn-secondary-border-active: #757575;
   --fluent-card-bg: #292929;
   --fluent-card-border: #3d3d3d;
   --fluent-table-header-bg: #292929;
