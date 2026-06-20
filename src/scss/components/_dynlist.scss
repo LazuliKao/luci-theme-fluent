@@ -152,6 +152,7 @@
 
     > input {
       @include input-base;
+      @include input-focus-ripple-v2;
 
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;

@@ -54,63 +54,10 @@ cbi-dropdown,
   line-height: 20px;
   outline-style: none;
   cursor: pointer;
-
-  // ----------------------------------------------------------
-  // Bottom indicator (::after) - FluentUI focus animation
-  // Starts scaleX(0), animates to scaleX(1) on focus/open
-  // ----------------------------------------------------------
-  &::after {
-    box-sizing: border-box;
-    content: "";
-    position: absolute;
-    left: -1px;
-    bottom: -2px;
-    right: -1px;
-    height: max(2px, 4px);
-    border-bottom-left-radius: var(--fluent-radius-md);
-    border-bottom-right-radius: var(--fluent-radius-md);
-    border-bottom: 2px solid var(--fluent-primary);
-    clip-path: inset(calc(100% - 2px) 0 0 0);
-    transform: scaleX(0);
-    transition-property: transform;
-    transition-duration: var(--fluent-duration-fast);
-    transition-timing-function: var(--fluent-easing-standard);
-  }
-
-  // ----------------------------------------------------------
-  // HOVER STATE
-  // ----------------------------------------------------------
-  &:hover:not([disabled]) {
-    border-bottom-color: var(--fluent-input-border-hover);
-  }
-
-  // ----------------------------------------------------------
-  // FOCUS / OPEN STATE
-  // ----------------------------------------------------------
-  &:focus,
-  &.focus,
-  &[open] {
-    border-bottom-color: var(--fluent-input-border-focus);
-    outline: none;
-  }
+  @include input-focus-ripple-v1; // Apply focus ripple effect to the entire dropdown container
 
   &[open] {
     z-index: var(--fluent-zindex-dropdown);
-  }
-
-  &:focus::after,
-  &.focus::after,
-  &[open]::after {
-    transform: scaleX(1);
-    transition-duration: 0.2s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.23, 1);
-  }
-
-  // ----------------------------------------------------------
-  // ACTIVE STATE
-  // ----------------------------------------------------------
-  &:active:not([disabled]) {
-    border-bottom-color: var(--fluent-input-border-focus);
   }
 
   // ----------------------------------------------------------
@@ -317,7 +264,7 @@ cbi-dropdown,
     // min-width: 100%;
     max-width: 80vw !important;
     overflow-y: auto;
-    max-height: min(800px, 80vh);
+    max-height: min(350px, 50vh);
     // Appearance
     background-color: var(--fluent-dropdown-bg);
     border: 1px solid var(--fluent-dropdown-border);
@@ -502,9 +449,22 @@ cbi-dropdown,
   // ----------------------------------------------------------
   // LEGACY SELECT / INPUT-SELECT (kept for compatibility)
   // ----------------------------------------------------------
-  > select,
+  > select {
+    @include input-base;
+    @include input-focus-ripple-v2;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: var(--fluent-space-xl);
+    cursor: pointer;
+  }
+
   > .cbi-input-select {
     @include input-base;
+    @include input-focus-ripple-v2(
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+      right 10px center,
+      10px 6px
+    );
     width: 100%;
     box-sizing: border-box;
     padding-right: var(--fluent-space-xl);

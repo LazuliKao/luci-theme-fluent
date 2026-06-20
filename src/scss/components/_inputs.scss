@@ -16,12 +16,7 @@ input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
 input[type="month"],
-input[type="week"] {
-  @include input-base;
-
-  max-width: 100%;
-  box-sizing: border-box;
-}
+input[type="week"],
 
 // LuCI-specific input classes
 .cbi-input-text,
@@ -30,6 +25,7 @@ input[type="week"] {
 .cbi-input-time,
 .cbi-input-datetime {
   @include input-base;
+  @include input-focus-ripple-v2;
 
   max-width: 100%;
   box-sizing: border-box;

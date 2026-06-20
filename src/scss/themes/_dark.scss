@@ -59,8 +59,9 @@
     --fluent-input-bg: #292929; // Grey16
     --fluent-input-border: #666666;
     --fluent-input-border-bottom: #adadad;
-    --fluent-input-border-hover: #ffffff; // White
-    --fluent-input-border-focus: #4da6ff; // Brand tint20
+    --fluent-input-border-hover: #757575;
+    --fluent-input-border-bottom-hover: #bdbdbd;
+    --fluent-input-border-bottom-focus: var(--fluent-primary); // Brand tint20
     --fluent-input-bg-disabled: #333333; // Grey20
     --fluent-input-bg-hover: #333333; // Grey20
     --fluent-calendar-picker-invert: 1;
@@ -184,14 +185,16 @@
   --fluent-sidebar-item-active: rgba(77, 166, 255, 0.08);
 
   // Input
-  --fluent-input-bg: #292929;
-  --fluent-input-border: #666666;
-  --fluent-input-border-bottom: #adadad;
-  --fluent-input-border-hover: #ffffff;
-  --fluent-input-border-focus: #4da6ff;
-  --fluent-input-bg-disabled: #333333;
-  --fluent-input-bg-hover: #333333;
-  --fluent-calendar-picker-invert: 1;
+  // Input
+    --fluent-input-bg: #292929; // Grey16
+    --fluent-input-border: #666666;
+    --fluent-input-border-bottom: #adadad;
+    --fluent-input-border-hover: #757575;
+    --fluent-input-border-bottom-hover: #bdbdbd;
+    --fluent-input-border-bottom-focus: var(--fluent-primary); // Brand tint20
+    --fluent-input-bg-disabled: #333333; // Grey20
+    --fluent-input-bg-hover: #333333; // Grey20
+    --fluent-calendar-picker-invert: 1;
 
   // Button
   --fluent-btn-primary-bg: #4da6ff;

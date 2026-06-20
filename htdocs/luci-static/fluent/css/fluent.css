@@ -91,8 +91,9 @@
   --fluent-input-height: var(--fluent-control-height, 42px);
   --fluent-input-border: #d1d1d1;
   --fluent-input-border-bottom: #616161;
-  --fluent-input-border-hover: #242424;
-  --fluent-input-border-focus: #0078d4;
+  --fluent-input-border-hover: #c7c7c7;
+  --fluent-input-border-bottom-hover: #575757;
+  --fluent-input-border-bottom-focus: var(--fluent-primary);
   --fluent-input-bg: #fff;
   --fluent-input-bg-disabled: #f0f0f0;
   --fluent-input-bg-hover: #f5f5f5;
@@ -985,7 +986,14 @@ div[id="view"] > :not(.spinning) {
   display: inline-flex;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"] {
+.control-group:only-child(.cbi-button) {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  display: flex;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -998,77 +1006,39 @@ input[type="text"], input[type="password"], input[type="email"], input[type="num
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
 }
 
-input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, input[type="number"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="url"]:hover, input[type="date"]:hover, input[type="time"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="week"]:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="week"]:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
-}
-
-input[type="text"]:disabled, input[type="password"]:disabled, input[type="email"]:disabled, input[type="number"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="url"]:disabled, input[type="date"]:disabled, input[type="time"]:disabled, input[type="datetime-local"]:disabled, input[type="month"]:disabled, input[type="week"]:disabled {
+input[type="text"]:disabled, input[type="password"]:disabled, input[type="email"]:disabled, input[type="number"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="url"]:disabled, input[type="date"]:disabled, input[type="time"]:disabled, input[type="datetime-local"]:disabled, input[type="month"]:disabled, input[type="week"]:disabled, .cbi-input-text:disabled, .cbi-input-password:disabled, .cbi-input-date:disabled, .cbi-input-time:disabled, .cbi-input-datetime:disabled {
   background: var(--fluent-input-bg-disabled);
   color: var(--fluent-text-disabled);
   cursor: not-allowed;
 }
 
-input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, input[type="number"]::placeholder, input[type="search"]::placeholder, input[type="tel"]::placeholder, input[type="url"]::placeholder, input[type="date"]::placeholder, input[type="time"]::placeholder, input[type="datetime-local"]::placeholder, input[type="month"]::placeholder, input[type="week"]::placeholder {
+input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, input[type="number"]::placeholder, input[type="search"]::placeholder, input[type="tel"]::placeholder, input[type="url"]::placeholder, input[type="date"]::placeholder, input[type="time"]::placeholder, input[type="datetime-local"]::placeholder, input[type="month"]::placeholder, input[type="week"]::placeholder, .cbi-input-text::placeholder, .cbi-input-password::placeholder, .cbi-input-date::placeholder, .cbi-input-time::placeholder, .cbi-input-datetime::placeholder {
   color: var(--fluent-text-disabled);
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"] {
-  box-sizing: border-box;
-  max-width: 100%;
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
 }
 
-.cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
-  height: var(--fluent-input-height);
-  padding: 0 var(--fluent-space-sm);
-  font-family: var(--fluent-font-family);
-  font-size: var(--fluent-font-size-base);
-  line-height: var(--fluent-line-height-normal);
-  color: var(--fluent-text);
-  background: var(--fluent-input-bg);
-  border: 1px solid var(--fluent-input-border);
-  border-bottom-width: 1px;
-  border-bottom-color: var(--fluent-input-border-bottom);
-  border-radius: var(--fluent-radius-md);
-  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
+input[type="text"]:hover:not([disabled]):not(:focus), input[type="password"]:hover:not([disabled]):not(:focus), input[type="email"]:hover:not([disabled]):not(:focus), input[type="number"]:hover:not([disabled]):not(:focus), input[type="search"]:hover:not([disabled]):not(:focus), input[type="tel"]:hover:not([disabled]):not(:focus), input[type="url"]:hover:not([disabled]):not(:focus), input[type="date"]:hover:not([disabled]):not(:focus), input[type="time"]:hover:not([disabled]):not(:focus), input[type="datetime-local"]:hover:not([disabled]):not(:focus), input[type="month"]:hover:not([disabled]):not(:focus), input[type="week"]:hover:not([disabled]):not(:focus), .cbi-input-text:hover:not([disabled]):not(:focus), .cbi-input-password:hover:not([disabled]):not(:focus), .cbi-input-date:hover:not([disabled]):not(:focus), .cbi-input-time:hover:not([disabled]):not(:focus), .cbi-input-datetime:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
 }
 
-.cbi-input-text:hover, .cbi-input-password:hover, .cbi-input-date:hover, .cbi-input-time:hover, .cbi-input-datetime:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-.cbi-input-text:focus, .cbi-input-password:focus, .cbi-input-date:focus, .cbi-input-time:focus, .cbi-input-datetime:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="week"]:focus, .cbi-input-text:focus, .cbi-input-password:focus, .cbi-input-date:focus, .cbi-input-time:focus, .cbi-input-datetime:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
   outline: none;
-  padding-bottom: 0;
 }
 
-.cbi-input-text:disabled, .cbi-input-password:disabled, .cbi-input-date:disabled, .cbi-input-time:disabled, .cbi-input-datetime:disabled {
-  background: var(--fluent-input-bg-disabled);
-  color: var(--fluent-text-disabled);
-  cursor: not-allowed;
-}
-
-.cbi-input-text::placeholder, .cbi-input-password::placeholder, .cbi-input-date::placeholder, .cbi-input-time::placeholder, .cbi-input-datetime::placeholder {
-  color: var(--fluent-text-disabled);
-}
-
-.cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
   box-sizing: border-box;
   max-width: 100%;
 }
@@ -3154,20 +3124,6 @@ td > .ifacebadge, .td > .ifacebadge {
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-.zonebadge > input[type="text"]:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-.zonebadge > input[type="text"]:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 .zonebadge > input[type="text"]:disabled {
@@ -3178,6 +3134,26 @@ td > .ifacebadge, .td > .ifacebadge {
 
 .zonebadge > input[type="text"]::placeholder {
   color: var(--fluent-text-disabled);
+}
+
+.zonebadge > input[type="text"] {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+.zonebadge > input[type="text"]:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+.zonebadge > input[type="text"]:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
 }
 
 .zonebadge > input[type="text"] {
@@ -5061,20 +5037,6 @@ cbi-dropdown, .cbi-dropdown {
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-cbi-dropdown:hover, .cbi-dropdown:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-cbi-dropdown:focus, .cbi-dropdown:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 cbi-dropdown:disabled, .cbi-dropdown:disabled {
@@ -5102,45 +5064,38 @@ cbi-dropdown, .cbi-dropdown {
   position: relative;
 }
 
+cbi-dropdown:hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]), .cbi-dropdown:hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+cbi-dropdown:focus, cbi-dropdown:focus-within, cbi-dropdown.focus, cbi-dropdown[open], .cbi-dropdown:focus, .cbi-dropdown:focus-within, .cbi-dropdown.focus, .cbi-dropdown[open] {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  outline: none;
+}
+
+cbi-dropdown:focus:after, cbi-dropdown:focus-within:after, cbi-dropdown.focus:after, cbi-dropdown[open]:after, .cbi-dropdown:focus:after, .cbi-dropdown:focus-within:after, .cbi-dropdown.focus:after, .cbi-dropdown[open]:after {
+  transform: scaleX(1);
+}
+
 cbi-dropdown:after, .cbi-dropdown:after {
   box-sizing: border-box;
   content: "";
-  border-bottom-left-radius: var(--fluent-radius-md);
-  border-bottom-right-radius: var(--fluent-radius-md);
-  border-bottom: 2px solid var(--fluent-primary);
-  clip-path: inset(calc(100% - 2px) 0 0);
-  height: 4px;
-  transition-property: transform;
-  transition-duration: var(--fluent-duration-fast);
-  transition-timing-function: var(--fluent-easing-standard);
+  border-bottom-left-radius: var(--fluent-radius-sm);
+  border-bottom-right-radius: var(--fluent-radius-sm);
+  background: var(--fluent-input-border-bottom-focus);
+  height: 2px;
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  pointer-events: none;
   position: absolute;
-  bottom: -2px;
-  left: -1px;
-  right: -1px;
+  bottom: -1px;
+  left: 1px;
+  right: 1px;
   transform: scaleX(0);
-}
-
-cbi-dropdown:hover:not([disabled]), .cbi-dropdown:hover:not([disabled]) {
-  border-bottom-color: var(--fluent-input-border-hover);
-}
-
-cbi-dropdown:focus, cbi-dropdown.focus, cbi-dropdown[open], .cbi-dropdown:focus, .cbi-dropdown.focus, .cbi-dropdown[open] {
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
 }
 
 cbi-dropdown[open], .cbi-dropdown[open] {
   z-index: var(--fluent-zindex-dropdown);
-}
-
-cbi-dropdown:focus:after, cbi-dropdown.focus:after, cbi-dropdown[open]:after, .cbi-dropdown:focus:after, .cbi-dropdown.focus:after, .cbi-dropdown[open]:after {
-  transition-duration: .2s;
-  transition-timing-function: cubic-bezier(.4, 0, .23, 1);
-  transform: scaleX(1);
-}
-
-cbi-dropdown:active:not([disabled]), .cbi-dropdown:active:not([disabled]) {
-  border-bottom-color: var(--fluent-input-border-focus);
 }
 
 cbi-dropdown[disabled], .cbi-dropdown[disabled] {
@@ -5330,7 +5285,7 @@ cbi-dropdown[open] > ul.dropdown, .cbi-dropdown[open] > ul.dropdown {
   background-color: var(--fluent-dropdown-bg);
   border: 1px solid var(--fluent-dropdown-border);
   border-radius: var(--fluent-radius-md);
-  max-height: min(800px, 80vh);
+  max-height: min(350px, 50vh);
   box-shadow: var(--fluent-dropdown-shadow);
   z-index: var(--fluent-zindex-dropdown);
   padding: var(--fluent-space-xxs);
@@ -5488,7 +5443,7 @@ cbi-dropdown[open] > ul.dropdown > li .create-item-input, .cbi-dropdown[open] > 
   outline: none;
 }
 
-cbi-dropdown > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > select, .cbi-dropdown > .cbi-input-select {
+cbi-dropdown > select, .cbi-dropdown > select {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -5501,33 +5456,91 @@ cbi-dropdown > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > select,
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
 }
 
-cbi-dropdown > select:hover, cbi-dropdown > .cbi-input-select:hover, .cbi-dropdown > select:hover, .cbi-dropdown > .cbi-input-select:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-cbi-dropdown > select:focus, cbi-dropdown > .cbi-input-select:focus, .cbi-dropdown > select:focus, .cbi-dropdown > .cbi-input-select:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
-}
-
-cbi-dropdown > select:disabled, cbi-dropdown > .cbi-input-select:disabled, .cbi-dropdown > select:disabled, .cbi-dropdown > .cbi-input-select:disabled {
+cbi-dropdown > select:disabled, .cbi-dropdown > select:disabled {
   background: var(--fluent-input-bg-disabled);
   color: var(--fluent-text-disabled);
   cursor: not-allowed;
 }
 
-cbi-dropdown > select::placeholder, cbi-dropdown > .cbi-input-select::placeholder, .cbi-dropdown > select::placeholder, .cbi-dropdown > .cbi-input-select::placeholder {
+cbi-dropdown > select::placeholder, .cbi-dropdown > select::placeholder {
   color: var(--fluent-text-disabled);
 }
 
-cbi-dropdown > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > select, .cbi-dropdown > .cbi-input-select {
+cbi-dropdown > select, .cbi-dropdown > select {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+cbi-dropdown > select:hover:not([disabled]):not(:focus), .cbi-dropdown > select:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+cbi-dropdown > select:focus, .cbi-dropdown > select:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
+}
+
+cbi-dropdown > select, .cbi-dropdown > select {
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: var(--fluent-space-xl);
+  cursor: pointer;
+}
+
+cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select {
+  height: var(--fluent-input-height);
+  padding: 0 var(--fluent-space-sm);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+  color: var(--fluent-text);
+  background: var(--fluent-input-bg);
+  border: 1px solid var(--fluent-input-border);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--fluent-input-border-bottom);
+  border-radius: var(--fluent-radius-md);
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+cbi-dropdown > .cbi-input-select:disabled, .cbi-dropdown > .cbi-input-select:disabled {
+  background: var(--fluent-input-bg-disabled);
+  color: var(--fluent-text-disabled);
+  cursor: not-allowed;
+}
+
+cbi-dropdown > .cbi-input-select::placeholder, .cbi-dropdown > .cbi-input-select::placeholder {
+  color: var(--fluent-text-disabled);
+}
+
+cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom, right 10px center;
+  background-repeat: no-repeat;
+  background-size: 0 2px, 10px 6px;
+  background-origin: border-box;
+}
+
+cbi-dropdown > .cbi-input-select:hover:not([disabled]):not(:focus), .cbi-dropdown > .cbi-input-select:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+cbi-dropdown > .cbi-input-select:focus, .cbi-dropdown > .cbi-input-select:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px, 10px 6px;
+  outline: none;
+}
+
+cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select {
   box-sizing: border-box;
   width: 100%;
   padding-right: var(--fluent-space-xl);
@@ -6417,20 +6430,6 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-.cbi-dynlist > .add-item > input:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-.cbi-dynlist > .add-item > input:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 .cbi-dynlist > .add-item > input:disabled {
@@ -6441,6 +6440,26 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
 
 .cbi-dynlist > .add-item > input::placeholder {
   color: var(--fluent-text-disabled);
+}
+
+.cbi-dynlist > .add-item > input {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+.cbi-dynlist > .add-item > input:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+.cbi-dynlist > .add-item > input:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
 }
 
 .cbi-dynlist > .add-item > input {
@@ -6549,20 +6568,6 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-.control-group:has( > input.cbi-input-password):hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-.control-group:has( > input.cbi-input-password):focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 .control-group:has( > input.cbi-input-password):disabled {
@@ -6576,22 +6581,56 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
 }
 
 .control-group:has( > input.cbi-input-password) {
-  border-bottom-width: 1px;
+  position: relative;
+}
+
+.control-group:has( > input.cbi-input-password):hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+:is(.control-group:has( > input.cbi-input-password):focus, .control-group:has( > input.cbi-input-password):focus-within, .control-group:has( > input.cbi-input-password).focus, .control-group:has( > input.cbi-input-password)[open]) {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  outline: none;
+}
+
+.control-group:has( > input.cbi-input-password):focus:after {
+  transform: scaleX(1);
+}
+
+.control-group:has( > input.cbi-input-password):focus-within:after {
+  transform: scaleX(1);
+}
+
+.control-group:has( > input.cbi-input-password).focus:after {
+  transform: scaleX(1);
+}
+
+.control-group:has( > input.cbi-input-password)[open]:after {
+  transform: scaleX(1);
+}
+
+.control-group:has( > input.cbi-input-password):after {
+  box-sizing: border-box;
+  content: "";
+  border-bottom-left-radius: var(--fluent-radius-sm);
+  border-bottom-right-radius: var(--fluent-radius-sm);
+  background: var(--fluent-input-border-bottom-focus);
+  height: 2px;
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  pointer-events: none;
+  position: absolute;
+  bottom: -1px;
+  left: 1px;
+  right: 1px;
+  transform: scaleX(0);
+}
+
+.control-group:has( > input.cbi-input-password) {
   align-items: stretch;
   gap: 0;
   display: flex;
-  padding: 0 0 1px !important;
-}
-
-.control-group:has( > input.cbi-input-password):hover {
-  border-bottom-width: 2px;
-  padding-bottom: 0 !important;
-}
-
-.control-group:has( > input.cbi-input-password):focus-within {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  padding-bottom: 0 !important;
+  padding: 0 !important;
 }
 
 .control-group:has( > input.cbi-input-password) input.cbi-input-password {
@@ -6985,20 +7024,6 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-.password-input input:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-.password-input input:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 .password-input input:disabled {
@@ -7009,6 +7034,26 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
 
 .password-input input::placeholder {
   color: var(--fluent-text-disabled);
+}
+
+.password-input input {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+.password-input input:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+.password-input input:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
 }
 
 .password-input input {
@@ -7391,20 +7436,6 @@ textarea, .cbi-input-textarea {
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-textarea:hover, .cbi-input-textarea:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-textarea:focus, .cbi-input-textarea:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 textarea:disabled, .cbi-input-textarea:disabled {
@@ -7418,6 +7449,26 @@ textarea::placeholder, .cbi-input-textarea::placeholder {
 }
 
 textarea, .cbi-input-textarea {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+textarea:hover:not([disabled]):not(:focus), .cbi-input-textarea:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+textarea:focus, .cbi-input-textarea:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
+}
+
+textarea, .cbi-input-textarea {
   width: 100%;
   max-width: 100%;
   min-height: 80px;
@@ -7425,18 +7476,6 @@ textarea, .cbi-input-textarea {
   resize: vertical;
   box-sizing: border-box;
   line-height: var(--fluent-line-height-relaxed);
-  background-image: linear-gradient(var(--fluent-primary), var(--fluent-primary)),linear-gradient(var(--fluent-primary), var(--fluent-primary));
-  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  background-position: bottom, 50% calc(100% - 1px);
-  background-repeat: no-repeat;
-  background-size: 0 2px, 100% 1px;
-}
-
-textarea:focus, .cbi-input-textarea:focus {
-  border-color: var(--fluent-input-border-focus);
-  box-shadow: none;
-  background-size: 100% 2px, 100% 1px;
-  outline: none;
 }
 
 textarea:disabled, .cbi-input-textarea:disabled {
@@ -7464,7 +7503,7 @@ textarea:disabled, .cbi-input-textarea:disabled {
   position: absolute;
 }
 
-select, select.cbi-input-select {
+select {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -7477,20 +7516,6 @@ select, select.cbi-input-select {
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-}
-
-select:hover {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-hover);
-  padding-bottom: 0;
-}
-
-select:focus {
-  border-bottom-width: 2px;
-  border-bottom-color: var(--fluent-input-border-focus);
-  outline: none;
-  padding-bottom: 0;
 }
 
 select:disabled {
@@ -7499,26 +7524,90 @@ select:disabled {
   cursor: not-allowed;
 }
 
-select::placeholder, select.cbi-input-select::placeholder {
+select::placeholder {
   color: var(--fluent-text-disabled);
 }
 
-select, select.cbi-input-select {
+select {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+select:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+select:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
+}
+
+select {
   appearance: none;
   padding-right: var(--fluent-space-xl);
   cursor: pointer;
 }
 
-select:after, select.cbi-input-select:after {
+select:after {
   content: "";
 }
 
 select.cbi-input-select {
-  box-sizing: border-box;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-position: right 10px center;
+  height: var(--fluent-input-height);
+  padding: 0 var(--fluent-space-sm);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+  color: var(--fluent-text);
+  background: var(--fluent-input-bg);
+  border: 1px solid var(--fluent-input-border);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--fluent-input-border-bottom);
+  border-radius: var(--fluent-radius-md);
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+}
+
+select.cbi-input-select:disabled {
+  background: var(--fluent-input-bg-disabled);
+  color: var(--fluent-text-disabled);
+  cursor: not-allowed;
+}
+
+select.cbi-input-select::placeholder {
+  color: var(--fluent-text-disabled);
+}
+
+select.cbi-input-select {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom, right 10px center;
   background-repeat: no-repeat;
-  background-size: 10px 6px;
+  background-size: 0 2px, 10px 6px;
+  background-origin: border-box;
+}
+
+select.cbi-input-select:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+select.cbi-input-select:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px, 10px 6px;
+  outline: none;
+}
+
+select.cbi-input-select {
+  appearance: none;
+  padding-right: var(--fluent-space-xl);
+  cursor: pointer;
+  box-sizing: border-box;
   max-width: 100%;
 }
 
@@ -7526,9 +7615,9 @@ select.cbi-input-select[multiple] {
   height: auto;
   min-height: calc(var(--fluent-input-height)*4);
   padding: var(--fluent-space-xxs);
-  background-image: none;
-  background-position: initial;
-  background-size: initial;
+  background-image: none !important;
+  background-position: initial !important;
+  background-size: initial !important;
 }
 
 select.cbi-input-select[multiple] option {
@@ -9490,8 +9579,9 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
     --fluent-input-bg: #292929;
     --fluent-input-border: #666;
     --fluent-input-border-bottom: #adadad;
-    --fluent-input-border-hover: #fff;
-    --fluent-input-border-focus: #4da6ff;
+    --fluent-input-border-hover: #757575;
+    --fluent-input-border-bottom-hover: #bdbdbd;
+    --fluent-input-border-bottom-focus: var(--fluent-primary);
     --fluent-input-bg-disabled: #333;
     --fluent-input-bg-hover: #333;
     --fluent-calendar-picker-invert: 1;
@@ -9581,8 +9671,9 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-input-bg: #292929;
   --fluent-input-border: #666;
   --fluent-input-border-bottom: #adadad;
-  --fluent-input-border-hover: #fff;
-  --fluent-input-border-focus: #4da6ff;
+  --fluent-input-border-hover: #757575;
+  --fluent-input-border-bottom-hover: #bdbdbd;
+  --fluent-input-border-bottom-focus: var(--fluent-primary);
   --fluent-input-bg-disabled: #333;
   --fluent-input-bg-hover: #333;
   --fluent-calendar-picker-invert: 1;

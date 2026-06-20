@@ -154,8 +154,9 @@
   --fluent-input-height: var(--fluent-control-height, 42px);
   --fluent-input-border: #d1d1d1; // --colorNeutralStroke1: #d1d1d1;
   --fluent-input-border-bottom: #616161; // Grey38 (FluentUI default)
-  --fluent-input-border-hover: #242424; // Grey14
-  --fluent-input-border-focus: #0078d4; // BrandBlue
+  --fluent-input-border-hover: #c7c7c7;  
+  --fluent-input-border-bottom-hover: #575757;  
+  --fluent-input-border-bottom-focus: var(--fluent-primary); // BrandBlue
   --fluent-input-bg: #ffffff;
   --fluent-input-bg-disabled: #f0f0f0; // Grey94
   --fluent-input-bg-hover: #f5f5f5; // Grey96

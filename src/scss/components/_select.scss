@@ -7,6 +7,7 @@
 // Native select
 select {
   @include input-base;
+  @include input-focus-ripple-v2;
   appearance: none;
   -webkit-appearance: none;
   padding-right: var(--fluent-space-xl);
@@ -20,22 +21,27 @@ select {
 
 // LuCI select with chevron
 select.cbi-input-select {
-  @extend select;
+  @include input-base;
+  @include input-focus-ripple-v2(
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+    right 10px center,
+    10px 6px
+  );
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: var(--fluent-space-xl);
+  cursor: pointer;
   max-width: 100%;
   box-sizing: border-box;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23616161' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-position: right 10px center;
-  background-size: 10px 6px;
-  background-repeat: no-repeat;
 
   // Multiple select
   &[multiple] {
     height: auto;
     min-height: calc(var(--fluent-input-height) * 4);
     padding: var(--fluent-space-xxs);
-    background-image: none;
-    background-position: initial;
-    background-size: initial;
+    background-image: none !important;
+    background-position: initial !important;
+    background-size: initial !important;
 
     option {
       padding: var(--fluent-space-xxs) var(--fluent-space-xs);

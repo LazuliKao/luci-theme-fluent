@@ -167,7 +167,82 @@ $breakpoint-xxl: 1400px;
     background: var(--fluent-bg-active);
   }
 }
+// for div(dropdown)
+@mixin input-focus-ripple-v1 {
+  position: relative;
 
+  &:hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
+    border-color: var(--fluent-input-border-hover);
+    border-bottom-color: var(--fluent-input-border-bottom-hover);
+  }
+
+  &:focus,
+  &:focus-within,
+  &.focus,
+  &[open] {
+    outline: none;
+    border-bottom-color: var(--fluent-input-border-bottom-focus);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  &::after {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    left: 1px;
+    bottom: -1px;
+    right: 1px;
+    height: 2px;
+    border-bottom-left-radius: var(--fluent-radius-sm);
+    border-bottom-right-radius: var(--fluent-radius-sm);
+    background: var(--fluent-input-border-bottom-focus);
+    transform: scaleX(0);
+    transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+    pointer-events: none;
+  }
+}
+// for void elements like input
+@mixin input-focus-ripple-v2($extra-bg: null, $extra-position: null, $extra-size: null) {
+  @if $extra-bg {
+    background-image:
+      linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus)), $extra-bg;
+    background-position:
+      center bottom,
+      $extra-position;
+    background-size:
+      0 2px,
+      $extra-size;
+  } @else {
+    background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+    background-position: center bottom;
+    background-size: 0 2px;
+  }
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  transition:
+    background-size var(--fluent-duration-fast) var(--fluent-easing-standard),
+    border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &:hover:not([disabled]):not(:focus) {
+    border-color: var(--fluent-input-border-hover);
+    border-bottom-color: var(--fluent-input-border-bottom-hover);
+  }
+
+  &:focus {
+    outline: none;
+    border-bottom-color: var(--fluent-input-border-bottom-focus);
+    @if $extra-bg {
+      background-size:
+        100% 2px,
+        $extra-size;
+    } @else {
+      background-size: 100% 2px;
+    }
+  }
+}
 // ============================================================
 // INPUT BASE (FluentUI Input)
 // Height: 32px, Radius: 4px, Bottom-border indicator
@@ -185,20 +260,6 @@ $breakpoint-xxl: 1400px;
   border-bottom-color: var(--fluent-input-border-bottom);
   border-radius: var(--fluent-radius-md);
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  padding-bottom: 1px;
-
-  &:hover {
-    border-bottom-width: 2px;
-    padding-bottom: 0px;
-    border-bottom-color: var(--fluent-input-border-hover);
-  }
-
-  &:focus {
-    border-bottom-width: 2px;
-    padding-bottom: 0px;
-    border-bottom-color: var(--fluent-input-border-focus);
-    outline: none;
-  }
 
   &:disabled {
     background: var(--fluent-input-bg-disabled);

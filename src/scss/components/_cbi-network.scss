@@ -65,6 +65,7 @@ td > .ifacebadge,
 
 .zonebadge > input[type="text"] {
   @include input-base;
+  @include input-focus-ripple-v2;
   flex: 1 1 12rem;
   min-width: 0;
 }
