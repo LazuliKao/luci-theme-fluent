@@ -1752,13 +1752,12 @@ body.modal-overlay-active #modal_overlay {
 }
 
 .modal .alert, .modal .alert-message {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
   box-shadow: none !important;
   color: var(--fluent-text) !important;
   background: none !important;
   border: none !important;
   margin: 0 !important;
+  padding: 0 !important;
 }
 
 .modal .alert:before, .modal .alert-message:before {
@@ -1917,6 +1916,13 @@ body.modal-overlay-active #modal_overlay {
   margin-bottom: var(--fluent-space-lg);
   position: relative;
   overflow: visible !important;
+}
+
+.modal .right {
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--fluent-space-xs);
+  display: flex;
 }
 
 .modal-wide {
@@ -7637,6 +7643,7 @@ textarea::placeholder, .cbi-input-textarea::placeholder {
 }
 
 textarea, .cbi-input-textarea {
+  height: unset;
   background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
   transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
   background-position: bottom;

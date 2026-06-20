@@ -17,8 +17,9 @@
   > * .cbi-section {
     // Override nested sections (e.g. in Portweaver)
     padding: 0;
+    box-shadow: none;
   }
-  > .cbi-section-node {
+  .cbi-section-node {
     padding-top: var(--fluent-space-lg);
   }
   .cbi-section-remove.right + .cbi-section-node:has(+ .cbi-section-remove.right + .cbi-section-node) {

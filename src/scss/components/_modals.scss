@@ -63,8 +63,8 @@ body.modal-overlay-active {
     border: none !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-    padding-left: var(--fluent-modal-padding) !important;
-    padding-right: var(--fluent-modal-padding) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin: 0 !important;
     box-shadow: none !important;
     color: var(--fluent-text) !important;
@@ -162,7 +162,14 @@ body.modal-overlay-active {
     margin-top: var(--fluent-space-lg);
     margin-bottom: var(--fluent-space-lg);
     overflow: visible !important; // Prevent clipping of the spinner icon due to modal's overflow-y: auto
+  }
 
+  // Right-aligned layouts inside modal body (e.g. file upload dialog buttons)
+  .right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--fluent-space-xs);
   }
 }
 

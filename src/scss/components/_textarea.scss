@@ -5,6 +5,7 @@
 
 textarea {
   @include input-base;
+  height: unset;
   @include input-focus-ripple-v2;
   @include custom-scrollbar;
   width: 100%;
