@@ -138,12 +138,6 @@ jobs:
         run: gh release delete nightly --yes || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create and push nightly tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -f nightly
-          git push origin nightly --force
       - name: Create Nightly Release
         uses: softprops/action-gh-release@v2
         with:
