@@ -176,60 +176,76 @@
 
     // --- Icon Mappings via CSS Masks (Fading Regular to Filled) ---
     $sidebar-icons: (
-      "Dashboard": "home-20",
-      "QuickStart": "flash-20",
-      "NetworkGuide": "compass-northwest-20",
-      "Status": "heart-pulse-20",
-      "System": "settings-20",
-      "Services": "apps-20",
-      "iStore": "app-store-24",
-      "NAS": "database-20",
-      "VPN": "shield-lock-20",
-      "Network": "router-20",
-      "Statistics": "data-trending-20",
-      "Log_out": "arrow-exit-20"
+      "Dashboard": (
+        "reg": "__icon__(home-20-regular)",
+        "fill": "__icon__(home-20-filled)"
+      ),
+      "QuickStart": (
+        "reg": "__icon__(flash-20-regular)",
+        "fill": "__icon__(flash-20-filled)"
+      ),
+      "NetworkGuide": (
+        "reg": "__icon__(compass-northwest-20-regular)",
+        "fill": "__icon__(compass-northwest-20-filled)"
+      ),
+      "Status": (
+        "reg": "__icon__(heart-pulse-20-regular)",
+        "fill": "__icon__(heart-pulse-20-filled)"
+      ),
+      "System": (
+        "reg": "__icon__(settings-20-regular)",
+        "fill": "__icon__(settings-20-filled)"
+      ),
+      "Services": (
+        "reg": "__icon__(apps-20-regular)",
+        "fill": "__icon__(apps-20-filled)"
+      ),
+      "iStore": (
+        "reg": "__icon__(app-store-24-regular)",
+        "fill": "__icon__(app-store-24-filled)"
+      ),
+      "NAS": (
+        "reg": "__icon__(database-20-regular)",
+        "fill": "__icon__(database-20-filled)"
+      ),
+      "VPN": (
+        "reg": "__icon__(shield-lock-20-regular)",
+        "fill": "__icon__(shield-lock-20-filled)"
+      ),
+      "Network": (
+        "reg": "__icon__(router-20-regular)",
+        "fill": "__icon__(router-20-filled)"
+      ),
+      "Statistics": (
+        "reg": "__icon__(data-trending-20-regular)",
+        "fill": "__icon__(data-trending-20-filled)"
+      ),
+      "Log_out": (
+        "reg": "__icon__(arrow-exit-20-regular)",
+        "fill": "__icon__(arrow-exit-20-filled)"
+      )
     );
 
-    @each $title, $icon in $sidebar-icons {
+    @each $title, $pair in $sidebar-icons {
       &[data-title="#{$title}"] {
+        $reg-raw: map.get($pair, "reg");
+        $fill-raw: map.get($pair, "fill");
+
+        $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
+        $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
+
         .menu-icon::before {
-          $svg-reg: map.get($fluent-icons, "#{$icon}-regular");
+          $svg-reg: map.get($fluent-icons, $reg);
           -webkit-mask-image: url("data:image/svg+xml,#{$svg-reg}");
           mask-image: url("data:image/svg+xml,#{$svg-reg}");
         }
         .menu-icon::after {
-          $svg-fill: map.get($fluent-icons, "#{$icon}-filled");
+          $svg-fill: map.get($fluent-icons, $fill);
           -webkit-mask-image: url("data:image/svg+xml,#{$svg-fill}");
           mask-image: url("data:image/svg+xml,#{$svg-fill}");
         }
       }
     }
-
-    // Builder Scanner hints (regular and filled versions):
-    // @include fluent-icon-by-name("home-20-regular", 20px);
-    // @include fluent-icon-by-name("home-20-filled", 20px);
-    // @include fluent-icon-by-name("flash-20-regular", 20px);
-    // @include fluent-icon-by-name("flash-20-filled", 20px);
-    // @include fluent-icon-by-name("compass-northwest-20-regular", 20px);
-    // @include fluent-icon-by-name("compass-northwest-20-filled", 20px);
-    // @include fluent-icon-by-name("heart-pulse-20-regular", 20px);
-    // @include fluent-icon-by-name("heart-pulse-20-filled", 20px);
-    // @include fluent-icon-by-name("settings-20-regular", 20px);
-    // @include fluent-icon-by-name("settings-20-filled", 20px);
-    // @include fluent-icon-by-name("apps-20-regular", 20px);
-    // @include fluent-icon-by-name("apps-20-filled", 20px);
-    // @include fluent-icon-by-name("app-store-24-regular", 24px);
-    // @include fluent-icon-by-name("app-store-24-filled", 24px);
-    // @include fluent-icon-by-name("database-20-regular", 20px);
-    // @include fluent-icon-by-name("database-20-filled", 20px);
-    // @include fluent-icon-by-name("shield-lock-20-regular", 20px);
-    // @include fluent-icon-by-name("shield-lock-20-filled", 20px);
-    // @include fluent-icon-by-name("router-20-regular", 20px);
-    // @include fluent-icon-by-name("router-20-filled", 20px);
-    // @include fluent-icon-by-name("data-trending-20-regular", 20px);
-    // @include fluent-icon-by-name("data-trending-20-filled", 20px);
-    // @include fluent-icon-by-name("arrow-exit-20-regular", 20px);
-    // @include fluent-icon-by-name("arrow-exit-20-filled", 20px);
 
     // Subtle Hover & Active transitions
     &:hover,

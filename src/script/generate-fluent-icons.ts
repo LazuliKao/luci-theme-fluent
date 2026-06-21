@@ -135,10 +135,19 @@ function walkScssFiles(dir: string): string[] {
 
 function extractNamesFromScss(content: string): string[] {
   const seen = new Set<string>();
+  
+  // Existing mixin matches
   const re = /fluent-icon(?:-content)?-by-name\s*\(\s*["']([^"']+)["']\s*,/g;
   for (const match of content.matchAll(re)) {
     seen.add(match[1]);
   }
+
+  // Custom __icon__(...) matches
+  const reCustom = /__icon__\(\s*["']?([^"'\)]+)["']?\s*\)/g;
+  for (const match of content.matchAll(reCustom)) {
+    seen.add(match[1]);
+  }
+
   return [...seen].sort();
 }
 
