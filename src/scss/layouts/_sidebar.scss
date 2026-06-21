@@ -138,18 +138,64 @@
 
     // Icon positioning (via ::before pseudo-element)
     &::before {
+      content: "";
       position: relative;
       left: 0;
       margin-right: var(--fluent-space-sm);
       width: 20px;
       height: 20px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      color: var(--fluent-text-secondary);
-      transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+      background-color: currentColor;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      transition:
+        color var(--fluent-duration-fast) var(--fluent-easing-standard),
+        background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
     }
+
+    // --- Icon Mappings via CSS Masks ---
+    $sidebar-icons: (
+      "Dashboard": "home-20-regular",
+      "QuickStart": "flash-20-regular",
+      "NetworkGuide": "compass-northwest-20-regular",
+      "Status": "heart-pulse-20-regular",
+      "System": "settings-20-regular",
+      "Services": "apps-20-regular",
+      "iStore": "store-20-regular",
+      "NAS": "database-20-regular",
+      "VPN": "shield-lock-20-regular",
+      "Network": "router-20-regular",
+      "Statistics": "data-trending-20-regular",
+      "Log_out": "arrow-exit-20-regular"
+    );
+
+    @each $title, $icon in $sidebar-icons {
+      &[data-title="#{$title}"]::before {
+        $svg: map.get($fluent-icons, $icon);
+        -webkit-mask-image: url("data:image/svg+xml,#{$svg}");
+        mask-image: url("data:image/svg+xml,#{$svg}");
+      }
+    }
+
+    // Builder Scanner hints:
+    // @include fluent-icon-by-name("home-20-regular", 20px);
+    // @include fluent-icon-by-name("flash-20-regular", 20px);
+    // @include fluent-icon-by-name("compass-northwest-20-regular", 20px);
+    // @include fluent-icon-by-name("heart-pulse-20-regular", 20px);
+    // @include fluent-icon-by-name("settings-20-regular", 20px);
+    // @include fluent-icon-by-name("apps-20-regular", 20px);
+    // @include fluent-icon-by-name("store-20-regular", 20px);
+    // @include fluent-icon-by-name("database-20-regular", 20px);
+    // @include fluent-icon-by-name("shield-lock-20-regular", 20px);
+    // @include fluent-icon-by-name("router-20-regular", 20px);
+    // @include fluent-icon-by-name("data-trending-20-regular", 20px);
+    // @include fluent-icon-by-name("arrow-exit-20-regular", 20px);
 
     // Subtle FluentUI hover
     &:hover {
