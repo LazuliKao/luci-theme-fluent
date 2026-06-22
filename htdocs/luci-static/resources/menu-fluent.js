@@ -558,14 +558,7 @@ function select_dropdown_r(l) {
 ;// CONCATENATED MODULE: ./web/resources/utils/ifacebox-tooltip.ts
 let ifacebox_tooltip_e = null;
 function setupIfaceboxTooltips() {
-    document.addEventListener("mouseover", (e)=>{
-        let t = e.target.closest(".ifacebadge");
-        if (t && !t.title && !t.classList.contains("cbi-tooltip")) {
-            var o;
-            let e = t.querySelector("span:not(.cbi-tooltip-container):not(.cbi-tooltip)");
-            e && (t.title = (null == (o = e.textContent) ? void 0 : o.trim()) || "");
-        }
-    }), document.addEventListener("mouseover", (t)=>{
+    document.addEventListener("mouseover", (t)=>{
         let o = t.target.closest(".cbi-tooltip-container");
         if (!(null == o ? void 0 : o.closest('td[data-name="_ifacebox"] .ifacebox-body, .td[data-name="_ifacebox"] .ifacebox-body'))) {
             ifacebox_tooltip_e && "none" !== ifacebox_tooltip_e.style.display && (ifacebox_tooltip_e.style.display = "none", ifacebox_tooltip_e.style.opacity = "0");
@@ -574,10 +567,10 @@ function setupIfaceboxTooltips() {
         let n = o.querySelector(".cbi-tooltip");
         if (!n) return;
         ifacebox_tooltip_e || ((ifacebox_tooltip_e = document.createElement("div")).id = "fluent-global-tooltip", ifacebox_tooltip_e.className = "cbi-tooltip ifacebadge large", ifacebox_tooltip_e.style.position = "absolute", ifacebox_tooltip_e.style.zIndex = "10000", ifacebox_tooltip_e.style.pointerEvents = "none", ifacebox_tooltip_e.style.display = "none", document.body.appendChild(ifacebox_tooltip_e)), ifacebox_tooltip_e.innerHTML = n.innerHTML, ifacebox_tooltip_e.style.display = "block", ifacebox_tooltip_e.style.opacity = "0";
-        let i = o.getBoundingClientRect(), l = ifacebox_tooltip_e.getBoundingClientRect(), s = window.pageYOffset + i.bottom + 6, a = window.pageXOffset + i.left + i.width / 2 - l.width / 2;
-        a < 10 && (a = 10), a + l.width > window.innerWidth - 10 && (a = window.innerWidth - l.width - 10), ifacebox_tooltip_e.style.top = "".concat(s, "px"), ifacebox_tooltip_e.style.left = "".concat(a, "px"), ifacebox_tooltip_e.offsetWidth, ifacebox_tooltip_e.style.opacity = "1";
-        let d = window.pageXOffset + i.left + i.width / 2 - a;
-        ifacebox_tooltip_e.style.setProperty("--arrow-left", "".concat(d, "px"));
+        let i = o.getBoundingClientRect(), l = ifacebox_tooltip_e.getBoundingClientRect(), s = window.pageYOffset + i.bottom + 6, d = window.pageXOffset + i.left + i.width / 2 - l.width / 2;
+        d < 10 && (d = 10), d + l.width > window.innerWidth - 10 && (d = window.innerWidth - l.width - 10), ifacebox_tooltip_e.style.top = "".concat(s, "px"), ifacebox_tooltip_e.style.left = "".concat(d, "px"), ifacebox_tooltip_e.offsetWidth, ifacebox_tooltip_e.style.opacity = "1";
+        let a = window.pageXOffset + i.left + i.width / 2 - d;
+        ifacebox_tooltip_e.style.setProperty("--arrow-left", "".concat(a, "px"));
         let c = ()=>{
             ifacebox_tooltip_e && (ifacebox_tooltip_e.style.display = "none", ifacebox_tooltip_e.style.opacity = "0"), o.removeEventListener("mouseleave", c), window.removeEventListener("scroll", r, !0);
         }, r = ()=>{

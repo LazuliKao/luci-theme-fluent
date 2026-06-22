@@ -5,18 +5,6 @@
 let globalTooltip: HTMLElement | null = null;
 
 export function setupIfaceboxTooltips() {
-  // Automatically add native title attribute to ifacebadges for full name display on hover
-  document.addEventListener("mouseover", (e) => {
-    const target = e.target as HTMLElement;
-    const badge = target.closest(".ifacebadge") as HTMLElement | null;
-    if (badge && !badge.title && !badge.classList.contains("cbi-tooltip")) {
-      const textSpan = badge.querySelector("span:not(.cbi-tooltip-container):not(.cbi-tooltip)");
-      if (textSpan) {
-        badge.title = textSpan.textContent?.trim() || "";
-      }
-    }
-  });
-
   document.addEventListener("mouseover", (e) => {
     const target = e.target as HTMLElement;
     const container = target.closest(".cbi-tooltip-container") as HTMLElement | null;
