@@ -7,6 +7,7 @@
 // Main section card
 .cbi-section {
   @include card;
+
   position: relative;
 
   width: 100%;
@@ -19,7 +20,8 @@
     padding: 0;
     box-shadow: none;
   }
-  .cbi-section-node {
+
+   .cbi-section-node:not(:first-child) {
     padding-top: var(--fluent-space-lg);
   }
   .cbi-section-remove.right + .cbi-section-node:has(+ .cbi-section-remove.right + .cbi-section-node) {

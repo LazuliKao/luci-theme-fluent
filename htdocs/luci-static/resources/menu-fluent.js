@@ -700,6 +700,7 @@ function setupThemeFeatures() {
                 !e || e.startsWith('#') || e.startsWith("javascript:") || i.getAttribute('target') || i.hostname !== location.hostname || l();
             }
         }), document.addEventListener('submit', (e)=>{
+            if (e.defaultPrevented) return;
             let t = e.target;
             if (!t) return;
             let i = t.closest('form');
@@ -865,7 +866,7 @@ const main = baseclass.extend({
                         class: p,
                         "data-title": (i.title || "").replace(/ /g, "_"),
                         children: [
-                            1 === s ? jsx("span", {
+                            1 === s || 2 === s ? jsx("span", {
                                 class: "menu-icon"
                             }) : null,
                             _(i.title || "")

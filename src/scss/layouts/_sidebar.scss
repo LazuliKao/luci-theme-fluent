@@ -407,6 +407,141 @@
             height: 32px;
             box-shadow: none;
             transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+            .menu-icon {
+              display: none;
+              position: relative;
+              margin-right: var(--fluent-space-xs);
+              width: 16px;
+              height: 16px;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              color: inherit;
+
+              &::before,
+              &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: currentColor;
+                -webkit-mask-size: contain;
+                mask-size: contain;
+                -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                mask-position: center;
+                transition: opacity var(--fluent-duration-normal) var(--fluent-easing-standard);
+              }
+
+              &::before {
+                opacity: 1;
+              }
+
+              &::after {
+                opacity: 0;
+              }
+            }
+
+            // --- Submenu Icon Mappings via CSS Masks ---
+            $submenu-icons: (
+              "Overview": (
+                "reg": "__icon__(document-text-20-regular)",
+                "fill": "__icon__(document-text-20-filled)"
+              ),
+              "Interfaces": (
+                "reg": "__icon__(network-adapter-16-regular)",
+                "fill": "__icon__(network-adapter-16-filled)"
+              ),
+              "Wireless": (
+                "reg": "__icon__(wifi-1-20-regular)",
+                "fill": "__icon__(wifi-1-20-filled)"
+              ),
+              "Firewall": (
+                "reg": "__icon__(shield-20-regular)",
+                "fill": "__icon__(shield-20-filled)"
+              ),
+              "DHCP": (
+                "reg": "__icon__(server-20-regular)",
+                "fill": "__icon__(server-20-filled)"
+              ),
+              "DNS": (
+                "reg": "__icon__(globe-20-regular)",
+                "fill": "__icon__(globe-20-filled)"
+              ),
+              "Routing": (
+                "reg": "__icon__(arrow-routing-20-regular)",
+                "fill": "__icon__(arrow-routing-20-filled)"
+              ),
+              "Diagnostics": (
+                "reg": "__icon__(heart-pulse-20-regular)",
+                "fill": "__icon__(heart-pulse-20-filled)"
+              ),
+              "Software": (
+                "reg": "__icon__(box-20-regular)",
+                "fill": "__icon__(box-20-filled)"
+              ),
+              "Administration": (
+                "reg": "__icon__(key-20-regular)",
+                "fill": "__icon__(key-20-filled)"
+              ),
+              "Startup": (
+                "reg": "__icon__(play-20-regular)",
+                "fill": "__icon__(play-20-filled)"
+              ),
+              "Scheduled_Tasks": (
+                "reg": "__icon__(clock-20-regular)",
+                "fill": "__icon__(clock-20-filled)"
+              ),
+              "Mount_Points": (
+                "reg": "__icon__(hard-drive-20-regular)",
+                "fill": "__icon__(hard-drive-20-filled)"
+              ),
+              "Backup_/_Flash_Firmware": (
+                "reg": "__icon__(arrow-sync-20-regular)",
+                "fill": "__icon__(arrow-sync-20-filled)"
+              ),
+              "Reboot": (
+                "reg": "__icon__(power-20-regular)",
+                "fill": "__icon__(power-20-filled)"
+              ),
+              "Terminal": (
+                "reg": "__icon__(window-console-20-regular)",
+                "fill": "__icon__(window-console-20-filled)"
+              )
+            );
+
+            @each $title, $pair in $submenu-icons {
+              &[data-title="#{$title}"] {
+                .menu-icon {
+                  display: inline-flex;
+
+                  $reg-raw: map.get($pair, "reg");
+                  $fill-raw: map.get($pair, "fill");
+
+                  $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
+                  $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
+
+                  $svg-reg: str-replace(map.get($fluent-icons, $reg), '"', "'");
+                  $svg-fill: str-replace(map.get($fluent-icons, $fill), '"', "'");
+
+                  $svg-reg-encoded: str-replace(str-replace($svg-reg, "<", "%3C"), ">", "%3E");
+                  $svg-fill-encoded: str-replace(str-replace($svg-fill, "<", "%3C"), ">", "%3E");
+
+                  &::before {
+                    -webkit-mask-image: url("data:image/svg+xml,#{$svg-reg-encoded}");
+                    mask-image: url("data:image/svg+xml,#{$svg-reg-encoded}");
+                  }
+                  &::after {
+                    -webkit-mask-image: url("data:image/svg+xml,#{$svg-fill-encoded}");
+                    mask-image: url("data:image/svg+xml,#{$svg-fill-encoded}");
+                  }
+                }
+              }
+            }
           }
 
           // Submenu item hover
@@ -419,6 +554,15 @@
 
             a {
               color: var(--fluent-text);
+
+              .menu-icon {
+                &::before {
+                  opacity: 0;
+                }
+                &::after {
+                  opacity: 1;
+                }
+              }
             }
 
             &::after {
@@ -442,6 +586,16 @@
             a {
               color: var(--fluent-primary);
               font-weight: var(--fluent-font-weight-semibold);
+
+              .menu-icon {
+                color: var(--fluent-primary);
+                &::before {
+                  opacity: 0;
+                }
+                &::after {
+                  opacity: 1;
+                }
+              }
             }
 
             &::after {

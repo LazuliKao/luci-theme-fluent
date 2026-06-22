@@ -285,6 +285,7 @@ export function setupThemeFeatures() {
     });
 
     document.addEventListener('submit', (e) => {
+      if (e.defaultPrevented) return;
       const target = e.target as HTMLElement | null;
       if (!target) return;
       const form = target.closest('form');

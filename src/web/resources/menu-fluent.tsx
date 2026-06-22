@@ -191,7 +191,7 @@ const module: Module = {
       const menuItem = (
         <li class={slideClass ?? undefined}>
           <a href={L.url(url, child.name)} onclick={currentLevel === 1 ? ui.createHandlerFn(this, "handleMenuExpand") : null} class={menuClassCombined} data-title={(child.title || "").replace(/ /g, "_")}>
-            {currentLevel === 1 ? <span class="menu-icon"></span> : null}
+            {currentLevel === 1 || currentLevel === 2 ? <span class="menu-icon"></span> : null}
             {_(child.title || "")}
           </a>
           {submenu}
