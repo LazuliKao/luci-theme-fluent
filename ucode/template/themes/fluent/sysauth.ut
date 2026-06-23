@@ -1,6 +1,6 @@
 {% include('themes/fluent/out_header_login'); %}
 {#
-  FluentUI Theme for LuCI - Login Page
+  Fluent Theme for LuCI - Login Page
   Licensed to the public under the Apache License 2.0
 #}
 

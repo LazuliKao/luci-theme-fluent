@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import fs from "node:fs";
+import path from "node:path";
+import { type Browser, type BrowserContext, chromium, type Page } from "playwright";
 
 // Helper to manually load .env file
 function loadEnv() {
@@ -27,11 +27,62 @@ function loadEnv() {
 // Load environment variables
 loadEnv();
 
+function getLanguage(): string {
+  const langArgIndex = process.argv.findIndex((arg) => arg.startsWith("--lang=") || arg === "-l");
+  if (langArgIndex !== -1) {
+    if (process.argv[langArgIndex].startsWith("--lang=")) {
+      return process.argv[langArgIndex].split("=")[1].trim();
+    } else if (langArgIndex + 1 < process.argv.length) {
+      return process.argv[langArgIndex + 1].trim();
+    }
+  }
+  return process.env.SCREENSHOT_LANG || "en-US";
+}
+
+function parseLanguage(lang: string) {
+  const lower = lang.toLowerCase().replace("_", "-");
+  if (lower.startsWith("zh")) {
+    return {
+      code: "zh-Hans",
+      locale: "zh-CN",
+      acceptLanguage: "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+      isChinese: true,
+    };
+  }
+  return {
+    code: "en-US",
+    locale: "en-US",
+    acceptLanguage: "en-US,en;q=0.9",
+    isChinese: false,
+  };
+}
+
+const langConfig = parseLanguage(getLanguage());
+
 const PAGES = [
   { name: "overview", urlPath: "/cgi-bin/luci/admin/status/overview" },
   { name: "network", urlPath: "/cgi-bin/luci/admin/network/network" },
   { name: "nftables", urlPath: "/cgi-bin/luci/admin/status/nftables" },
 ];
+
+const MOBILE_LIGHT_EXTRA_PAGES = [
+  { name: "system_settings", urlPath: "/cgi-bin/luci/admin/system/system" },
+  { name: "software_management", urlPath: "/cgi-bin/luci/admin/system/package-manager" },
+] as const;
+
+const OVERVIEW_BLUR_SELECTORS = [
+  "#view > div:nth-child(1) > div:nth-child(2) > table > tr:nth-child(2) > td:nth-child(2)",
+  "#view > div:nth-child(1) > div:nth-child(2) > table > tr:nth-child(6) > td:nth-child(2)",
+] as const;
+
+const MASK_BLUR_CLASS = "fluent-mask-blur";
+const MASK_BLUR_STYLE = `
+  .${MASK_BLUR_CLASS} {
+    filter: blur(6px);
+    user-select: none;
+    pointer-events: none;
+  }
+`;
 
 type VariantConfig = {
   prefix: string;
@@ -45,8 +96,8 @@ const VARIANTS: VariantConfig[] = [
   { prefix: "dark_", viewport: { width: 1280, height: 720 }, label: "Desktop Dark", darkMode: true },
   { prefix: "mobile_", viewport: { width: 390, height: 844 }, label: "Mobile Light", darkMode: false },
   { prefix: "mobile_dark_", viewport: { width: 390, height: 844 }, label: "Mobile Dark", darkMode: true },
-  { prefix: "tablet_", viewport: { width: 1180, height: 820 }, label: "Tablet Light", darkMode: false },
-  { prefix: "tablet_dark_", viewport: { width: 1180, height: 820 }, label: "Tablet Dark", darkMode: true },
+  { prefix: "tablet_", viewport: { width: 1024, height: 720 }, label: "Tablet Light", darkMode: false },
+  { prefix: "tablet_dark_", viewport: { width: 1024, height: 720 }, label: "Tablet Dark", darkMode: true },
 ];
 
 /**
@@ -55,13 +106,16 @@ const VARIANTS: VariantConfig[] = [
  */
 async function captureVariant(browser: Browser, screenshotsDir: string, routerUrl: string, username: string, password: string, config: VariantConfig): Promise<void> {
   console.log(`\n=== ${config.label} (${config.viewport.width}×${config.viewport.height}) ===`);
+  const isTouchMobileVariant = config.prefix === "mobile_" || config.prefix === "mobile_dark_";
 
   const context: BrowserContext = await browser.newContext({
     viewport: config.viewport,
+    isMobile: isTouchMobileVariant,
+    hasTouch: isTouchMobileVariant,
     ignoreHTTPSErrors: true,
-    locale: "en-US",
+    locale: langConfig.locale,
     extraHTTPHeaders: {
-      "Accept-Language": "en-US,en;q=0.9",
+      "Accept-Language": langConfig.acceptLanguage,
     },
   });
 
@@ -168,6 +222,10 @@ async function captureVariant(browser: Browser, screenshotsDir: string, routerUr
       await page.waitForSelector(".main, #mainmenu", { timeout: 15000 });
       await page.waitForTimeout(2500); // Let transitions/charts render
 
+      if (pageConfig.name === "overview") {
+        await applyOverviewBlurMask(page);
+      }
+
       // Simulate mouse hover to trigger tooltips
       if (pageConfig.name === "network") {
         const badge = page.locator('td[data-name="_ifacebox"] .ifacebox-body .cbi-tooltip-container, .td[data-name="_ifacebox"] .ifacebox-body .cbi-tooltip-container').first();
@@ -178,7 +236,7 @@ async function captureVariant(browser: Browser, screenshotsDir: string, routerUr
           try {
             await page.waitForSelector("#fluent-global-tooltip:visible, .cbi-tooltip:visible", { timeout: 5000 });
             await page.waitForTimeout(1000); // Wait for transition/positioning to stabilize
-          } catch (e) {
+          } catch (_e) {
             console.log("  Note: Tooltip did not become visible in 5s (may not exist or already visible)");
           }
         }
@@ -187,6 +245,11 @@ async function captureVariant(browser: Browser, screenshotsDir: string, routerUr
       const screenshotPath = path.join(screenshotsDir, `${config.prefix}${pageConfig.name}.png`);
       await page.screenshot({ path: screenshotPath });
       console.log(`  Saved: ${config.prefix}${pageConfig.name}.png`);
+    }
+
+    if (config.prefix === "mobile_" || config.prefix === "mobile_dark_") {
+      await captureMobileSidebarOpen(page, screenshotsDir, config.prefix);
+      await captureMobileExtraPages(page, screenshotsDir, routerUrl, config.prefix);
     }
   } catch (error) {
     console.error(`  [${config.label}] Error:`, error);
@@ -200,6 +263,58 @@ async function captureVariant(browser: Browser, screenshotsDir: string, routerUr
     throw error;
   } finally {
     await context.close();
+  }
+}
+
+async function applyOverviewBlurMask(page: Page): Promise<void> {
+  await page.addStyleTag({ content: MASK_BLUR_STYLE });
+
+  for (const selector of OVERVIEW_BLUR_SELECTORS) {
+    const cell = page.locator(selector);
+    await cell.evaluate((element, className) => {
+      element.classList.add(className);
+    }, MASK_BLUR_CLASS);
+  }
+}
+
+async function captureMobileSidebarOpen(page: Page, screenshotsDir: string, prefix = "mobile_"): Promise<void> {
+  const sidebarToggle = page.locator("a.showSide");
+
+  await sidebarToggle.waitFor({ state: "visible", timeout: 15000 });
+  await sidebarToggle.click();
+  await page.waitForSelector("#mainmenu.active", { timeout: 15000 });
+  await page.waitForSelector(".darkMask.active", { timeout: 15000 });
+  await page.waitForTimeout(300);
+
+  const screenshotPath = path.join(screenshotsDir, `${prefix}sidebar_open.png`);
+  await page.screenshot({ path: screenshotPath });
+  console.log(`  Saved: ${prefix}sidebar_open.png`);
+
+  await sidebarToggle.evaluate((element) => {
+    if (element instanceof HTMLElement) {
+      element.click();
+      return;
+    }
+
+    element.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+  await page.waitForSelector("#mainmenu:not(.active)", { timeout: 15000 });
+  await page.waitForSelector(".darkMask:not(.active)", { timeout: 15000 });
+  await page.waitForTimeout(300);
+}
+
+async function captureMobileExtraPages(page: Page, screenshotsDir: string, routerUrl: string, prefix = "mobile_"): Promise<void> {
+  for (const pageConfig of MOBILE_LIGHT_EXTRA_PAGES) {
+    const url = `${routerUrl}${pageConfig.urlPath}`;
+    console.log(`  Navigating to mobile ${pageConfig.name}...`);
+    await page.goto(url, { waitUntil: "load", timeout: 30000 });
+    await page.waitForLoadState("networkidle");
+    await page.waitForSelector(".main, #mainmenu", { timeout: 15000 });
+    await page.waitForTimeout(2500);
+
+    const screenshotPath = path.join(screenshotsDir, `${prefix}${pageConfig.name}.png`);
+    await page.screenshot({ path: screenshotPath });
+    console.log(`  Saved: ${prefix}${pageConfig.name}.png`);
   }
 }
 
@@ -231,7 +346,8 @@ async function main() {
   console.log(`Username: ${username}`);
 
   // Ensure screenshots directory exists
-  const screenshotsDir = path.resolve(process.cwd(), "screenshots", ".cache");
+  const screenshotsOutput = langConfig.isChinese ? path.resolve(process.cwd(), "screenshots", langConfig.code) : path.resolve(process.cwd(), "screenshots");
+  const screenshotsDir = path.resolve(screenshotsOutput, ".cache");
   if (!fs.existsSync(screenshotsDir)) {
     fs.mkdirSync(screenshotsDir, { recursive: true });
     console.log(`Created screenshots directory: ${screenshotsDir}`);

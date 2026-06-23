@@ -4,7 +4,7 @@ PKG_NAME:=luci-theme-fluent
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
 
-LUCI_TITLE:=FluentUI Theme for LuCI
+LUCI_TITLE:=Fluent Theme for LuCI
 LUCI_DEPENDS:=
 LUCI_MINIFY_CSS:=0
 

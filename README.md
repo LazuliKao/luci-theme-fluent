@@ -28,6 +28,10 @@ A FluentUI-inspired OpenWrt LuCI theme with SCSS, CSS custom properties, and uco
   <img src="./screenshots/showcase_banner.png" alt="Showcase banner" width="100%" />
 </p>
 
+<p align="center">
+  <img src="./screenshots/showcase_mobile_promo.png" alt="Showcase banner" width="100%" />
+</p>
+
 ## Key Features
 
 - FluentUI-inspired visual style for LuCI.
@@ -36,7 +40,6 @@ A FluentUI-inspired OpenWrt LuCI theme with SCSS, CSS custom properties, and uco
 - ucode templates for LuCI header, footer, and login pages.
 - Theme settings UI for colors, animation, and login appearance.
 - Structured overrides for plugin-specific OpenWrt pages.
-- OpenWrt packaging ready through the included `Makefile`.
 
 ## Getting Started
 

@@ -15,7 +15,6 @@
     
     body {
       margin: 0;
-      padding: 0;
       width: 1920px;
       height: 1080px;
       background: var(--bg-gradient);
@@ -25,7 +24,7 @@
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
-      padding: 50px 70px;
+      padding: 38px 52px;
       overflow: hidden;
       position: relative;
     }
@@ -61,12 +60,13 @@
       justify-content: space-between;
       align-items: flex-start;
       z-index: 10;
+      margin-bottom: 10px;
     }
     
     .title-area h1 {
-      font-size: 72px;
+      font-size: 82px;
       font-weight: 800;
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
       background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -74,18 +74,20 @@
     }
     
     .title-area p {
-      font-size: 26px;
+      font-size: 31px;
       color: var(--text-muted);
       margin: 0;
       font-weight: 300;
+      max-width: 980px;
     }
 
     /* Three-device stacked showcase */
     .device-showcase {
       position: relative;
       flex-grow: 1;
-      height: 640px;
+      height: 670px;
       z-index: 5;
+      margin-top: -10px;
     }
 
     /* Device shell base styles (CSS mockups) */
@@ -100,10 +102,10 @@
 
     /* Desktop mockup - larger and lower to avoid covering text */
     .device-pc {
-      left: 50px;
-      top: 90px;
-      width: 1060px;
-      height: 596px;
+      left: 35px;
+      top: 64px;
+      width: 1120px;
+      height: 630px;
       z-index: 1;
       position: relative;
     }
@@ -152,24 +154,26 @@
     
     /* Tablet mockup - larger and more tightly stacked */
     .device-tablet {
-      left: 1000px;
-      bottom: 30px;
-      width: 560px;
-      height: 388px;
+      left: 1030px;
+      bottom: 18px;
+      width: 590px;
+      height: 410px;
       z-index: 2;
       border-width: 14px;
       border-radius: 20px;
+      transform: rotate(-4deg);
     }
 
     /* Mobile mockup - larger and more tightly stacked */
     .device-phone {
-      right: 40px;
-      bottom: 50px;
-      width: 240px;
-      height: 519px;
+      right: 14px;
+      bottom: 26px;
+      width: 270px;
+      height: 584px;
       z-index: 3;
       border-radius: 36px;
       border-width: 12px;
+      transform: rotate(6deg);
     }
     
     /* Simulated phone notch / earpiece */
@@ -200,13 +204,13 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 25px;
+      padding-top: 18px;
       z-index: 10;
     }
     
     .features {
       display: flex;
-      gap: 50px;
+      gap: 34px;
     }
     
     .feature-item {
@@ -216,7 +220,7 @@
     
     .feature-title {
       font-weight: 700;
-      font-size: 22px;
+      font-size: 26px;
       color: #60a5fa;
       margin-bottom: 6px;
       display: flex;
@@ -226,21 +230,23 @@
 
     /* Iconify Icon styling */
     .feature-title .iconify {
-      font-size: 32px;
+      font-size: 36px;
       color: #60a5fa;
     }
     
     .feature-desc {
-      font-size: 16px;
+      font-size: 18px;
       color: var(--text-muted);
+      max-width: 360px;
+      line-height: 1.5;
     }
     
     .github-link {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 500;
       color: var(--text-muted);
       background: rgba(255, 255, 255, 0.03);
-      padding: 10px 22px;
+      padding: 12px 22px;
       border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
@@ -253,7 +259,7 @@
 
   <header>
     <div class="title-area">
-      <h1>FluentUI Theme for OpenWrt</h1>
+      <h1>Fluent Theme for OpenWrt</h1>
       <p>An elegant, responsive Fluent-style theme for modern OpenWrt LuCI</p>
     </div>
   </header>
@@ -265,15 +271,15 @@
         <span class="dot-y"></span>
         <span class="dot-g"></span>
       </div>
-      <img src="../../../screenshots/.cache/overview.png" alt="Desktop Overview">
+      <img src="../../../screenshots/.cache/dark_overview.png" alt="Desktop Overview">
     </div>
     <!-- Tablet -->
     <div class="device device-tablet">
-      <img src="../../../screenshots/.cache/tablet_overview.png" alt="Tablet Overview">
+      <img src="../../../screenshots/.cache/tablet_dark_overview.png" alt="Tablet Overview">
     </div>
     <!-- Mobile -->
     <div class="device device-phone">
-      <img src="../../../screenshots/.cache/mobile_overview.png" alt="Mobile Overview">
+      <img src="../../../screenshots/.cache/mobile_dark_overview.png" alt="Mobile Overview">
     </div>
   </div>
 

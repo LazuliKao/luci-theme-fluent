@@ -231,7 +231,7 @@ The Makefile uses OpenWrt's `luci.mk` build system:
 ```makefile
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=FluentUI Theme
+LUCI_TITLE:=Fluent Theme
 LUCI_DEPENDS:=
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=1

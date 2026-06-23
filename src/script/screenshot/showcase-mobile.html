@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>luci-theme-fluent Mobile Showcase</title>
+  <!-- Load Iconify SVG Framework to render FluentUI Icons -->
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <style>
+    :root {
+      --primary: #0078d4;
+      --bg-gradient: linear-gradient(135deg, #0a0f1d 0%, #111827 50%, #1e1b4b 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      width: 1600px;
+      height: 1080px;
+      background: var(--bg-gradient);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Segoe UI Emoji", sans-serif;
+      color: var(--text-main);
+      box-sizing: border-box;
+      padding: 36px 52px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+      top: -100px;
+      right: -100px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(192, 132, 252, 0.1) 0%, rgba(192, 132, 252, 0) 70%);
+      bottom: -200px;
+      left: -200px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .title-area h1 {
+      font-size: 86px;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1.5px;
+    }
+
+    .title-area p {
+      font-size: 31px;
+      color: var(--text-muted);
+      margin: 0;
+      font-weight: 300;
+      max-width: 980px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      align-items: center;
+      gap: 14px;
+      flex-grow: 1;
+      min-height: 0;
+    }
+
+    .content-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding: 10px 0 6px;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      max-width: 560px;
+    }
+
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .feature-item:first-child {
+      padding-top: 0;
+    }
+
+    .feature-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .feature-title {
+      font-weight: 700;
+      font-size: 26px;
+      color: #60a5fa;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-title .iconify {
+      font-size: 36px;
+      color: #60a5fa;
+    }
+
+    .feature-desc {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 350px;
+      line-height: 1.5;
+    }
+
+    .device-stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .device-showcase {
+      position: relative;
+      width: 820px;
+      height: 760px;
+    }
+
+    .device {
+      position: absolute;
+      box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+      border-radius: 36px;
+      background: #1e293b;
+      border: 12px solid #0b0f19;
+      overflow: hidden;
+      width: 340px;
+      height: 736px;
+      transition: transform 0.3s ease;
+    }
+
+    .device-left {
+      left: 18px;
+      top: 62px;
+      transform: rotate(-10deg) scale(0.96);
+      z-index: 1;
+    }
+
+    .device-center {
+      left: 218px;
+      top: 18px;
+      transform: scale(1.03);
+      z-index: 3;
+      box-shadow: 0 45px 70px -10px rgba(0, 0, 0, 0.85), 0 0 1px 1px rgba(255, 255, 255, 0.15) inset;
+    }
+
+    .device-right {
+      right: 10px;
+      top: 62px;
+      transform: rotate(10deg) scale(0.96);
+      z-index: 2;
+    }
+
+    .device::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 22px;
+      background: #0b0f19;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      z-index: 10;
+    }
+
+    .device img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 16px;
+      z-index: 10;
+    }
+
+    .github-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px 22px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="title-area">
+        <h1>Fluent Theme Mobile Experience</h1>
+        <p>Optimized, responsive, and elegant mobile interface for OpenWrt LuCI</p>
+      </div>
+    </header>
+
+    <section class="hero-layout">
+      <div class="content-column">
+        <div class="features">
+          <div class="feature-item">
+            <span class="feature-title">
+              <span class="iconify" data-icon="fluent:navigation-24-regular"></span>
+              Intuitive Navigation
+            </span>
+            <span class="feature-desc">Slide-out sidebar drawer designed for quick and easy mobile access</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-title">
+              <span class="iconify" data-icon="fluent:phone-laptop-24-regular"></span>
+              Responsive Layout
+            </span>
+            <span class="feature-desc">Adaptive controls and tables optimized for single-handed touch interactions</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-title">
+              <span class="iconify" data-icon="fluent:flash-24-regular"></span>
+              Lightweight & Fast
+            </span>
+            <span class="feature-desc">Hardware-accelerated animations and minimal overhead for mobile browsers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="device-stage">
+        <div class="device-showcase">
+          <div class="device device-left">
+            <img src="../../../screenshots/.cache/mobile_dark_sidebar_open.png" alt="Mobile Sidebar Open">
+          </div>
+          <div class="device device-center">
+            <img src="../../../screenshots/.cache/mobile_dark_system_settings.png" alt="Mobile System Settings">
+          </div>
+          <div class="device device-right">
+            <img src="../../../screenshots/.cache/mobile_dark_software_management.png" alt="Mobile Software Management">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="github-link">
+        <span>GitHub: LazuliKao/luci-theme-fluent</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

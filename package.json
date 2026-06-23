@@ -19,8 +19,11 @@
     "test": "echo \"No tests yet\" && exit 0",
     "dev:remote": "luci-types dev",
     "icons:generate": "tsx src/script/generate-icons.ts",
-    "screenshot": "tsx src/script/screenshot/screenshot.ts && tsx src/script/screenshot/generate-showcase.ts",
-    "screenshot:showcase": "tsx src/script/screenshot/generate-showcase.ts"
+    "screenshot": "pnpm run screenshot:run && pnpm run screenshot:showcase && pnpm run screenshot:run:zh-Hans && pnpm run screenshot:showcase:zh-Hans",
+    "screenshot:run": "tsx src/script/screenshot/run.ts",
+    "screenshot:showcase": "tsx src/script/screenshot/generate-showcase.ts",
+    "screenshot:run:zh-Hans": "tsx src/script/screenshot/run.ts -- --lang=zh-Hans",
+    "screenshot:showcase:zh-Hans": "tsx src/script/screenshot/generate-showcase.ts -- --lang=zh-Hans"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
