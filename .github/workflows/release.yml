@@ -78,7 +78,7 @@ jobs:
       RSBUILD_MINIFY: "true"
     steps:
       - name: Download prepared source
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: release-source-${{ env.TAG }}
 
@@ -87,7 +87,7 @@ jobs:
 
       - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
 
@@ -129,7 +129,7 @@ jobs:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - name: Download prepared source
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: release-source-${{ env.TAG }}
 
@@ -137,7 +137,7 @@ jobs:
         run: tar -xzf release-source.tar.gz
 
       - name: Download built assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: fluent-assets-${{ env.TAG }}
           path: .
@@ -179,7 +179,7 @@ jobs:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - name: Download all release artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: artifacts/
           pattern: release-${{ env.TAG }}-*
