@@ -193,18 +193,15 @@ jobs:
         run: |
           echo "Nightly packages:"
           find packages/ -type f \( -name "*.ipk" -o -name "*.apk" \) -exec ls -lh {} \;
-      - name: Delete old nightly release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if gh release view nightly >/dev/null 2>&1; then
-            for asset_id in $(gh release view nightly --json assets --jq '.assets[].id'); do
-              gh api -X DELETE "repos/${GITHUB_REPOSITORY}/releases/assets/${asset_id}"
-            done
-            gh release delete nightly --yes --cleanup-tag
-          fi
+      - name: Delete existing nightly tag
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          delete_release: true
+          tag_name: nightly
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Nightly Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: nightly
           name: "Nightly Build"

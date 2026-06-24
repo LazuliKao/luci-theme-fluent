@@ -191,7 +191,7 @@ jobs:
           find artifacts/ -type f \( -name "*.ipk" -o -name "*.apk" \) -exec ls -lh {} \;
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.TAG }}
           name: "Release ${{ env.TAG }}"
