@@ -371,7 +371,7 @@
         <div id="step-password" class="step-container">
           <div class="login-account-pill-wrapper">
             <div class="login-account-pill" id="login-account-pill">
-              <span class="login-account-pill__text" id="login-account-pill-text">{{ entityencode(duser, true) }}</span>
+              <span class="login-account-pill__text" id="login-account-pill-text"></span>
             </div>
           </div>
           
@@ -413,6 +413,31 @@
           var passwordToggle = document.getElementById('ms-password-toggle');
           var errorBox = document.querySelector('.errorbox');
 
+          function getCurrentHost() {
+            if (window.location && window.location.host) {
+              return window.location.host;
+            }
+
+            return '{{ entityencode(hostname, true) }}';
+          }
+
+          function formatAccountPill(username) {
+            var normalizedUsername = username ? username.trim() : '';
+
+            if (!normalizedUsername) {
+              return '';
+            }
+
+            var currentHost = getCurrentHost();
+
+            return currentHost ? normalizedUsername + '@' + currentHost : normalizedUsername;
+          }
+
+          function syncAccountPill() {
+            if (accountPillText && userInput) {
+              accountPillText.textContent = formatAccountPill(userInput.value);
+            }
+          }
           function clearError() {
             if (errorBox) errorBox.style.display = 'none';
             if (userInput) userInput.classList.remove('cbi-input-invalid');
@@ -452,9 +477,7 @@
             btnNext.addEventListener('click', function(e) {
               e.preventDefault();
               if (userInput.value.trim() !== '') {
-                if (accountPillText) {
-                  accountPillText.textContent = userInput.value.trim();
-                }
+                syncAccountPill();
                 showStep2();
               } else {
                 if (typeof userInput.reportValidity === 'function') {
@@ -495,9 +518,7 @@
 
           // Initial router: If username is already populated, go straight to Step 2.
           if (userInput && userInput.value.trim() !== '') {
-            if (accountPillText) {
-              accountPillText.textContent = userInput.value.trim();
-            }
+              syncAccountPill();
             if (loginFormEl) {
               loginFormEl.classList.add('no-transition');
               showStep2();
