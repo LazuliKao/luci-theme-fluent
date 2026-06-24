@@ -70,11 +70,12 @@ jobs:
           path: release-source.tar.gz
 
   scss:
-    name: Build CSS
+    name: Build minified assets
     needs: prepare
     runs-on: ubuntu-latest
     env:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
+      RSBUILD_MINIFY: "true"
     steps:
       - name: Download prepared source
         uses: actions/download-artifact@v4
@@ -94,13 +95,27 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm run build
-          test -s htdocs/luci-static/fluent/css/fluent.css
 
-      - name: Upload CSS artifact
+      - name: Verify built assets
+        run: |
+          test -s htdocs/luci-static/fluent/css/fluent.css
+          test -s htdocs/luci-static/resources/menu-fluent.js
+          test -s htdocs/luci-static/resources/view/fluent-config.js
+          css_size=$(wc -c < htdocs/luci-static/fluent/css/fluent.css)
+          menu_size=$(wc -c < htdocs/luci-static/resources/menu-fluent.js)
+          config_size=$(wc -c < htdocs/luci-static/resources/view/fluent-config.js)
+          echo "Built fluent.css (${css_size} bytes)"
+          echo "Built menu-fluent.js (${menu_size} bytes)"
+          echo "Built fluent-config.js (${config_size} bytes)"
+
+      - name: Upload built assets
         uses: actions/upload-artifact@v4
         with:
-          name: fluent-css
-          path: htdocs/luci-static/fluent/css/fluent.css
+          name: fluent-assets-${{ env.TAG }}
+          path: |
+            htdocs/luci-static/fluent/css/fluent.css
+            htdocs/luci-static/resources/menu-fluent.js
+            htdocs/luci-static/resources/view/fluent-config.js
 
   release:
     name: Build & Publish (${{ matrix.version }})
@@ -121,11 +136,11 @@ jobs:
       - name: Extract prepared source
         run: tar -xzf release-source.tar.gz
 
-      - name: Download CSS artifact
+      - name: Download built assets
         uses: actions/download-artifact@v4
         with:
-          name: fluent-css
-          path: htdocs/luci-static/fluent/css/
+          name: fluent-assets-${{ env.TAG }}
+          path: .
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget

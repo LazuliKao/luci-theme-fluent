@@ -77,20 +77,31 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build CSS & JS
+      - name: Build minified CSS & JS
+        env:
+          RSBUILD_MINIFY: "true"
         run: pnpm run build
 
-      - name: Verify output
+      - name: Verify built assets
         run: |
           test -s htdocs/luci-static/fluent/css/fluent.css
-          size=$(wc -c < htdocs/luci-static/fluent/css/fluent.css)
-          echo "fluent.css built successfully (${size} bytes)"
+          test -s htdocs/luci-static/resources/menu-fluent.js
+          test -s htdocs/luci-static/resources/view/fluent-config.js
+          css_size=$(wc -c < htdocs/luci-static/fluent/css/fluent.css)
+          menu_size=$(wc -c < htdocs/luci-static/resources/menu-fluent.js)
+          config_size=$(wc -c < htdocs/luci-static/resources/view/fluent-config.js)
+          echo "Built fluent.css (${css_size} bytes)"
+          echo "Built menu-fluent.js (${menu_size} bytes)"
+          echo "Built fluent-config.js (${config_size} bytes)"
 
-      - name: Upload CSS artifact
+      - name: Upload built assets
         uses: actions/upload-artifact@v4
         with:
-          name: fluent-css
-          path: htdocs/luci-static/fluent/css/fluent.css
+          name: fluent-assets
+          path: |
+            htdocs/luci-static/fluent/css/fluent.css
+            htdocs/luci-static/resources/menu-fluent.js
+            htdocs/luci-static/resources/view/fluent-config.js
 
   lint:
     name: Lint
@@ -129,11 +140,11 @@ jobs:
       - name: Extract prepared source
         run: tar -xzf ci-source.tar.gz
 
-      - name: Download CSS artifact
+      - name: Download built assets
         uses: actions/download-artifact@v4
         with:
-          name: fluent-css
-          path: htdocs/luci-static/fluent/css/
+          name: fluent-assets
+          path: .
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget
