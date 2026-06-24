@@ -11,11 +11,60 @@ permissions:
   contents: read
 
 jobs:
-  scss:
-    name: SCSS Build Validation
+  prepare:
+    name: Prepare CI source
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+
+      - id: meta
+        name: Resolve CI version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.sha }}
+        run: |
+          BASE_VERSION=$(sed -n 's/^PKG_VERSION:=//p' Makefile)
+          SHORT_SHA=$(printf '%.7s' "$SHA")
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            VERSION="${BASE_VERSION}-pr${PR_NUMBER}-${SHORT_SHA}"
+          else
+            VERSION="${BASE_VERSION}-dev-${SHORT_SHA}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Using CI version ${VERSION}"
+
+      - name: Sync version files
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" Makefile
+          sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
+          grep '^PKG_VERSION:=' Makefile
+          grep '^  "version":' package.json
+
+      - name: Pack prepared source
+        run: tar --exclude=.git -czf ci-source.tar.gz .
+
+      - name: Upload prepared source
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-source-${{ github.run_id }}
+          path: ci-source.tar.gz
+
+  scss:
+    name: SCSS Build Validation
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download prepared source
+        uses: actions/download-artifact@v4
+        with:
+          name: ci-source-${{ github.run_id }}
+
+      - name: Extract prepared source
+        run: tar -xzf ci-source.tar.gz
 
       - uses: pnpm/action-setup@v4
 
@@ -72,7 +121,13 @@ jobs:
       matrix:
         version: ['24.10.7', '25.12.4']
     steps:
-      - uses: actions/checkout@v4
+      - name: Download prepared source
+        uses: actions/download-artifact@v4
+        with:
+          name: ci-source-${{ github.run_id }}
+
+      - name: Extract prepared source
+        run: tar -xzf ci-source.tar.gz
 
       - name: Download CSS artifact
         uses: actions/download-artifact@v4
@@ -119,7 +174,7 @@ jobs:
   nightly:
     name: Nightly Release
     if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/openwrt-24.10')
-    needs: openwrt-sdk
+    needs: [prepare, openwrt-sdk]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -150,7 +205,7 @@ jobs:
           body: |
             ## LuCI Theme Fluent - Nightly Build
 
-            Automatic build from commit `${{ github.sha }}`.
+            Automatic build for package version `${{ needs.prepare.outputs.version }}` from commit `${{ github.sha }}`.
 
             ### Packages
             - `luci-theme-fluent` — FluentUI theme for OpenWrt LuCI

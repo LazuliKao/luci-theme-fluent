@@ -58,7 +58,7 @@ echo "    HTTP ${HTTP_CODE} OK"
 echo ">>> Downloading SDK (${SDK_TARBALL})..."
 mkdir -p "${BUILDER_DIR}"
 cd "${BUILDER_DIR}"
-wget -q --show-progress -O sdk.tar.zst "${SDK_URL}"
+wget -q -O sdk.tar.zst "${SDK_URL}"
 
 # Extract SDK
 echo ">>> Extracting SDK..."

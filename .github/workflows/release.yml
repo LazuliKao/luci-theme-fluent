@@ -13,13 +13,76 @@ permissions:
   contents: write
 
 jobs:
+  prepare:
+    name: Prepare release source
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.TAG }}
+
+      - id: meta
+        name: Resolve release version
+        run: |
+          VERSION="${TAG#v}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Using release version ${VERSION} from ${TAG}"
+
+      - name: Sync version files
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" Makefile
+          sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
+          grep '^PKG_VERSION:=' Makefile
+          grep '^  "version":' package.json
+
+      - name: Commit version bump
+        if: github.event_name == 'push'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          TAG_COMMIT=$(git rev-list -n 1 "$TAG")
+          BRANCH=$(git for-each-ref --format='%(refname:short)' refs/remotes/origin --contains "$TAG_COMMIT" | grep -Ev '^origin/HEAD$' | sed 's#^origin/##' | head -1)
+          BRANCH=${BRANCH:-$DEFAULT_BRANCH}
+          git checkout "$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Makefile package.json
+          if git diff --cached --quiet; then
+            echo "Version files already match ${TAG}; nothing to commit."
+          else
+            git commit -m "chore: sync release version ${TAG}"
+            git push origin HEAD:"$BRANCH"
+          fi
+
+      - name: Pack prepared source
+        run: tar --exclude=.git -czf release-source.tar.gz .
+
+      - name: Upload prepared source
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-source-${{ env.TAG }}
+          path: release-source.tar.gz
+
   scss:
     name: Build CSS
+    needs: prepare
     runs-on: ubuntu-latest
     env:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Download prepared source
+        uses: actions/download-artifact@v4
+        with:
+          name: release-source-${{ env.TAG }}
+
+      - name: Extract prepared source
+        run: tar -xzf release-source.tar.gz
 
       - uses: pnpm/action-setup@v4
 
@@ -41,7 +104,7 @@ jobs:
 
   release:
     name: Build & Publish (${{ matrix.version }})
-    needs: scss
+    needs: [prepare, scss]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -50,7 +113,13 @@ jobs:
     env:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Download prepared source
+        uses: actions/download-artifact@v4
+        with:
+          name: release-source-${{ env.TAG }}
+
+      - name: Extract prepared source
+        run: tar -xzf release-source.tar.gz
 
       - name: Download CSS artifact
         uses: actions/download-artifact@v4
