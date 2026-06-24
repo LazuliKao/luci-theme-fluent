@@ -64,7 +64,7 @@ jobs:
         run: tar --exclude=.git -czf "$RUNNER_TEMP/release-source.tar.gz" .
 
       - name: Upload prepared source
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-source-${{ env.TAG }}
           path: ${{ runner.temp }}/release-source.tar.gz
@@ -109,7 +109,7 @@ jobs:
           echo "Built fluent-config.js (${config_size} bytes)"
 
       - name: Upload built assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: fluent-assets-${{ env.TAG }}
           path: |
@@ -164,7 +164,7 @@ jobs:
           ls -lh release/
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ env.TAG }}-openwrt-${{ matrix.version }}
           path: |
