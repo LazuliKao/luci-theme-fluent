@@ -144,7 +144,7 @@ body.login-page {
       position: relative !important;
 
       // Microsoft sign-in card token alignment
-      background: rgba(var(--fluent-bg-card-rgb, 255, 255, 255), var(--fluent-blur-opacity)) !important;
+      background: rgba(var(--fluent-bg-card-rgb), var(--fluent-blur-opacity)) !important;
       border: 1px solid var(--fluent-border) !important;
       border-radius: 12px !important;
       box-shadow:
@@ -648,7 +648,7 @@ body.login-page {
     -webkit-backdrop-filter: blur(var(--fluent-blur-radius-dark)) !important;
 
     .login-form {
-      background: rgba(var(--fluent-bg-card-dark-rgb, 41, 41, 41), var(--fluent-blur-opacity-dark)) !important;
+      background: rgba(var(--fluent-bg-card-dark-rgb), var(--fluent-blur-opacity-dark)) !important;
       border-color: rgba(255, 255, 255, 0.1) !important;
       box-shadow:
         0 0 2px rgba(0, 0, 0, 0.24),

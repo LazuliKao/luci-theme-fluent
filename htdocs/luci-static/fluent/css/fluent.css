@@ -229,11 +229,12 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 body::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 body::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 body::-webkit-scrollbar-corner {
@@ -1424,19 +1425,21 @@ input[type="week"]::-webkit-calendar-picker-indicator:hover {
   }
 
   .cbi-tblsection::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg);
+    border-radius: var(--fluent-radius-circular, 10000px);
   }
 
   .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg);
+    border-radius: var(--fluent-radius-circular, 10000px);
   }
 
   .cbi-tblsection::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
   }
 
   .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
   }
 
   .cbi-tblsection::-webkit-scrollbar-corner {
@@ -1731,19 +1734,21 @@ div.td, div.th {
   }
 
   .table::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg);
+    border-radius: var(--fluent-radius-circular, 10000px);
   }
 
   .cbi-section-table::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg);
+    border-radius: var(--fluent-radius-circular, 10000px);
   }
 
   .table::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
   }
 
   .cbi-section-table::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
   }
 
   .table::-webkit-scrollbar-corner {
@@ -1887,11 +1892,12 @@ body.modal-overlay-active #modal_overlay {
 }
 
 .modal > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script)::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .modal > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script)::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .modal > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script)::-webkit-scrollbar-corner {
@@ -2556,11 +2562,12 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
 }
 
 .uci-change-list::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .uci-change-list::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .uci-change-list::-webkit-scrollbar-corner {
@@ -3451,11 +3458,12 @@ td > .ifacebadge, .td > .ifacebadge {
 }
 
 #syslog::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 #syslog::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 #syslog::-webkit-scrollbar-corner {
@@ -3531,19 +3539,21 @@ td > .ifacebadge, .td > .ifacebadge {
 }
 
 #diag-rc-output > pre::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 #command-rc-output > pre::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 #diag-rc-output > pre::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 #command-rc-output > pre::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 #diag-rc-output > pre::-webkit-scrollbar-corner {
@@ -3652,19 +3662,21 @@ td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:hove
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-scrollbar-corner {
@@ -5005,11 +5017,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 html::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 html::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 html::-webkit-scrollbar-corner {
@@ -5154,51 +5167,57 @@ code::-webkit-scrollbar-thumb:hover {
 }
 
 .cbi-section::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .modal::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .main-content::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .sidebar::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 pre::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 code::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .cbi-section::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .modal::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .main-content::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .sidebar::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 pre::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 code::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .cbi-section::-webkit-scrollbar-corner {
@@ -5278,11 +5297,12 @@ code::-webkit-resizer {
 }
 
 .cbi-dropdown ul.dropdown::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .cbi-dropdown ul.dropdown::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .cbi-dropdown ul.dropdown::-webkit-scrollbar-corner {
@@ -7861,19 +7881,21 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 textarea::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .cbi-input-textarea::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 textarea::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .cbi-input-textarea::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 textarea::-webkit-scrollbar-corner {
@@ -8524,11 +8546,12 @@ label[data-tooltip] {
 }
 
 .fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-corner {
@@ -9135,7 +9158,7 @@ body.login-page {
   will-change: transform,opacity;
   animation: fluent-login-fade-in var(--fluent-duration-slow) var(--fluent-easing-easy-ease);
   box-sizing: border-box !important;
-  background: rgba(var(--fluent-bg-card-rgb, 255, 255, 255), var(--fluent-blur-opacity)) !important;
+  background: rgba(var(--fluent-bg-card-rgb), var(--fluent-blur-opacity)) !important;
   border: 1px solid var(--fluent-border) !important;
   border-radius: 12px !important;
   flex-direction: column !important;
@@ -9575,7 +9598,7 @@ body.login-page {
 }
 
 [data-theme="dark"] .login-page .login-container .login-form {
-  background: rgba(var(--fluent-bg-card-dark-rgb, 41, 41, 41), var(--fluent-blur-opacity-dark)) !important;
+  background: rgba(var(--fluent-bg-card-dark-rgb), var(--fluent-blur-opacity-dark)) !important;
   border-color: #ffffff1a !important;
   box-shadow: 0 0 2px #0000003d, 0 8px 16px #00000047 !important;
 }
@@ -9712,11 +9735,12 @@ body.login-page {
 }
 
 .main-left::-webkit-scrollbar-thumb:horizontal {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
 }
 
 .main-left::-webkit-scrollbar-thumb:horizontal:hover {
-  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
 .main-left::-webkit-scrollbar-corner {

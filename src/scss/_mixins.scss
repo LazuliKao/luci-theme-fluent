@@ -358,10 +358,11 @@ $breakpoint-xxl: 1400px;
     }
 
     &:horizontal {
-      background: var(--fluent-scrollbar-thumb-horizontal-bg, rgba(0, 0, 0, 0.15));
+      background: var(--fluent-scrollbar-thumb-horizontal-bg);
+      border-radius: var(--fluent-radius-circular, 10000px);
 
       &:hover {
-        background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, rgba(0, 0, 0, 0.35));
+        background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
       }
     }
   }
