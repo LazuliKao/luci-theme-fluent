@@ -1,9 +1,15 @@
-﻿// Layouts - Header
+// Layouts - Header
 // FluentUI 2 Toolbar pattern with reserved desktop search slot
 @use "../mixins" as *;
 @use "../icons" as *;
 
 body > div.main > div.main-right > header {
+  @keyframes fluent-poll-pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
   display: flex;
   align-items: center;
   gap: var(--fluent-space-md);
@@ -163,14 +169,14 @@ body > div.main > div.main-right > header {
     }
 
     &::after {
-      right: 2px;
+      left: 2px;
       bottom: 2px;
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       opacity: 0;
       font-size: 0;
       line-height: 0;
-      @include fluent-icon-content-by-name("fluent:arrow-sync-12-filled", 10px, #605e5c);
+      @include fluent-icon-content-by-name("link-16-filled", 12px, #605e5c);
     }
 
     &[data-active-theme="dark"]::before {
@@ -193,60 +199,71 @@ body > div.main > div.main-right > header {
     display: flex;
     align-items: center;
 
-    #xhr_poll_status {
-      display: inline-flex;
+    #xhr_poll_status,
+    [data-indicator="poll-status"],
+    [data-indicator="poll"] {
+      display: inline-flex !important;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: var(--fluent-font-size-sm);
-      font-weight: var(--fluent-font-weight-semibold);
-      padding: 2px 8px;
-      height: 24px;
+      font-size: 0 !important; // Hide text gracefully
+      color: transparent !important; // Bulletproof text hiding
+      padding: 0 !important;
+      height: 32px !important;
+      width: 32px !important;
       border-radius: var(--fluent-radius-sm);
+      border: none !important;
+      background-color: transparent !important;
       user-select: none;
       transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+      position: relative; // For absolute icon positioning
 
       &[data-style="active"] {
-        background-color: var(--fluent-bg-hover, #f3f2f1);
-        color: var(--fluent-primary);
-        border: 1px solid var(--fluent-border);
+        --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
+
+        &::before {
+          @include fluent-mask-icon-by-name("arrow-sync-20-regular", 18px, var(--fluent-poll-icon));
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: 4px;
+          bottom: 4px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: var(--fluent-success, #107c10);
+          border: 2px solid var(--fluent-bg, #ffffff);
+          animation: fluent-poll-pulse 1.5s infinite ease-in-out;
+        }
 
         &:hover {
-          background-color: var(--fluent-primary-lightest, #eff6fc);
+          background-color: var(--fluent-bg-hover, #f3f2f1) !important;
+          --fluent-poll-icon: var(--fluent-text, #323130);
         }
       }
 
       &[data-style="inactive"] {
-        background-color: var(--fluent-warning-light, #fff4ce);
-        color: var(--fluent-warning, #795707);
-        border: 1px solid var(--fluent-warning, #795707);
+        --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
 
-        &:hover {
-          background-color: #fde7aa;
+        &::before {
+          @include fluent-mask-icon-by-name("arrow-sync-off-20-regular", 18px, var(--fluent-poll-icon));
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
         }
-      }
-    }
-  }
-
-  @include theme-dark {
-    .status #xhr_poll_status {
-      &[data-style="active"] {
-        background-color: rgba(255, 255, 255, 0.06);
-        color: var(--fluent-primary);
-        border-color: rgba(255, 255, 255, 0.15);
 
         &:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-
-      &[data-style="inactive"] {
-        background-color: rgba(251, 99, 64, 0.15);
-        color: #ff8f73;
-        border-color: #ff8f73;
-
-        &:hover {
-          background-color: rgba(251, 99, 64, 0.25);
+          background-color: var(--fluent-bg-hover, #f3f2f1) !important;
+          --fluent-poll-icon: var(--fluent-text, #323130);
         }
       }
     }
