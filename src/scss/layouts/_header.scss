@@ -1,4 +1,4 @@
-// Layouts - Header
+﻿// Layouts - Header
 // FluentUI 2 Toolbar pattern with reserved desktop search slot
 @use "../mixins" as *;
 @use "../icons" as *;
@@ -98,14 +98,14 @@ body > div.main > div.main-right > header {
 
   .mobile-toggle {
     display: none !important;
-    @media (max-width: 768px) {
+    @include respond-down("md") {
       display: flex !important;
     }
   }
 
   .desktop-toggle {
     display: flex !important;
-    @media (max-width: 768px) {
+    @include respond-down("md") {
       display: none !important;
     }
   }
@@ -262,7 +262,7 @@ body > div.main > div.main-right > header {
     }
   }
 
-  @media (max-width: 768px) {
+  @include respond-down("md") {
     padding: 0 var(--fluent-space-sm);
     gap: var(--fluent-space-sm);
 

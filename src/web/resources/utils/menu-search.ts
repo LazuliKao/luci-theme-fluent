@@ -256,23 +256,40 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { input: HTMLInputEleme
  * and registers keyboard shortcuts.
  */
 export function setupMenuSearch(root: LuCI.ui.menu.MenuNode): void {
-  const searchSlot = document.querySelector(".header__search-slot");
-  if (!searchSlot) return;
+  const inputs: HTMLInputElement[] = [];
 
-  // Clear existing placeholder or previous search instance
-  searchSlot.innerHTML = "";
+  const setupSlot = (selector: string) => {
+    const slot = document.querySelector(selector);
+    if (!slot) return;
 
-  const { input, overlay } = createSearchInput(root);
+    slot.innerHTML = "";
+    const { input } = createSearchInput(root);
+    slot.appendChild(input.closest(`.${SEARCH_BOX_CLASS}`)!);
+    inputs.push(input);
+  };
 
-  searchSlot.appendChild(input.closest(`.${SEARCH_BOX_CLASS}`)!);
+  setupSlot(".header__search-slot");
+  setupSlot(".sidebar__search-slot");
+
+  if (inputs.length === 0) return;
 
   // Keyboard shortcuts
   document.addEventListener("keydown", (e) => {
+    // Helper to focus the first visible input
+    const focusVisibleInput = () => {
+      for (const input of inputs) {
+        if (input.offsetParent !== null) {
+          input.focus();
+          input.select();
+          return;
+        }
+      }
+    };
+
     // Ctrl+K or Cmd+K
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
       e.preventDefault();
-      input.focus();
-      input.select();
+      focusVisibleInput();
       return;
     }
 
@@ -287,8 +304,7 @@ export function setupMenuSearch(root: LuCI.ui.menu.MenuNode): void {
       !document.activeElement?.getAttribute("contenteditable")
     ) {
       e.preventDefault();
-      input.focus();
-      input.select();
+      focusVisibleInput();
       return;
     }
 

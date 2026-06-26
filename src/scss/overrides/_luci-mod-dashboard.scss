@@ -1,3 +1,4 @@
+@use "../mixins" as *;
 @use "overrides-utils" as *;
 
 // ============================================================
@@ -157,7 +158,7 @@
   // RESPONSIVE
   // ──────────────────────────────────────────────────────────
 
-  @media (max-width: 768px) {
+  @include respond-down("md") {
     .dashboard-bg {
       min-width: 0;
       flex: 1 1 100%;

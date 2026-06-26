@@ -34,6 +34,30 @@ $breakpoint-xxl: 1400px;
   }
 }
 
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == "sm" {
+    @media (max-width: ($breakpoint-sm - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == "md" {
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == "lg" {
+    @media (max-width: ($breakpoint-lg - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == "xl" {
+    @media (max-width: ($breakpoint-xl - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == "xxl" {
+    @media (max-width: ($breakpoint-xxl - 1px)) {
+      @content;
+    }
+  }
+}
+
 // ============================================================
 // FLEXBOX HELPERS
 // ============================================================

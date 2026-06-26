@@ -332,6 +332,7 @@
   <div class="main">
     {% if (ctx.authsession) { %}
     <div class="main-left" id="mainmenu" style="display:none">
+      <div class="sidebar__search-slot" aria-hidden="true"></div>
     </div>
     {% } %}
     <div class="main-right">

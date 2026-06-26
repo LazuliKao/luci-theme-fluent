@@ -22,6 +22,12 @@
 
   @include custom-scrollbar;
 
+  .sidebar__search-slot {
+    display: none;
+    padding: var(--fluent-space-sm) var(--fluent-space-sm) 0;
+    margin-bottom: var(--fluent-space-xs);
+    flex-shrink: 0;
+  }
 }
 
 .main-right {
@@ -918,33 +924,19 @@
 
     .menu {
       &::after {
-        content: "";
         position: absolute;
         right: var(--fluent-space-sm);
         top: 50%;
-        width: 14px;
-        height: 14px;
         transform: translateY(-50%) rotate(-90deg);
         transition:
           transform var(--fluent-duration-fast) var(--fluent-easing-standard),
           background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-        @include fluent-icon-content-by-name("chevron-down-20-regular", 14px, #605e5c);
-
-        @include theme-dark-context {
-          @include fluent-icon-by-name("chevron-down-20-regular", 14px, #a0a0a0);
-        }
+        @include fluent-mask-icon-by-name("chevron-down-20-regular", 14px, var(--fluent-text-secondary));
       }
 
       &.active::after {
         transform: translateY(-50%) rotate(0deg);
-        background-image: none !important;
-        background-color: var(--fluent-primary);
-        $chevron-svg: map.get($fluent-icons, "chevron-down-20-regular");
-        @include set-icon-mask("data:image/svg+xml,#{$chevron-svg}");
-        -webkit-mask-size: contain;
-        mask-size: contain;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
+        background-color: var(--fluent-primary) !important;
       }
     }
   }
@@ -1081,12 +1073,17 @@ body[data-sidebar-state="collapsed"] {
   }
 }
 
-@media (max-width: 768px) {
+@include respond-down("md") {
   .main-left {
     transform: translateX(-100%);
     z-index: calc(var(--fluent-zindex-modal) + 150);
     top: 0;
     height: 100vh;
+
+    .sidebar__search-slot {
+      display: block;
+      padding-top: 16px;
+    }
 
     &.active {
       transform: translateX(0);

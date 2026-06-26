@@ -1,4 +1,4 @@
-@use "../mixins" as *;
+﻿@use "../mixins" as *;
 @use "../icons" as *;
 
 .fluent-menu-search {
@@ -40,6 +40,10 @@
       appearance: none;
       display: none;
     }
+
+    @include respond-down("md") {
+      padding-right: var(--fluent-space-sm);
+    }
   }
 
   .fluent-menu-search-hotkey {
@@ -58,6 +62,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include respond-down("md") {
+      display: none;
+    }
   }
 
   &::before {
