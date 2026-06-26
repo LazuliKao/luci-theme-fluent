@@ -11800,15 +11800,15 @@ body > div.main > div.main-right > header .theme-toggle[data-active-theme="dark"
 }
 
 body > div.main > div.main-right > header .theme-toggle[data-mode="auto"]:before {
-  -webkit-mask-image: var(--fluent-mask-weather-sunny-20-regular),radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
-  mask-image: var(--fluent-mask-weather-sunny-20-regular),radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
+  -webkit-mask-image: var(--fluent-mask-weather-sunny-20-regular),radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
+  mask-image: var(--fluent-mask-weather-sunny-20-regular),radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
 
 body > div.main > div.main-right > header .theme-toggle[data-active-theme="dark"][data-mode="auto"]:before {
-  -webkit-mask-image: var(--fluent-mask-weather-moon-20-regular),radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
-  mask-image: var(--fluent-mask-weather-moon-20-regular),radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
+  -webkit-mask-image: var(--fluent-mask-weather-moon-20-regular),radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
+  mask-image: var(--fluent-mask-weather-moon-20-regular),radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
 }
 
 body > div.main > div.main-right > header .theme-toggle[data-mode="auto"]:after {
