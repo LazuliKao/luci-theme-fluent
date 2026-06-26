@@ -54,10 +54,12 @@
         let ext = m ? m[1] : null;
 
         if (ext in imageTypes || ext in videoTypes) {
+          let parts = split(f, '/');
+          let filename = parts[length(parts) - 1];
           push(backgroundTable, {
             type: ext,
             is_video: ext in videoTypes,
-            url: themeDir + f
+            url: themeDir + filename
           });
           backgroundCount++;
         }

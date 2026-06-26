@@ -4,6 +4,7 @@ import { SlideAnimations } from "./utils/slide-animations";
 import { setupFluentSelects } from "./utils/select-dropdown";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupThemeFeatures } from "./utils/theme-features";
+import { setupMenuSearch } from "./utils/menu-search";
 
 
 interface Module {
@@ -59,6 +60,7 @@ const module: Module = {
     setupFluentSelects();
     setupIfaceboxTooltips();
     setupThemeFeatures();
+    setupMenuSearch(data);
   },
 
   /**

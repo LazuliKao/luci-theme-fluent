@@ -8380,6 +8380,170 @@ label[data-tooltip] {
   z-index: 100 !important;
 }
 
+.fluent-menu-search {
+  flex-shrink: 0;
+  width: min(420px, 100%);
+  position: relative;
+}
+
+.fluent-menu-search .fluent-menu-search-input {
+  width: 100%;
+  height: 32px;
+  padding: 0 var(--fluent-space-sm) 0 32px;
+  border-radius: var(--fluent-radius-md);
+  border: 1px solid var(--fluent-border);
+  background: var(--fluent-bg-hover);
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-base);
+  transition: all var(--fluent-duration-fast) var(--fluent-easing-standard);
+  box-sizing: border-box;
+  box-shadow: inset 0 1px #ffffff14;
+}
+
+.fluent-menu-search .fluent-menu-search-input:hover {
+  border-color: var(--fluent-input-border-hover);
+}
+
+.fluent-menu-search .fluent-menu-search-input:focus {
+  border-color: var(--fluent-primary);
+  box-shadow: 0 0 0 1px var(--fluent-primary);
+  background: var(--fluent-input-bg);
+  outline: none;
+}
+
+.fluent-menu-search .fluent-menu-search-input::placeholder {
+  color: var(--fluent-text-secondary);
+  opacity: .8;
+}
+
+.fluent-menu-search .fluent-menu-search-input::-webkit-search-cancel-button {
+  appearance: none;
+  display: none;
+}
+
+.fluent-menu-search:before {
+  content: "";
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23605e5c' d=%22M13.73 14.436a6.5 6.5 0 1 1 .707-.707l3.416 3.418a.5.5 0 0 1-.637.764l-.07-.057zm-.71-.71q.385-.32.707-.706a5.5 5.5 0 1 0-.707.707%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+[data-theme="dark"] .fluent-menu-search:before {
+  content: "";
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23a0a0a0' d=%22M13.73 14.436a6.5 6.5 0 1 1 .707-.707l3.416 3.418a.5.5 0 0 1-.637.764l-.07-.057zm-.71-.71q.385-.32.707-.706a5.5 5.5 0 1 0-.707.707%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay {
+  background: var(--fluent-card-bg);
+  border: 1px solid var(--fluent-border);
+  border-radius: var(--fluent-radius-md);
+  box-shadow: var(--fluent-shadow-medium);
+  z-index: var(--fluent-zindex-popover, 1050);
+  max-height: 400px;
+  position: absolute;
+  overflow-y: auto;
+  top: calc(100% + 4px) !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg, #00000026);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover, #00000059);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay::-webkit-resizer {
+  background: none;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list {
+  padding: var(--fluent-space-xs) 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-item {
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  cursor: pointer;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+  -webkit-user-select: none;
+  user-select: none;
+  flex-direction: column;
+  gap: 2px;
+  display: flex;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-item:hover, .fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-item.selected {
+  background: var(--fluent-sidebar-item-hover);
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-item .fluent-menu-search-label {
+  color: var(--fluent-text);
+  font-weight: var(--fluent-font-weight-regular);
+  font-size: 13px;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-item .fluent-menu-search-path {
+  color: var(--fluent-text-secondary);
+  font-size: 11px;
+}
+
+.fluent-menu-search .fluent-menu-search-overlay .fluent-menu-search-list .fluent-menu-search-more {
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  color: var(--fluent-text-secondary);
+  text-align: center;
+  font-size: 11px;
+  font-style: italic;
+}
+
 img[src="/luci-static/resources/icons/port_down.svg"] {
   --icon-data: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iNzUgNzUgMzYyIDM2MiIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InRpdGxlIGRlc2MiPgogIDx0aXRsZSBpZD0idGl0bGUiPkV0aGVybmV0IHBvcnQgd2l0aCBkaXNjb25uZWN0ZWQgcGx1ZzwvdGl0bGU+CiAgPGRlc2MgaWQ9ImRlc2MiPkEgRmx1ZW50IFVJIHN0eWxlIGV0aGVybmV0IHBvcnQgaWNvbiB3aXRoIGVpZ2h0IFJKNDUgY29udGFjdHMgYW5kIGEgcGx1ZyBkaXNjb25uZWN0ZWQgc3ltYm9sLjwvZGVzYz4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiM0MjQyNDIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMzMzIDEzNUgxMzljLTguOCAwLTE2IDcuMi0xNiAxNnYyMjFjMCA4LjggNy4yIDE2IDE2IDE2aDIzOWM4LjggMCAxNi03LjIgMTYtMTZWMjA2IiBzdHJva2Utd2lkdGg9IjEwIi8+CiAgICA8cGF0aCBkPSJNMTcxIDIwOWgxNzN2MTAxaC0zM3YyN2gtMjd2MjNoLTU1di0yM2gtMjd2LTI3aC0zMXoiIHN0cm9rZS13aWR0aD0iMTAiLz4KICAgIDxwYXRoIGQ9Ik0xOTUgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0yMTMgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0yMzEgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0yNDkgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0yNjcgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0yODUgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0zMDMgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICAgIDxwYXRoIGQ9Ik0zMjEgMjExdjI2IiBzdHJva2Utd2lkdGg9IjkiLz4KICA8L2c+CiAgPHBhdGggZmlsbD0iIzQyNDI0MiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzEyIDg2KSBzY2FsZSg2LjYpIiBkPSJNMTcuODU0IDIuMTQ2YS41LjUgMCAwIDEgMCAuNzA4bC0xLjY2OCAxLjY2OGE0LjA0IDQuMDQgMCAwIDEtLjMzMiA1LjMzMWwtLjMuM2wtLjAwMy4wMDNsLS4zMDkuMzA5YTEuMDUgMS4wNSAwIDAgMS0xLjQ4NCAwTDkuNTM1IDYuMjQyYTEuMDUgMS4wNSAwIDAgMSAwLTEuNDg1bC42MTEtLjYxYTQuMDM2IDQuMDM2IDAgMCAxIDUuMzMyLS4zMzJsMS42NjgtMS42NjlhLjUuNSAwIDAgMSAuNzA4IDBNMTUuMTQgNC44NDdhMy4wMzcgMy4wMzcgMCAwIDAtNC4yODYuMDA2bC0uMy4zYS40OS40OSAwIDAgMCAwIC42OTNsMy42IDMuNmMuMTkuMTkxLjUuMTkyLjY5MS4wMDJsLjAwMi0uMDAybC4zLS4zYTMuMDM2IDMuMDM2IDAgMCAwIC4wMDYtNC4yODZsLS4wMDctLjAwNnptLTUuNzg2IDMuOGEuNS41IDAgMCAxIDAgLjcwN0w3LjcwNyAxMUw5IDEyLjI5M2wxLjY0Ni0xLjY0N2EuNS41IDAgMCAxIC43MDguNzA4TDkuNzA3IDEzbC40NDcuNDQ3YTEuNDkgMS40OSAwIDAgMSAwIDIuMTA3bC0uMy4zYTQuMDM2IDQuMDM2IDAgMCAxLTUuMzMyLjMzMmwtMS42NjggMS42NjhhLjUuNSAwIDAgMS0uNzA4LS43MDhsMS42NjktMS42NjhhNC4wMzYgNC4wMzYgMCAwIDEgLjMzMS01LjMzMWwuMy0uM2ExLjQ5IDEuNDkgMCAwIDEgMi4xMDggMGwuNDQ2LjQ0NmwxLjY0Ni0xLjY0N2EuNS41IDAgMCAxIC43MDggMG0tNC40OTUgNi41MDVhMy4wMzYgMy4wMzYgMCAwIDAgNC4yODctLjAwNWwuMy0uM2EuNDkuNDkgMCAwIDAgMC0uNjkzbC0zLjYtMy42YS40OS40OSAwIDAgMC0uNjkyIDBsLS4zLjNhMy4wMzYgMy4wMzYgMCAwIDAgMCA0LjI5MnoiLz4KPC9zdmc+Cg==);
   width: 24px;
@@ -11467,9 +11631,6 @@ body > div.main > div.main-right > header .header__title {
 }
 
 body > div.main > div.main-right > header .header__search-slot {
-  pointer-events: none;
-  -webkit-user-select: none;
-  user-select: none;
   flex: auto;
   justify-content: center;
   align-items: center;
