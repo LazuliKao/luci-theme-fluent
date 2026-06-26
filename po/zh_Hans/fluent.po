@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-06-24 21:30+0800\n"
+"POT-Creation-Date: 2026-06-26 12:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,9 @@ msgstr "强调色"
 
 msgid "Adjust login card opacity and blur separately for light and dark mode."
 msgstr "分别为亮色模式和深色模式调整登录卡片的不透明度和模糊效果。"
+
+msgid "and {count} more…"
+msgstr "和 {count} 个更多..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and themed "
@@ -199,6 +202,12 @@ msgstr "使用主题的自定义下拉组件替换原生的选择元素。"
 msgid "Respect reduced-motion preference"
 msgstr "遵循减少动态效果偏好设置"
 
+msgid "Search menu items"
+msgstr "搜索菜单项"
+
+msgid "Search menu…"
+msgstr "搜索菜单…"
+
 msgid "Semibold"
 msgstr "半粗体"
 
@@ -213,11 +222,11 @@ msgstr "显示顶部加载条"
 msgid "Sidebar background"
 msgstr "侧边栏背景"
 
+msgid "Switch theme mode"
+msgstr "切换主题模式"
+
 msgid "Theme settings"
 msgstr "主题设置"
-
-msgid "Toggle dark mode"
-msgstr "切换深色模式"
 
 msgid "Use Fluent custom select dropdowns"
 msgstr "使用 Fluent 自定义下拉选择框"
