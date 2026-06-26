@@ -167,13 +167,22 @@ body > div.main > div.main-right > header {
 
     &::after {
       @include fluent-mask-icon-by-name("link-16-filled", 12px, currentColor);
-      left: 2px;
+      right: 2px;
       bottom: 2px;
       opacity: 0;
     }
 
     &[data-active-theme="dark"]::before {
       @include fluent-mask-icon-by-name("weather-moon-20-regular", 18px, currentColor);
+    }
+
+    &[data-mode="auto"]::before {
+      mask-image: var(--fluent-mask-weather-sunny-20-regular), radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
+      mask-composite: intersect;
+    }
+
+    &[data-active-theme="dark"][data-mode="auto"]::before {
+      mask-image: var(--fluent-mask-weather-moon-20-regular), radial-gradient(circle at 17px 17px, transparent 7.5px, black 8px);
     }
 
     &[data-mode="auto"]::after {
