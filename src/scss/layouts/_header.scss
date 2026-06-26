@@ -125,10 +125,10 @@ body > div.main > div.main-right > header {
     padding: 0;
     border: none;
     background: transparent;
-    color: var(--fluent-text-secondary, #605e5c);
+    color: var(--fluent-text-secondary);
     cursor: pointer;
-    border-radius: var(--fluent-radius-sm, 4px);
-    transition: all var(--fluent-transition-fast, 150ms ease);
+    border-radius: var(--fluent-radius-sm);
+    transition: all var(--fluent-transition-fast);
     position: relative;
     opacity: 0;
     pointer-events: none;
@@ -139,8 +139,8 @@ body > div.main > div.main-right > header {
     }
 
     &:hover {
-      background: var(--fluent-bg-hover, #f3f2f1);
-      color: var(--fluent-text, #323130);
+      background: var(--fluent-bg-hover);
+      color: var(--fluent-text);
     }
 
     &:active {
@@ -157,8 +157,8 @@ body > div.main > div.main-right > header {
       background-size: contain;
       pointer-events: none;
       transition:
-        opacity var(--fluent-transition-fast, 150ms ease),
-        transform var(--fluent-transition-fast, 150ms ease);
+        opacity var(--fluent-transition-fast),
+        transform var(--fluent-transition-fast);
     }
 
     &::before {
@@ -191,7 +191,7 @@ body > div.main > div.main-right > header {
   .header-actions {
     display: flex;
     align-items: center;
-    gap: var(--fluent-space-sm, 8px);
+    gap: var(--fluent-space-sm);
     flex: 0 0 auto;
   }
 
@@ -219,7 +219,7 @@ body > div.main > div.main-right > header {
       position: relative; // For absolute icon positioning
 
       &[data-style="active"] {
-        --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
+        --fluent-poll-icon: var(--fluent-text-secondary);
 
         &::before {
           @include fluent-mask-icon-by-name("arrow-sync-20-regular", 18px, var(--fluent-poll-icon));
@@ -238,19 +238,19 @@ body > div.main > div.main-right > header {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background-color: var(--fluent-success, #107c10);
-          border: 2px solid var(--fluent-bg, #ffffff);
+          background-color: var(--fluent-success);
+          border: 2px solid var(--fluent-bg);
           animation: fluent-poll-pulse 1.5s infinite ease-in-out;
         }
 
         &:hover {
-          background-color: var(--fluent-bg-hover, #f3f2f1) !important;
-          --fluent-poll-icon: var(--fluent-text, #323130);
+          background-color: var(--fluent-bg-hover) !important;
+          --fluent-poll-icon: var(--fluent-text);
         }
       }
 
       &[data-style="inactive"] {
-        --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
+        --fluent-poll-icon: var(--fluent-text-secondary);
 
         &::before {
           @include fluent-mask-icon-by-name("arrow-sync-off-20-regular", 18px, var(--fluent-poll-icon));
@@ -262,8 +262,8 @@ body > div.main > div.main-right > header {
         }
 
         &:hover {
-          background-color: var(--fluent-bg-hover, #f3f2f1) !important;
-          --fluent-poll-icon: var(--fluent-text, #323130);
+          background-color: var(--fluent-bg-hover) !important;
+          --fluent-poll-icon: var(--fluent-text);
         }
       }
     }
@@ -271,11 +271,11 @@ body > div.main > div.main-right > header {
 
   [data-theme="dark"] .theme-toggle,
   .theme-toggle[data-active-theme="dark"] {
-    color: var(--fluent-text-secondary, #a0a0a0);
+    color: var(--fluent-text-secondary);
 
     &:hover {
       background: rgba(255, 255, 255, 0.08);
-      color: var(--fluent-text, #f3f2f1);
+      color: var(--fluent-text);
     }
   }
 

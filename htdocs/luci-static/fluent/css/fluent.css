@@ -11682,10 +11682,10 @@ body > div.main > div.main-right > header .desktop-toggle {
 body > div.main > div.main-right > header .theme-toggle {
   width: 32px;
   height: 32px;
-  color: var(--fluent-text-secondary, #605e5c);
+  color: var(--fluent-text-secondary);
   cursor: pointer;
-  border-radius: var(--fluent-radius-sm, 4px);
-  transition: all var(--fluent-transition-fast, .15s ease);
+  border-radius: var(--fluent-radius-sm);
+  transition: all var(--fluent-transition-fast);
   opacity: 0;
   pointer-events: none;
   background: none;
@@ -11703,8 +11703,8 @@ body > div.main > div.main-right > header .theme-toggle.visible {
 }
 
 body > div.main > div.main-right > header .theme-toggle:hover {
-  background: var(--fluent-bg-hover, #f3f2f1);
-  color: var(--fluent-text, #323130);
+  background: var(--fluent-bg-hover);
+  color: var(--fluent-text);
 }
 
 body > div.main > div.main-right > header .theme-toggle:active {
@@ -11714,7 +11714,7 @@ body > div.main > div.main-right > header .theme-toggle:active {
 body > div.main > div.main-right > header .theme-toggle:before, body > div.main > div.main-right > header .theme-toggle:after {
   content: "";
   pointer-events: none;
-  transition: opacity var(--fluent-transition-fast, .15s ease),transform var(--fluent-transition-fast, .15s ease);
+  transition: opacity var(--fluent-transition-fast),transform var(--fluent-transition-fast);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -11756,7 +11756,7 @@ body > div.main > div.main-right > header .theme-toggle[data-mode="auto"]:after 
 
 body > div.main > div.main-right > header .header-actions {
   align-items: center;
-  gap: var(--fluent-space-sm, 8px);
+  gap: var(--fluent-space-sm);
   flex: none;
   display: flex;
 }
@@ -11786,7 +11786,7 @@ body > div.main > div.main-right > header .status #xhr_poll_status, body > div.m
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="active"], body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="active"], body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="active"] {
-  --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
+  --fluent-poll-icon: var(--fluent-text-secondary);
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="active"]:before, body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="active"]:before, body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="active"]:before {
@@ -11813,8 +11813,8 @@ body > div.main > div.main-right > header .status #xhr_poll_status[data-style="a
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="active"]:after, body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="active"]:after, body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="active"]:after {
   content: "";
-  background-color: var(--fluent-success, #107c10);
-  border: 2px solid var(--fluent-bg, #fff);
+  background-color: var(--fluent-success);
+  border: 2px solid var(--fluent-bg);
   border-radius: 50%;
   width: 8px;
   height: 8px;
@@ -11825,12 +11825,12 @@ body > div.main > div.main-right > header .status #xhr_poll_status[data-style="a
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="active"]:hover, body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="active"]:hover, body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="active"]:hover {
-  --fluent-poll-icon: var(--fluent-text, #323130);
-  background-color: var(--fluent-bg-hover, #f3f2f1) !important;
+  --fluent-poll-icon: var(--fluent-text);
+  background-color: var(--fluent-bg-hover) !important;
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="inactive"], body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="inactive"], body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="inactive"] {
-  --fluent-poll-icon: var(--fluent-text-secondary, #605e5c);
+  --fluent-poll-icon: var(--fluent-text-secondary);
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="inactive"]:before, body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="inactive"]:before, body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="inactive"]:before {
@@ -11856,16 +11856,16 @@ body > div.main > div.main-right > header .status #xhr_poll_status[data-style="i
 }
 
 body > div.main > div.main-right > header .status #xhr_poll_status[data-style="inactive"]:hover, body > div.main > div.main-right > header .status [data-indicator="poll-status"][data-style="inactive"]:hover, body > div.main > div.main-right > header .status [data-indicator="poll"][data-style="inactive"]:hover {
-  --fluent-poll-icon: var(--fluent-text, #323130);
-  background-color: var(--fluent-bg-hover, #f3f2f1) !important;
+  --fluent-poll-icon: var(--fluent-text);
+  background-color: var(--fluent-bg-hover) !important;
 }
 
 body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle, body > div.main > div.main-right > header .theme-toggle[data-active-theme="dark"] {
-  color: var(--fluent-text-secondary, #a0a0a0);
+  color: var(--fluent-text-secondary);
 }
 
 body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hover, body > div.main > div.main-right > header .theme-toggle[data-active-theme="dark"]:hover {
-  color: var(--fluent-text, #f3f2f1);
+  color: var(--fluent-text);
   background: #ffffff14;
 }
 
