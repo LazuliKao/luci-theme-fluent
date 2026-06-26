@@ -6988,7 +6988,82 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   min-width: 13rem;
 }
 
-.control-group:has( > input.cbi-input-password) {
+.control-group:has( > input.cbi-input-password) > input.cbi-input-password + .cbi-button {
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  width: var(--fluent-input-height) !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+}
+
+.control-group:has( > input.cbi-input-password[type="password"]) > input.cbi-input-password + .cbi-button:after {
+  content: "";
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.control-group:has( > input.cbi-input-password[type="password"]) > input.cbi-input-password + .cbi-button:hover:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+.control-group:has( > input.cbi-input-password[type="text"]) > input.cbi-input-password + .cbi-button:after {
+  content: "";
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.control-group:has( > input.cbi-input-password[type="text"]) > input.cbi-input-password + .cbi-button:hover:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+[data-theme="dark"] :scope .control-group:has( > input.cbi-input-password[type="password"]) > input.cbi-input-password + .cbi-button:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+[data-theme="dark"] :scope .control-group:has( > input.cbi-input-password[type="password"]) > input.cbi-input-password + .cbi-button:hover:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+[data-theme="dark"] :scope .control-group:has( > input.cbi-input-password[type="text"]) > input.cbi-input-password + .cbi-button:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+[data-theme="dark"] :scope .control-group:has( > input.cbi-input-password[type="text"]) > input.cbi-input-password + .cbi-button:hover:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -7003,47 +7078,47 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
-.control-group:has( > input.cbi-input-password):disabled {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):disabled {
   background: var(--fluent-input-bg-disabled);
   color: var(--fluent-text-disabled);
   cursor: not-allowed;
 }
 
-.control-group:has( > input.cbi-input-password)::placeholder {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button))::placeholder {
   color: var(--fluent-text-disabled);
 }
 
-.control-group:has( > input.cbi-input-password) {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) {
   position: relative;
 }
 
-.control-group:has( > input.cbi-input-password):hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
   border-color: var(--fluent-input-border-hover);
   border-bottom-color: var(--fluent-input-border-bottom-hover);
 }
 
-:is(.control-group:has( > input.cbi-input-password):focus, .control-group:has( > input.cbi-input-password):focus-within, .control-group:has( > input.cbi-input-password).focus, .control-group:has( > input.cbi-input-password)[open]) {
+:is(.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):focus, .control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):focus-within, .control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)).focus, .control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button))[open]) {
   border-bottom-color: var(--fluent-input-border-bottom-focus);
   outline: none;
 }
 
-.control-group:has( > input.cbi-input-password):focus:after {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):focus:after {
   transform: scaleX(1);
 }
 
-.control-group:has( > input.cbi-input-password):focus-within:after {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):focus-within:after {
   transform: scaleX(1);
 }
 
-.control-group:has( > input.cbi-input-password).focus:after {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)).focus:after {
   transform: scaleX(1);
 }
 
-.control-group:has( > input.cbi-input-password)[open]:after {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button))[open]:after {
   transform: scaleX(1);
 }
 
-.control-group:has( > input.cbi-input-password):after {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)):after {
   box-sizing: border-box;
   content: "";
   border-bottom-left-radius: var(--fluent-radius-sm);
@@ -7059,14 +7134,14 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   transform: scaleX(0);
 }
 
-.control-group:has( > input.cbi-input-password) {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) {
   align-items: stretch;
   gap: 0;
   display: flex;
   padding: 0 !important;
 }
 
-.control-group:has( > input.cbi-input-password) input.cbi-input-password {
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) > input.cbi-input-password {
   min-width: 0;
   color: var(--fluent-text);
   flex: 1;
@@ -7079,277 +7154,65 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   margin: 0 !important;
 }
 
-.control-group:has( > input.cbi-input-password) .cbi-button {
-  cursor: pointer;
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) > input.cbi-input-password + .cbi-button {
   border-radius: 0 var(--fluent-radius-md) var(--fluent-radius-md) 0;
   flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
   box-shadow: none !important;
-  width: var(--fluent-input-height) !important;
   background: none !important;
   border: none !important;
   height: 100% !important;
   margin: 0 !important;
-  padding: 0 !important;
-  font-size: 0 !important;
 }
 
-.control-group:has( > input.cbi-input-password) .cbi-button-neutral {
-  cursor: pointer;
-  border-radius: 0 var(--fluent-radius-md) var(--fluent-radius-md) 0;
-  flex-shrink: 0;
-  justify-content: center;
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) > input.cbi-input-password + .cbi-button:hover {
+  background: var(--fluent-bg-hover) !important;
+}
+
+.control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button)) > input.cbi-input-password + .cbi-button:active {
+  background: var(--fluent-bg-active) !important;
+}
+
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button) {
   align-items: center;
-  display: inline-flex;
-  box-shadow: none !important;
-  width: var(--fluent-input-height) !important;
-  background: none !important;
-  border: none !important;
-  height: 100% !important;
+  gap: 0;
+  display: flex;
+}
+
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button) > input.cbi-input-password {
+  flex: 1;
+  min-width: 0;
+  border-right: none !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
   margin: 0 !important;
-  padding: 0 !important;
-  font-size: 0 !important;
 }
 
-.control-group:has( > input.cbi-input-password) button.cbi-button {
-  cursor: pointer;
-  border-radius: 0 var(--fluent-radius-md) var(--fluent-radius-md) 0;
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button) > input.cbi-input-password + .cbi-button {
   flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  display: inline-flex;
-  box-shadow: none !important;
-  width: var(--fluent-input-height) !important;
-  background: none !important;
-  border: none !important;
-  height: 100% !important;
+  background: var(--fluent-input-bg) !important;
+  border-left: none !important;
+  border-color: var(--fluent-input-border) !important;
+  border-bottom-color: var(--fluent-input-border-bottom) !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
   margin: 0 !important;
-  padding: 0 !important;
-  font-size: 0 !important;
 }
 
-.control-group:has( > input.cbi-input-password) .cbi-button:hover {
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button) > input.cbi-input-password + .cbi-button:hover {
   background: var(--fluent-bg-hover) !important;
 }
 
-.control-group:has( > input.cbi-input-password) .cbi-button-neutral:hover {
-  background: var(--fluent-bg-hover) !important;
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button) > .cbi-button ~ .cbi-button {
+  margin-left: var(--fluent-space-sm) !important;
 }
 
-.control-group:has( > input.cbi-input-password) button.cbi-button:hover {
-  background: var(--fluent-bg-hover) !important;
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button):has( > input.cbi-input-password:hover) > input.cbi-input-password + .cbi-button {
+  border-color: var(--fluent-input-border-hover) !important;
+  border-bottom-color: var(--fluent-input-border-bottom-hover) !important;
 }
 
-.control-group:has( > input.cbi-input-password) .cbi-button:active {
-  background: var(--fluent-bg-active) !important;
-}
-
-.control-group:has( > input.cbi-input-password) .cbi-button-neutral:active {
-  background: var(--fluent-bg-active) !important;
-}
-
-.control-group:has( > input.cbi-input-password) button.cbi-button:active {
-  background: var(--fluent-bg-active) !important;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button-neutral:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ button.cbi-button:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button-neutral:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ button.cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button-neutral:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ button.cbi-button:after {
-  content: "";
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23616161' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button-neutral:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-.control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ button.cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23242424' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button-neutral:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ button.cbi-button:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ .cbi-button-neutral:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="password"] ~ button.cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M3.26 11.602C3.942 8.327 6.793 6 10 6s6.057 2.327 6.74 5.602a.5.5 0 0 0 .98-.204C16.943 7.673 13.693 5 10 5s-6.943 2.673-7.72 6.398a.5.5 0 0 0 .98.204M10 8a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m-2.5 3.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button-neutral:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ button.cbi-button:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23adadad' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ .cbi-button-neutral:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-}
-
-[data-theme="dark"] .control-group:has( > input.cbi-input-password) input.cbi-input-password[type="text"] ~ button.cbi-button:hover:after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='%23ffffff' d=%22M2.854 2.146a.5.5 0 1 0-.708.708l3.5 3.498a8.1 8.1 0 0 0-3.366 5.046a.5.5 0 1 0 .98.204a7.1 7.1 0 0 1 3.107-4.528L7.953 8.66a3.5 3.5 0 1 0 4.886 4.886l4.307 4.308a.5.5 0 0 0 .708-.708zm9.265 10.68A2.5 2.5 0 1 1 8.673 9.38zm-1.995-4.824l3.374 3.374a3.5 3.5 0 0 0-3.374-3.374M10 6c-.57 0-1.129.074-1.666.213l-.803-.803A7.7 7.7 0 0 1 10 5c3.693 0 6.942 2.673 7.72 6.398a.5.5 0 0 1-.98.204C16.058 8.327 13.207 6 10 6%22/></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
+.control-group:has( > input.cbi-input-password):has( > .cbi-button ~ .cbi-button):has( > input.cbi-input-password:focus) > input.cbi-input-password + .cbi-button {
+  border-bottom-color: var(--fluent-input-border-bottom-focus) !important;
 }
 
 .password-input {
