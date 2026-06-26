@@ -657,7 +657,7 @@ div[id="view"] > :not(.spinning) {
   border-color: var(--fluent-btn-secondary-border-active);
 }
 
-.cbi-button.cbi-button-remove, .cbi-button.cbi-button-negative, .btn.cbi-button-remove, .btn.cbi-button-negative {
+.cbi-button.cbi-button-remove, .cbi-button.cbi-button-negative, .cbi-button.danger, .btn.cbi-button-remove, .btn.cbi-button-negative, .btn.danger {
   height: var(--fluent-btn-height);
   font-family: var(--fluent-font-family);
   font-size: var(--fluent-font-size-base);
@@ -676,7 +676,7 @@ div[id="view"] > :not(.spinning) {
   display: inline-flex;
 }
 
-.cbi-button.cbi-button-remove:disabled, .cbi-button.cbi-button-negative:disabled, .btn.cbi-button-remove:disabled, .btn.cbi-button-negative:disabled {
+.cbi-button.cbi-button-remove:disabled, .cbi-button.cbi-button-negative:disabled, .cbi-button.danger:disabled, .btn.cbi-button-remove:disabled, .btn.cbi-button-negative:disabled, .btn.danger:disabled {
   color: var(--fluent-text-disabled);
   background: var(--fluent-bg-active);
   border-color: var(--fluent-bg-active);
@@ -684,23 +684,23 @@ div[id="view"] > :not(.spinning) {
   pointer-events: none;
 }
 
-.cbi-button.cbi-button-remove:focus-visible, .cbi-button.cbi-button-negative:focus-visible, .btn.cbi-button-remove:focus-visible, .btn.cbi-button-negative:focus-visible {
+.cbi-button.cbi-button-remove:focus-visible, .cbi-button.cbi-button-negative:focus-visible, .cbi-button.danger:focus-visible, .btn.cbi-button-remove:focus-visible, .btn.cbi-button-negative:focus-visible, .btn.danger:focus-visible {
   outline: 2px solid var(--fluent-focus-color);
   outline-offset: 2px;
 }
 
-.cbi-button.cbi-button-remove, .cbi-button.cbi-button-negative, .btn.cbi-button-remove, .btn.cbi-button-negative {
+.cbi-button.cbi-button-remove, .cbi-button.cbi-button-negative, .cbi-button.danger, .btn.cbi-button-remove, .btn.cbi-button-negative, .btn.danger {
   background: var(--fluent-error);
   color: var(--fluent-text-on-primary);
   border-color: var(--fluent-error);
 }
 
-.cbi-button.cbi-button-remove:hover, .cbi-button.cbi-button-negative:hover, .btn.cbi-button-remove:hover, .btn.cbi-button-negative:hover {
+.cbi-button.cbi-button-remove:hover, .cbi-button.cbi-button-negative:hover, .cbi-button.danger:hover, .btn.cbi-button-remove:hover, .btn.cbi-button-negative:hover, .btn.danger:hover {
   background: var(--fluent-error-hover);
   border-color: var(--fluent-error-hover);
 }
 
-.cbi-button.cbi-button-remove:active, .cbi-button.cbi-button-negative:active, .btn.cbi-button-remove:active, .btn.cbi-button-negative:active {
+.cbi-button.cbi-button-remove:active, .cbi-button.cbi-button-negative:active, .cbi-button.danger:active, .btn.cbi-button-remove:active, .btn.cbi-button-negative:active, .btn.danger:active {
   background: var(--fluent-error-active);
   border-color: var(--fluent-error-active);
 }

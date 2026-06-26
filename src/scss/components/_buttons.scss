@@ -24,7 +24,8 @@
   }
 
   &.cbi-button-remove,
-  &.cbi-button-negative {
+  &.cbi-button-negative,
+  &.danger {
     @include button-base;
     background: var(--fluent-error);
     color: var(--fluent-text-on-primary);
@@ -111,7 +112,7 @@
   margin-bottom: var(--fluent-space-md);
 }
 
-.control-group:not(:has(> :not(.cbi-button))){
+.control-group:not(:has(> :not(.cbi-button))) {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
