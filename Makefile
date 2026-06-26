@@ -18,6 +18,7 @@ define Package/$(PKG_NAME)/postinst
 		set luci.themes.Fluent=/luci-static/fluent
 		commit luci
 	EOF
+	/etc/init.d/rpcd restart
 }
 endef
 
