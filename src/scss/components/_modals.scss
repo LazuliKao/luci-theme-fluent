@@ -61,15 +61,16 @@ body.modal-overlay-active {
   .alert-message {
     background: transparent !important;
     border: none !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding: 0 0 0 calc(18px + var(--fluent-space-md)) !important;
     margin: 0 !important;
     box-shadow: none !important;
     color: var(--fluent-text) !important;
+    display: block !important;
 
     &::before {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
       margin-top: 2px !important;
     }
   }

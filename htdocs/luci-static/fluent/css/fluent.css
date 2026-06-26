@@ -1818,16 +1818,20 @@ body.modal-overlay-active #modal_overlay {
 }
 
 .modal .alert, .modal .alert-message {
+  padding: 0 0 0 calc(18px + var(--fluent-space-md)) !important;
   box-shadow: none !important;
   color: var(--fluent-text) !important;
   background: none !important;
   border: none !important;
   margin: 0 !important;
-  padding: 0 !important;
+  display: block !important;
 }
 
 .modal .alert:before, .modal .alert-message:before {
   margin-top: 2px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
 }
 
 .modal h4, .modal .modal-header {
