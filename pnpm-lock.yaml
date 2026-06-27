@@ -21,8 +21,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       '@lazulikao/luci-types':
-        specifier: github:LazuliKao/luci-types#6b7f0bd4ec583246912842d40477c68bb75d2e17
-        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/6b7f0bd4ec583246912842d40477c68bb75d2e17
+        specifier: github:LazuliKao/luci-types#ba10994517383afe7c4cc989ff9252b359258982
+        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/ba10994517383afe7c4cc989ff9252b359258982
       '@types/node':
         specifier: ^22.19.21
         version: 22.19.21
@@ -45,8 +45,8 @@ importers:
   src:
     devDependencies:
       '@lazulikao/luci-types':
-        specifier: github:LazuliKao/luci-types#6b7f0bd4ec583246912842d40477c68bb75d2e17
-        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/6b7f0bd4ec583246912842d40477c68bb75d2e17
+        specifier: github:LazuliKao/luci-types#ba10994517383afe7c4cc989ff9252b359258982
+        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/ba10994517383afe7c4cc989ff9252b359258982
       '@rsbuild/core':
         specifier: ^2.0.15
         version: 2.0.15
@@ -413,8 +413,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/6b7f0bd4ec583246912842d40477c68bb75d2e17':
-    resolution: {tarball: https://codeload.github.com/LazuliKao/luci-types/tar.gz/6b7f0bd4ec583246912842d40477c68bb75d2e17}
+  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/ba10994517383afe7c4cc989ff9252b359258982':
+    resolution: {tarball: https://codeload.github.com/LazuliKao/luci-types/tar.gz/ba10994517383afe7c4cc989ff9252b359258982}
     version: 0.2.0
     engines: {node: '>=18.18.0'}
     hasBin: true
@@ -1382,7 +1382,7 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/6b7f0bd4ec583246912842d40477c68bb75d2e17':
+  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/ba10994517383afe7c4cc989ff9252b359258982':
     dependencies:
       chokidar: 5.0.0
       ssh2: 1.17.0
