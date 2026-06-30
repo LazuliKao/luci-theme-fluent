@@ -53,9 +53,37 @@ make menuconfig
 
 Choose `LuCI -> Themes -> luci-theme-fluent`, then build your firmware or package as usual.
 
-### Install on a running device
+### Quick Install
 
-Build and install the generated package with your usual OpenWrt workflow, then apply the theme from the LuCI appearance settings.
+Auto-detects `opkg` / `apk` and installs the latest release by default:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/LazuliKao/luci-theme-fluent/main/install.sh | sh
+```
+
+Install the nightly build instead:
+
+```bash
+wget -qO- https://raw.githubusercontent.com/LazuliKao/luci-theme-fluent/main/install.sh | sh -s nightly
+```
+
+After installation, navigate to `System -> Fluent Theme` in the LuCI web interface.
+
+### Manual Installation
+
+1. Open the release page and download the package file matching your system:
+   - Stable releases: https://github.com/LazuliKao/luci-theme-fluent/releases
+   - Nightly release: https://github.com/LazuliKao/luci-theme-fluent/releases/tag/nightly
+2. Upload the downloaded file to your router, for example into `/tmp/`.
+3. Install it with the matching package manager:
+
+```bash
+# OpenWrt 24.10.x
+opkg install /tmp/luci-theme-fluent_*.ipk
+
+# OpenWrt 25.12.x
+apk add --allow-untrusted /tmp/luci-theme-fluent-*.apk
+```
 
 ## Configuration
 
