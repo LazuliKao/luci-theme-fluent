@@ -1937,10 +1937,6 @@ div.td, div.th {
   background: none;
 }
 
-:is(.modal:has(.cbi-dropdown[open]), .modal:has(cbi-dropdown[open])), :is(.modal:has(.cbi-dropdown[open]) > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script), .modal:has(cbi-dropdown[open]) > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script)) {
-  overflow: visible;
-}
-
 .modal .cbi-map .cbi-section {
   padding: 0 !important;
 }
@@ -6430,6 +6426,19 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
   transform-origin: top !important;
   animation: .2s cubic-bezier(.4, 0, .23, 1) forwards fluent-dropdown-slide-in !important;
   bottom: auto !important;
+}
+
+cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown {
+  width: var(--fluent-dropdown-width);
+  max-height: var(--fluent-dropdown-max-height);
+  z-index: calc(var(--fluent-zindex-dropdown) + 1);
+  position: fixed;
+  top: var(--fluent-dropdown-top) !important;
+  bottom: auto !important;
+  left: var(--fluent-dropdown-left) !important;
+  max-width: calc(100vw - 16px) !important;
+  margin: 0 !important;
+  right: auto !important;
 }
 
 .cbi-value-field.cbi-dropdown-open {

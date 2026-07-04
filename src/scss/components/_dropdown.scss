@@ -771,6 +771,19 @@ cbi-dropdown,
       transform-origin: top !important;
       animation: fluent-dropdown-slide-in 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
     }
+
+    &[data-fluent-floating="modal"][open] > ul.dropdown {
+      position: fixed;
+      top: var(--fluent-dropdown-top) !important;
+      bottom: auto !important;
+      left: var(--fluent-dropdown-left) !important;
+      right: auto !important;
+      width: var(--fluent-dropdown-width);
+      max-width: calc(100vw - 16px) !important;
+      max-height: var(--fluent-dropdown-max-height);
+      margin: 0 !important;
+      z-index: calc(var(--fluent-zindex-dropdown) + 1);
+    }
   }
 }
 // Elevate the stacking context of the dropdown parent elements when a dropdown is open

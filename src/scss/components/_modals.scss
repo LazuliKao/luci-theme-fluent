@@ -115,19 +115,6 @@
     @include custom-scrollbar;
   }
 
-  // Allow open dropdown menus to escape the scrollable modal body. LuCI renders
-  // select menus inline, so the modal/body overflow would otherwise clip short
-  // dialogs such as Network → Add new interface.
-  &:has(.cbi-dropdown[open]),
-  &:has(cbi-dropdown[open]) {
-    overflow: visible;
-
-    > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(
-        style
-      ):not(script) {
-      overflow: visible;
-    }
-  }
   .cbi-map {
     .cbi-section {
       padding: 0 !important;

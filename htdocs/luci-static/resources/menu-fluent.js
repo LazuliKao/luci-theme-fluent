@@ -334,14 +334,14 @@ const SlideAnimations = {
 
 function setupFluentSelects() {
     "0" === document.body.getAttribute("data-theme-custom-select") || (document.querySelectorAll("select").forEach((e)=>{
-        select_dropdown_r(e);
+        select_dropdown_o(e);
     }), document.querySelectorAll("cbi-dropdown").forEach((e)=>{
         select_dropdown_l(e);
     }), new MutationObserver((e)=>{
         e.forEach((e)=>{
             e.addedNodes.forEach((e)=>{
-                e.nodeType === Node.ELEMENT_NODE && ("SELECT" === e.tagName ? select_dropdown_r(e) : "CBI-DROPDOWN" === e.tagName ? select_dropdown_l(e) : (e.querySelectorAll("select").forEach((e)=>{
-                    select_dropdown_r(e);
+                e.nodeType === Node.ELEMENT_NODE && ("SELECT" === e.tagName ? select_dropdown_o(e) : "CBI-DROPDOWN" === e.tagName ? select_dropdown_l(e) : (e.querySelectorAll("select").forEach((e)=>{
+                    select_dropdown_o(e);
                 }), e.querySelectorAll("cbi-dropdown").forEach((e)=>{
                     select_dropdown_l(e);
                 })));
@@ -356,8 +356,16 @@ function select_dropdown_l(e) {
     let t = e.querySelector("span.open");
     t && "true" !== t.getAttribute("data-chevron-upgraded") && (t.setAttribute("data-chevron-upgraded", "true"), t.innerHTML = '<svg fill="currentColor" class="___9ctc0p0 f1w7gpdv fez10in f1dd5bof" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.85 7.65c.2.2.2.5 0 .7l-5.46 5.49a.55.55 0 0 1-.78 0L4.15 8.35a.5.5 0 1 1 .7-.7L10 12.8l5.15-5.16c.2-.2.5-.2.7 0Z" fill="currentColor"></path></svg>');
 }
-function select_dropdown_r(l) {
-    var r;
+function select_dropdown_n(e, t) {
+    let l = t.offsetTop, n = l + t.offsetHeight, r = e.scrollTop, o = r + e.clientHeight;
+    l < r ? e.scrollTop = l : n > o && (e.scrollTop = n - e.clientHeight);
+}
+function select_dropdown_r(e) {
+    var t;
+    e.removeAttribute("open"), e.removeAttribute("data-fluent-floating"), e.style.removeProperty("--fluent-dropdown-left"), e.style.removeProperty("--fluent-dropdown-top"), e.style.removeProperty("--fluent-dropdown-width"), e.style.removeProperty("--fluent-dropdown-max-height"), null == (t = e.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
+}
+function select_dropdown_o(l) {
+    var o;
     if ((null == l ? void 0 : l.tagName) !== "SELECT" || "true" === l.getAttribute("data-fluent-transformed") || l.closest(".cbi-dropdown") || l.multiple || function(e) {
         let t = e.getAttribute("style") || "";
         if (/\bdisplay\s*:\s*none/i.test(t) || "none" === e.style.display) return !0;
@@ -375,113 +383,111 @@ function select_dropdown_r(l) {
                     t = t.parentElement;
                 }
                 if (!l) return !0;
-                let r = e.cloneNode(!1);
-                r.style.display = "", document.body.appendChild(r);
-                let i = window.getComputedStyle(r), n = "none" === i.display;
-                return document.body.removeChild(r), n;
+                let n = e.cloneNode(!1);
+                n.style.display = "", document.body.appendChild(n);
+                let r = window.getComputedStyle(n), o = "none" === r.display;
+                return document.body.removeChild(n), o;
             }
         } catch (e) {}
         return !1;
     }(l)) return;
     let i = l.getAttribute("style");
     l.setAttribute("data-fluent-transformed", "true"), l.style.setProperty("display", "none", "important");
-    let n = jsx("li", {});
-    n.setAttribute("selected", "");
-    let o = jsx("ul", {
+    let a = jsx("li", {});
+    a.setAttribute("selected", "");
+    let d = jsx("ul", {
         class: "dropdown"
     }), s = jsx("span", {
         class: "open"
     });
     s.innerHTML = '<svg fill="currentColor" class="___9ctc0p0 f1w7gpdv fez10in f1dd5bof" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M15.85 7.65c.2.2.2.5 0 .7l-5.46 5.49a.55.55 0 0 1-.78 0L4.15 8.35a.5.5 0 1 1 .7-.7L10 12.8l5.15-5.16c.2-.2.5-.2.7 0Z" fill="currentColor"></path></svg>';
-    let a = jsxs("div", {
+    let c = jsxs("div", {
         class: "cbi-dropdown fluent-custom-select",
         children: [
             jsx("ul", {
-                children: n
+                children: a
             }),
             s,
-            o
+            d
         ]
     });
-    if (a.setAttribute("tabindex", "0"), i) {
+    if (c.setAttribute("tabindex", "0"), i) {
         let e = i.replace(/\bdisplay\s*:\s*[^;]+(;|$)/gi, "").trim();
-        e && a.setAttribute("style", e);
+        e && c.setAttribute("style", e);
     }
-    l.disabled && (a.setAttribute("disabled", ""), a.removeAttribute("tabindex"));
-    let d = ()=>{
-        o.innerHTML = "";
-        let t = "", r = !1;
+    l.disabled && (c.setAttribute("disabled", ""), c.removeAttribute("tabindex"));
+    let u = ()=>{
+        d.innerHTML = "";
+        let t = "", n = !1;
         if (Array.from(l.options).forEach((l)=>{
-            let i = jsx("li", {
+            let r = jsx("li", {
                 children: l.text
             });
-            i.setAttribute("data-value", l.value), l.selected && (i.setAttribute("selected", ""), t = l.text, r = !0), l.disabled && i.setAttribute("disabled", ""), o.appendChild(i);
-        }), !r && l.options.length > 0) {
+            r.setAttribute("data-value", l.value), l.selected && (r.setAttribute("selected", ""), t = l.text, n = !0), l.disabled && r.setAttribute("disabled", ""), d.appendChild(r);
+        }), !n && l.options.length > 0) {
             let e = l.options[l.selectedIndex >= 0 ? l.selectedIndex : 0];
             t = e.text;
-            let r = o.querySelector('li[data-value="'.concat(e.value, '"]'));
-            null == r || r.setAttribute("selected", "");
+            let n = d.querySelector('li[data-value="'.concat(e.value, '"]'));
+            null == n || n.setAttribute("selected", "");
         }
-        n.textContent = t;
+        a.textContent = t;
     };
-    d(), null == (r = l.parentNode) || r.insertBefore(a, l.nextSibling), a.addEventListener("click", (e)=>{
-        var t, r, i;
-        if (a.hasAttribute("disabled")) return;
-        let n = e.target.closest("ul.dropdown > li");
-        if (n) {
-            let r = n.getAttribute("data-value");
-            null === r || n.hasAttribute("disabled") || (l.value = r, l.dispatchEvent(new Event("change", {
+    u(), null == (o = l.parentNode) || o.insertBefore(c, l.nextSibling), c.addEventListener("click", (e)=>{
+        if (c.hasAttribute("disabled")) return;
+        let t = e.target.closest("ul.dropdown > li");
+        if (t) {
+            let n = t.getAttribute("data-value");
+            null === n || t.hasAttribute("disabled") || (l.value = n, l.dispatchEvent(new Event("change", {
                 bubbles: !0
             })), l.dispatchEvent(new Event("input", {
                 bubbles: !0
-            }))), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open"), e.stopPropagation();
+            }))), select_dropdown_r(c), e.stopPropagation();
             return;
         }
-        if (a.hasAttribute("open")) a.removeAttribute("open"), null == (r = a.closest(".cbi-value-field, .cbi-value")) || r.classList.remove("cbi-dropdown-open");
+        if (c.hasAttribute("open")) select_dropdown_r(c);
         else {
+            var o;
             document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((e)=>{
-                var t;
-                e.removeAttribute("open"), null == (t = e.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
-            });
-            let e = a.getBoundingClientRect(), t = window.innerHeight - e.bottom, r = e.top;
-            t < Math.min(32 * l.options.length + 10, 250) && r > t ? a.setAttribute("data-open-direction", "up") : a.setAttribute("data-open-direction", "down"), a.setAttribute("open", ""), null == (i = a.closest(".cbi-value-field, .cbi-value")) || i.classList.add("cbi-dropdown-open");
-            let n = o.querySelector("li[selected]");
-            n && n.scrollIntoView({
-                block: "nearest"
-            });
+                if (e instanceof HTMLElement && e.classList.contains("fluent-custom-select")) select_dropdown_r(e);
+                else {
+                    var t;
+                    e.removeAttribute("open"), null == (t = e.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
+                }
+            }), function(e, t) {
+                let l = e.getBoundingClientRect(), n = window.innerHeight, r = n - l.bottom, o = l.top;
+                if (r < Math.min(32 * t.options.length + 10, 250) && o > r ? e.setAttribute("data-open-direction", "up") : e.setAttribute("data-open-direction", "down"), !e.closest("#modal_overlay .modal")) return e.removeAttribute("data-fluent-floating");
+                let i = Math.min(32 * t.options.length + 10, 350, 0.5 * n), a = r < i && o > r, d = Math.min(i, Math.max(64, a ? l.top - 8 - 4 : n - l.bottom - 8 - 4)), s = Math.min(l.width, window.innerWidth - 16), c = Math.min(Math.max(8, l.left), window.innerWidth - s - 8), u = a ? Math.max(8, l.top - d - 4) : Math.min(n - 8 - d, l.bottom + 4);
+                e.setAttribute("data-open-direction", a ? "up" : "down"), e.setAttribute("data-fluent-floating", "modal"), e.style.setProperty("--fluent-dropdown-left", "".concat(c, "px")), e.style.setProperty("--fluent-dropdown-top", "".concat(u, "px")), e.style.setProperty("--fluent-dropdown-width", "".concat(s, "px")), e.style.setProperty("--fluent-dropdown-max-height", "".concat(d, "px"));
+            }(c, l), c.setAttribute("open", ""), null == (o = c.closest(".cbi-value-field, .cbi-value")) || o.classList.add("cbi-dropdown-open");
+            let e = d.querySelector("li[selected]");
+            e && select_dropdown_n(d, e);
         }
         e.stopPropagation();
     });
-    let c = (e)=>{
-        if (!a.contains(e.target) && a.hasAttribute("open")) {
-            var t;
-            a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
-        }
+    let b = (e)=>{
+        !c.contains(e.target) && c.hasAttribute("open") && select_dropdown_r(c);
     };
-    document.addEventListener("click", c, !0), a.addEventListener("keydown", (e)=>{
-        var t, r;
-        if (a.hasAttribute("disabled")) return;
-        let i = a.hasAttribute("open"), n = Array.from(o.querySelectorAll("li:not([disabled])")), s = n.findIndex((e)=>e.hasAttribute("selected"));
+    document.addEventListener("click", b, !0), c.addEventListener("keydown", (e)=>{
+        if (c.hasAttribute("disabled")) return;
+        let t = c.hasAttribute("open"), o = Array.from(d.querySelectorAll("li:not([disabled])")), i = o.findIndex((e)=>e.hasAttribute("selected"));
         switch(e.key){
             case "Enter":
             case " ":
-                if (e.preventDefault(), i) {
-                    let e = n[s];
+                if (e.preventDefault(), t) {
+                    let e = o[i];
                     e && e.click();
-                } else a.click();
+                } else c.click();
                 break;
             case "Escape":
-                i && (e.preventDefault(), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open"));
+                t && (e.preventDefault(), select_dropdown_r(c));
                 break;
             case "ArrowDown":
-                if (e.preventDefault(), i) {
-                    if (n.length > 0) {
-                        let e = (s + 1) % n.length;
-                        n.forEach((t, r)=>{
+                if (e.preventDefault(), t) {
+                    if (o.length > 0) {
+                        let e = (i + 1) % o.length;
+                        o.forEach((t, r)=>{
                             if (r === e) {
-                                t.setAttribute("selected", ""), t.scrollIntoView({
-                                    block: "nearest"
-                                });
+                                t.setAttribute("selected", ""), select_dropdown_n(d, t);
                                 let e = t.getAttribute("data-value");
                                 null !== e && (l.value = e, l.dispatchEvent(new Event("change", {
                                     bubbles: !0
@@ -491,17 +497,15 @@ function select_dropdown_r(l) {
                             } else t.removeAttribute("selected");
                         });
                     }
-                } else a.click();
+                } else c.click();
                 break;
             case "ArrowUp":
-                if (e.preventDefault(), i) {
-                    if (n.length > 0) {
-                        let e = (s - 1 + n.length) % n.length;
-                        n.forEach((t, r)=>{
+                if (e.preventDefault(), t) {
+                    if (o.length > 0) {
+                        let e = (i - 1 + o.length) % o.length;
+                        o.forEach((t, r)=>{
                             if (r === e) {
-                                t.setAttribute("selected", ""), t.scrollIntoView({
-                                    block: "nearest"
-                                });
+                                t.setAttribute("selected", ""), select_dropdown_n(d, t);
                                 let e = t.getAttribute("data-value");
                                 null !== e && (l.value = e, l.dispatchEvent(new Event("change", {
                                     bubbles: !0
@@ -511,46 +515,43 @@ function select_dropdown_r(l) {
                             } else t.removeAttribute("selected");
                         });
                     }
-                } else a.click();
+                } else c.click();
                 break;
             case "Tab":
-                i && (a.removeAttribute("open"), null == (r = a.closest(".cbi-value-field, .cbi-value")) || r.classList.remove("cbi-dropdown-open"));
+                t && select_dropdown_r(c);
         }
     }), l.addEventListener("change", ()=>{
-        let e = l.value, t = Array.from(o.querySelectorAll("li")), r = "";
+        let e = l.value, t = Array.from(d.querySelectorAll("li")), n = "";
         t.forEach((t)=>{
-            t.getAttribute("data-value") === e ? (t.setAttribute("selected", ""), r = t.textContent || "") : t.removeAttribute("selected");
-        }), n.textContent = r;
+            t.getAttribute("data-value") === e ? (t.setAttribute("selected", ""), n = t.textContent || "") : t.removeAttribute("selected");
+        }), a.textContent = n;
     });
-    let u = new MutationObserver(()=>{
-        d();
+    let p = new MutationObserver(()=>{
+        u();
     });
-    u.observe(l, {
+    p.observe(l, {
         childList: !0
     });
-    let b = new MutationObserver((e)=>{
+    let f = new MutationObserver((e)=>{
         e.forEach((e)=>{
-            if ("disabled" === e.attributeName) if (l.disabled) {
-                var t;
-                a.setAttribute("disabled", ""), a.removeAttribute("tabindex"), a.removeAttribute("open"), null == (t = a.closest(".cbi-value-field, .cbi-value")) || t.classList.remove("cbi-dropdown-open");
-            } else a.removeAttribute("disabled"), a.setAttribute("tabindex", "0");
+            "disabled" === e.attributeName && (l.disabled ? (c.setAttribute("disabled", ""), c.removeAttribute("tabindex"), select_dropdown_r(c)) : (c.removeAttribute("disabled"), c.setAttribute("tabindex", "0")));
         });
     });
-    b.observe(l, {
+    f.observe(l, {
         attributes: !0,
         attributeFilter: [
             "disabled"
         ]
     });
-    let p = new MutationObserver((e)=>{
+    let h = new MutationObserver((e)=>{
         e.forEach((e)=>{
             e.removedNodes.forEach((e)=>{
                 var t;
-                (e === l || (null == (t = e.contains) ? void 0 : t.call(e, l))) && (document.removeEventListener("click", c, !0), u.disconnect(), b.disconnect(), p.disconnect(), a.remove());
+                (e === l || (null == (t = e.contains) ? void 0 : t.call(e, l))) && (document.removeEventListener("click", b, !0), p.disconnect(), f.disconnect(), h.disconnect(), c.remove());
             });
         });
     });
-    l.parentNode && p.observe(l.parentNode, {
+    l.parentNode && h.observe(l.parentNode, {
         childList: !0
     });
 }

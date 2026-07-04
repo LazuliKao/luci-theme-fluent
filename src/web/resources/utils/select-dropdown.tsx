@@ -117,6 +117,75 @@ function isSelectElementHidden(selectEl: HTMLSelectElement): boolean {
   return false;
 }
 
+const DROPDOWN_VIEWPORT_MARGIN = 8;
+const DROPDOWN_GAP = 4;
+
+function scrollOptionIntoDropdown(listbox: HTMLElement, item: HTMLElement) {
+  const itemTop = item.offsetTop;
+  const itemBottom = itemTop + item.offsetHeight;
+  const visibleTop = listbox.scrollTop;
+  const visibleBottom = visibleTop + listbox.clientHeight;
+
+  if (itemTop < visibleTop) {
+    listbox.scrollTop = itemTop;
+  } else if (itemBottom > visibleBottom) {
+    listbox.scrollTop = itemBottom - listbox.clientHeight;
+  }
+}
+
+function updateDropdownPosition(customDropdown: HTMLElement, selectEl: HTMLSelectElement) {
+  const rect = customDropdown.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const spaceBelow = viewportHeight - rect.bottom;
+  const spaceAbove = rect.top;
+  const listHeight = Math.min(selectEl.options.length * 32 + 10, 250);
+
+  if (spaceBelow < listHeight && spaceAbove > spaceBelow) {
+    customDropdown.setAttribute("data-open-direction", "up");
+  } else {
+    customDropdown.setAttribute("data-open-direction", "down");
+  }
+
+  if (!customDropdown.closest("#modal_overlay .modal")) {
+    customDropdown.removeAttribute("data-fluent-floating");
+    return;
+  }
+
+  const maxListHeight = Math.min(selectEl.options.length * 32 + 10, 350, viewportHeight * 0.5);
+  const openUp = spaceBelow < maxListHeight && spaceAbove > spaceBelow;
+  const availableHeight = Math.max(
+    64,
+    openUp
+      ? rect.top - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP
+      : viewportHeight - rect.bottom - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP,
+  );
+  const dropdownHeight = Math.min(maxListHeight, availableHeight);
+  const dropdownWidth = Math.min(rect.width, window.innerWidth - DROPDOWN_VIEWPORT_MARGIN * 2);
+  const dropdownLeft = Math.min(
+    Math.max(DROPDOWN_VIEWPORT_MARGIN, rect.left),
+    window.innerWidth - dropdownWidth - DROPDOWN_VIEWPORT_MARGIN,
+  );
+  const dropdownTop = openUp
+    ? Math.max(DROPDOWN_VIEWPORT_MARGIN, rect.top - dropdownHeight - DROPDOWN_GAP)
+    : Math.min(viewportHeight - DROPDOWN_VIEWPORT_MARGIN - dropdownHeight, rect.bottom + DROPDOWN_GAP);
+
+  customDropdown.setAttribute("data-open-direction", openUp ? "up" : "down");
+  customDropdown.setAttribute("data-fluent-floating", "modal");
+  customDropdown.style.setProperty("--fluent-dropdown-left", `${dropdownLeft}px`);
+  customDropdown.style.setProperty("--fluent-dropdown-top", `${dropdownTop}px`);
+  customDropdown.style.setProperty("--fluent-dropdown-width", `${dropdownWidth}px`);
+  customDropdown.style.setProperty("--fluent-dropdown-max-height", `${dropdownHeight}px`);
+}
+
+function closeCustomDropdown(customDropdown: HTMLElement) {
+  customDropdown.removeAttribute("open");
+  customDropdown.removeAttribute("data-fluent-floating");
+  customDropdown.style.removeProperty("--fluent-dropdown-left");
+  customDropdown.style.removeProperty("--fluent-dropdown-top");
+  customDropdown.style.removeProperty("--fluent-dropdown-width");
+  customDropdown.style.removeProperty("--fluent-dropdown-max-height");
+  customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+}
 function transformSelect(selectEl: HTMLSelectElement) {
   // Safety checks
   if (selectEl?.tagName !== "SELECT") return;
@@ -215,8 +284,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
         selectEl.dispatchEvent(new Event("change", { bubbles: true }));
         selectEl.dispatchEvent(new Event("input", { bubbles: true }));
       }
-      customDropdown.removeAttribute("open");
-      customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+      closeCustomDropdown(customDropdown);
       e.stopPropagation();
       return;
     }
@@ -224,36 +292,26 @@ function transformSelect(selectEl: HTMLSelectElement) {
     // Header click toggle
     const isOpen = customDropdown.hasAttribute("open");
     if (isOpen) {
-      customDropdown.removeAttribute("open");
-      customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+      closeCustomDropdown(customDropdown);
     } else {
       // Close all other open dropdowns first (including native cbi-dropdown elements and our custom ones)
       document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((el) => {
-        el.removeAttribute("open");
-        el.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+        if (el instanceof HTMLElement && el.classList.contains("fluent-custom-select")) {
+          closeCustomDropdown(el);
+        } else {
+          el.removeAttribute("open");
+          el.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+        }
       });
 
-      // Calculate available space to determine open direction dynamically
-      const rect = customDropdown.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const spaceBelow = viewportHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      // Approximate height of the options list (32px per option + padding, max 250px)
-      const listHeight = Math.min(selectEl.options.length * 32 + 10, 250);
-
-      if (spaceBelow < listHeight && spaceAbove > spaceBelow) {
-        customDropdown.setAttribute("data-open-direction", "up");
-      } else {
-        customDropdown.setAttribute("data-open-direction", "down");
-      }
-
+      updateDropdownPosition(customDropdown, selectEl);
       customDropdown.setAttribute("open", "");
       customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.add("cbi-dropdown-open");
 
       // Scroll selected item into view
       const selectedItem = listbox.querySelector("li[selected]") as HTMLElement;
       if (selectedItem) {
-        selectedItem.scrollIntoView({ block: "nearest" });
+        scrollOptionIntoDropdown(listbox, selectedItem);
       }
     }
     e.stopPropagation();
@@ -261,11 +319,8 @@ function transformSelect(selectEl: HTMLSelectElement) {
 
   // Close dropdown on click outside
   const clickOutsideHandler = (e: MouseEvent) => {
-    if (!customDropdown.contains(e.target as Node)) {
-      if (customDropdown.hasAttribute("open")) {
-        customDropdown.removeAttribute("open");
-        customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
-      }
+    if (!customDropdown.contains(e.target as Node) && customDropdown.hasAttribute("open")) {
+      closeCustomDropdown(customDropdown);
     }
   };
   document.addEventListener("click", clickOutsideHandler, true);
@@ -294,8 +349,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
       case "Escape":
         if (isOpen) {
           e.preventDefault();
-          customDropdown.removeAttribute("open");
-          customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+          closeCustomDropdown(customDropdown);
         }
         break;
       case "ArrowDown":
@@ -307,7 +361,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
           options.forEach((opt, idx) => {
             if (idx === nextIndex) {
               opt.setAttribute("selected", "");
-              opt.scrollIntoView({ block: "nearest" });
+              scrollOptionIntoDropdown(listbox, opt);
               const val = opt.getAttribute("data-value");
               if (val !== null) {
                 selectEl.value = val;
@@ -329,7 +383,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
           options.forEach((opt, idx) => {
             if (idx === prevIndex) {
               opt.setAttribute("selected", "");
-              opt.scrollIntoView({ block: "nearest" });
+              scrollOptionIntoDropdown(listbox, opt);
               const val = opt.getAttribute("data-value");
               if (val !== null) {
                 selectEl.value = val;
@@ -344,8 +398,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
         break;
       case "Tab":
         if (isOpen) {
-          customDropdown.removeAttribute("open");
-          customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+          closeCustomDropdown(customDropdown);
         }
         break;
     }
@@ -384,8 +437,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
         if (isDisabled) {
           customDropdown.setAttribute("disabled", "");
           customDropdown.removeAttribute("tabindex");
-          customDropdown.removeAttribute("open");
-          customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+          closeCustomDropdown(customDropdown);
         } else {
           customDropdown.removeAttribute("disabled");
           customDropdown.setAttribute("tabindex", "0");
