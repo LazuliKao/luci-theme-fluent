@@ -380,7 +380,11 @@ function transformSelect(selectEl: HTMLSelectElement) {
 
   // Close dropdown on click outside
   const clickOutsideHandler = (e: MouseEvent) => {
-    if (!customDropdown.contains(e.target as Node) && customDropdown.hasAttribute("open")) {
+    if (
+      !customDropdown.contains(e.target as Node) &&
+      e.target !== selectEl &&
+      customDropdown.hasAttribute("open")
+    ) {
       closeCustomDropdown(customDropdown);
     }
   };

@@ -483,8 +483,8 @@ function select_dropdown_c(e) {
         }
         t.stopPropagation();
     });
-    let h = (e)=>{
-        !p.contains(e.target) && p.hasAttribute("open") && select_dropdown_d(p);
+    let h = (t)=>{
+        !p.contains(t.target) && t.target !== e && p.hasAttribute("open") && select_dropdown_d(p);
     };
     document.addEventListener("click", h, !0), p.addEventListener("keydown", (t)=>{
         if (p.hasAttribute("disabled")) return;
