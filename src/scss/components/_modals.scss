@@ -70,7 +70,6 @@
   .modal-header {
     flex: 0 0 auto;
     background: var(--fluent-modal-bg);
-    // padding: var(--fluent-modal-padding) var(--fluent-modal-padding) var(--fluent-space-md);
     padding-bottom: var(--fluent-space-md);
     font-size: var(--fluent-font-size-lg);
     font-weight: var(--fluent-font-weight-semibold);
@@ -214,6 +213,10 @@ body.modal-overlay-active {
   &:has(#modal_overlay .modal.spinning) {
     overflow: auto !important;
     height: auto !important;
+    .modal,
+    .uci-dialog {
+      padding: var(--fluent-space-md);
+    }
   }
 
   // 2. Temporarily disable all form interaction on the page content during save flow

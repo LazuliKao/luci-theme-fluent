@@ -424,8 +424,8 @@ body::-webkit-resizer {
 }
 
 div:not([id="view"]) > .spinning {
-  padding-left: 40px;
   position: relative;
+  padding-left: 40px !important;
 }
 
 div:not([id="view"]) > .spinning:before {
@@ -2074,6 +2074,10 @@ body.modal-overlay-active #modal_overlay {
 :is(body.modal-overlay-active:has(#modal_overlay .modal.notice), body.modal-overlay-active:has(#modal_overlay .modal.spinning)) {
   height: auto !important;
   overflow: auto !important;
+}
+
+:is(body.modal-overlay-active:has(#modal_overlay .modal.notice) .modal, body.modal-overlay-active:has(#modal_overlay .modal.notice) .uci-dialog, body.modal-overlay-active:has(#modal_overlay .modal.spinning) .modal, body.modal-overlay-active:has(#modal_overlay .modal.spinning) .uci-dialog) {
+  padding: var(--fluent-space-md);
 }
 
 body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent button {
