@@ -206,8 +206,8 @@ textarea {
 }
 
 ::selection {
-  background: var(--fluent-primary-light);
-  color: var(--fluent-text);
+  background: var(--fluent-selection-bg);
+  color: var(--fluent-selection-text);
 }
 
 :focus-visible {
@@ -914,6 +914,8 @@ div[id="view"] > :not(.spinning) {
   height: 16px;
   -webkit-mask-image: var(--fluent-mask-arrow-right-20-regular);
   mask-image: var(--fluent-mask-arrow-right-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -2005,6 +2007,8 @@ div.td, div.th {
   height: 20px;
   -webkit-mask-image: var(--fluent-mask-dismiss-20-regular);
   mask-image: var(--fluent-mask-dismiss-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -2915,6 +2919,8 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-info-20-regular);
   mask-image: var(--fluent-mask-info-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   margin-top: 2px;
   display: inline-block;
   position: absolute;
@@ -3110,6 +3116,8 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-checkmark-circle-20-regular);
   mask-image: var(--fluent-mask-checkmark-circle-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -3132,6 +3140,8 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-warning-20-regular);
   mask-image: var(--fluent-mask-warning-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -3154,6 +3164,8 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-dismiss-circle-20-regular);
   mask-image: var(--fluent-mask-dismiss-circle-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -3176,6 +3188,8 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-info-20-regular);
   mask-image: var(--fluent-mask-info-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -7214,6 +7228,8 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open][data-open
   height: 16px;
   -webkit-mask-image: var(--fluent-mask-eye-20-regular);
   mask-image: var(--fluent-mask-eye-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -7235,6 +7251,8 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open][data-open
   height: 16px;
   -webkit-mask-image: var(--fluent-mask-eye-off-20-regular);
   mask-image: var(--fluent-mask-eye-off-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8539,6 +8557,8 @@ label[data-tooltip] {
   height: 16px;
   -webkit-mask-image: var(--fluent-mask-search-20-regular);
   mask-image: var(--fluent-mask-search-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   pointer-events: none;
   z-index: 1;
   display: inline-block;
@@ -8898,6 +8918,8 @@ img[src="/luci-static/resources/icons/port_down.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8915,6 +8937,8 @@ img[src="/luci-static/resources/icons/port_up.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8932,6 +8956,8 @@ img[src="/luci-static/resources/icons/ethernet.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8949,6 +8975,8 @@ img[src="/luci-static/resources/icons/ethernet_disabled.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8966,6 +8994,8 @@ img[src="/luci-static/resources/icons/bridge.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -8983,6 +9013,8 @@ img[src="/luci-static/resources/icons/bridge_disabled.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9000,6 +9032,8 @@ img[src="/luci-static/resources/icons/tunnel.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9017,6 +9051,8 @@ img[src="/luci-static/resources/icons/tunnel_disabled.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9034,6 +9070,8 @@ img[src="/luci-static/resources/icons/switch.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9051,6 +9089,8 @@ img[src="/luci-static/resources/icons/switch_disabled.svg"] {
   height: 24px;
   -webkit-mask-image: var(--icon-data);
   mask-image: var(--icon-data);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9128,6 +9168,8 @@ img[src="/luci-static/resources/icons/signal-none.svg"] {
   height: 24px;
   -webkit-mask-image: var(--fluent-mask-fluent-cellular-warning-20-filled);
   mask-image: var(--fluent-mask-fluent-cellular-warning-20-filled);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9146,6 +9188,8 @@ img[src="/luci-static/resources/icons/wifi.svg"] {
   height: 24px;
   -webkit-mask-image: var(--fluent-mask-fluent-wifi-1-20-filled);
   mask-image: var(--fluent-mask-fluent-wifi-1-20-filled);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9164,6 +9208,8 @@ img[src="/luci-static/resources/icons/wifi_disabled.svg"] {
   height: 24px;
   -webkit-mask-image: var(--fluent-mask-fluent-wifi-off-20-filled);
   mask-image: var(--fluent-mask-fluent-wifi-off-20-filled);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -11657,6 +11703,8 @@ body[data-tab-animation="0"] .main-left .nav li.slide .slide-menu .fluent-sideba
   height: 14px;
   -webkit-mask-image: var(--fluent-mask-chevron-down-20-regular);
   mask-image: var(--fluent-mask-chevron-down-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   position: absolute;
   top: 50%;
@@ -11710,6 +11758,8 @@ body[data-sidebar-state="collapsed"] .main-left .sidenav-header .sidebar-collaps
   height: 20px;
   -webkit-mask-image: var(--fluent-mask-line-horizontal-3-20-regular);
   mask-image: var(--fluent-mask-line-horizontal-3-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -11953,6 +12003,8 @@ body > div.main > div.main-right > header .header__toggle:before, body > div.mai
   height: 20px;
   -webkit-mask-image: var(--fluent-mask-line-horizontal-3-20-regular);
   mask-image: var(--fluent-mask-line-horizontal-3-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -12032,6 +12084,8 @@ body > div.main > div.main-right > header .theme-toggle:before {
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-weather-sunny-20-regular);
   mask-image: var(--fluent-mask-weather-sunny-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   opacity: 1;
   display: inline-block;
   top: 50%;
@@ -12053,6 +12107,8 @@ body > div.main > div.main-right > header .theme-toggle:after {
   height: 12px;
   -webkit-mask-image: var(--fluent-mask-link-16-filled);
   mask-image: var(--fluent-mask-link-16-filled);
+  -webkit-user-select: none;
+  user-select: none;
   opacity: 0;
   display: inline-block;
   bottom: 2px;
@@ -12073,6 +12129,8 @@ body > div.main > div.main-right > header .theme-toggle[data-active-theme="dark"
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-weather-moon-20-regular);
   mask-image: var(--fluent-mask-weather-moon-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -12141,6 +12199,8 @@ body > div.main > div.main-right > header .status #xhr_poll_status[data-style="a
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-arrow-sync-20-regular);
   mask-image: var(--fluent-mask-arrow-sync-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
   display: inline-block;
   position: absolute;
@@ -12185,6 +12245,8 @@ body > div.main > div.main-right > header .status #xhr_poll_status[data-style="i
   height: 18px;
   -webkit-mask-image: var(--fluent-mask-arrow-sync-off-20-regular);
   mask-image: var(--fluent-mask-arrow-sync-off-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
   transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
   display: inline-block;
   position: absolute;
@@ -12279,6 +12341,8 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-primary-light: var(--fluent-brand-140);
   --fluent-primary-lighter: var(--fluent-brand-150);
   --fluent-primary-lightest: var(--fluent-brand-160);
+  --fluent-selection-bg: var(--fluent-primary-light);
+  --fluent-selection-text: var(--fluent-text);
   --fluent-white: #fff;
   --fluent-black: #000;
   --fluent-bg: #fff;
@@ -12386,6 +12450,8 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-primary-light: color-mix(in srgb, var(--fluent-primary) 15%, #000);
   --fluent-primary-lighter: color-mix(in srgb, var(--fluent-primary) 8%, #000);
   --fluent-primary-lightest: color-mix(in srgb, var(--fluent-primary) 12%, #000);
+  --fluent-selection-bg: color-mix(in srgb, var(--fluent-primary) 35%, #000);
+  --fluent-selection-text: var(--fluent-text);
   --fluent-info: var(--fluent-primary);
   --fluent-info-light: var(--fluent-primary-light);
   --fluent-success: #6feb6f;

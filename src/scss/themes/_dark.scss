@@ -19,6 +19,8 @@
   --fluent-primary-light: color-mix(in srgb, var(--fluent-primary) 15%, #000000);
   --fluent-primary-lighter: color-mix(in srgb, var(--fluent-primary) 8%, #000000);
   --fluent-primary-lightest: color-mix(in srgb, var(--fluent-primary) 12%, #000000);
+  --fluent-selection-bg: color-mix(in srgb, var(--fluent-primary) 35%, #000000);
+  --fluent-selection-text: var(--fluent-text);
 
   --fluent-info: var(--fluent-primary);
   --fluent-info-light: var(--fluent-primary-light);

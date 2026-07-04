@@ -103,6 +103,7 @@
   mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;
+  user-select: none;
 }
 
 /// Apply an icon from a file path via CSS mask for dynamic CSS custom property coloring.
@@ -117,6 +118,7 @@
   mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;
+  user-select: none;
 }
 
 @mixin set-icon-mask($icon, $name: null) {
