@@ -31,14 +31,6 @@
 }
 
 // ============================================================
-// POSITION POSITION-TRY FALLBACKS FOR ANCHOR POSITIONING
-// ============================================================
-@position-try --fluent-cbi-flip {
-  top: auto !important;
-  bottom: calc(anchor(--fluent-cbi-dropdown-active top) + var(--fluent-space-xxs)) !important;
-}
-
-// ============================================================
 // DROPDOWN CONTAINER
 // ============================================================
 cbi-dropdown,
@@ -846,8 +838,6 @@ cbi-dropdown,
     @supports (anchor-name: --a) {
       position: fixed !important;
       position-anchor: --fluent-cbi-dropdown-active !important;
-      top: calc(anchor(--fluent-cbi-dropdown-active bottom) + var(--fluent-space-xxs)) !important;
-      bottom: auto !important;
       left: anchor(--fluent-cbi-dropdown-active left) !important;
       right: auto !important;
       min-width: anchor-size(--fluent-cbi-dropdown-active width) !important;
@@ -855,9 +845,18 @@ cbi-dropdown,
       max-width: calc(100vw - 16px) !important;
       max-height: min(350px, 50vh) !important;
       margin: 0 !important;
-      position-try-fallbacks: --fluent-cbi-flip;
       position-visibility: anchors-visible;
       z-index: calc(var(--fluent-zindex-dropdown) + 1) !important;
+
+      // Default to opening downwards
+      top: calc(anchor(--fluent-cbi-dropdown-active bottom) + var(--fluent-space-xxs)) !important;
+      bottom: auto !important;
+
+      // If LuCI JS calculated that it should open upwards, follow its choice
+      &[style*="bottom"] {
+        top: auto !important;
+        bottom: calc(anchor(--fluent-cbi-dropdown-active top) + var(--fluent-space-xxs)) !important;
+      }
     }
   }
 }
