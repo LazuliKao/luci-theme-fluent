@@ -56,7 +56,7 @@
   --fluent-modal-padding: var(--fluent-space-xl);
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
   :root {
     --fluent-modal-padding: var(--fluent-space-lg);
   }
