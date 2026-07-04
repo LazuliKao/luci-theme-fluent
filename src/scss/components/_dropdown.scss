@@ -354,8 +354,12 @@ cbi-dropdown,
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: clip !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        align-items: center !important;
+
+        label {
+          white-space: normal !important;
+          display: block !important;
+        }
 
         .hide-close {
           min-width: unset !important;

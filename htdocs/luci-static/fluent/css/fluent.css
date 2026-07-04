@@ -5830,33 +5830,49 @@ cbi-dropdown[open] > ul.dropdown > li, .cbi-dropdown[open] > ul.dropdown > li {
 cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) {
   white-space: normal !important;
   text-overflow: clip !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   overflow: visible !important;
 }
 
 cbi-dropdown[open] > ul.dropdown > li:has(div) {
   white-space: normal !important;
   text-overflow: clip !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   overflow: visible !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) {
   white-space: normal !important;
   text-overflow: clip !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   overflow: visible !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(div) {
   white-space: normal !important;
   text-overflow: clip !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   overflow: visible !important;
+}
+
+cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) label {
+  white-space: normal !important;
+  display: block !important;
+}
+
+cbi-dropdown[open] > ul.dropdown > li:has(div) label {
+  white-space: normal !important;
+  display: block !important;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) label {
+  white-space: normal !important;
+  display: block !important;
+}
+
+.cbi-dropdown[open] > ul.dropdown > li:has(div) label {
+  white-space: normal !important;
+  display: block !important;
 }
 
 cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) .hide-close {
