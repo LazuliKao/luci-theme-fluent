@@ -53,7 +53,7 @@
   --fluent-card-radius: var(--fluent-radius-lg);
   --fluent-card-padding: var(--fluent-space-lg);
   --fluent-modal-radius: var(--fluent-radius-lg);
-  --fluent-modal-padding: var(--fluent-space-lg);
+  --fluent-modal-padding: var(--fluent-space-xl);
   --fluent-tab-height: 44px;
   --fluent-tab-indicator-height: 3px;
   --fluent-checkbox-size: 20px;
@@ -1878,17 +1878,13 @@ div.td, div.th {
 .modal .button-row, .modal .modal-footer, .modal > .right {
   background: var(--fluent-modal-bg);
   padding-top: var(--fluent-space-md);
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  gap: var(--fluent-space-xs);
-  flex-wrap: wrap;
+  gap: var(--fluent-space-sm);
+  flex-flow: row-reverse wrap;
   flex: none;
   margin: 0;
   display: flex;
-}
-
-.modal .button-row > :nth-child(2), .modal .modal-footer > :nth-child(2), .modal > .right > :nth-child(2) {
-  margin-left: auto;
 }
 
 .modal > :not(h4):not(.modal-header):not(.button-row):not(.modal-footer):not(.right):not(.close):not(.modal-close):not(style):not(script) {
@@ -1938,6 +1934,7 @@ div.td, div.th {
 }
 
 .modal .cbi-map .cbi-section {
+  box-shadow: none;
   padding: 0 !important;
 }
 
@@ -2022,7 +2019,7 @@ div.td, div.th {
   overflow: visible !important;
 }
 
-.modal .right {
+.modal > :not(.right) .right {
   justify-content: flex-end;
   align-items: center;
   gap: var(--fluent-space-xs);
@@ -2264,18 +2261,14 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
 
 :is(.modal.alert-message:has(.button-row) .button-row, .modal.alert-message:has(button) .button-row) {
   margin: var(--fluent-space-lg) 0 0 0 !important;
-  justify-content: flex-end !important;
+  justify-content: flex-start !important;
   gap: var(--fluent-space-xs) !important;
   background: none !important;
   border-top: none !important;
-  flex-wrap: wrap !important;
+  flex-flow: row-reverse wrap !important;
   padding: 0 !important;
   display: flex !important;
   position: static !important;
-}
-
-:is(.modal.alert-message:has(.button-row) .button-row > :nth-child(2), .modal.alert-message:has(button) .button-row > :nth-child(2)) {
-  margin-left: auto !important;
 }
 
 .cbi-map, #view {
@@ -6436,6 +6429,21 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
   top: var(--fluent-dropdown-top) !important;
   bottom: auto !important;
   left: var(--fluent-dropdown-left) !important;
+  max-width: calc(100vw - 16px) !important;
+  margin: 0 !important;
+  right: auto !important;
+}
+
+cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open] > ul.dropdown {
+  width: anchor-size(width);
+  position-try-fallbacks: flip-block;
+  position-visibility: anchors-visible;
+  max-height: min(350px, 50vh);
+  z-index: calc(var(--fluent-zindex-dropdown) + 1);
+  position: fixed;
+  top: calc(anchor(bottom) + var(--fluent-space-xxs)) !important;
+  bottom: auto !important;
+  left: anchor(left) !important;
   max-width: calc(100vw - 16px) !important;
   margin: 0 !important;
   right: auto !important;

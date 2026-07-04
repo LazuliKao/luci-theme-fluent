@@ -93,15 +93,12 @@
     background: var(--fluent-modal-bg);
     padding-top: var(--fluent-space-md);
     display: flex;
+    flex-direction: row-reverse;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
-    gap: var(--fluent-space-xs);
+    justify-content: flex-start;
+    gap: var(--fluent-space-sm);
     margin: 0;
-
-    > :nth-child(2) {
-      margin-left: auto;
-    }
   }
 
   // Content area: make any direct child that is not a header, footer, or close button scrollable
@@ -118,6 +115,7 @@
   .cbi-map {
     .cbi-section {
       padding: 0 !important;
+      box-shadow: none;
     }
   }
   .modal-body {
@@ -161,7 +159,7 @@
   }
 
   // Right-aligned layouts inside modal body (e.g. file upload dialog buttons)
-  .right {
+  > :not(.right) .right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -318,13 +316,10 @@ body.modal-overlay-active {
     padding: 0 !important;
     background: transparent !important;
     display: flex !important;
+    flex-direction: row-reverse !important;
     flex-wrap: wrap !important;
-    justify-content: flex-end !important;
+    justify-content: flex-start !important;
     gap: var(--fluent-space-xs) !important;
     border-top: none !important;
-
-    > :nth-child(2) {
-      margin-left: auto !important;
-    }
   }
 }
