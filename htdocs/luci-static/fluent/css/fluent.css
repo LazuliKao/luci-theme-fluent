@@ -6404,25 +6404,32 @@ cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge .ifacebadge {
 }
 
 cbi-dropdown.fluent-custom-select[data-open-direction="up"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-open-direction="up"][open] > ul.dropdown {
+  width: max-content;
+  min-width: 100%;
   bottom: 100%;
   margin-top: 0 !important;
   margin-bottom: var(--fluent-space-xxs) !important;
   transform-origin: bottom !important;
   animation: .2s cubic-bezier(.4, 0, .23, 1) forwards fluent-dropdown-slide-in-up !important;
   top: auto !important;
+  right: auto !important;
 }
 
 cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdown {
+  width: max-content;
+  min-width: 100%;
   top: 100%;
   margin-bottom: 0 !important;
   margin-top: var(--fluent-space-xxs) !important;
   transform-origin: top !important;
   animation: .2s cubic-bezier(.4, 0, .23, 1) forwards fluent-dropdown-slide-in !important;
   bottom: auto !important;
+  right: auto !important;
 }
 
 cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown {
-  width: var(--fluent-dropdown-width);
+  min-width: var(--fluent-dropdown-width);
+  width: max-content;
   max-height: var(--fluent-dropdown-max-height);
   z-index: calc(var(--fluent-zindex-dropdown) + 1);
   position: fixed;
@@ -6435,9 +6442,10 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
 }
 
 cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open] > ul.dropdown {
-  width: anchor-size(width);
+  min-width: anchor-size(width);
   position-try-fallbacks: flip-block;
   position-visibility: anchors-visible;
+  width: max-content;
   max-height: min(350px, 50vh);
   z-index: calc(var(--fluent-zindex-dropdown) + 1);
   position: fixed;

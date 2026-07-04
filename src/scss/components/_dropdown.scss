@@ -762,6 +762,9 @@ cbi-dropdown,
       margin-bottom: var(--fluent-space-xxs) !important;
       transform-origin: bottom !important;
       animation: fluent-dropdown-slide-in-up 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
+      min-width: 100%;
+      width: max-content;
+      right: auto !important;
     }
     &[data-open-direction="down"][open] > ul.dropdown {
       top: 100%;
@@ -770,6 +773,9 @@ cbi-dropdown,
       margin-top: var(--fluent-space-xxs) !important;
       transform-origin: top !important;
       animation: fluent-dropdown-slide-in 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
+      min-width: 100%;
+      width: max-content;
+      right: auto !important;
     }
 
     &[data-fluent-floating="modal"][open] > ul.dropdown {
@@ -778,7 +784,8 @@ cbi-dropdown,
       bottom: auto !important;
       left: var(--fluent-dropdown-left) !important;
       right: auto !important;
-      width: var(--fluent-dropdown-width);
+      min-width: var(--fluent-dropdown-width);
+      width: max-content;
       max-width: calc(100vw - 16px) !important;
       max-height: var(--fluent-dropdown-max-height);
       margin: 0 !important;
@@ -791,7 +798,8 @@ cbi-dropdown,
       bottom: auto !important;
       left: anchor(left) !important;
       right: auto !important;
-      width: anchor-size(width);
+      min-width: anchor-size(width);
+      width: max-content;
       max-width: calc(100vw - 16px) !important;
       max-height: min(350px, 50vh);
       margin: 0 !important;
