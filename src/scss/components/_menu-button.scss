@@ -135,7 +135,7 @@
     margin-left: 0 !important;
     margin-right: 0;
     font-size: 0;
-    color: transparent;
+    color: inherit;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.23, 1);
 
     &::before {

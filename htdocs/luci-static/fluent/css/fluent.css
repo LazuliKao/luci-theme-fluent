@@ -6812,11 +6812,11 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="anchor"][open][data-open
 }
 
 .cbi-dropdown.cbi-button > span.open, .cbi-dropdown.btn > span.open {
-  color: #0000;
-  justify-content: center;
-  align-items: center;
   width: 30px;
   height: 100%;
+  color: inherit;
+  justify-content: center;
+  align-items: center;
   margin-right: 0;
   font-size: 0;
   transition: transform .2s cubic-bezier(.4, 0, .23, 1);
