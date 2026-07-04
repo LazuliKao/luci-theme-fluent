@@ -165,7 +165,7 @@
       --fluent-font-size: {{ font_size }}px;
       --fluent-sidebar-width: {{ sidebar_width }}px;
       --fluent-header-height: {{ header_height }}px;
-      --fluent-radius-sm: {{ border_radius }}px;
+      --fluent-radius-sm: {{ border_radius / 2 }}px;
       --fluent-control-height: {{ control_height }}px;
       --fluent-radius-md: {{ border_radius }}px;
       --fluent-card-shadow: {{ card_shadow_value }};
