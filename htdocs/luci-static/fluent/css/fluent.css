@@ -2052,6 +2052,10 @@ div.td, div.th {
   min-width: 96px;
 }
 
+.modal .button-row .cbi-button + .cbi-button, .uci-dialog .button-row .cbi-button + .cbi-button {
+  margin-left: var(--fluent-space-sm);
+}
+
 .modal > .cbi-section, .uci-dialog > .cbi-section {
   box-shadow: none !important;
   background: none !important;

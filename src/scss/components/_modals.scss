@@ -181,6 +181,9 @@
     > .btn {
       min-width: 96px;
     }
+    .cbi-button + .cbi-button {
+      margin-left: var(--fluent-space-sm);
+    }
   }
   > .cbi-section {
     border: none !important;
