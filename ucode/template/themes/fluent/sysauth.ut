@@ -12,25 +12,26 @@
   let boardinfo = ubus.call('system', 'board');
   let hostname = boardinfo && boardinfo.hostname ? boardinfo.hostname : '?';
 
-  // UCI config
   let cfg = cursor();
-  let mode = 'auto';
-  let primary = '#0078d4';
-  let dark_primary = '#1a1a2e';
-  let blur_radius = '0';
-  let blur_radius_dark = '0';
-  let blur_opacity = '0';
-  let blur_opacity_dark = '0';
+  let defaults = {};
+  include('themes/fluent/defaults', { defaults });
+  let mode = defaults.mode;
+  let primary = defaults.primary;
+  let dark_primary = defaults.dark_primary;
+  let blur_radius = defaults.blur;
+  let blur_radius_dark = defaults.blur_dark;
+  let blur_opacity = defaults.transparency;
+  let blur_opacity_dark = defaults.transparency_dark;
   let bar_color = primary;
 
   if (access('/etc/config/fluent')) {
-    mode = cfg.get_first('fluent', 'global', 'mode') || 'auto';
-    primary = cfg.get_first('fluent', 'global', 'primary') || '#0078d4';
-    dark_primary = cfg.get_first('fluent', 'global', 'dark_primary') || '#1a1a2e';
-    blur_radius = cfg.get_first('fluent', 'global', 'blur') || '0';
-    blur_radius_dark = cfg.get_first('fluent', 'global', 'blur_dark') || '0';
-    blur_opacity = cfg.get_first('fluent', 'global', 'transparency') || '0';
-    blur_opacity_dark = cfg.get_first('fluent', 'global', 'transparency_dark') || '0';
+    mode = cfg.get_first('fluent', 'global', 'mode') || mode;
+    primary = cfg.get_first('fluent', 'global', 'primary') || primary;
+    dark_primary = cfg.get_first('fluent', 'global', 'dark_primary') || dark_primary;
+    blur_radius = cfg.get_first('fluent', 'global', 'blur') || blur_radius;
+    blur_radius_dark = cfg.get_first('fluent', 'global', 'blur_dark') || blur_radius_dark;
+    blur_opacity = cfg.get_first('fluent', 'global', 'transparency') || blur_opacity;
+    blur_opacity_dark = cfg.get_first('fluent', 'global', 'transparency_dark') || blur_opacity_dark;
 
     bar_color = mode === 'dark' ? dark_primary : primary;
   }
@@ -73,10 +74,10 @@
     let bgUrl = '';
     let backgroundType = 'None';
     let mimeType = '';
-    let login_bg = 'microsoft';
+    let login_bg = defaults.login_bg;
 
     if (access('/etc/config/fluent')) {
-      login_bg = cfg.get_first('fluent', 'global', 'login_bg') || 'microsoft';
+      login_bg = cfg.get_first('fluent', 'global', 'login_bg') || login_bg;
     }
 
     if (login_bg === 'microsoft') {

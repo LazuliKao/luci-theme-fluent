@@ -1,9 +1,10 @@
 import { defineConfig, rspack } from "@rsbuild/core";
 import { pluginSass } from "@rsbuild/plugin-sass";
-import { generateIcons } from "./script/generate-fluent-icons";
 import { SwcJsMinimizerRspackPlugin } from "@rspack/core";
 import type { Compiler } from "@rspack/core";
 
+import { generateThemeDefaults } from "./script/generate-theme-defaults";
+import { generateIcons } from "./script/generate-fluent-icons";
 const luciRequires = `"use strict";
 "require baseclass";
 "require ui";
@@ -178,6 +179,22 @@ export default defineConfig({
                 callback();
               });
               compiler.hooks.watchRun.tapAsync("GenerateFluentIconsPlugin", (_, callback) => {
+                regenerate();
+                callback();
+              });
+            },
+          });
+          config.plugins.push({
+            name: "GenerateThemeDefaultsPlugin",
+            apply(compiler: Compiler) {
+              const regenerate = () => {
+                generateThemeDefaults();
+              };
+              compiler.hooks.beforeRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
+                regenerate();
+                callback();
+              });
+              compiler.hooks.watchRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
                 regenerate();
                 callback();
               });
