@@ -359,7 +359,13 @@ export function setupThemeFeatures() {
     });
 
     const ajaxObserver = new MutationObserver(() => {
-      const hasSpinner = document.querySelector('.spinning, .loading, #view > .spinning') !== null;
+      const hasSpinner = Array.from(document.querySelectorAll('.spinning, .loading, #view > .spinning')).some((node) => {
+        const element = node as HTMLElement;
+        const style = window.getComputedStyle(element);
+        const isVisible = element.getClientRects().length > 0 && style.display !== 'none' && style.visibility !== 'hidden';
+        return isVisible && !element.closest('.btn');
+      });
+
       if (hasSpinner) {
         showLoading();
       } else {
