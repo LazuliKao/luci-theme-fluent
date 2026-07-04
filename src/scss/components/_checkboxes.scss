@@ -166,7 +166,7 @@ $table-checkbox-contexts: (".table", ".cbi-section-table", ".cbi-dropdown", "td"
     height: 20px !important;
     min-width: 20px !important;
     min-height: 20px !important;
-    border-radius: 4px !important;
+    border-radius: var(--fluent-radius-md) !important;
     border: 1px solid var(--fluent-checkbox-border) !important;
     border-width: 1px !important;
     border-style: solid !important;

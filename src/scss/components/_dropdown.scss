@@ -588,6 +588,7 @@ cbi-dropdown,
     }
     input[type="checkbox"] {
       pointer-events: none;
+      border-radius: var(--fluent-radius-sm) !important;
     }
     // Selected state: applied if the checkbox itself is checked, OR if the parent li is selected.
     // Explicitly define background-image for hover, focus, active, and parent focus/hover states to prevent the tick from disappearing.
