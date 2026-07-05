@@ -111,8 +111,7 @@ pnpm install
 pnpm run build
 pnpm run watch
 pnpm run lint
-pnpm run i18n:extract
-pnpm run i18n:export
+pnpm run i18n:build
 ```
 
 ### Source scripts
