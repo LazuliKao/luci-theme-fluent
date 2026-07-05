@@ -1,11 +1,12 @@
-import sharp from 'sharp';
-import fs from 'fs';
-import path from 'path';
+import fs from "node:fs";
+import path from "node:path";
+
+import sharp from "sharp";
 
 // Use relative paths from the repository root
-const svgPath = './htdocs/luci-static/fluent/img/fluent.svg';
-const iconDir = './htdocs/luci-static/fluent/icon';
-const themeDir = './htdocs/luci-static/fluent';
+const svgPath = "./packages/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg";
+const iconDir = "./packages/luci-theme-fluent/htdocs/luci-static/fluent/icon";
+const themeDir = "./packages/luci-theme-fluent/htdocs/luci-static/fluent";
 
 interface Target {
   file: string;
@@ -13,15 +14,15 @@ interface Target {
 }
 
 const targets: Target[] = [
-  { file: 'icon-192.png', size: 192 },
-  { file: 'favicon-32.png', size: 32 }
+  { file: "icon-192.png", size: 192 },
+  { file: "favicon-32.png", size: 32 }
 ];
 
 const keepFiles = new Set<string>([
-  'manifest.json',
-  'favicon.ico',
-  'icon-192.png',
-  'favicon-32.png'
+  "manifest.json",
+  "favicon.ico",
+  "icon-192.png",
+  "favicon-32.png"
 ]);
 
 async function generate(): Promise<void> {
@@ -54,7 +55,7 @@ async function generate(): Promise<void> {
   }
 
   // Generate favicon.ico at themeDir root (32x32 compressed PNG)
-  console.log('Generating favicon.ico in root...');
+  console.log("Generating favicon.ico in root...");
   await sharp(svgBuffer)
     .resize(32, 32)
     .png({
@@ -63,10 +64,10 @@ async function generate(): Promise<void> {
       quality: 85,
       effort: 10
     })
-    .toFile(path.join(themeDir, 'favicon.ico'));
+    .toFile(path.join(themeDir, "favicon.ico"));
 
   // Generate favicon.ico inside icon directory
-  console.log('Generating favicon.ico in icon directory...');
+  console.log("Generating favicon.ico in icon directory...");
   await sharp(svgBuffer)
     .resize(32, 32)
     .png({
@@ -75,7 +76,7 @@ async function generate(): Promise<void> {
       quality: 85,
       effort: 10
     })
-    .toFile(path.join(iconDir, 'favicon.ico'));
+    .toFile(path.join(iconDir, "favicon.ico"));
 
   // Clean up all other files in the icon directory
   const files = fs.readdirSync(iconDir);
@@ -86,10 +87,10 @@ async function generate(): Promise<void> {
     }
   }
 
-  console.log('All icons generated, minimized, and optimized successfully!');
+  console.log("All icons generated, minimized, and optimized successfully!");
 }
 
-generate().catch(err => {
-  console.error('Error generating icons:', err);
+generate().catch((err: unknown) => {
+  console.error("Error generating icons:", err);
   process.exit(1);
 });

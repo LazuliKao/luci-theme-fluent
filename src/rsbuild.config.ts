@@ -1,7 +1,6 @@
 import { defineConfig, rspack } from "@rsbuild/core";
 import { pluginSass } from "@rsbuild/plugin-sass";
-import { SwcJsMinimizerRspackPlugin } from "@rspack/core";
-import type { Compiler } from "@rspack/core";
+import { SwcJsMinimizerRspackPlugin, type Compiler } from "@rspack/core";
 
 import { generateThemeDefaults } from "./script/generate-theme-defaults";
 import { generateIcons } from "./script/generate-fluent-icons";
@@ -28,7 +27,7 @@ export default defineConfig({
         charset: "ascii",
         overrideBrowserslist: ["defaults", "not ie <= 11", "not op_mini all", "chrome >= 125", "firefox >= 147", "safari >= 26", "edge >= 125"],
         distPath: {
-          root: "../htdocs/luci-static/resources",
+          root: "../packages/luci-theme-fluent/htdocs/luci-static/resources",
           js: ".",
         },
         filename: {
@@ -133,7 +132,7 @@ export default defineConfig({
       },
       output: {
         distPath: {
-          root: "../htdocs/luci-static/fluent/css",
+          root: "../packages/luci-theme-fluent/htdocs/luci-static/fluent/css",
           css: ".",
           js: ".",
         },

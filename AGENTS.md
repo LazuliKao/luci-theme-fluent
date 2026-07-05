@@ -12,7 +12,7 @@
 pnpm install          # install deps from root + src/ (pnpm workspace)
 pnpm run build        # compile SCSS + LuCI JS/TSX (runs "cd src && pnpm run build")
 pnpm run watch        # auto-rebuild both
-pnpm run lint         # Biome lint on htdocs/ + src/web/resources/
+pnpm run lint         # Biome lint on packages/luci-theme-fluent/htdocs/ + src/web/resources/
 pnpm run typecheck    # "cd src && tsc -p tsconfig.json --noEmit"
 ```
 
@@ -22,8 +22,8 @@ The project uses **Rsbuild** (not raw sass CLI) configured in `src/rsbuild.confi
 
 | Environment | Entry | Output | Notes |
 |---|---|---|---|
-| `css` | `src/scss/fluent.scss` | `htdocs/luci-static/fluent/css/fluent.css` | Sass via `@rsbuild/plugin-sass`, SVG inlining via `dataUriLimit: MAX_SAFE_INTEGER`. Custom plugin removes generated `fluent.js`. Minify: off. |
-| `js` | `src/web/resources/{menu-fluent.tsx, view/fluent-config.tsx}` | `htdocs/luci-static/resources/{menu-fluent.js, view/fluent-config.js}` | React JSX via `@lazulikao/luci-types`, LuCI `require` preamble via `BannerPlugin`, `return main;` footer. Minify: on (but splitChunks/runtimeChunk off). |
+| `css` | `src/scss/fluent.scss` | `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` | Sass via `@rsbuild/plugin-sass`, SVG inlining via `dataUriLimit: MAX_SAFE_INTEGER`. Custom plugin removes generated `fluent.js`. Minify: off. |
+| `js` | `src/web/resources/{menu-fluent.tsx, view/fluent-config.tsx}` | `packages/luci-theme-fluent/htdocs/luci-static/resources/{menu-fluent.js, view/fluent-config.js}` | React JSX via `@lazulikao/luci-types`, LuCI `require` preamble via `BannerPlugin`, `return main;` footer. Minify: on (but splitChunks/runtimeChunk off). |
 
 **Key rsbuild quirks**:
 
@@ -35,6 +35,27 @@ The project uses **Rsbuild** (not raw sass CLI) configured in `src/rsbuild.confi
 
 ```
 luci-theme-fluent/
+├── packages/
+│   └── luci-theme-fluent/
+│       ├── htdocs/luci-static/
+│       │   ├── fluent/css/fluent.css       # Compiled CSS (NOT committed? check .gitignore)
+│       │   ├── fluent/background/          # User-uploaded backgrounds
+│       │   ├── fluent/fonts/               # Empty directory
+│       │   ├── fluent/icon/                # favicon.ico, icon-192.png, favicon-32.png, manifest.json
+│       │   ├── fluent/img/fluent.svg       # Theme logo
+│       │   └── resources/                  # Compiled JS: menu-fluent.js, view/fluent-config.js
+│       ├── ucode/template/themes/fluent/   # 6 ucode templates (header.ut, footer.ut, header_login.ut, footer_login.ut, out_header_login.ut, sysauth.ut)
+│       ├── root/
+│       │   ├── etc/config/fluent           # Default UCI config (40+ options)
+│       │   ├── etc/uci-defaults/luci-fluent # Theme registration + default config initialization
+│       │   ├── usr/libexec/fluent/online_wallpaper  # Shell script: fetches Bing/Unsplash login backgrounds
+│       │   ├── usr/libexec/rpcd/luci.fluent        # RPC daemon: list/remove/rename background files
+│       │   ├── usr/share/luci/menu.d/luci-theme-fluent.json  # Menu registration for config view
+│       │   └── usr/share/rpcd/acl.d/luci-theme-fluent.json   # ACL permissions: fluent UCI + background file access
+│       ├── po/
+│       │   ├── templates/fluent.pot        # POT template (66 strings)
+│       │   └── zh_Hans/fluent.po           # Simplified Chinese translations
+│       └── Makefile                        # OpenWrt package definition
 ├── src/
 │   ├── scss/
 │   │   ├── fluent.scss            # Entry point (47 @use imports)
@@ -66,33 +87,16 @@ luci-theme-fluent/
 │   │           ├── shared.ts             # Color picker widget, transparency steps
 │   │           └── tabs/                 # {general, colors, animation, login}.ts — each registers section.taboption()
 │   ├── script/
-│   │   ├── extract-ucode.ts       # Bridge: scans .ut files for `_('...')`, filters LuCI core strings, generates extra-strings.js
-│   │   ├── generate-icons.ts       # Generates favicon-32.png + icon-192.png from fluent.svg
-│   │   ├── fluent-icons.json       # Iconify mapping: SCSS var name → @iconify-json/fluent icon name
-│   │   └── translate.md            # AI translation prompt for luci-types i18n --translate (zh_Hans)
+│   │   ├── extract-ucode.ts       # Bridge: scans package-local .ut files for `_('...')`, filters LuCI core strings, generates extra-strings.js
+│   │   ├── generate-icons.ts      # Generates favicon-32.png + icon-192.png from package-local fluent.svg
+│   │   ├── fluent-icons.json      # Iconify mapping: SCSS var name → @iconify-json/fluent icon name
+│   │   └── translate.md           # AI translation prompt for luci-types i18n --translate (zh_Hans)
 │   └── rsbuild.config.ts, package.json, tsconfig.json
-├── htdocs/luci-static/
-│   ├── fluent/css/fluent.css       # Compiled CSS (NOT committed? check .gitignore)
-│   ├── fluent/background/          # User-uploaded backgrounds
-│   ├── fluent/fonts/               # Empty directory
-│   ├── fluent/icon/                # favicon.ico, icon-192.png, favicon-32.png, manifest.json
-│   ├── fluent/img/fluent.svg       # Theme logo
-│   └── resources/                  # Compiled JS: menu-fluent.js, view/fluent-config.js
-├── ucode/template/themes/fluent/   # 6 ucode templates (header.ut, footer.ut, header_login.ut, footer_login.ut, out_header_login.ut, sysauth.ut)
-├── root/
-│   ├── etc/config/fluent           # Default UCI config (40+ options)
-│   ├── etc/uci-defaults/luci-fluent # Theme registration + default config initialization
-│   ├── usr/libexec/fluent/online_wallpaper  # Shell script: fetches Bing/Unsplash login backgrounds
-│   ├── usr/libexec/rpcd/luci.fluent        # RPC daemon: list/remove/rename background files
-│   ├── usr/share/luci/menu.d/luci-theme-fluent.json  # Menu registration for config view
-│   └── usr/share/rpcd/acl.d/luci-theme-fluent.json   # ACL permissions: fluent UCI + background file access
-├── po/
-│   ├── templates/fluent.pot        # POT template (66 strings)
-│   └── zh_Hans/fluent.po           # Simplified Chinese translations
-└── .github/workflows/
-    ├── ci.yml                      # Push/PR: SCSS build → lint → 2 SDK matrix builds → nightly release
-    ├── release.yml                 # Tag push: build for 24.10.7 + 25.12.4 → GitHub release
-    └── build.sh                    # SDK download + compile script (shared by both workflows)
+├── .github/workflows/
+│   ├── ci.yml                      # Push/PR: SCSS build → lint → 2 SDK matrix builds → nightly release
+│   ├── release.yml                 # Tag push: build for 24.10.7 + 25.12.4 → GitHub release
+│   └── build.sh                    # SDK download + compile script (shared by both workflows)
+└── package.json                    # Workspace build tooling
 ```
 
 ## SCSS Rules
@@ -118,7 +122,7 @@ luci-theme-fluent/
 
 ## UCI Configuration (`/etc/config/fluent`)
 
-Available UCI options (set defaults in `root/etc/config/fluent` and `root/etc/uci-defaults/luci-fluent`):
+Available UCI options (set defaults in `packages/luci-theme-fluent/root/etc/config/fluent` and `packages/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`):
 
 | Group | Keys |
 |---|---|
@@ -133,8 +137,8 @@ Available UCI options (set defaults in `root/etc/config/fluent` and `root/etc/uc
 ## i18n / Translation Pipeline
 
 ```bash
-pnpm run i18n:extract       # → po/templates/fluent.pot (66 strings)
-pnpm run i18n:export        # → po/zh_Hans/fluent.po (AI-translated via OpenAI)
+pnpm run i18n:extract       # → packages/luci-theme-fluent/po/templates/fluent.pot (66 strings)
+pnpm run i18n:export        # → packages/luci-theme-fluent/po/zh_Hans/fluent.po (AI-translated via OpenAI)
 pnpm run i18n:extract-ucode # Discover ucode-only translatable strings
 pnpm run i18n:build         # All three steps
 ```
@@ -154,7 +158,7 @@ pnpm run i18n:build         # All three steps
 
 **Nightly**: Creates pre-release tag named `nightly` with both ipk and apk packages.
 
-**SDK build** (`build.sh`): Auto-discovers SDK tarball from `downloads.openwrt.org`, uses `sed` to replace git.openwrt.org with GitHub mirrors for faster feeds, only builds `package/luci-theme-fluent/compile`, collects `luci-theme-fluent*` + `luci-i18n-fluent*` packages.
+**SDK build** (`.github/workflows/build.sh`): Auto-discovers SDK tarball from `downloads.openwrt.org`, uses `sed` to replace git.openwrt.org with GitHub mirrors for faster feeds, only builds `package/luci-theme-fluent/compile`, collects `luci-theme-fluent*` + `luci-i18n-fluent*` packages.
 
 ## Web Resources Architecture
 
@@ -165,26 +169,26 @@ pnpm run i18n:build         # All three steps
 
 ## OpenWrt Packaging
 
-`Makefile` uses `luci.mk` build system. `LUCI_MINIFY_CSS:=0` prevents luci.mk from minifying (handled by rsbuild). Post-install registers theme via `uci set luci.themes.fluent=/luci-static/fluent`.
+`packages/luci-theme-fluent/Makefile` uses `luci.mk` build system. `LUCI_MINIFY_CSS:=0` prevents luci.mk from minifying (handled by rsbuild). Post-install registers theme via `uci set luci.themes.fluent=/luci-static/fluent`.
 
 ## Key Constraints
 
 1. **JSX uses non-standard import**: `importSource: "@lazulikao/luci-types"` (not React). JSX elements are LuCI DOM nodes, not React components.
 2. **SCSS files excluded from Biome**: `biome.json` ignores `src/scss/**/*`.
 3. **RSBuild CSS output cleanup**: `RemoveEntryJsPlugin` prevents `fluent.js` from appearing in CSS output.
-4. **Po files in `po/` auto-processed**: OpenWrt `luci.mk` converts them to translation JSON at build time.
+4. **Po files in `packages/luci-theme-fluent/po/` auto-processed**: OpenWrt `luci.mk` converts them to translation JSON at build time.
 5. **Template entry**: `header.ut` handles both authenticated pages AND login page rendering (via `ctx.authsession` check).
-6. **`root/etc/config/fluent`** and **`root/etc/uci-defaults/luci-fluent`** are the authoritative source for default UCI config values.
+6. **`packages/luci-theme-fluent/root/etc/config/fluent`** and **`packages/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`** are the authoritative source for default UCI config values.
 
 ## Troubleshooting
 
 | Issue | Check |
 |---|---|
-| CSS not loading | `htdocs/luci-static/fluent/css/fluent.css` exists? |
+| CSS not loading | `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` exists? |
 | Dark mode wrong | UCI `mode` set correctly? CSS vars injected? localStorage `fluent-theme` override? |
 | Build fails | `pnpm install` first. Rsbuild config in `src/rsbuild.config.ts`. SCSS lint via Biome (but ignores SCSS files). |
 | Template error | ucode: `{% %}` not `<% %>`, `{{ }}` not `<%= %>` |
-| CI SDK fails | `build.sh` — SDK URL auto-discovery, HTTP 200 check |
+| CI SDK fails | `.github/workflows/build.sh` — SDK URL auto-discovery, HTTP 200 check |
 | i18n fails | `.env` has `OPENAI_API_KEY`? `pnpm run build` compiled JS first? |
 
 ## 额外注意事项

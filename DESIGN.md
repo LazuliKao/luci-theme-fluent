@@ -12,16 +12,31 @@ Luci-Theme-Fluent is a modern, FluentUI-inspired theme for OpenWrt's LuCI web in
 
 ```
 luci-theme-fluent/
-├── htdocs/luci-static/
-│   ├── fluent/
-│   │   ├── background/          # User-uploaded background images
-│   │   ├── fonts/               # Self-contained font files (optional)
-│   │   ├── icon/                # Theme icons
-│   │   └── img/                 # Theme images (logo, placeholders)
-│   └── resources/
-│       ├── menu-fluent.js       # Compiled sidebar navigation (LuCI module)
-│       └── view/
-│           └── fluent-config.js # Compiled configuration UI
+├── packages/
+│   └── luci-theme-fluent/
+│       ├── htdocs/luci-static/
+│       │   ├── fluent/
+│       │   │   ├── background/          # User-uploaded background images
+│       │   │   ├── fonts/               # Self-contained font files (optional)
+│       │   │   ├── icon/                # Theme icons
+│       │   │   └── img/                 # Theme images (logo, placeholders)
+│       │   └── resources/
+│       │       ├── menu-fluent.js       # Compiled sidebar navigation (LuCI module)
+│       │       └── view/
+│       │           └── fluent-config.js # Compiled configuration UI
+│       ├── ucode/template/themes/fluent/
+│       │   ├── header.ut                # Main header template
+│       │   ├── header_login.ut          # Login page header
+│       │   ├── footer.ut                # Main footer
+│       │   ├── footer_login.ut          # Login footer
+│       │   ├── out_header_login.ut      # Outer login header
+│       │   └── sysauth.ut               # Login/auth page
+│       ├── root/
+│       │   ├── etc/config/fluent        # Default UCI config
+│       │   ├── etc/uci-defaults/        # Theme registration and config setup
+│       │   └── usr/                     # Scripts, RPCD, ACL files
+│       ├── po/                          # Translation sources
+│       └── Makefile                     # OpenWrt package definition
 ├── src/
 │   ├── scss/
 │   │   ├── fluent.scss          # Main entry point (imports partials)
@@ -39,18 +54,6 @@ luci-theme-fluent/
 │   │           └── fluent-config.tsx # Config UI TSX source
 │   ├── script/                  # Build scripts (extract-ucode, generate-icons, etc.)
 │   └── rsbuild.config.ts        # Rsbuild configuration
-├── ucode/template/themes/fluent/
-│   ├── header.ut                # Main header template
-│   ├── header_login.ut          # Login page header
-│   ├── footer.ut                # Main footer
-│   ├── footer_login.ut          # Login footer
-│   ├── out_header_login.ut      # Outer login header
-│   └── sysauth.ut               # Login/auth page
-├── root/
-│   ├── etc/config/fluent        # Default UCI config
-│   ├── etc/uci-defaults/        # Theme registration and config setup
-│   └── usr/                     # Scripts, RPCD, ACL files
-├── Makefile                     # OpenWrt package definition
 └── package.json                 # Project build tooling (pnpm workspace)
 ```
 
@@ -60,7 +63,7 @@ luci-theme-fluent/
 
 ### Design Tokens (Variables System)
 
-All design tokens are CSS custom properties, defined in `:root` and aligned with `@fluentui/tokens` v2. The authoritative source for these values is [src/scss/_variables.scss](file:///A:/Documents/GitHub/luci-theme-fluent/src/scss/_variables.scss):
+All design tokens are CSS custom properties, defined in `:root` and aligned with `@fluentui/tokens` v2. The authoritative source for these values is `src/scss/_variables.scss`:
 
 ```scss
 :root {
@@ -168,12 +171,12 @@ Ucode templates have automatic access to LuCI global properties: `theme`, `media
 ## Build System & Tooling
 
 The project uses **Rsbuild** (configured in `src/rsbuild.config.ts`) instead of standard Sass compilers. It builds two environments:
-1. **CSS environment** (`src/scss/fluent.scss`): Preprocesses SCSS files, inlines inline SVGs, and outputs CSS to `htdocs/luci-static/fluent/css/fluent.css`.
+1. **CSS environment** (`src/scss/fluent.scss`): Preprocesses SCSS files, inlines inline SVGs, and outputs CSS to `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`.
 2. **JS environment** (`src/web/resources/`): Compiles React-like JSX/TSX views into OpenWrt-compatible LuCI modules using custom banner/footer plugins.
 
 ### Package Scripts
 
-Authoritative scripts inside [package.json](file:///A:/Documents/GitHub/luci-theme-fluent/package.json):
+Authoritative scripts inside `package.json`:
 * `pnpm run build`: Compiles both SCSS styles and LuCI JS modules.
 * `pnpm run watch`: Watches files for dynamic hot-rebuilding.
 * `pnpm run lint`: Formats and checks codebase using Biome.
