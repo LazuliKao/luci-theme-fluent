@@ -26,7 +26,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           SHA: ${{ github.sha }}
         run: |
-          BASE_VERSION=$(sed -n 's/^PKG_VERSION:=//p' packages/luci-theme-fluent/Makefile)
+          BASE_VERSION=$(sed -n 's/^PKG_VERSION:=//p' package/luci-theme-fluent/Makefile)
           SHORT_SHA=$(printf '%.7s' "$SHA")
           if [ "$EVENT_NAME" = "pull_request" ]; then
             VERSION="${BASE_VERSION}-pr${PR_NUMBER}-${SHORT_SHA}"
@@ -77,12 +77,12 @@ jobs:
 
       - name: Verify built assets
         run: |
-          test -s packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
-          test -s packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
-          test -s packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
-          css_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css)
-          menu_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js)
-          config_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js)
+          test -s package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
+          test -s package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
+          test -s package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
+          css_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css)
+          menu_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js)
+          config_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js)
           echo "Built fluent.css (${css_size} bytes)"
           echo "Built menu-fluent.js (${menu_size} bytes)"
           echo "Built fluent-config.js (${config_size} bytes)"
@@ -92,9 +92,9 @@ jobs:
         with:
           name: fluent-assets
           path: |
-            packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
-            packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
-            packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
+            package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
+            package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
+            package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
 
   lint:
     name: Lint
@@ -137,7 +137,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: fluent-assets
-          path: packages/luci-theme-fluent/htdocs/luci-static
+          path: package/luci-theme-fluent/htdocs/luci-static
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget
@@ -145,7 +145,7 @@ jobs:
       - name: Prepare package sources
         run: |
           mkdir -p ${HOME}/builder/packages
-          cp -r "$PWD/packages/luci-theme-fluent" "${HOME}/builder/packages/luci-theme-fluent"
+          cp -r "$PWD/package/luci-theme-fluent" "${HOME}/builder/package/luci-theme-fluent"
           echo "Staged packages:"
           ls -la ${HOME}/builder/packages/
 

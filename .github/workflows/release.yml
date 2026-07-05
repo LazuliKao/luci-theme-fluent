@@ -36,9 +36,9 @@ jobs:
       - name: Sync version files
         run: |
           VERSION="${{ steps.meta.outputs.version }}"
-          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" packages/luci-theme-fluent/Makefile
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent/Makefile
           sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
-          grep '^PKG_VERSION:=' packages/luci-theme-fluent/Makefile
+          grep '^PKG_VERSION:=' package/luci-theme-fluent/Makefile
           grep '^  "version":' package.json
 
       - name: Commit version bump
@@ -52,7 +52,7 @@ jobs:
           git checkout "$BRANCH"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add packages/luci-theme-fluent/Makefile package.json
+          git add package/luci-theme-fluent/Makefile package.json
           if git diff --cached --quiet; then
             echo "Version files already match ${TAG}; nothing to commit."
           else
@@ -98,12 +98,12 @@ jobs:
 
       - name: Verify built assets
         run: |
-          test -s packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
-          test -s packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
-          test -s packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
-          css_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css)
-          menu_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js)
-          config_size=$(wc -c < packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js)
+          test -s package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
+          test -s package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
+          test -s package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
+          css_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css)
+          menu_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js)
+          config_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js)
           echo "Built fluent.css (${css_size} bytes)"
           echo "Built menu-fluent.js (${menu_size} bytes)"
           echo "Built fluent-config.js (${config_size} bytes)"
@@ -113,9 +113,9 @@ jobs:
         with:
           name: fluent-assets-${{ env.TAG }}
           path: |
-            packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
-            packages/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
-            packages/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
+            package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
+            package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
+            package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
 
   release:
     name: Build & Publish (${{ matrix.version }})
@@ -140,7 +140,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: fluent-assets-${{ env.TAG }}
-          path: packages/luci-theme-fluent/htdocs/luci-static
+          path: package/luci-theme-fluent/htdocs/luci-static
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget
@@ -148,7 +148,7 @@ jobs:
       - name: Prepare package sources
         run: |
           mkdir -p ${HOME}/builder/packages
-          cp -r "$PWD/packages/luci-theme-fluent" "${HOME}/builder/packages/luci-theme-fluent"
+          cp -r "$PWD/package/luci-theme-fluent" "${HOME}/builder/package/luci-theme-fluent"
 
       - name: Build packages
         run: |

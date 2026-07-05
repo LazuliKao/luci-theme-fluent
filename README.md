@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./packages/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg" alt="luci-theme-fluent" width="96" />
+<img src="./package/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg" alt="luci-theme-fluent" width="96" />
 
 # luci-theme-fluent
 
@@ -126,17 +126,17 @@ pnpm run typecheck
 
 ### Output paths
 
-- CSS: `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`
-- JS: `packages/luci-theme-fluent/htdocs/luci-static/resources/`
+- CSS: `package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`
+- JS: `package/luci-theme-fluent/htdocs/luci-static/resources/`
 
 ## Project Structure
 
 ```text
 luci-theme-fluent/
-├── packages/luci-theme-fluent/htdocs/luci-static/fluent/
-├── packages/luci-theme-fluent/ucode/template/themes/fluent/
-├── packages/luci-theme-fluent/root/etc/uci-defaults/
-├── packages/luci-theme-fluent/Makefile
+├── package/luci-theme-fluent/htdocs/luci-static/fluent/
+├── package/luci-theme-fluent/ucode/template/themes/fluent/
+├── package/luci-theme-fluent/root/etc/uci-defaults/
+├── package/luci-theme-fluent/Makefile
 ├── src/scss/
 ├── src/web/resources/
 └── package.json

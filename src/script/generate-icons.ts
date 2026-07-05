@@ -4,9 +4,9 @@ import path from "node:path";
 import sharp from "sharp";
 
 // Use relative paths from the repository root
-const svgPath = "./packages/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg";
-const iconDir = "./packages/luci-theme-fluent/htdocs/luci-static/fluent/icon";
-const themeDir = "./packages/luci-theme-fluent/htdocs/luci-static/fluent";
+const svgPath = "./package/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg";
+const iconDir = "./package/luci-theme-fluent/htdocs/luci-static/fluent/icon";
+const themeDir = "./package/luci-theme-fluent/htdocs/luci-static/fluent";
 
 interface Target {
   file: string;

@@ -12,7 +12,7 @@ Luci-Theme-Fluent is a modern, FluentUI-inspired theme for OpenWrt's LuCI web in
 
 ```
 luci-theme-fluent/
-├── packages/
+├── package/
 │   └── luci-theme-fluent/
 │       ├── htdocs/luci-static/
 │       │   ├── fluent/
@@ -171,7 +171,7 @@ Ucode templates have automatic access to LuCI global properties: `theme`, `media
 ## Build System & Tooling
 
 The project uses **Rsbuild** (configured in `src/rsbuild.config.ts`) instead of standard Sass compilers. It builds two environments:
-1. **CSS environment** (`src/scss/fluent.scss`): Preprocesses SCSS files, inlines inline SVGs, and outputs CSS to `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`.
+1. **CSS environment** (`src/scss/fluent.scss`): Preprocesses SCSS files, inlines inline SVGs, and outputs CSS to `package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`.
 2. **JS environment** (`src/web/resources/`): Compiles React-like JSX/TSX views into OpenWrt-compatible LuCI modules using custom banner/footer plugins.
 
 ### Package Scripts

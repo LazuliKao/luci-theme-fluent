@@ -27,7 +27,7 @@ export default defineConfig({
         charset: "ascii",
         overrideBrowserslist: ["defaults", "not ie <= 11", "not op_mini all", "chrome >= 125", "firefox >= 147", "safari >= 26", "edge >= 125"],
         distPath: {
-          root: "../packages/luci-theme-fluent/htdocs/luci-static/resources",
+          root: "../package/luci-theme-fluent/htdocs/luci-static/resources",
           js: ".",
         },
         filename: {
@@ -132,7 +132,7 @@ export default defineConfig({
       },
       output: {
         distPath: {
-          root: "../packages/luci-theme-fluent/htdocs/luci-static/fluent/css",
+          root: "../package/luci-theme-fluent/htdocs/luci-static/fluent/css",
           css: ".",
           js: ".",
         },

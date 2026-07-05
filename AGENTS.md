@@ -12,7 +12,7 @@
 pnpm install          # install deps from root + src/ (pnpm workspace)
 pnpm run build        # compile SCSS + LuCI JS/TSX (runs "cd src && pnpm run build")
 pnpm run watch        # auto-rebuild both
-pnpm run lint         # Biome lint on packages/luci-theme-fluent/htdocs/ + src/web/resources/
+pnpm run lint         # Biome lint on package/luci-theme-fluent/htdocs/ + src/web/resources/
 pnpm run typecheck    # "cd src && tsc -p tsconfig.json --noEmit"
 ```
 
@@ -22,8 +22,8 @@ The project uses **Rsbuild** (not raw sass CLI) configured in `src/rsbuild.confi
 
 | Environment | Entry | Output | Notes |
 |---|---|---|---|
-| `css` | `src/scss/fluent.scss` | `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` | Sass via `@rsbuild/plugin-sass`, SVG inlining via `dataUriLimit: MAX_SAFE_INTEGER`. Custom plugin removes generated `fluent.js`. Minify: off. |
-| `js` | `src/web/resources/{menu-fluent.tsx, view/fluent-config.tsx}` | `packages/luci-theme-fluent/htdocs/luci-static/resources/{menu-fluent.js, view/fluent-config.js}` | React JSX via `@lazulikao/luci-types`, LuCI `require` preamble via `BannerPlugin`, `return main;` footer. Minify: on (but splitChunks/runtimeChunk off). |
+| `css` | `src/scss/fluent.scss` | `package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` | Sass via `@rsbuild/plugin-sass`, SVG inlining via `dataUriLimit: MAX_SAFE_INTEGER`. Custom plugin removes generated `fluent.js`. Minify: off. |
+| `js` | `src/web/resources/{menu-fluent.tsx, view/fluent-config.tsx}` | `package/luci-theme-fluent/htdocs/luci-static/resources/{menu-fluent.js, view/fluent-config.js}` | React JSX via `@lazulikao/luci-types`, LuCI `require` preamble via `BannerPlugin`, `return main;` footer. Minify: on (but splitChunks/runtimeChunk off). |
 
 **Key rsbuild quirks**:
 
@@ -35,7 +35,7 @@ The project uses **Rsbuild** (not raw sass CLI) configured in `src/rsbuild.confi
 
 ```
 luci-theme-fluent/
-├── packages/
+├── package/
 │   └── luci-theme-fluent/
 │       ├── htdocs/luci-static/
 │       │   ├── fluent/css/fluent.css       # Compiled CSS (NOT committed? check .gitignore)
@@ -122,7 +122,7 @@ luci-theme-fluent/
 
 ## UCI Configuration (`/etc/config/fluent`)
 
-Available UCI options (set defaults in `packages/luci-theme-fluent/root/etc/config/fluent` and `packages/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`):
+Available UCI options (set defaults in `package/luci-theme-fluent/root/etc/config/fluent` and `package/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`):
 
 | Group | Keys |
 |---|---|
@@ -137,8 +137,8 @@ Available UCI options (set defaults in `packages/luci-theme-fluent/root/etc/conf
 ## i18n / Translation Pipeline
 
 ```bash
-pnpm run i18n:extract       # → packages/luci-theme-fluent/po/templates/fluent.pot (66 strings)
-pnpm run i18n:export        # → packages/luci-theme-fluent/po/zh_Hans/fluent.po (AI-translated via OpenAI)
+pnpm run i18n:extract       # → package/luci-theme-fluent/po/templates/fluent.pot (66 strings)
+pnpm run i18n:export        # → package/luci-theme-fluent/po/zh_Hans/fluent.po (AI-translated via OpenAI)
 pnpm run i18n:extract-ucode # Discover ucode-only translatable strings
 pnpm run i18n:build         # All three steps
 ```
@@ -169,22 +169,22 @@ pnpm run i18n:build         # All three steps
 
 ## OpenWrt Packaging
 
-`packages/luci-theme-fluent/Makefile` uses `luci.mk` build system. `LUCI_MINIFY_CSS:=0` prevents luci.mk from minifying (handled by rsbuild). Post-install registers theme via `uci set luci.themes.fluent=/luci-static/fluent`.
+`package/luci-theme-fluent/Makefile` uses `luci.mk` build system. `LUCI_MINIFY_CSS:=0` prevents luci.mk from minifying (handled by rsbuild). Post-install registers theme via `uci set luci.themes.fluent=/luci-static/fluent`.
 
 ## Key Constraints
 
 1. **JSX uses non-standard import**: `importSource: "@lazulikao/luci-types"` (not React). JSX elements are LuCI DOM nodes, not React components.
 2. **SCSS files excluded from Biome**: `biome.json` ignores `src/scss/**/*`.
 3. **RSBuild CSS output cleanup**: `RemoveEntryJsPlugin` prevents `fluent.js` from appearing in CSS output.
-4. **Po files in `packages/luci-theme-fluent/po/` auto-processed**: OpenWrt `luci.mk` converts them to translation JSON at build time.
+4. **Po files in `package/luci-theme-fluent/po/` auto-processed**: OpenWrt `luci.mk` converts them to translation JSON at build time.
 5. **Template entry**: `header.ut` handles both authenticated pages AND login page rendering (via `ctx.authsession` check).
-6. **`packages/luci-theme-fluent/root/etc/config/fluent`** and **`packages/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`** are the authoritative source for default UCI config values.
+6. **`package/luci-theme-fluent/root/etc/config/fluent`** and **`package/luci-theme-fluent/root/etc/uci-defaults/luci-fluent`** are the authoritative source for default UCI config values.
 
 ## Troubleshooting
 
 | Issue | Check |
 |---|---|
-| CSS not loading | `packages/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` exists? |
+| CSS not loading | `package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css` exists? |
 | Dark mode wrong | UCI `mode` set correctly? CSS vars injected? localStorage `fluent-theme` override? |
 | Build fails | `pnpm install` first. Rsbuild config in `src/rsbuild.config.ts`. SCSS lint via Biome (but ignores SCSS files). |
 | Template error | ucode: `{% %}` not `<% %>`, `{{ }}` not `<%= %>` |

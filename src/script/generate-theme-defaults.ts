@@ -6,8 +6,8 @@ import { FLUENT_DEFAULTS } from "../web/resources/fluent-defaults";
 
 export const generateThemeDefaults = (): void => {
   const here = dirname(fileURLToPath(import.meta.url));
-  const moduleOutputPath = join(here, "../../packages/luci-theme-fluent/root/usr/share/luci-theme-fluent/fluent-defaults.uc");
-  const templateOutputPath = join(here, "../../packages/luci-theme-fluent/ucode/template/themes/fluent/defaults.ut");
+  const moduleOutputPath = join(here, "../../package/luci-theme-fluent/root/usr/share/luci-theme-fluent/fluent-defaults.uc");
+  const templateOutputPath = join(here, "../../package/luci-theme-fluent/ucode/template/themes/fluent/defaults.ut");
   const entries = Object.entries(FLUENT_DEFAULTS)
     .map(([key, value]) => `  ${key}: ${JSON.stringify(value)}`)
     .join(",\n");

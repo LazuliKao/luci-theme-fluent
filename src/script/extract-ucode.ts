@@ -17,7 +17,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { globSync } from "node:fs";
 import { dirname } from "node:path";
 
-const UCODE_GLOB = "packages/luci-theme-fluent/ucode/template/themes/fluent/*.ut";
+const UCODE_GLOB = "package/luci-theme-fluent/ucode/template/themes/fluent/*.ut";
 const EXTRA_STRINGS_PATH = "src/script/.cache/extra-strings.js";
 const EXTRACT_RE = /\{\{\s*_\(['"]([^'"]+)['"]\)\s*\}\}/g;
 
