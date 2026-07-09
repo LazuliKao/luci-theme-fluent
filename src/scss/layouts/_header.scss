@@ -5,9 +5,18 @@
 
 body > div.main > div.main-right > header {
   @keyframes fluent-poll-pulse {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   display: flex;
@@ -70,10 +79,10 @@ body > div.main > div.main-right > header {
       background: var(--fluent-bg-hover);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
-
   }
 
-  .header__toggle, .desktop-toggle {
+  .header__toggle,
+  .desktop-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,19 +183,27 @@ body > div.main > div.main-right > header {
     }
 
     &[data-mode="auto"]::before {
-      mask-image: var(--fluent-mask-weather-sunny-20-regular), radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
+      mask-image:
+        var(--fluent-mask-weather-sunny-20-regular),
+        radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
       mask-composite: intersect;
 
       @include rtl {
-        mask-image: var(--fluent-mask-weather-sunny-20-regular), radial-gradient(ellipse 6.5px 4.5px at 1px 17px, transparent 90%, black 100%);
+        mask-image:
+          var(--fluent-mask-weather-sunny-20-regular),
+          radial-gradient(ellipse 6.5px 4.5px at 1px 17px, transparent 90%, black 100%);
       }
     }
 
     &[data-active-theme="dark"][data-mode="auto"]::before {
-      mask-image: var(--fluent-mask-weather-moon-20-regular), radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
+      mask-image:
+        var(--fluent-mask-weather-moon-20-regular),
+        radial-gradient(ellipse 6.5px 4.5px at 17px 17px, transparent 90%, black 100%);
 
       @include rtl {
-        mask-image: var(--fluent-mask-weather-moon-20-regular), radial-gradient(ellipse 6.5px 4.5px at 1px 17px, transparent 90%, black 100%);
+        mask-image:
+          var(--fluent-mask-weather-moon-20-regular),
+          radial-gradient(ellipse 6.5px 4.5px at 1px 17px, transparent 90%, black 100%);
       }
     }
 
@@ -310,6 +327,7 @@ body > div.main > div.main-right > header {
     .theme-toggle {
       width: 28px;
       height: 28px;
+      flex: 0 0 28px;
     }
   }
 }
