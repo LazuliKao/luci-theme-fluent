@@ -9811,6 +9811,7 @@ html[dir="rtl"] .login-page .login-container .login-form .form-login, body[data-
   border: none !important;
   border-radius: 0 !important;
   margin: 2px 0 0 !important;
+  padding: 0 !important;
   padding-inline-start: 16px !important;
   line-height: 16px !important;
   display: block !important;

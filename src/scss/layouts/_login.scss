@@ -318,6 +318,7 @@ body.login-page {
         // ERROR BOX (Microsoft style)
         .errorbox {
           position: relative !important;
+          padding: 0 !important;
           padding-inline-start: 16px !important;
           margin: 2px 0 0 0 !important;
           border-radius: 0 !important;
