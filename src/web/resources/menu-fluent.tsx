@@ -245,7 +245,8 @@ const module: Module = {
    */
   renderMainMenu(this: Module, tree: MenuNode, url: string, level?: number): HTMLElement {
     const currentLevel = (level || 0) + 1;
-    const menuContainer = <ul class={level ? "slide-menu" : "nav"}></ul>;
+    const parentTitle = level && tree.title ? tree.title.replace(/ /g, "_") : undefined;
+    const menuContainer = <ul class={level ? "slide-menu" : "nav"} data-parent={parentTitle || undefined}></ul>;
     const children = ui.menu.getChildren(tree);
 
     // Don't render empty menus or menus deeper than 2 levels

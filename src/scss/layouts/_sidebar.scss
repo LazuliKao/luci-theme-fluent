@@ -5,6 +5,88 @@
 @use "sass:map";
 @use "sass:list";
 
+$sidebar-icons: (
+  "Dashboard": (
+    "reg": "__icon__(fluent:home-20-regular)",
+    "fill": "__icon__(fluent:home-20-filled)"
+  ),
+  "QuickStart": (
+    "reg": "__icon__(fluent:flash-20-regular)",
+    "fill": "__icon__(fluent:flash-20-filled)"
+  ),
+  "NetworkGuide": (
+    "reg": "__icon__(fluent:compass-northwest-20-regular)",
+    "fill": "__icon__(fluent:compass-northwest-20-filled)"
+  ),
+  "Status": (
+    "reg": "__icon__(fluent:heart-pulse-20-regular)",
+    "fill": "__icon__(fluent:heart-pulse-20-filled)"
+  ),
+  "System": (
+    "reg": "__icon__(fluent:settings-20-regular)",
+    "fill": "__icon__(fluent:settings-20-filled)"
+  ),
+  "Services": (
+    "reg": "__icon__(fluent:apps-20-regular)",
+    "fill": "__icon__(fluent:apps-20-filled)"
+  ),
+  "iStore": (
+    "reg": "__icon__(fluent:app-store-24-regular)",
+    "fill": "__icon__(fluent:app-store-24-filled)"
+  ),
+  "Docker": (
+    "reg": "__icon__(fluent:box-20-regular)",
+    "fill": "__icon__(fluent:box-20-filled)"
+  ),
+  "NAS": (
+    "reg": "__icon__(fluent:database-20-regular)",
+    "fill": "__icon__(fluent:database-20-filled)"
+  ),
+  "VPN": (
+    "reg": "__icon__(fluent:shield-lock-20-regular)",
+    "fill": "__icon__(fluent:shield-lock-20-filled)"
+  ),
+  "Network": (
+    "reg": "__icon__(fluent:router-20-regular)",
+    "fill": "__icon__(fluent:router-20-filled)"
+  ),
+  "Statistics": (
+    "reg": "__icon__(fluent:data-trending-20-regular)",
+    "fill": "__icon__(fluent:data-trending-20-filled)"
+  ),
+  "Log_out": (
+    "reg": "__icon__(fluent:arrow-exit-20-regular)",
+    "fill": "__icon__(fluent:arrow-exit-20-filled)"
+  )
+);
+
+@each $title, $pair in $sidebar-icons {
+  $reg-raw: map.get($pair, "reg");
+  $fill-raw: map.get($pair, "fill");
+
+  $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
+  $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
+
+  $svg-reg: str-replace(map.get($fluent-icons, $reg), '"', "'");
+  $svg-fill: str-replace(map.get($fluent-icons, $fill), '"', "'");
+  $svg-reg-encoded: str-replace(str-replace($svg-reg, "<", "%3C"), ">", "%3E");
+  $svg-fill-encoded: str-replace(str-replace($svg-fill, "<", "%3C"), ">", "%3E");
+
+  .main-left .nav > li > a:first-child[data-title="#{$title}"] .menu-icon::before,
+  .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon::before {
+    @include set-icon-mask("data:image/svg+xml,#{$svg-reg-encoded}");
+  }
+
+  .main-left .nav > li > a:first-child[data-title="#{$title}"] .menu-icon::after,
+  .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon::after {
+    @include set-icon-mask("data:image/svg+xml,#{$svg-fill-encoded}");
+  }
+
+  .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon {
+    display: inline-flex;
+  }
+}
+
 .main-left {
   position: fixed;
   top: var(--fluent-header-height, 48px);
@@ -98,14 +180,14 @@
       flex-shrink: 0;
       color: var(--fluent-text-secondary);
 
-              &::before,
-              &::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                inset-inline-start: 0;
-                width: 100%;
-                height: 100%;
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        inset-inline-start: 0;
+        width: 100%;
+        height: 100%;
         background-color: currentColor;
         mask-size: contain;
         mask-repeat: no-repeat;
@@ -128,84 +210,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    $sidebar-icons: (
-      "Dashboard": (
-        "reg": "__icon__(fluent:home-20-regular)",
-        "fill": "__icon__(fluent:home-20-filled)"
-      ),
-      "QuickStart": (
-        "reg": "__icon__(fluent:flash-20-regular)",
-        "fill": "__icon__(fluent:flash-20-filled)"
-      ),
-      "NetworkGuide": (
-        "reg": "__icon__(fluent:compass-northwest-20-regular)",
-        "fill": "__icon__(fluent:compass-northwest-20-filled)"
-      ),
-      "Status": (
-        "reg": "__icon__(fluent:heart-pulse-20-regular)",
-        "fill": "__icon__(fluent:heart-pulse-20-filled)"
-      ),
-      "System": (
-        "reg": "__icon__(fluent:settings-20-regular)",
-        "fill": "__icon__(fluent:settings-20-filled)"
-      ),
-      "Services": (
-        "reg": "__icon__(fluent:apps-20-regular)",
-        "fill": "__icon__(fluent:apps-20-filled)"
-      ),
-      "iStore": (
-        "reg": "__icon__(fluent:app-store-24-regular)",
-        "fill": "__icon__(fluent:app-store-24-filled)"
-      ),
-      "Docker": (
-        "reg": "__icon__(fluent:box-20-regular)",
-        "fill": "__icon__(fluent:box-20-filled)"
-      ),
-      "NAS": (
-        "reg": "__icon__(fluent:database-20-regular)",
-        "fill": "__icon__(fluent:database-20-filled)"
-      ),
-      "VPN": (
-        "reg": "__icon__(fluent:shield-lock-20-regular)",
-        "fill": "__icon__(fluent:shield-lock-20-filled)"
-      ),
-      "Network": (
-        "reg": "__icon__(fluent:router-20-regular)",
-        "fill": "__icon__(fluent:router-20-filled)"
-      ),
-      "Statistics": (
-        "reg": "__icon__(fluent:data-trending-20-regular)",
-        "fill": "__icon__(fluent:data-trending-20-filled)"
-      ),
-      "Log_out": (
-        "reg": "__icon__(fluent:arrow-exit-20-regular)",
-        "fill": "__icon__(fluent:arrow-exit-20-filled)"
-      )
-    );
-
-    @each $title, $pair in $sidebar-icons {
-      &[data-title="#{$title}"] {
-        $reg-raw: map.get($pair, "reg");
-        $fill-raw: map.get($pair, "fill");
-
-        $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
-        $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
-
-        $svg-reg: str-replace(map.get($fluent-icons, $reg), '"', "'");
-        $svg-fill: str-replace(map.get($fluent-icons, $fill), '"', "'");
-        $svg-reg-encoded: str-replace(str-replace($svg-reg, "<", "%3C"), ">", "%3E");
-        $svg-fill-encoded: str-replace(str-replace($svg-fill, "<", "%3C"), ">", "%3E");
-
-        .menu-icon::before {
-          @include set-icon-mask("data:image/svg+xml,#{$svg-reg-encoded}");
-        }
-
-        .menu-icon::after {
-          @include set-icon-mask("data:image/svg+xml,#{$svg-fill-encoded}");
-        }
-      }
     }
 
     &:hover,
@@ -389,8 +393,13 @@
               font-size: 13px;
             }
 
-            $submenu-fuzzy-icons: (
+            $submenu-icons-spec: (
               (
+                "reg": "__icon__(fluent:shield-lock-20-regular)",
+                "fill": "__icon__(fluent:shield-lock-20-filled)",
+                "titles": (
+                  "WireGuard"
+                ),
                 "keywords": (
                   "wall",
                   "clash",
@@ -405,441 +414,454 @@
                   "tunnel",
                   "tier",
                   "proxy"
-                ),
-                "reg": "__icon__(fluent:shield-lock-20-regular)",
-                "fill": "__icon__(fluent:shield-lock-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:shield-dismiss-20-regular)",
+                "fill": "__icon__(fluent:shield-dismiss-20-filled)",
                 "keywords": (
                   "bypass"
-                ),
-                "reg": "__icon__(fluent:shield-dismiss-20-regular)",
-                "fill": "__icon__(fluent:shield-dismiss-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:shield-checkmark-20-regular)",
+                "fill": "__icon__(fluent:shield-checkmark-20-filled)",
                 "keywords": (
                   "guard"
-                ),
-                "reg": "__icon__(fluent:shield-checkmark-20-regular)",
-                "fill": "__icon__(fluent:shield-checkmark-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:globe-shield-20-regular)",
+                "fill": "__icon__(fluent:globe-shield-20-filled)",
                 "keywords": (
                   "dns"
-                ),
-                "reg": "__icon__(fluent:globe-shield-20-regular)",
-                "fill": "__icon__(fluent:globe-shield-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:globe-arrow-up-20-regular)",
+                "fill": "__icon__(fluent:globe-arrow-up-20-filled)",
                 "keywords": (
                   "ddns"
-                ),
-                "reg": "__icon__(fluent:globe-arrow-up-20-regular)",
-                "fill": "__icon__(fluent:globe-arrow-up-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:box-20-regular)",
+                "fill": "__icon__(fluent:box-20-filled)",
+                "titles": (
+                  "Containers",
+                  "Software"
+                ),
                 "keywords": (
                   "docker"
-                ),
-                "reg": "__icon__(fluent:box-20-regular)",
-                "fill": "__icon__(fluent:box-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:folder-open-20-regular)",
+                "fill": "__icon__(fluent:folder-open-20-filled)",
+                "titles": (
+                  "Quick_File_Manager"
+                ),
                 "keywords": (
                   "file"
-                ),
-                "reg": "__icon__(fluent:folder-open-20-regular)",
-                "fill": "__icon__(fluent:folder-open-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:paint-brush-20-regular)",
+                "fill": "__icon__(fluent:paint-brush-20-filled)",
+                "titles": (
+                  "Argon_Config",
+                  "Fluent_Theme"
+                ),
                 "keywords": (
                   "theme"
-                ),
-                "reg": "__icon__(fluent:paint-brush-20-regular)",
-                "fill": "__icon__(fluent:paint-brush-20-filled)"
+                )
               ),
               (
-                "keywords": (
-                  "config"
-                ),
                 "reg": "__icon__(fluent:settings-20-regular)",
-                "fill": "__icon__(fluent:settings-20-filled)"
+                "fill": "__icon__(fluent:settings-20-filled)",
+                "titles": (
+                  "Configuration",
+                  "System"
+                ),
+                "keywords": (
+                  "config",
+                  "setting"
+                )
               ),
               (
+                "reg": "__icon__(fluent:power-20-regular)",
+                "fill": "__icon__(fluent:power-20-filled)",
+                "titles": (
+                  "Reboot"
+                ),
                 "keywords": (
                   "reboot"
-                ),
-                "reg": "__icon__(fluent:power-20-regular)",
-                "fill": "__icon__(fluent:power-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:document-bullet-list-clock-20-regular)",
+                "fill": "__icon__(fluent:document-bullet-list-clock-20-filled)",
+                "titles": (
+                  "Events",
+                  "System_Log"
+                ),
                 "keywords": (
                   "log"
-                ),
-                "reg": "__icon__(fluent:document-bullet-list-clock-20-regular)",
-                "fill": "__icon__(fluent:document-bullet-list-clock-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:data-usage-20-regular)",
+                "fill": "__icon__(fluent:data-usage-20-filled)",
+                "titles": (
+                  "Traffic_Monitor"
+                ),
                 "keywords": (
                   "monitor",
                   "statistics",
                   "bandix",
                   "Graphs"
-                ),
-                "reg": "__icon__(fluent:data-usage-20-regular)",
-                "fill": "__icon__(fluent:data-usage-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:info-20-regular)",
+                "fill": "__icon__(fluent:info-20-filled)",
                 "keywords": (
                   "S.M.A.R.T.",
                   "info"
-                ),
-                "reg": "__icon__(fluent:info-20-regular)",
-                "fill": "__icon__(fluent:info-20-filled)"
+                )
               ),
               (
-                "keywords": (
-                  "setting"
-                ),
-                "reg": "__icon__(fluent:settings-20-regular)",
-                "fill": "__icon__(fluent:settings-20-filled)"
-              ),
-              (
+                "reg": "__icon__(fluent:settings-cog-multiple-20-regular)",
+                "fill": "__icon__(fluent:settings-cog-multiple-20-filled)",
                 "keywords": (
                   "Setup"
-                ),
-                "reg": "__icon__(fluent:settings-cog-multiple-20-regular)",
-                "fill": "__icon__(fluent:settings-cog-multiple-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:developer-board-20-regular)",
+                "fill": "__icon__(fluent:developer-board-20-filled)",
+                "titles": (
+                  "CPU_Freq"
+                ),
                 "keywords": (
                   "cpu"
-                ),
-                "reg": "__icon__(fluent:developer-board-20-regular)",
-                "fill": "__icon__(fluent:developer-board-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:lightbulb-20-regular)",
+                "fill": "__icon__(fluent:lightbulb-20-filled)",
+                "titles": (
+                  "LED_Configuration"
+                ),
                 "keywords": (
                   "led"
-                ),
-                "reg": "__icon__(fluent:lightbulb-20-regular)",
-                "fill": "__icon__(fluent:lightbulb-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:key-20-regular)",
+                "fill": "__icon__(fluent:key-20-filled)",
+                "titles": (
+                  "Administration"
+                ),
                 "keywords": (
                   "kms"
-                ),
-                "reg": "__icon__(fluent:key-20-regular)",
-                "fill": "__icon__(fluent:key-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:server-20-regular)",
+                "fill": "__icon__(fluent:server-20-filled)",
+                "titles": (
+                  "DHCP"
+                ),
                 "keywords": (
                   "upnp"
-                ),
-                "reg": "__icon__(fluent:server-20-regular)",
-                "fill": "__icon__(fluent:server-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:network-adapter-16-regular)",
+                "fill": "__icon__(fluent:network-adapter-16-filled)",
+                "titles": (
+                  "Interfaces"
+                ),
                 "keywords": (
                   "network"
-                ),
-                "reg": "__icon__(fluent:network-adapter-16-regular)",
-                "fill": "__icon__(fluent:network-adapter-16-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:wifi-1-20-regular)",
+                "fill": "__icon__(fluent:wifi-1-20-filled)",
+                "titles": (
+                  "Wireless"
+                ),
                 "keywords": (
                   "wireless"
-                ),
-                "reg": "__icon__(fluent:wifi-1-20-regular)",
-                "fill": "__icon__(fluent:wifi-1-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:card-ui-20-regular)",
+                "fill": "__icon__(fluent:card-ui-20-filled)",
                 "keywords": (
                   "address"
-                ),
-                "reg": "__icon__(fluent:card-ui-20-regular)",
-                "fill": "__icon__(fluent:card-ui-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:data-funnel-20-regular)",
+                "fill": "__icon__(fluent:data-funnel-20-filled)",
                 "keywords": (
                   "qos"
-                ),
-                "reg": "__icon__(fluent:data-funnel-20-regular)",
-                "fill": "__icon__(fluent:data-funnel-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:arrow-swap-20-regular)",
+                "fill": "__icon__(fluent:arrow-swap-20-filled)",
                 "keywords": (
                   "PortWeaver",
                   "socat"
-                ),
-                "reg": "__icon__(fluent:arrow-swap-20-regular)",
-                "fill": "__icon__(fluent:arrow-swap-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:connected-20-regular)",
+                "fill": "__icon__(fluent:connected-20-filled)",
                 "keywords": (
                   "usteer",
                   "roam",
                   "mesh"
-                ),
-                "reg": "__icon__(fluent:connected-20-regular)",
-                "fill": "__icon__(fluent:connected-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:share-android-20-regular)",
+                "fill": "__icon__(fluent:share-android-20-filled)",
                 "keywords": (
                   "share"
-                ),
-                "reg": "__icon__(fluent:share-android-20-regular)",
-                "fill": "__icon__(fluent:share-android-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:usb-plug-20-regular)",
+                "fill": "__icon__(fluent:usb-plug-20-filled)",
                 "keywords": (
                   "usb"
-                ),
-                "reg": "__icon__(fluent:usb-plug-20-regular)",
-                "fill": "__icon__(fluent:usb-plug-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:database-link-20-regular)",
+                "fill": "__icon__(fluent:database-link-20-filled)",
                 "keywords": (
                   "raid"
-                ),
-                "reg": "__icon__(fluent:database-link-20-regular)",
-                "fill": "__icon__(fluent:database-link-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:filter-20-regular)",
+                "fill": "__icon__(fluent:filter-20-filled)",
                 "keywords": (
                   "filter"
-                ),
-                "reg": "__icon__(fluent:filter-20-regular)",
-                "fill": "__icon__(fluent:filter-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:top-speed-20-regular)",
+                "fill": "__icon__(fluent:top-speed-20-filled)",
                 "keywords": (
                   "speed",
                   "homebox"
-                ),
-                "reg": "__icon__(fluent:top-speed-20-regular)",
-                "fill": "__icon__(fluent:top-speed-20-filled)"
+                )
               ),
               (
-                "keywords": (
+                "reg": "__icon__(fluent:data-bar-vertical-star-20-regular)",
+                "fill": "__icon__(fluent:data-bar-vertical-star-20-filled)",
+                "prefixes": (
                   "4g",
                   "lte",
-                  "5g",
-                  "sim",
-                  "modem"
+                  "5g"
                 ),
-                "reg": "__icon__(fluent:data-bar-vertical-star-20-regular)",
-                "fill": "__icon__(fluent:data-bar-vertical-star-20-filled)"
-              ),
-              (
                 "keywords": (
-                  "4g",
-                  "lte",
-                  "5g",
                   "sim",
                   "modem"
-                ),
-                "reg": "__icon__(fluent:data-bar-vertical-star-20-regular)",
-                "fill": "__icon__(fluent:data-bar-vertical-star-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:arrow-routing-20-regular)",
+                "fill": "__icon__(fluent:arrow-routing-20-filled)",
+                "titles": (
+                  "Routing"
+                ),
                 "keywords": (
                   "routing"
-                ),
-                "reg": "__icon__(fluent:arrow-routing-20-regular)",
-                "fill": "__icon__(fluent:arrow-routing-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:alert-urgent-20-regular)",
+                "fill": "__icon__(fluent:alert-urgent-20-filled)",
                 "keywords": (
                   "Wake_on_LAN",
                   "wol",
                   "timer"
-                ),
-                "reg": "__icon__(fluent:alert-urgent-20-regular)",
-                "fill": "__icon__(fluent:alert-urgent-20-filled)"
+                )
               ),
               (
+                "reg": "__icon__(fluent:box-multiple-20-regular)",
+                "fill": "__icon__(fluent:box-multiple-20-filled)",
+                "titles": (
+                  "Images"
+                ),
                 "keywords": (
                   "plugin",
                   "kit"
-                ),
-                "reg": "__icon__(fluent:box-multiple-20-regular)",
-                "fill": "__icon__(fluent:box-multiple-20-filled)"
-              )
-            );
-
-            $submenu-icons: (
-              "Overview": (
+                )
+              ),
+              (
                 "reg": "__icon__(fluent:document-text-20-regular)",
-                "fill": "__icon__(fluent:document-text-20-filled)"
+                "fill": "__icon__(fluent:document-text-20-filled)",
+                "titles": (
+                  "Overview"
+                )
               ),
-              "Containers": (
-                "reg": "__icon__(fluent:box-20-regular)",
-                "fill": "__icon__(fluent:box-20-filled)"
-              ),
-              "Images": (
-                "reg": "__icon__(fluent:box-multiple-20-regular)",
-                "fill": "__icon__(fluent:box-multiple-20-filled)"
-              ),
-              "Networks": (
+              (
                 "reg": "__icon__(fluent:virtual-network-20-regular)",
-                "fill": "__icon__(fluent:virtual-network-20-filled)"
+                "fill": "__icon__(fluent:virtual-network-20-filled)",
+                "titles": (
+                  "Networks"
+                )
               ),
-              "Volumes": (
+              (
                 "reg": "__icon__(fluent:storage-20-regular)",
-                "fill": "__icon__(fluent:storage-20-filled)"
+                "fill": "__icon__(fluent:storage-20-filled)",
+                "titles": (
+                  "Volumes",
+                  "Disk_Man"
+                )
               ),
-              "Events": (
-                "reg": "__icon__(fluent:document-bullet-list-clock-20-regular)",
-                "fill": "__icon__(fluent:document-bullet-list-clock-20-filled)"
-              ),
-              "Configuration": (
-                "reg": "__icon__(fluent:settings-20-regular)",
-                "fill": "__icon__(fluent:settings-20-filled)"
-              ),
-              "Interfaces": (
-                "reg": "__icon__(fluent:network-adapter-16-regular)",
-                "fill": "__icon__(fluent:network-adapter-16-filled)"
-              ),
-              "Wireless": (
-                "reg": "__icon__(fluent:wifi-1-20-regular)",
-                "fill": "__icon__(fluent:wifi-1-20-filled)"
-              ),
-              "Firewall": (
+              (
                 "reg": "__icon__(fluent:shield-20-regular)",
-                "fill": "__icon__(fluent:shield-20-filled)"
+                "fill": "__icon__(fluent:shield-20-filled)",
+                "titles": (
+                  "Firewall"
+                )
               ),
-              "DHCP": (
-                "reg": "__icon__(fluent:server-20-regular)",
-                "fill": "__icon__(fluent:server-20-filled)"
-              ),
-              "DNS": (
+              (
                 "reg": "__icon__(fluent:globe-20-regular)",
-                "fill": "__icon__(fluent:globe-20-filled)"
+                "fill": "__icon__(fluent:globe-20-filled)",
+                "titles": (
+                  "DNS"
+                )
               ),
-              "Routing": (
-                "reg": "__icon__(fluent:arrow-routing-20-regular)",
-                "fill": "__icon__(fluent:arrow-routing-20-filled)"
-              ),
-              "Diagnostics": (
+              (
                 "reg": "__icon__(fluent:heart-pulse-20-regular)",
-                "fill": "__icon__(fluent:heart-pulse-20-filled)"
+                "fill": "__icon__(fluent:heart-pulse-20-filled)",
+                "titles": (
+                  "Diagnostics"
+                )
               ),
-              "Software": (
-                "reg": "__icon__(fluent:box-20-regular)",
-                "fill": "__icon__(fluent:box-20-filled)"
-              ),
-              "Administration": (
-                "reg": "__icon__(fluent:key-20-regular)",
-                "fill": "__icon__(fluent:key-20-filled)"
-              ),
-              "Startup": (
+              (
                 "reg": "__icon__(fluent:play-20-regular)",
-                "fill": "__icon__(fluent:play-20-filled)"
+                "fill": "__icon__(fluent:play-20-filled)",
+                "titles": (
+                  "Startup"
+                )
               ),
-              "Scheduled_Tasks": (
+              (
                 "reg": "__icon__(fluent:clock-20-regular)",
-                "fill": "__icon__(fluent:clock-20-filled)"
+                "fill": "__icon__(fluent:clock-20-filled)",
+                "titles": (
+                  "Scheduled_Tasks"
+                )
               ),
-              "Mount_Points": (
+              (
                 "reg": "__icon__(fluent:hard-drive-20-regular)",
-                "fill": "__icon__(fluent:hard-drive-20-filled)"
+                "fill": "__icon__(fluent:hard-drive-20-filled)",
+                "titles": (
+                  "Mount_Points"
+                )
               ),
-              "Backup_/_Flash_Firmware": (
+              (
                 "reg": "__icon__(fluent:arrow-sync-20-regular)",
-                "fill": "__icon__(fluent:arrow-sync-20-filled)"
+                "fill": "__icon__(fluent:arrow-sync-20-filled)",
+                "titles": (
+                  "Backup_/_Flash_Firmware"
+                )
               ),
-              "Reboot": (
-                "reg": "__icon__(fluent:power-20-regular)",
-                "fill": "__icon__(fluent:power-20-filled)"
-              ),
-              "Terminal": (
+              (
                 "reg": "__icon__(fluent:window-console-20-regular)",
-                "fill": "__icon__(fluent:window-console-20-filled)"
+                "fill": "__icon__(fluent:window-console-20-filled)",
+                "titles": (
+                  "Terminal"
+                )
               ),
-              "System_Log": (
-                "reg": "__icon__(fluent:document-bullet-list-clock-20-regular)",
-                "fill": "__icon__(fluent:document-bullet-list-clock-20-filled)"
-              ),
-              "Processes": (
+              (
                 "reg": "__icon__(fluent:window-dev-tools-20-regular)",
-                "fill": "__icon__(fluent:window-dev-tools-20-filled)"
+                "fill": "__icon__(fluent:window-dev-tools-20-filled)",
+                "titles": (
+                  "Processes"
+                )
               ),
-              "Channel_Analysis": (
+              (
                 "reg": "__icon__(fluent:radar-20-regular)",
-                "fill": "__icon__(fluent:radar-20-filled)"
+                "fill": "__icon__(fluent:radar-20-filled)",
+                "titles": (
+                  "Channel_Analysis"
+                )
               ),
-              "Realtime_Graphs": (
+              (
                 "reg": "__icon__(fluent:desktop-pulse-20-regular)",
-                "fill": "__icon__(fluent:desktop-pulse-20-filled)"
+                "fill": "__icon__(fluent:desktop-pulse-20-filled)",
+                "titles": (
+                  "Realtime_Graphs"
+                )
               ),
-              "Traffic_Monitor": (
-                "reg": "__icon__(fluent:data-usage-20-regular)",
-                "fill": "__icon__(fluent:data-usage-20-filled)"
-              ),
-              "AmneziaWG": (
+              (
                 "reg": "__icon__(fluent:shield-keyhole-20-regular)",
-                "fill": "__icon__(fluent:shield-keyhole-20-filled)"
+                "fill": "__icon__(fluent:shield-keyhole-20-filled)",
+                "titles": (
+                  "AmneziaWG"
+                )
               ),
-              "WireGuard": (
-                "reg": "__icon__(fluent:shield-lock-20-regular)",
-                "fill": "__icon__(fluent:shield-lock-20-filled)"
-              ),
-              "Release_RAM": (
+              (
                 "reg": "__icon__(fluent:broom-20-regular)",
-                "fill": "__icon__(fluent:broom-20-filled)"
+                "fill": "__icon__(fluent:broom-20-filled)",
+                "titles": (
+                  "Release_RAM"
+                )
               ),
-              "System": (
-                "reg": "__icon__(fluent:settings-20-regular)",
-                "fill": "__icon__(fluent:settings-20-filled)"
-              ),
-              "Disk_Man": (
-                "reg": "__icon__(fluent:storage-20-regular)",
-                "fill": "__icon__(fluent:storage-20-filled)"
-              ),
-              "LED_Configuration": (
-                "reg": "__icon__(fluent:lightbulb-20-regular)",
-                "fill": "__icon__(fluent:lightbulb-20-filled)"
-              ),
-              "Advanced_plus": (
+              (
                 "reg": "__icon__(fluent:wrench-settings-20-regular)",
-                "fill": "__icon__(fluent:wrench-settings-20-filled)"
+                "fill": "__icon__(fluent:wrench-settings-20-filled)",
+                "titles": (
+                  "Advanced_plus"
+                )
               ),
-              "Athena_LED_Ctrl": (
+              (
                 "reg": "__icon__(fluent:desktop-20-regular)",
-                "fill": "__icon__(fluent:desktop-20-filled)"
+                "fill": "__icon__(fluent:desktop-20-filled)",
+                "titles": (
+                  "Athena_LED_Ctrl"
+                )
               ),
-              "Quick_File_Manager": (
-                "reg": "__icon__(fluent:folder-open-20-regular)",
-                "fill": "__icon__(fluent:folder-open-20-filled)"
-              ),
-              "Scheduled_Reboot": (
+              (
                 "reg": "__icon__(fluent:timer-20-regular)",
-                "fill": "__icon__(fluent:timer-20-filled)"
-              ),
-              "Argon_Config": (
-                "reg": "__icon__(fluent:paint-brush-20-regular)",
-                "fill": "__icon__(fluent:paint-brush-20-filled)"
-              ),
-              "CPU_Freq": (
-                "reg": "__icon__(fluent:developer-board-20-regular)",
-                "fill": "__icon__(fluent:developer-board-20-filled)"
-              ),
-              "Fluent_Theme": (
-                "reg": "__icon__(fluent:paint-brush-20-regular)",
-                "fill": "__icon__(fluent:paint-brush-20-filled)"
+                "fill": "__icon__(fluent:timer-20-filled)",
+                "titles": (
+                  "Scheduled_Reboot"
+                )
               )
             );
 
-            @each $item in $submenu-fuzzy-icons {
+            @each $item in $submenu-icons-spec {
+              $titles: map.get($item, "titles");
               $keywords: map.get($item, "keywords");
               $prefixes: map.get($item, "prefixes");
               $suffixes: map.get($item, "suffixes");
               $selectors: ();
 
-              @each $keyword in $keywords {
-                $selector: '&[data-title*="#{$keyword}" i]';
-                $selectors: list.append($selectors, $selector, $separator: comma);
+              @if $titles {
+                @each $title in $titles {
+                  $selector: '&[data-title="#{$title}"]';
+                  $selectors: list.append($selectors, $selector, $separator: comma);
+                }
+              }
+
+              @if $keywords {
+                @each $keyword in $keywords {
+                  $selector: '&[data-title*="#{$keyword}" i]';
+                  $selectors: list.append($selectors, $selector, $separator: comma);
+                }
               }
 
               @if $prefixes {
@@ -862,31 +884,6 @@
 
                   $reg-raw: map.get($item, "reg");
                   $fill-raw: map.get($item, "fill");
-                  $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
-                  $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
-                  $svg-reg: str-replace(map.get($fluent-icons, $reg), '"', "'");
-                  $svg-fill: str-replace(map.get($fluent-icons, $fill), '"', "'");
-                  $svg-reg-encoded: str-replace(str-replace($svg-reg, "<", "%3C"), ">", "%3E");
-                  $svg-fill-encoded: str-replace(str-replace($svg-fill, "<", "%3C"), ">", "%3E");
-
-                  &::before {
-                    @include set-icon-mask("data:image/svg+xml,#{$svg-reg-encoded}");
-                  }
-
-                  &::after {
-                    @include set-icon-mask("data:image/svg+xml,#{$svg-fill-encoded}");
-                  }
-                }
-              }
-            }
-
-            @each $title, $pair in $submenu-icons {
-              &[data-title="#{$title}"] {
-                .menu-icon {
-                  display: inline-flex;
-
-                  $reg-raw: map.get($pair, "reg");
-                  $fill-raw: map.get($pair, "fill");
                   $reg: str-replace(str-replace($reg-raw, "__icon__(", ""), ")", "");
                   $fill: str-replace(str-replace($fill-raw, "__icon__(", ""), ")", "");
                   $svg-reg: str-replace(map.get($fluent-icons, $reg), '"', "'");
@@ -1028,10 +1025,10 @@ body[data-sidebar-state="collapsed"] {
     }
   }
 
-    .main-right {
-      margin-inline-start: var(--fluent-sidebar-collapsed-width, 48px);
-      position: relative;
-      z-index: 1;
+  .main-right {
+    margin-inline-start: var(--fluent-sidebar-collapsed-width, 48px);
+    position: relative;
+    z-index: 1;
   }
 
   .main-left .nav {
