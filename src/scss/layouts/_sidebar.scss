@@ -398,7 +398,8 @@
                   "vpn",
                   "ipsec",
                   "tailscale",
-                  "nikki"
+                  "nikki",
+                  "daed"
                 ),
                 "suffixes": (
                   "tunnel",
@@ -618,6 +619,52 @@
                 ),
                 "reg": "__icon__(fluent:top-speed-20-regular)",
                 "fill": "__icon__(fluent:top-speed-20-filled)"
+              ),
+              (
+                "keywords": (
+                  "4g",
+                  "lte",
+                  "5g",
+                  "sim",
+                  "modem"
+                ),
+                "reg": "__icon__(fluent:data-bar-vertical-star-20-regular)",
+                "fill": "__icon__(fluent:data-bar-vertical-star-20-filled)"
+              ),
+              (
+                "keywords": (
+                  "4g",
+                  "lte",
+                  "5g",
+                  "sim",
+                  "modem"
+                ),
+                "reg": "__icon__(fluent:data-bar-vertical-star-20-regular)",
+                "fill": "__icon__(fluent:data-bar-vertical-star-20-filled)"
+              ),
+              (
+                "keywords": (
+                  "routing"
+                ),
+                "reg": "__icon__(fluent:arrow-routing-20-regular)",
+                "fill": "__icon__(fluent:arrow-routing-20-filled)"
+              ),
+              (
+                "keywords": (
+                  "Wake_on_LAN",
+                  "wol",
+                  "timer"
+                ),
+                "reg": "__icon__(fluent:alert-urgent-20-regular)",
+                "fill": "__icon__(fluent:alert-urgent-20-filled)"
+              ),
+              (
+                "keywords": (
+                  "plugin",
+                  "kit"
+                ),
+                "reg": "__icon__(fluent:box-multiple-20-regular)",
+                "fill": "__icon__(fluent:box-multiple-20-filled)"
               )
             );
 
