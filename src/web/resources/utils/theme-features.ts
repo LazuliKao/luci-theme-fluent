@@ -24,6 +24,29 @@ export function setupThemeFeatures() {
   const ui = L.ui;
 
   // ============================================================
+  // PATCH: REDIRECT STRICT DIRECT-CHILD MODAL SELECTORS TO DESCENT-BASED SELECTORS
+  //
+  // Why: In LuCI core's form.js, the `getActiveModalMap()` method queries `.cbi-map` using a strict
+  // child combinator: `body.modal-overlay-active > #modal_overlay > .modal.cbi-modal > .cbi-map:not(.hidden)`.
+  // Because we wrap configuration map elements in a scroll container `.modal-content-wrap`,
+  // the direct child query returns null, causing findClassInstance() to throw "Cannot read properties
+  // of null (reading 'parentNode')" upon saving.
+  //
+  // LuCI upstream source code location:
+  // https://github.com/openwrt/luci/blob/master/modules/luci-base/htdocs/luci-static/resources/form.js#L3742
+  // ============================================================
+  const originalQuerySelector = document.querySelector;
+  (document as any).querySelector = function(selector: any) {
+    if (typeof selector === 'string' && selector.includes('body.modal-overlay-active > #modal_overlay > .modal.cbi-modal > .cbi-map')) {
+      const redirectedSelector = selector.replace('body.modal-overlay-active > #modal_overlay > .modal.cbi-modal > .cbi-map', 'body.modal-overlay-active > #modal_overlay > .modal.cbi-modal .cbi-map');
+      // biome-ignore lint/style/noArguments: forward standard arguments list
+      return originalQuerySelector.call(this, redirectedSelector);
+    }
+    // biome-ignore lint/style/noArguments: forward standard arguments list
+    return originalQuerySelector.apply(this, arguments as any);
+  };
+
+  // ============================================================
   // PATCH: PREVENT EXTREMELY SHORT DROPDOWNS IN NESTED SCROLL PARENTS (E.G. TABS IN MODALS)
   // ============================================================
   // biome-ignore lint/suspicious/noExplicitAny: override core prototype without strict types
