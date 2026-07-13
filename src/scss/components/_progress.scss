@@ -3,6 +3,8 @@
 // Height: 4px, Rounded ends
 // ============================================================
 
+@use "../mixins" as *;
+
 .cbi-progressbar {
   position: relative;
   width: 100%;
@@ -35,6 +37,11 @@
     border-radius: var(--fluent-radius-circular, 10000px);
     transition: width var(--fluent-duration-normal) var(--fluent-easing-decelerate);
     overflow: hidden;
+
+    @include rtl {
+      left: auto;
+      right: 0;
+    }
   }
 
   // Label Text (title attribute)
@@ -43,7 +50,7 @@
     position: absolute;
     top: 8px;
     left: 0;
-    max-width: 100%;
+    right: 0;
     color: var(--fluent-text-secondary);
     font-family: var(--fluent-font-family);
     font-size: var(--fluent-font-size-sm, 12px);
@@ -53,8 +60,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     pointer-events: none;
+
+    @include rtl {
+      direction: ltr;
+      text-align: right;
+    }
   }
 }
+
 
 @keyframes progressShimmer {
   0% {

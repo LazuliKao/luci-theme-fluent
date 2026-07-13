@@ -5498,9 +5498,13 @@ code::-webkit-resizer {
   overflow: hidden;
 }
 
+html[dir="rtl"] .cbi-progressbar > div, body[data-fluent-dir="rtl"] .cbi-progressbar > div {
+  left: auto;
+  right: 0;
+}
+
 .cbi-progressbar:after {
   content: attr(title);
-  max-width: 100%;
   color: var(--fluent-text-secondary);
   font-family: var(--fluent-font-family);
   font-size: var(--fluent-font-size-sm, 12px);
@@ -5512,7 +5516,13 @@ code::-webkit-resizer {
   position: absolute;
   top: 8px;
   left: 0;
+  right: 0;
   overflow: hidden;
+}
+
+html[dir="rtl"] .cbi-progressbar:after, body[data-fluent-dir="rtl"] .cbi-progressbar:after {
+  text-align: right;
+  direction: ltr;
 }
 
 @keyframes progressShimmer {
