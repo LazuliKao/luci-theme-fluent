@@ -4,9 +4,9 @@
     "includes": [
       "**/*",
       "!src/scss/**/*",
-      "!htdocs/luci-static/resources/view/fluent-config.js",
-      "!htdocs/luci-static/resources/menu-fluent.js",
-      "!htdocs/luci-static/fluent/css/fluent.css"
+      "!package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js",
+      "!package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js",
+      "!package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css"
     ]
   },
   "vcs": {
