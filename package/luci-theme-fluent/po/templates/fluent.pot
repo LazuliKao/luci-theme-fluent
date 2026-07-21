@@ -1,494 +1,694 @@
 msgid ""
-msgstr ""
-"Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-06 13:54+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: zh_CN\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:799
 msgid "A new version is available!"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:954
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1011
 msgid "About"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:258
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:278
 msgid "Accent color"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:86
 msgid ""
-"Adjust layout, typography, transition timing, shadows, and inject custom CSS var"
-"iables or rules when the built-in controls are not enough."
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:86
 msgid "Advanced"
 msgstr ""
 
-msgid "and {count} more…"
-msgstr ""
-
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:127
 msgid ""
-"Animate the active underline when switching between native LuCI tabs and themed "
-"tab menus."
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:121
 msgid "Animation"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:318
 msgid ""
-"API rate limit exceeded. Please enter a GitHub Token to continue. This token is "
-"only used for frontend requests and will not be saved on the router backend."
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
 msgstr ""
 
-msgid ""
-"Applies to standard buttons, inputs, selects, and similar form controls across t"
-"he theme."
-msgstr ""
-
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:629
 msgid "Author"
 msgstr ""
 
-msgid "Backdrop blur radius"
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:359
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:383
+msgid "Authorization Required"
 msgstr ""
 
-msgid "Backend (GHProxy Acceleration)"
-msgstr ""
-
-msgid "Backend (Official GitHub)"
-msgstr ""
-
-msgid "Base font size"
-msgstr ""
-
-msgid "Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."
-msgstr ""
-
-msgid ""
-"Blur radius in pixels behind the login card in light mode. Use 0 to disable blur"
-"."
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "Card background"
-msgstr ""
-
-msgid "Card shadow"
-msgstr ""
-
-msgid "Check for updates"
-msgstr ""
-
-msgid "Checking for updates..."
-msgstr ""
-
-msgid "Choose color"
-msgstr ""
-
-msgid "Color mode"
-msgstr ""
-
-msgid "Colors"
-msgstr ""
-
-msgid "Comfortable (42px)"
-msgstr ""
-
-msgid "Compact (32px)"
-msgstr ""
-
-msgid ""
-"Configure color mode, accent colors, layout sizing, animation behavior, login-pa"
-"ge appearance, and advanced CSS overrides for luci-theme-fluent."
-msgstr ""
-
-msgid "Confirm Installation"
-msgstr ""
-
-msgid "Continue"
-msgstr ""
-
-msgid "Control height"
-msgstr ""
-
-msgid "Choose the document direction for authenticated and login pages. Automatic mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
-msgstr ""
-
-msgid ""
-"Controls the font weight used by main navigation labels and related theme text a"
-"ccents."
-msgstr ""
-
-msgid ""
-"Controls the shared Fluent corner radius tokens used by cards, buttons, inputs, "
-"and related UI surfaces."
-msgstr ""
-
-msgid ""
-"Controls the shared Fluent transition timing used by menu, header, and other the"
-"me animations."
-msgstr ""
-
-msgid "Corner radius"
-msgstr ""
-
-msgid "Custom CSS"
-msgstr ""
-
-msgid ""
-"Customize the login page background, card opacity, and blur radius for light and"
-" dark modes."
-msgstr ""
-
-msgid "Dark mode"
-msgstr ""
-
-msgid "Disabled"
-msgstr ""
-
-msgid ""
-"Display the themed loading indicator at the top edge during page loads and trans"
-"itions."
-msgstr ""
-
-msgid "Download and Install"
-msgstr ""
-
-msgid "Downloading on router"
-msgstr ""
-
-msgid "Enable page transition animation"
-msgstr ""
-
-msgid "Enable tab underline animation"
-msgstr ""
-
-msgid "Expecting: %s"
-msgstr ""
-
-msgid "Extra large (12px)"
-msgstr ""
-
-msgid "Failed to check for updates"
-msgstr ""
-
-msgid "Failed to fetch current theme version."
-msgstr ""
-
-msgid "Fast"
-msgstr ""
-
-msgid "Finished"
-msgstr ""
-
-msgid "Fluent Design 2 theme for LuCI"
-msgstr ""
-
-msgid "Fluent theme settings"
-msgstr ""
-
-msgid "Follow system"
-msgstr ""
-
-msgid "Force LTR"
-msgstr ""
-
-msgid "Force RTL"
-msgstr ""
-
-msgid "Force dark mode"
-msgstr ""
-
-msgid "Force light mode"
-msgstr ""
-
-msgid "General"
-msgstr ""
-
-msgid "Text direction"
-msgstr ""
-
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:310
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:529
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:538
+msgid "Backdrop blur radius"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:711
+msgid "Backend (GHProxy Acceleration)"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:707
+msgid "Backend (Official GitHub)"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:88
+msgid "Base font size"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:538
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:529
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:851
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:975
+msgid "Cancel"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:270
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:290
+msgid "Card background"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:104
+msgid "Card shadow"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:717
+msgid "Check for updates"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1006
+msgid "Checking for updates..."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:209
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:211
+msgid "Choose color"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:310
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-"
+"*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:305
+msgid "Color mode"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:255
+msgid "Colors"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:318
+msgid "Comfortable (42px)"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:318
+msgid "Compact (32px)"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1027
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:863
+msgid "Confirm Installation"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:859
+msgid "Continue"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:317
+msgid "Control height"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:314
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:100
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:108
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:100
+msgid "Corner radius"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:112
+msgid "Custom CSS"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:516
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:247
+msgid "Dark mode"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:109
+msgid "Disabled"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:135
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:804
+msgid "Download and Install"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:838
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:843
+msgid "Downloading on router"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:123
+msgid "Enable page transition animation"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:127
+msgid "Enable tab underline animation"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:198
+msgid "Expecting: %s"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
+msgid "Extra large (12px)"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1002
+msgid "Failed to check for updates"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:790
+msgid "Failed to fetch current theme version."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:109
+msgid "Fast"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:910
+msgid "Finished"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:618
+msgid "Fluent Design 2 theme for LuCI"
+msgstr ""
+
+#: package/luci-theme-fluent/root/usr/share/luci/menu.d/luci-theme-fluent.json:3
+msgid "Fluent Theme"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1027
+msgid "Fluent theme settings"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:306
+msgid "Follow system"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:310
+msgid "Force LTR"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:310
+msgid "Force RTL"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:306
+msgid "Force dark mode"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:306
+msgid "Force light mode"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:303
+msgid "General"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:986
 msgid "GitHub Token Required"
 msgstr ""
 
-msgid "Header height"
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:374
+msgid "Go to password configuration..."
 msgstr ""
 
-msgid "Height of the top header bar in pixels."
+#: package/luci-theme-fluent/root/usr/share/rpcd/acl.d/luci-theme-fluent.json:3
+msgid "Grant UCI and file access for luci-theme-fluent config view"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:278
 msgid ""
-"HEX color used as the primary Fluent accent when the interface is rendered in da"
-"rk mode."
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:258
 msgid ""
-"HEX color used as the primary Fluent accent when the interface is rendered in li"
-"ght mode."
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:290
 msgid "HEX color used for container/card elements in dark mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:270
 msgid "HEX color used for container/card elements in light mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:282
 msgid ""
-"HEX color used for progress-bar labels while the interface is rendered in dark m"
-"ode."
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:262
 msgid ""
-"HEX color used for progress-bar labels while the interface is rendered in light "
-"mode."
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:286
 msgid "HEX color used for the main page background in dark mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:266
 msgid "HEX color used for the main page background in light mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:294
 msgid "HEX color used for the navigation sidebar in dark mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:274
 msgid "HEX color used for the navigation sidebar in light mode."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:96
+msgid "Header height"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:96
+msgid "Height of the top header bar in pixels."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:878
 msgid "Installation cancelled by user."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:643
 msgid "Installed version"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:879
 msgid "Installing package"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:399
+msgid "Invalid username and/or password! Please try again."
+msgstr ""
+
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:381
+msgid "JavaScript required!"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:105
 msgid "Large"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
 msgid "Large (8px)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:247
 msgid "Light mode"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:404
 msgid "Login"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:524
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:533
 msgid "Login card opacity"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:516
 msgid "Login page"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:105
 msgid "Medium"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
 msgid "Medium (4px)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:313
 msgid "Navigation font weight"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:371
 msgid "Next"
 msgstr ""
 
-msgid "Nightly build available (reinstallation check)."
-msgstr ""
-
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:698
 msgid "Nightly Channel (Prerelease)"
 msgstr ""
 
-msgid "No matching package asset found for your system architecture in this release."
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:799
+msgid "Nightly build available (reinstallation check)."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:799
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:832
+msgid ""
+"No matching package asset found for your system architecture in this release."
+msgstr ""
+
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:370
+msgid "No password set!"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:105
 msgid "None"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:109
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:314
 msgid "Normal"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:533
 msgid ""
-"Opacity of the login card in dark mode. 0 is fully transparent and 1 is fully op"
-"aque."
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:524
 msgid ""
-"Opacity of the login card in light mode. 0 is fully transparent and 1 is fully o"
-"paque."
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:112
 msgid ""
-"Optional raw CSS injected into the Fluent header template. Use this for extra --"
-"fluent-* variable overrides or page-specific tweaks that are not exposed as dedi"
-"cated options."
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:658
 msgid "Package format"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:266
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:286
 msgid "Page background"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:389
+msgid "Password"
+msgstr ""
+
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:384
 msgid "Please enter your password."
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:360
 msgid "Please enter your username."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:262
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:282
 msgid "Progress bar text color"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:915
 msgid "Reload Web Interface"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:321
 msgid "Replace native select elements with the theme's custom dropdown widget."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:131
 msgid "Respect reduced-motion preference"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:985
 msgid "Retrying with token..."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
 msgid "Rounded (6px)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js:850
 msgid "Search menu items"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js:850
 msgid "Search menu…"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:104
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:314
 msgid "Semibold"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:88
 msgid ""
-"Sets the base interface font size in pixels. Most theme text scales from this va"
-"lue through the Fluent CSS variables. Recommended range: 12-18px."
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:135
 msgid "Show top loading bar"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:274
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:294
 msgid "Sidebar background"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:92
 msgid "Sidebar width"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:109
 msgid "Slow"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:105
 msgid "Small"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
 msgid "Small (2px)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:762
 msgid "Software Update"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:673
 msgid "Source code"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:101
 msgid "Square (0px)"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:694
 msgid "Stable Channel"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:838
 msgid "Starting backend download..."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:833
 msgid "Starting update process..."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:981
 msgid "Submit"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:360
 msgid "Switch theme mode"
 msgstr ""
 
-msgid ""
-"The theme is being installed on your router. The logs are displayed below. Reloa"
-"ding the web interface will apply the changes once RPCD restarts."
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:309
+msgid "Text direction"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:929
 msgid ""
-"The theme package is ready. Are you sure you want to proceed with the installati"
-"on?"
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:866
 msgid ""
-"The token does NOT require any permissions/scopes to be granted (read-only publi"
-"c access is sufficient)."
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:967
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:1027
 msgid "Theme settings"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:910
 msgid ""
-"Theme successfully updated! Reloading RPC service, please refresh the page in 5 "
-"seconds."
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:108
 msgid "Theme transition speed"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:371
+msgid ""
+"There is no password set on this router. Please configure a root password to "
+"protect the web interface."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:879
 msgid "Triggering installation on router..."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:728
 msgid "Update channel"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:943
 msgid "Update failed"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:925
 msgid "Upgrade Successful!"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:321
 msgid "Use Fluent custom select dropdowns"
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:123
 msgid ""
-"Use the browser View Transition API to animate navigation between LuCI pages whe"
-"n supported."
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:306
 msgid ""
-"Use the system/browser preference, or always render the Fluent theme in a fixed "
-"light or dark palette."
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:365
+msgid "Username"
+msgstr ""
+
+#: package/luci-theme-fluent/ucode/template/themes/fluent/sysauth.ut:490
 msgid "Username is required."
 msgstr ""
 
-msgid "valid HEX color value"
-msgstr ""
-
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:131
 msgid ""
-"When enabled, Fluent animations follow the browser or operating system reduced-m"
-"otion preference."
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:92
 msgid "Width of the main navigation sidebar in pixels."
 msgstr ""
 
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:958
 msgid "You can create a new token at"
 msgstr ""
 
+#: package/luci-theme-fluent/ucode/template/themes/fluent/header.ut:382
+msgid ""
+"You must enable JavaScript in your browser or LuCI will not work properly."
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:799
 msgid "Your theme is up to date!"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js:892
+msgid "and {count} more…"
+msgstr ""
+
+#: package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js:198
+msgid "valid HEX color value"
 msgstr ""
