@@ -1220,6 +1220,366 @@ function setupMacSelector() {
     });
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/log-viewer.tsx
+
+let log_viewer_l = "fluent-log-wordwrap", log_viewer_n = "fluent-log-autoscroll";
+function log_viewer_o(e) {
+    return "function" == typeof _ ? _(e) : e;
+}
+function log_viewer_r(e) {
+    try {
+        let t = document.createElement("textarea");
+        t.value = e, t.style.position = "fixed", t.style.left = "-9999px", t.style.top = "-9999px", document.body.appendChild(t), t.focus(), t.select();
+        let l = document.execCommand("copy");
+        return document.body.removeChild(t), l;
+    } catch (e) {
+        return !1;
+    }
+}
+function setupLogViewer() {
+    let e = document.getElementById("syslog");
+    e && log_viewer_i(e), new MutationObserver(()=>{
+        let e = document.getElementById("syslog");
+        e && "true" !== e.getAttribute("data-fluent-log-transformed") && log_viewer_i(e);
+    }).observe(document.body, {
+        childList: !0,
+        subtree: !0
+    });
+}
+function log_viewer_i(i) {
+    if ("true" === i.getAttribute("data-fluent-log-transformed")) return;
+    i.setAttribute("data-fluent-log-transformed", "true");
+    let a = "true" === localStorage.getItem(log_viewer_l), s = "false" !== localStorage.getItem(log_viewer_n), c = !1, u = null, d = null, g = jsxs("div", {
+        class: "fluent-log-viewer",
+        children: [
+            jsxs("div", {
+                class: "fluent-log-viewer__header",
+                children: [
+                    jsxs("div", {
+                        class: "fluent-log-viewer__stats",
+                        children: [
+                            jsxs("span", {
+                                class: "fluent-log-viewer__badge fluent-log-viewer__badge--lines",
+                                children: [
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--lines"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-count",
+                                        id: "fluentLogCountLines",
+                                        children: "0"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-label",
+                                        children: log_viewer_o("\u884C")
+                                    })
+                                ]
+                            }),
+                            jsxs("span", {
+                                class: "fluent-log-viewer__badge fluent-log-viewer__badge--errors",
+                                children: [
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--errors"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-count",
+                                        id: "fluentLogCountErrors",
+                                        children: "0"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-label",
+                                        children: log_viewer_o("\u9519\u8BEF")
+                                    })
+                                ]
+                            }),
+                            jsxs("span", {
+                                class: "fluent-log-viewer__badge fluent-log-viewer__badge--warnings",
+                                children: [
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--warnings"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-count",
+                                        id: "fluentLogCountWarnings",
+                                        children: "0"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-label",
+                                        children: log_viewer_o("\u8B66\u544A")
+                                    })
+                                ]
+                            }),
+                            jsxs("span", {
+                                class: "fluent-log-viewer__badge fluent-log-viewer__badge--disconnects",
+                                children: [
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--disconnects"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-count",
+                                        id: "fluentLogCountDisconnects",
+                                        children: "0"
+                                    }),
+                                    jsx("span", {
+                                        class: "fluent-log-viewer__badge-label",
+                                        children: log_viewer_o("\u65AD\u5F00")
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    jsxs("div", {
+                        class: "fluent-log-viewer__toolbar",
+                        children: [
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "wrap",
+                                title: log_viewer_o("\u81EA\u52A8\u6362\u884C"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--wrap"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "autoscroll",
+                                title: log_viewer_o("\u81EA\u52A8\u6EDA\u52A8"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--autoscroll"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "copy",
+                                title: log_viewer_o("\u590D\u5236\u65E5\u5FD7"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--copy"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "download",
+                                title: log_viewer_o("\u4E0B\u8F7D\u65E5\u5FD7"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--download"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "scroll-top",
+                                title: log_viewer_o("\u6EDA\u52A8\u5230\u9876\u90E8"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--scroll-top"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "scroll-bottom",
+                                title: log_viewer_o("\u6EDA\u52A8\u5230\u5E95\u90E8"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--scroll-bottom"
+                                })
+                            }),
+                            jsx("button", {
+                                type: "button",
+                                class: "fluent-log-viewer__tool-btn",
+                                "data-action": "fullscreen",
+                                title: log_viewer_o("\u5168\u5C4F\u67E5\u770B"),
+                                children: jsx("span", {
+                                    class: "fluent-log-viewer__icon fluent-log-viewer__icon--fullscreen"
+                                })
+                            })
+                        ]
+                    })
+                ]
+            }),
+            jsx("div", {
+                class: "fluent-log-viewer__body",
+                children: jsx("div", {
+                    class: "fluent-log-viewer__content"
+                })
+            })
+        ]
+    }), f = g.querySelector("#fluentLogCountLines"), v = g.querySelector("#fluentLogCountErrors"), p = g.querySelector("#fluentLogCountWarnings"), w = g.querySelector("#fluentLogCountDisconnects"), b = g.querySelector(".fluent-log-viewer__body"), m = g.querySelector(".fluent-log-viewer__content"), h = g.querySelector('[data-action="wrap"]'), y = g.querySelector('[data-action="autoscroll"]'), L = g.querySelector('[data-action="copy"]'), C = g.querySelector('[data-action="download"]'), x = g.querySelector('[data-action="scroll-top"]'), S = g.querySelector('[data-action="scroll-bottom"]'), E = g.querySelector('[data-action="fullscreen"]');
+    function q(e, t) {
+        let l = e.getAttribute("title") || "";
+        e.setAttribute("title", t), e.classList.add("fluent-log-viewer__tool-btn--feedback"), setTimeout(()=>{
+            e.setAttribute("title", l), e.classList.remove("fluent-log-viewer__tool-btn--feedback");
+        }, 1500);
+    }
+    function $() {
+        if (!i) return;
+        let { lines: e, errors: t, warnings: l, disconnects: n } = function(e) {
+            let t = e.split(/\r?\n/), l = [], n = 0, o = 0, r = 0, i = 0;
+            for(let e = 0; e < t.length; e++){
+                let a, s, c, u = t[e];
+                if (!u && e === t.length - 1) continue;
+                i++;
+                let d = "default", g = u, f = u.match(/^\[([^\]]+)\]\s+([a-zA-Z0-9_-]+\.([a-zA-Z0-9_-]+))\s*:\s*(?:([a-zA-Z0-9_./-]+(?:\[\d+\])?)\s*:\s*)?(.*)$/);
+                if (f) {
+                    a = f[1], s = f[2];
+                    let e = f[3].toLowerCase();
+                    c = f[4], g = f[5], [
+                        "err",
+                        "error",
+                        "crit",
+                        "alert",
+                        "emerg"
+                    ].includes(e) ? (d = "err", n++) : [
+                        "warn",
+                        "warning"
+                    ].includes(e) ? (d = "warn", o++) : [
+                        "notice",
+                        "info"
+                    ].includes(e) ? d = "notice" === e ? "notice" : "info" : "debug" === e && (d = "debug");
+                } else {
+                    let e = u.match(/^\[\s*([\d.]+)\]\s+(.*)$/);
+                    if (e) {
+                        a = e[1];
+                        let t = (g = e[2]).toLowerCase();
+                        t.includes("cut here") || t.includes("panic") || t.includes("error") || t.includes("failed") ? (d = "err", n++) : (t.includes("warning") || t.includes("warn")) && (d = "warn", o++);
+                    }
+                }
+                let v = /disconnect|disassociat|deauthenticat|Exited normally|Exit before auth/i.test(u);
+                v && r++, l.push({
+                    lineNumber: i,
+                    raw: u,
+                    time: a,
+                    level: s,
+                    levelType: d,
+                    tag: c,
+                    message: g,
+                    isDisconnect: v
+                });
+            }
+            return {
+                lines: l,
+                errors: n,
+                warnings: o,
+                disconnects: r
+            };
+        }(i.value || i.textContent || "");
+        f.textContent = String(e.length), v.textContent = String(t), p.textContent = String(l), w.textContent = String(n);
+        let o = document.createDocumentFragment();
+        e.forEach((e)=>{
+            let t = document.createElement("div");
+            t.className = `fluent-log-viewer__line fluent-log-viewer__line--${e.levelType}${e.isDisconnect ? " fluent-log-viewer__line--disconnect" : ""}`;
+            let l = document.createElement("span");
+            if (l.className = "fluent-log-viewer__line-number", l.textContent = String(e.lineNumber), t.appendChild(l), e.time) {
+                let l = document.createElement("span");
+                l.className = "fluent-log-viewer__line-time", l.textContent = function(e) {
+                    if (/^\s*[\d.]+\s*$/.test(e)) {
+                        let t = parseFloat(e);
+                        return Number.isNaN(t) ? e.trim() : `${t.toFixed(2)}s`;
+                    }
+                    let t = e.match(/(\d{2}:\d{2}:\d{2})/);
+                    if (t) {
+                        let l = {
+                            jan: "01",
+                            feb: "02",
+                            mar: "03",
+                            apr: "04",
+                            may: "05",
+                            jun: "06",
+                            jul: "07",
+                            aug: "08",
+                            sep: "09",
+                            oct: "10",
+                            nov: "11",
+                            dec: "12"
+                        }, n = e.match(/(\d{1,2})\s+([A-Za-z]{3})/i);
+                        if (n) {
+                            let e = n[1].padStart(2, "0"), o = n[2].toLowerCase();
+                            if (l[o]) return `${l[o]}-${e} ${t[1]}`;
+                        }
+                        let o = e.match(/([A-Za-z]{3})\s+(\d{1,2})/i);
+                        if (o) {
+                            let e = o[1].toLowerCase(), n = o[2].padStart(2, "0");
+                            if (l[e]) return `${l[e]}-${n} ${t[1]}`;
+                        }
+                        return t[1];
+                    }
+                    return e;
+                }(e.time), t.appendChild(l);
+            }
+            if (e.level) {
+                let l = document.createElement("span");
+                l.className = `fluent-log-viewer__level fluent-log-viewer__level--${e.levelType}`, l.textContent = e.level, t.appendChild(l);
+            }
+            if (e.tag) {
+                let l = document.createElement("span");
+                l.className = "fluent-log-viewer__tag", l.textContent = `${e.tag}:`, t.appendChild(l);
+            }
+            let n = document.createElement("span");
+            n.className = "fluent-log-viewer__text", n.textContent = e.message, t.appendChild(n), o.appendChild(t);
+        }), m.innerHTML = "", m.appendChild(o), s && requestAnimationFrame(()=>{
+            b.scrollTop = b.scrollHeight;
+        });
+    }
+    a && (h.classList.add("active"), g.classList.add("fluent-log-viewer--wrap")), s && y.classList.add("active"), i.style.display = "none", i.parentNode && i.parentNode.insertBefore(g, i.nextSibling), h.addEventListener("click", ()=>{
+        a = !a, h.classList.toggle("active", a), g.classList.toggle("fluent-log-viewer--wrap", a);
+        try {
+            localStorage.setItem(log_viewer_l, a ? "true" : "false");
+        } catch (e) {}
+    }), y.addEventListener("click", ()=>{
+        s = !s, y.classList.toggle("active", s);
+        try {
+            localStorage.setItem(log_viewer_n, s ? "true" : "false");
+        } catch (e) {}
+        s && requestAnimationFrame(()=>{
+            b.scrollTop = b.scrollHeight;
+        });
+    }), L.addEventListener("click", ()=>{
+        var e;
+        (e = i.value || i.textContent || "", navigator.clipboard && window.isSecureContext ? navigator.clipboard.writeText(e).then(()=>!0).catch(()=>log_viewer_r(e)) : Promise.resolve(log_viewer_r(e))).then((e)=>{
+            e && q(L, log_viewer_o("\u5DF2\u590D\u5236"));
+        });
+    }), C.addEventListener("click", ()=>{
+        let e = i.value || i.textContent || "", t = location.pathname.includes("dmesg"), l = new Date().toISOString().slice(0, 10), n = `${t ? "dmesg" : "syslog"}-${l}.log`, r = new Blob([
+            e
+        ], {
+            type: "text/plain;charset=utf-8"
+        }), a = URL.createObjectURL(r), s = document.createElement("a");
+        s.href = a, s.download = n, document.body.appendChild(s), s.click(), document.body.removeChild(s), URL.revokeObjectURL(a), q(C, log_viewer_o("\u5DF2\u4E0B\u8F7D"));
+    }), x.addEventListener("click", ()=>{
+        b.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }), S.addEventListener("click", ()=>{
+        b.scrollTo({
+            top: b.scrollHeight,
+            behavior: "smooth"
+        });
+    }), E.addEventListener("click", ()=>{
+        c = !c, E.classList.toggle("active", c), c ? (u = g.parentNode, d = g.nextSibling, document.body.appendChild(g), g.classList.add("fluent-log-viewer--fullscreen"), document.body.classList.add("fluent-log-fullscreen")) : (u && u.insertBefore(g, d), g.classList.remove("fluent-log-viewer--fullscreen"), document.body.classList.remove("fluent-log-fullscreen"));
+        let e = E.querySelector(".fluent-log-viewer__icon");
+        e && (e.classList.toggle("fluent-log-viewer__icon--fullscreen", !c), e.classList.toggle("fluent-log-viewer__icon--fullscreen-exit", c));
+    }), $(), new MutationObserver(()=>{
+        $();
+    }).observe(i, {
+        childList: !0,
+        characterData: !0,
+        subtree: !0,
+        attributes: !0
+    });
+    let A = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")?.set;
+    A && Object.defineProperty(i, "value", {
+        set (e) {
+            A.call(this, e), $();
+        },
+        get () {
+            return Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")?.get?.call(this);
+        },
+        configurable: !0
+    }), i.addEventListener("input", $), i.addEventListener("change", $);
+}
+
 ;// CONCATENATED MODULE: ./web/resources/menu-fluent.tsx
 
 
@@ -1230,14 +1590,15 @@ function setupMacSelector() {
 
 
 
-function menu_fluent_u(e) {
+
+function menu_fluent_p(e) {
     document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
 }
-function menu_fluent_p() {
+function menu_fluent_m() {
     let e = localStorage.getItem("fluent-sidebar-state");
     return "collapsed" === e || "expanded" === e ? e : "expanded";
 }
-function menu_fluent_m() {
+function menu_fluent_h() {
     document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
         e.classList.remove("popup-open");
     }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
@@ -1247,7 +1608,7 @@ function menu_fluent_m() {
 const main = baseclass.extend({
     async __init__ () {
         let e = await ui.menu.load();
-        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector();
+        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer();
     },
     render (e) {
         let t = e, n = "", a = ui.menu.getChildren(e);
@@ -1266,12 +1627,12 @@ const main = baseclass.extend({
         });
         i.forEach((e)=>{
             e.addEventListener("click", r);
-        }), l && l.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_u(menu_fluent_p()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_u(menu_fluent_p()) : document.body.setAttribute("data-sidebar-state", "expanded");
+        }), l && l.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_p(menu_fluent_m()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_p(menu_fluent_m()) : document.body.setAttribute("data-sidebar-state", "expanded");
         }), document.addEventListener("click", (e)=>{
             if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
             let t = e.target, n = document.querySelector("#mainmenu");
-            t && n?.contains(t) || menu_fluent_m();
+            t && n?.contains(t) || menu_fluent_h();
         });
     },
     handleMenuExpand (e) {
@@ -1291,7 +1652,7 @@ const main = baseclass.extend({
                     } else e.style.top = "", SlideAnimations.slideDown(e, "fast");
                     e.querySelectorAll("li > a").forEach((e)=>{
                         e.addEventListener("click", ()=>{
-                            menu_fluent_m();
+                            menu_fluent_h();
                         }, {
                             once: !0
                         });
@@ -1385,7 +1746,7 @@ const main = baseclass.extend({
     handleDesktopSidebarToggle (e) {
         if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
         let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-        menu_fluent_m(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_u(t), "expanded" === t && this.adjustBrandTextSize();
+        menu_fluent_h(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_p(t), "expanded" === t && this.adjustBrandTextSize();
     }
 });
 

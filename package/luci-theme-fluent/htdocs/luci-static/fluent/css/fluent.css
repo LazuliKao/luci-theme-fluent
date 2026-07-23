@@ -9914,6 +9914,514 @@ body[data-page="admin-system-package-manager"] > #modal_overlay div.modal > div:
   margin-bottom: unset !important;
 }
 
+body[data-page^="admin-status-logs-syslog"] textarea#syslog, body[data-page^="admin-status-logs-dmesg"] textarea#syslog {
+  display: none;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer {
+  background-color: var(--fluent-card-bg);
+  border: 1px solid var(--fluent-card-border);
+  border-radius: var(--fluent-card-radius);
+  box-shadow: var(--fluent-card-shadow);
+  margin-bottom: var(--fluent-space-lg);
+  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard),box-shadow var(--fluent-duration-fast) var(--fluent-easing-standard);
+  flex-direction: column;
+  display: flex;
+  overflow: hidden;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__header, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__header {
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  padding: var(--fluent-space-sm) var(--fluent-space-md);
+  background-color: var(--fluent-bg-hover);
+  border-bottom: 1px solid var(--fluent-card-border);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__stats, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__stats {
+  align-items: center;
+  gap: var(--fluent-space-xs);
+  flex-wrap: wrap;
+  display: flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge {
+  border-radius: var(--fluent-radius-circular);
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-semibold);
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  line-height: 1;
+  display: inline-flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge--lines, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge--lines {
+  background-color: color-mix(in srgb, var(--fluent-text-secondary) 12%, transparent);
+  color: var(--fluent-text-secondary);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge--errors, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge--errors {
+  background-color: var(--fluent-error-light);
+  color: var(--fluent-error);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge--warnings, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge--warnings {
+  background-color: var(--fluent-warning-light);
+  color: var(--fluent-warning);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge--disconnects, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge--disconnects {
+  background-color: var(--fluent-purple-light);
+  color: var(--fluent-purple);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge-icon, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge-icon--lines, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge-icon--lines {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-document-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M5 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V5.414a1.5 1.5 0 0 0-.44-1.06L9.647 1.439A1.5 1.5 0 0 0 8.586 1zM4 3a1 1 0 0 1 1-1h3v2.5A1.5 1.5 0 0 0 9.5 6H12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zm7.793 2H9.5a.5.5 0 0 1-.5-.5V2.207z%22/></svg>");
+  width: 14px;
+  height: 14px;
+  -webkit-mask-image: var(--fluent-mask-fluent-document-16-regular);
+  mask-image: var(--fluent-mask-fluent-document-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge-icon--errors, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge-icon--errors {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-error-circle-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1m0 1a6 6 0 1 0 0 12A6 6 0 0 0 8 2m0 8a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5m0-5.5a.5.5 0 0 1 .492.41L8.5 5v3.5a.5.5 0 0 1-.992.09L7.5 8.5V5a.5.5 0 0 1 .5-.5%22/></svg>");
+  width: 14px;
+  height: 14px;
+  -webkit-mask-image: var(--fluent-mask-fluent-error-circle-16-regular);
+  mask-image: var(--fluent-mask-fluent-error-circle-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge-icon--warnings, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge-icon--warnings {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-warning-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M5.82 2.275c.956-1.7 3.404-1.7 4.36 0l4.496 8.004c.936 1.667-.269 3.725-2.18 3.725H3.503c-1.911 0-3.115-2.058-2.179-3.725zm3.488.49a1.5 1.5 0 0 0-2.616 0L2.195 10.77a1.5 1.5 0 0 0 1.308 2.234h8.993a1.5 1.5 0 0 0 1.308-2.234zM8 9.5A.75.75 0 1 1 8 11a.75.75 0 0 1 0-1.5M8 5a.5.5 0 0 1 .5.5V8a.5.5 0 0 1-1 0V5.5A.5.5 0 0 1 8 5%22/></svg>");
+  width: 14px;
+  height: 14px;
+  -webkit-mask-image: var(--fluent-mask-fluent-warning-16-regular);
+  mask-image: var(--fluent-mask-fluent-warning-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__badge-icon--disconnects, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__badge-icon--disconnects {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-plug-disconnected-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M15.354.646a.5.5 0 0 0-.707 0l-2.07 2.07c-1.37-.999-3.37-.843-4.64.428l-.13.131a1.25 1.25 0 0 0 0 1.768l3.181 3.182c.243.244.563.366.884.366s.641-.122.884-.366l.22-.22a3.47 3.47 0 0 0 1.025-2.529a3.46 3.46 0 0 0-.71-2.059l2.063-2.063a.5.5 0 0 0 0-.708m-3.086 6.651l-.22.22a.25.25 0 0 1-.354 0L8.512 4.335a.25.25 0 0 1 0-.354l.131-.131a2.7 2.7 0 0 1 1.897-.79c.61 0 1.211.214 1.671.648c.498.468.777 1.101.788 1.783a2.48 2.48 0 0 1-.73 1.806M8.146 9.146l-.88.88l-1.293-1.293l.88-.88a.5.5 0 0 0-.707-.707l-.88.88l-.253-.253a1.253 1.253 0 0 0-1.768.001l-.22.22A3.47 3.47 0 0 0 2 10.523c.012.756.26 1.47.71 2.059L.647 14.645a.5.5 0 0 0 .708.707l2.07-2.07a3.45 3.45 0 0 0 2.036.652c.938 0 1.888-.363 2.604-1.08l.131-.131a1.25 1.25 0 0 0 0-1.768l-.222-.222l.88-.88a.5.5 0 0 0-.707-.707m-.657 2.872l-.132.131c-.994.995-2.596 1.059-3.568.142a2.48 2.48 0 0 1-.788-1.783c-.01-.682.25-1.324.732-1.806l.22-.22a.25.25 0 0 1 .177-.073c.065 0 .128.024.177.073l3.18 3.18a.25.25 0 0 1 0 .354z%22/></svg>");
+  width: 14px;
+  height: 14px;
+  -webkit-mask-image: var(--fluent-mask-fluent-plug-disconnected-16-regular);
+  mask-image: var(--fluent-mask-fluent-plug-disconnected-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__toolbar, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__toolbar {
+  align-items: center;
+  gap: 2px;
+  display: flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tool-btn, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tool-btn {
+  border-radius: var(--fluent-radius-md);
+  width: 32px;
+  height: 32px;
+  color: var(--fluent-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard),color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background: none;
+  border: none;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  display: inline-flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tool-btn:hover, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tool-btn:hover {
+  background-color: var(--fluent-bg-hover);
+  color: var(--fluent-text);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tool-btn:focus-visible, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tool-btn:focus-visible {
+  outline: 2px solid var(--fluent-primary);
+  outline-offset: -2px;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tool-btn.active, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tool-btn.active {
+  background-color: var(--fluent-bg-active);
+  color: var(--fluent-primary);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tool-btn--feedback, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tool-btn--feedback {
+  background-color: var(--fluent-success-light);
+  color: var(--fluent-success);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--wrap, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--wrap {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-text-wrap-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h10a2.5 2.5 0 0 1 0 5H9.707l.647.646a.5.5 0 0 1-.708.708l-1.5-1.5a.5.5 0 0 1 0-.708l1.5-1.5a.5.5 0 0 1 .708.708L9.707 11H12.5a1.5 1.5 0 0 0 0-3h-10a.5.5 0 0 1-.5-.5M6 11a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1 0-1z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-text-wrap-16-regular);
+  mask-image: var(--fluent-mask-fluent-text-wrap-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--autoscroll, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--autoscroll {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-clock-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M2 8a6 6 0 1 1 12 0A6 6 0 0 1 2 8m6-7a7 7 0 1 0 0 14A7 7 0 0 0 8 1m0 3.5a.5.5 0 0 0-1 0v4a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1H8z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-clock-16-regular);
+  mask-image: var(--fluent-mask-fluent-clock-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--copy, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--copy {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-copy-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M4 4.085V10.5a2.5 2.5 0 0 0 2.336 2.495L6.5 13h4.414A1.5 1.5 0 0 1 9.5 14H6a3 3 0 0 1-3-3V5.5a1.5 1.5 0 0 1 1-1.415M11.5 2A1.5 1.5 0 0 1 13 3.5v7a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 5 10.5v-7A1.5 1.5 0 0 1 6.5 2zm0 1h-5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-copy-16-regular);
+  mask-image: var(--fluent-mask-fluent-copy-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--download, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--download {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-arrow-download-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M3.5 13h9a.5.5 0 0 1 .09.992L12.5 14h-9a.5.5 0 0 1-.09-.992zh9zM7.91 1.008L8 1a.5.5 0 0 1 .492.41l.008.09v8.792l2.682-2.681a.5.5 0 0 1 .638-.058l.07.058a.5.5 0 0 1 .057.638l-.058.069l-3.535 3.536a.5.5 0 0 1-.638.057l-.07-.057l-3.535-3.536a.5.5 0 0 1 .638-.765l.069.058L7.5 10.292V1.5a.5.5 0 0 1 .41-.492L8 1z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-arrow-download-16-regular);
+  mask-image: var(--fluent-mask-fluent-arrow-download-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--scroll-top, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--scroll-top {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-arrow-up-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M7.5 13.5a.5.5 0 0 0 1 0V3.803l3.628 4.031a.5.5 0 0 0 .744-.668l-4.5-5a.5.5 0 0 0-.744 0l-4.5 5a.5.5 0 0 0 .744.668L7.5 3.803z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-arrow-up-16-regular);
+  mask-image: var(--fluent-mask-fluent-arrow-up-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--scroll-bottom, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--scroll-bottom {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-arrow-down-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M8.5 2.5a.5.5 0 1 0-1 0v9.697L3.872 8.166a.5.5 0 1 0-.744.668l4.5 5a.5.5 0 0 0 .744 0l4.5-5a.5.5 0 0 0-.744-.668L8.5 12.197z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-arrow-down-16-regular);
+  mask-image: var(--fluent-mask-fluent-arrow-down-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--fullscreen, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--fullscreen {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-full-screen-maximize-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M3.75 3a.75.75 0 0 0-.75.75V5.5a.5.5 0 0 1-1 0V3.75C2 2.784 2.784 2 3.75 2H5.5a.5.5 0 0 1 0 1zM10 2.5a.5.5 0 0 1 .5-.5h1.75c.966 0 1.75.784 1.75 1.75V5.5a.5.5 0 0 1-1 0V3.75a.75.75 0 0 0-.75-.75H10.5a.5.5 0 0 1-.5-.5M2.5 10a.5.5 0 0 1 .5.5v1.75c0 .414.336.75.75.75H5.5a.5.5 0 0 1 0 1H3.75A1.75 1.75 0 0 1 2 12.25V10.5a.5.5 0 0 1 .5-.5m11 0a.5.5 0 0 1 .5.5v1.75A1.75 1.75 0 0 1 12.25 14H10.5a.5.5 0 0 1 0-1h1.75a.75.75 0 0 0 .75-.75V10.5a.5.5 0 0 1 .5-.5%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-full-screen-maximize-16-regular);
+  mask-image: var(--fluent-mask-fluent-full-screen-maximize-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__icon--fullscreen-exit, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__icon--fullscreen-exit {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-full-screen-minimize-16-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path fill='currentColor' d=%22M11 4a1 1 0 0 0 1 1h1.5a.5.5 0 0 1 0 1H12a2 2 0 0 1-2-2V2.5a.5.5 0 0 1 1 0zm0 8a1 1 0 0 1 1-1h1.5a.5.5 0 0 0 0-1H12a2 2 0 0 0-2 2v1.5a.5.5 0 0 0 1 0zm-7-1a1 1 0 0 1 1 1v1.5a.5.5 0 0 0 1 0V12a2 2 0 0 0-2-2H2.5a.5.5 0 0 0 0 1zm1-7a1 1 0 0 1-1 1H2.5a.5.5 0 0 0 0 1H4a2 2 0 0 0 2-2V2.5a.5.5 0 0 0-1 0z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-fluent-full-screen-minimize-16-regular);
+  mask-image: var(--fluent-mask-fluent-full-screen-minimize-16-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__body, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__body {
+  max-height: 600px;
+  font-family: var(--fluent-font-mono, Consolas, Monaco, "Courier New", monospace);
+  font-size: var(--fluent-font-size-sm);
+  background-color: var(--fluent-bg-card);
+  color: var(--fluent-text);
+  padding: var(--fluent-space-xs) 0;
+  scroll-behavior: smooth;
+  line-height: 1.6;
+  overflow: auto;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__content, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__content {
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+  min-width: max-content;
+  display: flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line {
+  padding: 1px var(--fluent-space-sm);
+  white-space: pre;
+  box-sizing: border-box;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  display: flex;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line:hover, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line:hover {
+  background-color: var(--fluent-bg-hover);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--err, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--err {
+  background-color: color-mix(in srgb, var(--fluent-error) 8%, transparent);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--err .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--err .fluent-log-viewer__line-number {
+  border-left-color: var(--fluent-error);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--warn, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--warn {
+  background-color: color-mix(in srgb, var(--fluent-warning) 8%, transparent);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--warn .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--warn .fluent-log-viewer__line-number {
+  border-left-color: var(--fluent-warning);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--info .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--notice .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--info .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--notice .fluent-log-viewer__line-number {
+  border-left-color: var(--fluent-info);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line--disconnect .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line--disconnect .fluent-log-viewer__line-number {
+  border-left-color: var(--fluent-purple);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line-number, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line-number {
+  text-align: right;
+  -webkit-user-select: none;
+  user-select: none;
+  min-width: 34px;
+  color: var(--fluent-text-disabled);
+  border-left: 2px solid #0000;
+  flex-shrink: 0;
+  padding: 0 4px 0 6px;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__line-time, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__line-time {
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-xs);
+  flex-shrink: 0;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level {
+  border-radius: var(--fluent-radius-sm);
+  font-size: var(--fluent-font-size-xs);
+  font-weight: var(--fluent-font-weight-semibold);
+  background-color: var(--fluent-bg-hover);
+  color: var(--fluent-text);
+  flex-shrink: 0;
+  padding: 1px 6px;
+  display: inline-block;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--err, body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--crit, body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--alert, body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--emerg, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--err, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--crit, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--alert, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--emerg {
+  background-color: var(--fluent-error-light);
+  color: var(--fluent-error);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--warn, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--warn {
+  background-color: var(--fluent-warning-light);
+  color: var(--fluent-warning);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--info, body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__level--notice, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--info, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__level--notice {
+  background-color: var(--fluent-info-light);
+  color: var(--fluent-info);
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__tag, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__tag {
+  color: var(--fluent-primary);
+  font-weight: var(--fluent-font-weight-semibold);
+  flex-shrink: 0;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer__text, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer__text {
+  color: var(--fluent-text);
+  flex: 1;
+  min-width: 0;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--wrap .fluent-log-viewer__body, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--wrap .fluent-log-viewer__body {
+  overflow-x: hidden !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--wrap .fluent-log-viewer__content, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--wrap .fluent-log-viewer__content {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--wrap .fluent-log-viewer__line, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--wrap .fluent-log-viewer__line {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--wrap .fluent-log-viewer__text, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--wrap .fluent-log-viewer__text {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--fullscreen, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--fullscreen {
+  z-index: 999999 !important;
+  background-color: var(--fluent-card-bg) !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  position: fixed !important;
+  inset: 0 !important;
+}
+
+body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--fullscreen .fluent-log-viewer__body, body[data-page^="admin-status-logs-dmesg"] .fluent-log-viewer--fullscreen .fluent-log-viewer__body {
+  flex: 1 !important;
+  max-height: none !important;
+}
+
+body.fluent-log-fullscreen {
+  overflow: hidden !important;
+}
+
 body.login-page {
   width: 100vw !important;
   min-width: 100vw !important;
@@ -12736,6 +13244,8 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-error-light: #fde7e9;
   --fluent-info: var(--fluent-primary);
   --fluent-info-light: var(--fluent-primary-lightest);
+  --fluent-purple: #7e22ce;
+  --fluent-purple-light: #f3e8ff;
   --fluent-shadow-sm: 0 2px 4px #0000000a, 0 2px 10px #0000000f;
   --fluent-shadow-md: 0 4px 8px #0000000f, 0 4px 18px #00000014;
   --fluent-shadow-lg: 0 8px 16px #00000014, 0 8px 32px #0000001a;
@@ -12831,6 +13341,8 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   --fluent-error-hover: #ff8080;
   --fluent-error-active: #ff9f9f;
   --fluent-error-light: #400;
+  --fluent-purple: #c084fc;
+  --fluent-purple-light: #c084fc2e;
   --fluent-text: #fff;
   --fluent-text-secondary: #adadad;
   --fluent-text-disabled: #6b6b6b;

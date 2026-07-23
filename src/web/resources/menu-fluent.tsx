@@ -6,6 +6,7 @@ import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupThemeFeatures } from "./utils/theme-features";
 import { setupMenuSearch } from "./utils/menu-search";
 import { setupMacSelector } from "./utils/mac-selector";
+import { setupLogViewer } from "./utils/log-viewer";
 
 
 interface Module {
@@ -63,6 +64,7 @@ const module: Module = {
     setupThemeFeatures();
     setupMenuSearch(data);
     setupMacSelector();
+    setupLogViewer();
   },
 
   /**

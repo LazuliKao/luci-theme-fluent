@@ -1,0 +1,349 @@
+@use "overrides-utils" as *;
+@use "../mixins" as *;
+@use "../icons" as *;
+
+@mixin admin-status-logs-styles {
+  // Hide original textarea while retaining it in DOM for LuCI form updates
+  textarea#syslog {
+    display: none;
+  }
+
+  .fluent-log-viewer {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--fluent-card-bg);
+    border: 1px solid var(--fluent-card-border);
+    border-radius: var(--fluent-card-radius);
+    box-shadow: var(--fluent-card-shadow);
+    margin-bottom: var(--fluent-space-lg);
+    transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+                border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+                box-shadow var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--fluent-space-sm);
+      padding: var(--fluent-space-sm) var(--fluent-space-md);
+      background-color: var(--fluent-bg-hover);
+      border-bottom: 1px solid var(--fluent-card-border);
+    }
+
+    &__stats {
+      display: flex;
+      align-items: center;
+      gap: var(--fluent-space-xs);
+      flex-wrap: wrap;
+    }
+
+    &__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--fluent-radius-circular);
+      font-size: var(--fluent-font-size-sm);
+      font-weight: var(--fluent-font-weight-semibold);
+      line-height: 1;
+
+      &--lines {
+        background-color: color-mix(in srgb, var(--fluent-text-secondary) 12%, transparent);
+        color: var(--fluent-text-secondary);
+      }
+
+      &--errors {
+        background-color: var(--fluent-error-light);
+        color: var(--fluent-error);
+      }
+
+      &--warnings {
+        background-color: var(--fluent-warning-light);
+        color: var(--fluent-warning);
+      }
+
+      &--disconnects {
+        background-color: var(--fluent-purple-light);
+        color: var(--fluent-purple);
+      }
+
+      &-icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+
+        &--lines {
+          @include fluent-mask-icon-by-name("fluent:document-16-regular", 14px, currentColor);
+        }
+        &--errors {
+          @include fluent-mask-icon-by-name("fluent:error-circle-16-regular", 14px, currentColor);
+        }
+        &--warnings {
+          @include fluent-mask-icon-by-name("fluent:warning-16-regular", 14px, currentColor);
+        }
+        &--disconnects {
+          @include fluent-mask-icon-by-name("fluent:plug-disconnected-16-regular", 14px, currentColor);
+        }
+      }
+    }
+
+    &__toolbar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    &__tool-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: var(--fluent-radius-md);
+      border: none;
+      background: transparent;
+      color: var(--fluent-text-secondary);
+      cursor: pointer;
+      outline: none;
+      transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+                  color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      &:hover {
+        background-color: var(--fluent-bg-hover);
+        color: var(--fluent-text);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--fluent-primary);
+        outline-offset: -2px;
+      }
+
+      // Minimal Fluent UI 2 Toolbar Active Toggle
+      &.active {
+        background-color: var(--fluent-bg-active);
+        color: var(--fluent-primary);
+      }
+
+      &--feedback {
+        background-color: var(--fluent-success-light);
+        color: var(--fluent-success);
+      }
+    }
+
+    &__icon {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+
+      &--wrap {
+        @include fluent-mask-icon-by-name("fluent:text-wrap-16-regular", 16px, currentColor);
+      }
+      &--autoscroll {
+        @include fluent-mask-icon-by-name("fluent:clock-16-regular", 16px, currentColor);
+      }
+      &--copy {
+        @include fluent-mask-icon-by-name("fluent:copy-16-regular", 16px, currentColor);
+      }
+      &--download {
+        @include fluent-mask-icon-by-name("fluent:arrow-download-16-regular", 16px, currentColor);
+      }
+      &--scroll-top {
+        @include fluent-mask-icon-by-name("fluent:arrow-up-16-regular", 16px, currentColor);
+      }
+      &--scroll-bottom {
+        @include fluent-mask-icon-by-name("fluent:arrow-down-16-regular", 16px, currentColor);
+      }
+      &--fullscreen {
+        @include fluent-mask-icon-by-name("fluent:full-screen-maximize-16-regular", 16px, currentColor);
+      }
+      &--fullscreen-exit {
+        @include fluent-mask-icon-by-name("fluent:full-screen-minimize-16-regular", 16px, currentColor);
+      }
+    }
+
+    &__body {
+      max-height: 600px;
+      overflow-y: auto;
+      overflow-x: auto;
+      font-family: var(--fluent-font-mono, Consolas, Monaco, "Courier New", monospace);
+      font-size: var(--fluent-font-size-sm);
+      line-height: 1.6;
+      background-color: var(--fluent-bg-card);
+      color: var(--fluent-text);
+      padding: var(--fluent-space-xs) 0;
+      scroll-behavior: smooth;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      min-width: max-content;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    &__line {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 1px var(--fluent-space-sm);
+      white-space: pre;
+      min-width: 0;
+      box-sizing: border-box;
+
+      &:hover {
+        background-color: var(--fluent-bg-hover);
+      }
+
+      &--err {
+        background-color: color-mix(in srgb, var(--fluent-error) 8%, transparent);
+        .fluent-log-viewer__line-number {
+          border-left-color: var(--fluent-error);
+        }
+      }
+
+      &--warn {
+        background-color: color-mix(in srgb, var(--fluent-warning) 8%, transparent);
+        .fluent-log-viewer__line-number {
+          border-left-color: var(--fluent-warning);
+        }
+      }
+
+      &--info,
+      &--notice {
+        .fluent-log-viewer__line-number {
+          border-left-color: var(--fluent-info);
+        }
+      }
+
+      &--disconnect {
+        .fluent-log-viewer__line-number {
+          border-left-color: var(--fluent-purple);
+        }
+      }
+    }
+
+    &__line-number {
+      min-width: 34px;
+      text-align: right;
+      user-select: none;
+      color: var(--fluent-text-disabled);
+      padding: 0 4px 0 6px;
+      border-left: 2px solid transparent;
+      flex-shrink: 0;
+    }
+
+    &__line-time {
+      color: var(--fluent-text-secondary);
+      flex-shrink: 0;
+      font-size: var(--fluent-font-size-xs);
+    }
+
+    &__level {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: var(--fluent-radius-sm);
+      font-size: var(--fluent-font-size-xs);
+      font-weight: var(--fluent-font-weight-semibold);
+      flex-shrink: 0;
+      background-color: var(--fluent-bg-hover);
+      color: var(--fluent-text);
+
+      &--err,
+      &--crit,
+      &--alert,
+      &--emerg {
+        background-color: var(--fluent-error-light);
+        color: var(--fluent-error);
+      }
+
+      &--warn {
+        background-color: var(--fluent-warning-light);
+        color: var(--fluent-warning);
+      }
+
+      &--info,
+      &--notice {
+        background-color: var(--fluent-info-light);
+        color: var(--fluent-info);
+      }
+    }
+
+    &__tag {
+      color: var(--fluent-primary);
+      font-weight: var(--fluent-font-weight-semibold);
+      flex-shrink: 0;
+    }
+
+    &__text {
+      color: var(--fluent-text);
+      min-width: 0;
+      flex: 1 1 0%;
+    }
+
+    // Strict Word Wrap Mode overrides: eliminate horizontal scrollbar & force text wrap within viewport
+    &--wrap {
+      .fluent-log-viewer__body {
+        overflow-x: hidden !important;
+      }
+
+      .fluent-log-viewer__content {
+        min-width: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .fluent-log-viewer__line {
+        width: 100% !important;
+        max-width: 100% !important;
+        white-space: pre-wrap !important;
+        word-break: break-all !important;
+        overflow-wrap: anywhere !important;
+      }
+
+      .fluent-log-viewer__text {
+        min-width: 0 !important;
+        flex: 1 1 0% !important;
+        white-space: pre-wrap !important;
+        word-break: break-all !important;
+        overflow-wrap: anywhere !important;
+      }
+    }
+
+    // Floating viewport fullscreen mode (matches anywhere under body[data-page^="..."])
+    &--fullscreen {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      z-index: 999999 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      margin: 0 !important;
+      height: 100vh !important;
+      width: 100vw !important;
+      background-color: var(--fluent-card-bg) !important;
+      box-shadow: none !important;
+
+      .fluent-log-viewer__body {
+        max-height: none !important;
+        flex: 1 !important;
+      }
+    }
+  }
+}
+
+// Global page scope for syslog & dmesg pages
+body[data-page^="admin-status-logs-syslog"],
+body[data-page^="admin-status-logs-dmesg"] {
+  @include admin-status-logs-styles;
+}
+
+// Prevent body scroll when fullscreen mode active
+body.fluent-log-fullscreen {
+  overflow: hidden !important;
+}
