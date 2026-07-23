@@ -107,14 +107,14 @@ body > div.main > div.main-right > header {
 
   .mobile-toggle {
     display: none !important;
-    @include respond-down("md") {
+    @include mobile-only {
       display: flex !important;
     }
   }
 
   .desktop-toggle {
     display: flex !important;
-    @include respond-down("md") {
+    @include mobile-only {
       display: none !important;
     }
   }
@@ -311,7 +311,7 @@ body > div.main > div.main-right > header {
     }
   }
 
-  @include respond-down("md") {
+  @include mobile-only {
     padding: 0 var(--fluent-space-sm);
     gap: var(--fluent-space-sm);
 

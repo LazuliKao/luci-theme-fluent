@@ -724,7 +724,7 @@ body.login-page {
 // ============================================================
 // RESPONSIVE DESIGN
 // ============================================================
-@media screen and (max-width: 576px) {
+@include phone-only {
   .login-page {
     padding: 0 !important;
     align-items: stretch !important;

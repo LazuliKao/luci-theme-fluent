@@ -31,7 +31,7 @@
           }
         }
       }
-      @include respond-down("md") {
+      @include mobile-only {
         padding: var(--fluent-space-md);
       }
     }

@@ -275,7 +275,7 @@ label[data-tooltip] {
 // ============================================================
 // 5. RESPONSIVE OVERRIDES
 // ============================================================
-@include respond-to("md") {
+@include tablet-up {
   .zonebadge .cbi-tooltip {
     inset-inline-start: 0;
     transform: translateY(var(--fluent-space-xs));

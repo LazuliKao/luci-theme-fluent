@@ -41,7 +41,7 @@
       display: none;
     }
 
-    @include respond-down("md") {
+    @include mobile-only {
       padding-inline-end: var(--fluent-space-sm);
     }
   }
@@ -63,7 +63,7 @@
     align-items: center;
     justify-content: center;
 
-    @include respond-down("md") {
+    @include mobile-only {
       display: none;
     }
   }

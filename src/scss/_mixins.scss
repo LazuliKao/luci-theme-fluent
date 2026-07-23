@@ -12,6 +12,7 @@ $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 $breakpoint-xxl: 1400px;
 
+// --- Base Breakpoint Helpers ---
 @mixin respond-to($breakpoint) {
   @if $breakpoint == "sm" {
     @media (min-width: $breakpoint-sm) {
@@ -42,7 +43,7 @@ $breakpoint-xxl: 1400px;
       @content;
     }
   } @else if $breakpoint == "md" {
-    @media (max-width: $breakpoint-md) {
+    @media (max-width: ($breakpoint-md - 1px)) {
       @content;
     }
   } @else if $breakpoint == "lg" {
@@ -57,6 +58,57 @@ $breakpoint-xxl: 1400px;
     @media (max-width: ($breakpoint-xxl - 1px)) {
       @content;
     }
+  }
+}
+
+// --- Semantic Responsive Mixins (Recommended) ---
+
+/// Target mobile screen sizes (< 768px, i.e., max-width: 767px)
+@mixin mobile-only {
+  @include respond-down("md") {
+    @content;
+  }
+}
+
+/// Target small phone screen sizes (< 576px, i.e., max-width: 575px)
+@mixin phone-only {
+  @include respond-down("sm") {
+    @content;
+  }
+}
+
+/// Target tablet and smaller screens (< 992px, i.e., max-width: 991px)
+@mixin tablet-down {
+  @include respond-down("lg") {
+    @content;
+  }
+}
+
+/// Target tablet and larger screens (>= 768px)
+@mixin tablet-up {
+  @include respond-to("md") {
+    @content;
+  }
+}
+
+/// Target strictly tablet screen range (768px ~ 991px)
+@mixin tablet-only {
+  @media (min-width: $breakpoint-md) and (max-width: ($breakpoint-lg - 1px)) {
+    @content;
+  }
+}
+
+/// Target desktop and larger screens (>= 992px)
+@mixin desktop-up {
+  @include respond-to("lg") {
+    @content;
+  }
+}
+
+/// Target large desktop screens (>= 1200px)
+@mixin large-desktop-up {
+  @include respond-to("xl") {
+    @content;
   }
 }
 

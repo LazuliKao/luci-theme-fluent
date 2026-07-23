@@ -17,7 +17,7 @@
   max-width: 100%;
   box-sizing: border-box;
 
-  @media (max-width: 767px) {
+  @include mobile-only {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     @include custom-scrollbar;
@@ -210,7 +210,7 @@ td.cbi-section-actions {
     flex-wrap: nowrap;
   }
 }
-@media (max-width: 767px) {
+@include mobile-only {
   .table,
   .cbi-section-table {
     display: block !important;

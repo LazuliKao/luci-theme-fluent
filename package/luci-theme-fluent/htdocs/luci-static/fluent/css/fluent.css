@@ -56,7 +56,7 @@
   --fluent-modal-padding: var(--fluent-space-xl);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   :root {
     --fluent-modal-padding: var(--fluent-space-lg);
   }
@@ -313,7 +313,7 @@ body::-webkit-resizer {
   }
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 767px) {
   .hide-sm {
     display: none !important;
   }
@@ -8728,7 +8728,7 @@ label[data-tooltip] {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .fluent-menu-search .fluent-menu-search-input {
     padding-inline-end: var(--fluent-space-sm);
   }
@@ -8752,7 +8752,7 @@ label[data-tooltip] {
   transform: translateY(-50%);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .fluent-menu-search .fluent-menu-search-hotkey {
     display: none;
   }
@@ -9847,7 +9847,7 @@ body[data-page="admin-dashboard"] > .main > .main-right > #maincontent .cbi-prog
   height: 12px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body[data-page="admin-dashboard"] > .main > .main-right > #maincontent .dashboard-bg {
     flex: 100%;
     min-width: 0;
@@ -10520,7 +10520,7 @@ html[dir="rtl"] .login-page .login-container .login-form .form-login, body[data-
   background-color: #ffffff1a !important;
 }
 
-@media screen and (max-width: 576px) {
+@media (max-width: 575px) {
   .login-page {
     justify-content: flex-start !important;
     align-items: stretch !important;
@@ -12197,7 +12197,7 @@ body[data-sidebar-state="collapsed"] .main-left .nav > li > a.menu.popup-open .m
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   html[dir="ltr"] .main-left, body[data-fluent-dir="ltr"] .main-left {
     transform: translateX(-100%);
   }
@@ -12369,7 +12369,7 @@ body > div.main > div.main-right > header .mobile-toggle {
   display: none !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body > div.main > div.main-right > header .mobile-toggle {
     display: flex !important;
   }
@@ -12379,7 +12379,7 @@ body > div.main > div.main-right > header .desktop-toggle {
   display: flex !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body > div.main > div.main-right > header .desktop-toggle {
     display: none !important;
   }
@@ -12643,7 +12643,7 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   background: #ffffff14;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body > div.main > div.main-right > header {
     padding: 0 var(--fluent-space-sm);
     gap: var(--fluent-space-sm);
@@ -12692,7 +12692,7 @@ body > div.main > div.main-right > header [data-theme="dark"] .theme-toggle:hove
   bottom: 4px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .main > .main-right > #maincontent {
     padding: var(--fluent-space-md);
   }

@@ -158,7 +158,7 @@
   // RESPONSIVE
   // ──────────────────────────────────────────────────────────
 
-  @include respond-down("md") {
+  @include mobile-only {
     .dashboard-bg {
       min-width: 0;
       flex: 1 1 100%;

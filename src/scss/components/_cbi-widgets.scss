@@ -263,7 +263,7 @@ div.td[data-type="fvalue"] {
   color: var(--fluent-text-secondary);
 }
 
-@include respond-to("md") {
+@include tablet-up {
   div.tr[data-title] {
     flex-direction: row;
     gap: 0;

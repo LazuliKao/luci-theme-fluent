@@ -129,7 +129,7 @@ body[data-page="admin-dashboard"] {
     color: var(--fluent-error);
   }
 
-  @include respond-down("md") {
+  @include mobile-only {
     // mobile override
   }
 }

@@ -103,7 +103,7 @@
   --fluent-modal-radius: var(--fluent-radius-lg);
   --fluent-modal-padding: var(--fluent-space-xl);
 
-  @include respond-down("md") {
+  @include mobile-only {
     --fluent-modal-padding: var(--fluent-space-lg);
   }
 
