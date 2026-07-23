@@ -583,7 +583,7 @@ div[id="view"] > :not(.spinning) {
   border-color: var(--fluent-btn-secondary-border-active);
 }
 
-.cbi-button.cbi-button-save, .cbi-button.cbi-button-apply, .cbi-button.cbi-button-positive, .cbi-button.primary, .btn.cbi-button-save, .btn.cbi-button-apply, .btn.cbi-button-positive, .btn.primary {
+.cbi-button.cbi-button-save, .cbi-button.cbi-button-apply, .cbi-button.cbi-button-positive, .cbi-button.cbi-button-action, .cbi-button.primary, .cbi-button.important, .btn.cbi-button-save, .btn.cbi-button-apply, .btn.cbi-button-positive, .btn.cbi-button-action, .btn.primary, .btn.important {
   height: var(--fluent-btn-height);
   font-family: var(--fluent-font-family);
   font-size: var(--fluent-font-size-base);
@@ -602,7 +602,7 @@ div[id="view"] > :not(.spinning) {
   display: inline-flex;
 }
 
-.cbi-button.cbi-button-save:disabled, .cbi-button.cbi-button-apply:disabled, .cbi-button.cbi-button-positive:disabled, .cbi-button.primary:disabled, .btn.cbi-button-save:disabled, .btn.cbi-button-apply:disabled, .btn.cbi-button-positive:disabled, .btn.primary:disabled {
+.cbi-button.cbi-button-save:disabled, .cbi-button.cbi-button-apply:disabled, .cbi-button.cbi-button-positive:disabled, .cbi-button.cbi-button-action:disabled, .cbi-button.primary:disabled, .cbi-button.important:disabled, .btn.cbi-button-save:disabled, .btn.cbi-button-apply:disabled, .btn.cbi-button-positive:disabled, .btn.cbi-button-action:disabled, .btn.primary:disabled, .btn.important:disabled {
   color: var(--fluent-text-disabled);
   background: var(--fluent-bg-active);
   border-color: var(--fluent-bg-active);
@@ -610,23 +610,23 @@ div[id="view"] > :not(.spinning) {
   pointer-events: none;
 }
 
-.cbi-button.cbi-button-save:focus-visible, .cbi-button.cbi-button-apply:focus-visible, .cbi-button.cbi-button-positive:focus-visible, .cbi-button.primary:focus-visible, .btn.cbi-button-save:focus-visible, .btn.cbi-button-apply:focus-visible, .btn.cbi-button-positive:focus-visible, .btn.primary:focus-visible {
+.cbi-button.cbi-button-save:focus-visible, .cbi-button.cbi-button-apply:focus-visible, .cbi-button.cbi-button-positive:focus-visible, .cbi-button.cbi-button-action:focus-visible, .cbi-button.primary:focus-visible, .cbi-button.important:focus-visible, .btn.cbi-button-save:focus-visible, .btn.cbi-button-apply:focus-visible, .btn.cbi-button-positive:focus-visible, .btn.cbi-button-action:focus-visible, .btn.primary:focus-visible, .btn.important:focus-visible {
   outline: 2px solid var(--fluent-focus-color);
   outline-offset: 2px;
 }
 
-.cbi-button.cbi-button-save, .cbi-button.cbi-button-apply, .cbi-button.cbi-button-positive, .cbi-button.primary, .btn.cbi-button-save, .btn.cbi-button-apply, .btn.cbi-button-positive, .btn.primary {
+.cbi-button.cbi-button-save, .cbi-button.cbi-button-apply, .cbi-button.cbi-button-positive, .cbi-button.cbi-button-action, .cbi-button.primary, .cbi-button.important, .btn.cbi-button-save, .btn.cbi-button-apply, .btn.cbi-button-positive, .btn.cbi-button-action, .btn.primary, .btn.important {
   background: var(--fluent-btn-primary-bg);
   color: var(--fluent-text-on-primary);
   border-color: var(--fluent-btn-primary-bg);
 }
 
-.cbi-button.cbi-button-save:hover, .cbi-button.cbi-button-apply:hover, .cbi-button.cbi-button-positive:hover, .cbi-button.primary:hover, .btn.cbi-button-save:hover, .btn.cbi-button-apply:hover, .btn.cbi-button-positive:hover, .btn.primary:hover {
+.cbi-button.cbi-button-save:hover, .cbi-button.cbi-button-apply:hover, .cbi-button.cbi-button-positive:hover, .cbi-button.cbi-button-action:hover, .cbi-button.primary:hover, .cbi-button.important:hover, .btn.cbi-button-save:hover, .btn.cbi-button-apply:hover, .btn.cbi-button-positive:hover, .btn.cbi-button-action:hover, .btn.primary:hover, .btn.important:hover {
   background: var(--fluent-btn-primary-bg-hover);
   border-color: var(--fluent-btn-primary-bg-hover);
 }
 
-.cbi-button.cbi-button-save:active, .cbi-button.cbi-button-apply:active, .cbi-button.cbi-button-positive:active, .cbi-button.primary:active, .btn.cbi-button-save:active, .btn.cbi-button-apply:active, .btn.cbi-button-positive:active, .btn.primary:active {
+.cbi-button.cbi-button-save:active, .cbi-button.cbi-button-apply:active, .cbi-button.cbi-button-positive:active, .cbi-button.cbi-button-action:active, .cbi-button.primary:active, .cbi-button.important:active, .btn.cbi-button-save:active, .btn.cbi-button-apply:active, .btn.cbi-button-positive:active, .btn.cbi-button-action:active, .btn.primary:active, .btn.important:active {
   background: var(--fluent-btn-primary-bg-active);
   border-color: var(--fluent-btn-primary-bg-active);
 }

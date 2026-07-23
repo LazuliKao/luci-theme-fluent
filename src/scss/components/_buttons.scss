@@ -13,7 +13,9 @@
   &.cbi-button-save,
   &.cbi-button-apply,
   &.cbi-button-positive,
-  &.primary {
+  &.cbi-button-action,
+  &.primary,
+  &.important {
     @include button-primary;
   }
 
