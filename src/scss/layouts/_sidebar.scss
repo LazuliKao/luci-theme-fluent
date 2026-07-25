@@ -64,6 +64,12 @@ $sidebar-icons: (
   )
 );
 
+$default-reg: str-replace(map.get($fluent-icons, "apps-20-regular"), '"', "'");
+$default-fill: str-replace(map.get($fluent-icons, "apps-20-filled"), '"', "'");
+$default-reg-encoded: str-replace(str-replace($default-reg, "<", "%3C"), ">", "%3E");
+$default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", "%3E");
+
+
 @each $title, $pair in $sidebar-icons {
   $reg-raw: map.get($pair, "reg");
   $fill-raw: map.get($pair, "fill");
@@ -175,11 +181,6 @@ $sidebar-icons: (
       border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
 
     .menu-icon {
-      $default-reg: str-replace(map.get($fluent-icons, "apps-20-regular"), '"', "'");
-      $default-fill: str-replace(map.get($fluent-icons, "apps-20-filled"), '"', "'");
-      $default-reg-encoded: str-replace(str-replace($default-reg, "<", "%3C"), ">", "%3E");
-      $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", "%3E");
-
       position: relative;
       width: 20px;
       height: 20px;
@@ -362,7 +363,7 @@ $sidebar-icons: (
               background var(--fluent-duration-fast) var(--fluent-easing-standard);
 
             .menu-icon {
-              display: none;
+              display: inline-flex;
               position: relative;
               width: 16px;
               height: 16px;
@@ -387,10 +388,12 @@ $sidebar-icons: (
               }
 
               &::before {
+                @include set-icon-mask("data:image/svg+xml,#{$default-reg-encoded}");
                 opacity: 1;
               }
 
               &::after {
+                @include set-icon-mask("data:image/svg+xml,#{$default-fill-encoded}");
                 opacity: 0;
               }
             }
