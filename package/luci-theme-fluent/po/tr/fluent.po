@@ -1,0 +1,588 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "Yeni bir sürüm mevcut!"
+
+msgid "About"
+msgstr "Hakkında"
+
+msgid "Accent color"
+msgstr "Vurgu rengi"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr ""
+"Yerleşim, tipografi, geçiş zamanlaması, gölgeler gibi ayarları yapın ve "
+"yerleşik kontroller yeterli olmadığında özel CSS değişkenleri veya kurallar "
+"ekleyin."
+
+msgid "Advanced"
+msgstr "Gelişmiş"
+
+msgid "Advanced MAC Selector"
+msgstr "Gelişmiş MAC Seçici"
+
+msgid "and {count} more…"
+msgstr "ve {count} daha fazla…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr ""
+"Yerel LuCI sekmeleri ve temalı sekme menüleri arasında geçiş yaparken, etkin "
+"alt çizginin animasyonunu sağlayın."
+
+msgid "Animation"
+msgstr "Animasyon"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"API hız sınırı aşıldı. Devam etmek için bir GitHub Token girin. Bu token "
+"yalnızca ön uç istekleri için kullanılır ve yönlendirici arka ucunda "
+"kaydedilmez."
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr ""
+"Standart düğmeler, giriş alanları, seçim kutuları ve tema genelindeki benzer "
+"form kontrollerine uygulanır."
+
+msgid "Author"
+msgstr "Yazar"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "Otomatik (yalnızca Arapça/Farsça yerel ayarlar)"
+
+msgid "Backdrop blur radius"
+msgstr "Arka plan bulanıklık yarıçapı"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "Arka Uç (GHProxy Hızlandırma)"
+
+msgid "Backend (Official GitHub)"
+msgstr "Arka Uç (Resmi GitHub)"
+
+msgid "Base font size"
+msgstr "Temel yazı boyutu"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Karanlık modda, giriş kartının arkasındaki bulanıklık yarıçapı (piksel). "
+"Bulanıklığı devre dışı bırakmak için 0 kullanın."
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Açık modda, giriş kartının arkasındaki bulanıklık yarıçapı (piksel). "
+"Bulanıklığı devre dışı bırakmak için 0 kullanın."
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Card background"
+msgstr "Kart arka planı"
+
+msgid "Card shadow"
+msgstr "Kart gölgelendirmesi"
+
+msgid "Check for updates"
+msgstr "Güncellemeleri kontrol et"
+
+msgid "Checking for updates..."
+msgstr "Güncellemeler aranıyor..."
+
+msgid "Choose color"
+msgstr "Renk seç"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"Kimlik doğrulama ve giriş sayfaları için belge yönünü seçin. Otomatik mod, "
+"Arapça ve Farsça dil kodlarını (ar, ar_*, ar-*, fa, fa_*, fa-*) sağdan sola "
+"(RTL) olarak çözer ve eksik veya tanınmayan yerel ayarlar için soldan sağa "
+"(LTR) olarak geri döner."
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Color mode"
+msgstr "Renk modu"
+
+msgid "Colors"
+msgstr "Renkler"
+
+msgid "Comfortable (42px)"
+msgstr "Rahat (42px)"
+
+msgid "Compact (32px)"
+msgstr "Kompakt (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"Renk modunu, vurgu renklerini, düzen boyutlandırmasını, animasyon "
+"davranışını, giriş sayfası görünümünü ve luci-theme-fluent için gelişmiş CSS "
+"geçersiz kılmalarını yapılandırın."
+
+msgid "Confirm"
+msgstr "Onayla"
+
+msgid "Confirm Installation"
+msgstr "Yüklemeyi Onayla"
+
+msgid "Continue"
+msgstr "Devam Et"
+
+msgid "Control height"
+msgstr "Yüksekliği kontrol et"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr ""
+"Ana gezinme etiketleri ve ilgili tema metin vurguları tarafından kullanılan "
+"yazı tipi kalınlığını kontrol eder."
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr ""
+"Kartlar, düğmeler, giriş alanları ve ilgili kullanıcı arayüzü öğeleri "
+"tarafından paylaşılan Fluent köşe yarıçapı belirteçlerini kontrol eder."
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr ""
+"Menü, başlık ve diğer tema animasyonları tarafından paylaşılan Fluent geçiş "
+"zamanlamasını kontrol eder."
+
+msgid "Corner radius"
+msgstr "Köşe yarıçapı"
+
+msgid "Current / Pending MAC Address"
+msgstr "Mevcut / Bekleyen MAC Adresi"
+
+msgid "Custom CSS"
+msgstr "Özel CSS"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr ""
+"Giriş sayfası arka planını, kart opaklığını ve açık ve karanlık modlar için "
+"bulanıklık yarıçapını özelleştirin."
+
+msgid "Dark mode"
+msgstr "Karanlık mod"
+
+msgid "Disabled"
+msgstr "Devre Dışı"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr ""
+"Sayfa yüklenmeleri ve geçişler sırasında temalı yükleme göstergesini en üst "
+"kenarda görüntüle."
+
+msgid "Download and Install"
+msgstr "İndir ve Yükle"
+
+msgid "Downloading on router"
+msgstr "Router'da indirme yapılıyor"
+
+msgid "Enable page transition animation"
+msgstr "Sayfa geçiş animasyonunu etkinleştir"
+
+msgid "Enable tab underline animation"
+msgstr "Sekme alt çizgi animasyonunu etkinleştir"
+
+msgid "Expecting: %s"
+msgstr "Bekleniyor: %s"
+
+msgid "Extra large (12px)"
+msgstr "Çok büyük (12px)"
+
+msgid "Failed to check for updates"
+msgstr "Güncelleme kontrolü başarısız oldu"
+
+msgid "Failed to fetch current theme version."
+msgstr "Mevcut tema sürümü alınamadı."
+
+msgid "Fast"
+msgstr "Hızlı"
+
+msgid "Finished"
+msgstr "Tamamlandı"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "LuCI için Fluent Design 2 teması"
+
+msgid "Fluent theme settings"
+msgstr "Fluent tema ayarları"
+
+msgid "Follow system"
+msgstr "Sistem ayarlarını uygula"
+
+msgid "Force dark mode"
+msgstr "Karanlık modu zorla etkinleştir"
+
+msgid "Force light mode"
+msgstr "Açık modu zorla kullan"
+
+msgid "Force LTR"
+msgstr "Soldan sağa yönlendirmeyi (LTR) zorla kullan"
+
+msgid "Force RTL"
+msgstr "Sağdan sola yönlendirmeyi (RTL) zorla kullan"
+
+msgid "General"
+msgstr "Genel"
+
+msgid "GitHub Token Required"
+msgstr "GitHub belirteci gereklidir"
+
+msgid "Header height"
+msgstr "Üst başlık yüksekliği"
+
+msgid "Height of the top header bar in pixels."
+msgstr "En üstteki başlık çubuğunun piksel cinsinden yüksekliği."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr ""
+"Arayüz karanlık modda görüntülendiğinde kullanılan birincil Fluent vurgu "
+"rengi (HEX)."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr ""
+"Arayüz açık modda görüntülendiğinde kullanılan birincil Fluent vurgu rengi "
+"(HEX)."
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "Karanlık modda kullanılan konteyner/kart elemanları için HEX renk."
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "Açık modda kullanılan konteyner/kart elemanları için HEX renk."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr ""
+"Arayüz karanlık modda görüntülendiğinde kullanılan ilerleme çubuğu "
+"etiketleri için HEX renk."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr ""
+"Arayüz açık modda görüntülendiğinde kullanılan ilerleme çubuğu etiketleri "
+"için HEX renk."
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "Karanlık modda ana sayfa arka planı için kullanılan HEX renk."
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "Açık modda ana sayfa arka planı için kullanılan HEX renk."
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "Karanlık modda navigasyon yan çubuğu için kullanılan HEX rengi."
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "Açık modda navigasyon yan çubuğu için kullanılan HEX rengi."
+
+msgid "Installation cancelled by user."
+msgstr "Kurulum kullanıcı tarafından iptal edildi."
+
+msgid "Installed version"
+msgstr "Yüklenen sürüm"
+
+msgid "Installing package"
+msgstr "Paket yükleniyor"
+
+msgid "Large"
+msgstr "Büyük"
+
+msgid "Large (8px)"
+msgstr "Büyük (8px)"
+
+msgid "Light mode"
+msgstr "Açık mod"
+
+msgid "Login"
+msgstr "Giriş"
+
+msgid "Login card opacity"
+msgstr "Giriş kartı opaklığı"
+
+msgid "Login page"
+msgstr "Giriş sayfası"
+
+msgid "Medium"
+msgstr "Orta"
+
+msgid "Medium (4px)"
+msgstr "Orta (4px)"
+
+msgid "Navigation font weight"
+msgstr "Navigasyon yazı tipi kalınlığı"
+
+msgid "Next"
+msgstr "İleri"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "Gece derlemesi mevcut (yeniden yükleme kontrolü)."
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "Gece Kanalı (Ön Sürüm)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr "Bu sürümde sistem mimariniz için uygun paket dosyası bulunamadı."
+
+msgid "None"
+msgstr "Yok"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Karanlık modda giriş kartının opaklığı. 0 tamamen şeffaf, 1 ise tamamen opak "
+"anlamına gelir."
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Açık modda giriş kartının opaklığı. 0 tamamen şeffaf, 1 ise tamamen opak "
+"anlamına gelir."
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"Fluent başlık şablonuna eklenen ham CSS. Ek --fluent-* değişkeni geçersiz "
+"kılmaları veya özel seçenekler olarak sunulmayan sayfa özelindeki "
+"ayarlamalar için kullanın."
+
+msgid "Package format"
+msgstr "Paket formatı"
+
+msgid "Page background"
+msgstr "Sayfa arka planı"
+
+msgid "Please enter your password."
+msgstr "Lütfen şifrenizi girin."
+
+msgid "Please enter your username."
+msgstr "Lütfen kullanıcı adınızı girin."
+
+msgid "Preset Vendor / Generator"
+msgstr "Önceden Ayarlanmış Satıcı / Oluşturucu"
+
+msgid "Progress bar text color"
+msgstr "İlerleme çubuğu metin rengi"
+
+msgid "Random Local MAC"
+msgstr "Rastgele Yerel MAC Adresi"
+
+msgid "Randomize MAC"
+msgstr "MAC Adresini Rastgeleleştir"
+
+msgid "Reload Web Interface"
+msgstr "Web Arayüzünü Yeniden Yükle"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr "Yerleşik seçim öğelerini, temanın özel açılır menü bileşeniyle değiştir."
+
+msgid "Respect reduced-motion preference"
+msgstr "Azaltılmış hareket tercihine saygı göster"
+
+msgid "Retrying with token..."
+msgstr "Token ile yeniden deniyor..."
+
+msgid "Rounded (6px)"
+msgstr "Yuvarlak (6px)"
+
+msgid "Search menu items"
+msgstr "Menü öğelerini ara"
+
+msgid "Search menu…"
+msgstr "Menüyü ara…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "Temalı kartlara ve panellere uygulanan gölge derinliğini seçin."
+
+msgid "Select vendor prefix..."
+msgstr "Satıcı önekini seç..."
+
+msgid "Semibold"
+msgstr "Yarı Kalın"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"Arayüzün temel yazı tipi boyutunu piksel cinsinden ayarlar. Çoğu tema metni, "
+"Fluent CSS değişkenleri aracılığıyla bu değerden ölçeklenir. Önerilen "
+"aralık: 12-18px."
+
+msgid "Show top loading bar"
+msgstr "Üst yükleme çubuğunu göster"
+
+msgid "Sidebar background"
+msgstr "Yan çubuk arka planı"
+
+msgid "Sidebar width"
+msgstr "Yan çubuk genişliği"
+
+msgid "Slow"
+msgstr "Yavaş"
+
+msgid "Small"
+msgstr "Küçük"
+
+msgid "Small (2px)"
+msgstr "Küçük (2px)"
+
+msgid "Software Update"
+msgstr "Yazılım Güncellemesi"
+
+msgid "Source code"
+msgstr "Kaynak kodu"
+
+msgid "Square (0px)"
+msgstr "Kare (0px)"
+
+msgid "Stable Channel"
+msgstr "Kararlı Kanal"
+
+msgid "Starting backend download..."
+msgstr "Arka uç indirme başlatılıyor..."
+
+msgid "Starting update process..."
+msgstr "Güncelleme işlemi başlatılıyor..."
+
+msgid "Submit"
+msgstr "Gönder"
+
+msgid "Switch theme mode"
+msgstr "Tema modunu değiştir"
+
+msgid "Text direction"
+msgstr "Metin yönü"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr ""
+"Tema, yönlendiricinize kuruluyor. Günlükler aşağıda görüntüleniyor. Web "
+"arayüzünü yeniden yüklemek, RPCD yeniden başlatıldığında değişiklikleri "
+"uygulayacaktır."
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr "Tema paketi hazır. Kurulumu gerçekten devam etmek istiyorsunuz?"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr ""
+"Bu token için herhangi bir izin/erişim yetkisi verilmesine gerek YOK (sadece "
+"okuma erişimi yeterlidir)."
+
+msgid "Theme settings"
+msgstr "Tema ayarları"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr ""
+"Tema başarıyla güncellendi! RPC hizmeti yeniden yükleniyor, lütfen sayfayı 5 "
+"saniye içinde yenileyin."
+
+msgid "Theme transition speed"
+msgstr "Tema geçiş hızı"
+
+msgid "Triggering installation on router..."
+msgstr "Kurulum yönlendiricide başlatılıyor..."
+
+msgid "Update channel"
+msgstr "Güncelleme kanalı"
+
+msgid "Update failed"
+msgstr "Güncelleme başarısız oldu"
+
+msgid "Upgrade Successful!"
+msgstr "Yükseltme başarılı!"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Fluent özel açılır menüleri kullan"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr ""
+"LuCI sayfaları arasında gezinirken animasyonlar için tarayıcı View "
+"Transition API'sini kullanın (destekleniyorsa)."
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr ""
+"Sistem/tarayıcı tercihini kullanın veya Fluent temasını her zaman sabit bir "
+"açık veya karanlık paletle görüntüleyin."
+
+msgid "Username is required."
+msgstr "Kullanıcı adı gereklidir."
+
+msgid "valid HEX color value"
+msgstr "Geçerli HEX renk değeri"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr ""
+"Etkinleştirildiğinde, Fluent animasyonları tarayıcı veya işletim sisteminin "
+"hareket azaltma tercihini takip eder."
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "Ana gezinme yan çubuğunun genişliği (piksel cinsinden)."
+
+msgid "You can create a new token at"
+msgstr "Yeni bir belirteç oluşturabilirsiniz:"
+
+msgid "Your theme is up to date!"
+msgstr "Temanız güncel."

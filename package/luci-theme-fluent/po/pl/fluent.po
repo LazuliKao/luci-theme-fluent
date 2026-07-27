@@ -1,0 +1,589 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "Dostępna jest nowa wersja!"
+
+msgid "About"
+msgstr "O programie"
+
+msgid "Accent color"
+msgstr "Kolor akcentu"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr ""
+"Dostosuj układ, typografię, czas trwania animacji, cienie oraz dodawaj "
+"własne zmienne CSS lub reguły, gdy wbudowane opcje są niewystarczające."
+
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+msgid "Advanced MAC Selector"
+msgstr "Zaawansowany wybór adresów MAC"
+
+msgid "and {count} more…"
+msgstr "i {count} więcej…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr ""
+"Animuj podświetlenie aktywnej zakładki podczas przełączania między natywnymi "
+"zakładkami LuCI a menu zakładek z motywem."
+
+msgid "Animation"
+msgstr "Animacja"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"Osiągnięto limit szybkości wywołań API. Wprowadź token GitHub, aby "
+"kontynuować. Ten token jest używany tylko do żądań frontendowych i nie "
+"zostanie zapisany w backendzie routera."
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr ""
+"Dotyczy standardowych przycisków, pól wprowadzania, list wyboru oraz "
+"podobnych elementów sterujących formularzami w całym motywie."
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "Automatyczne (tylko dla lokalizacji arabskich/perskich)"
+
+msgid "Backdrop blur radius"
+msgstr "Promień rozmycia tła"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "Backend (Przyspieszenie GHProxy)"
+
+msgid "Backend (Official GitHub)"
+msgstr "Backend (Oficjalny GitHub)"
+
+msgid "Base font size"
+msgstr "Podstawowy rozmiar czcionki"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Promień rozmycia w pikselach za kartą logowania w trybie ciemnym. Użyj 0, "
+"aby wyłączyć rozmycie."
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Promień rozmycia w pikselach za kartą logowania w trybie jasnym. Użyj 0, aby "
+"wyłączyć rozmycie."
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Card background"
+msgstr "Tło karty"
+
+msgid "Card shadow"
+msgstr "Cień karty"
+
+msgid "Check for updates"
+msgstr "Sprawdź aktualizacje"
+
+msgid "Checking for updates..."
+msgstr "Sprawdzanie dostępności aktualizacji..."
+
+msgid "Choose color"
+msgstr "Wybierz kolor"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"Wybierz kierunek tekstu dla stron uwierzytelniania i logowania. Tryb "
+"automatyczny rozpoznaje kody języków arabskiego i perskiego (ar, ar_*, ar-*, "
+"fa, fa_*, fa-*) i ustawia układ RTL, a w przypadku brakujących lub "
+"nieznanych lokalizacji przełącza się na LTR."
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "Color mode"
+msgstr "Tryb koloru"
+
+msgid "Colors"
+msgstr "Kolory"
+
+msgid "Comfortable (42px)"
+msgstr "Wygodny (42px)"
+
+msgid "Compact (32px)"
+msgstr "Kompaktowy (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"Konfiguruj tryb koloru, kolory akcentu, rozmiar układu, zachowanie animacji, "
+"wygląd strony logowania oraz zaawansowane nadpisy CSS dla luci-theme-fluent."
+
+msgid "Confirm"
+msgstr "Potwierdź"
+
+msgid "Confirm Installation"
+msgstr "Potwierdź instalację"
+
+msgid "Continue"
+msgstr "Kontynuuj"
+
+msgid "Control height"
+msgstr "Sterowanie wysokością"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr ""
+"Określa grubość czcionki używaną przez etykiety nawigacji głównej i "
+"powiązane elementy tekstowe motywu."
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr ""
+"Kontroluje współdzielone tokeny promienia narożnika Fluent, używane przez "
+"karty, przyciski, pola wprowadzania i inne elementy interfejsu użytkownika."
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr ""
+"Kontroluje współdzielone czasy trwania animacji Fluent, używane przez menu, "
+"nagłówek i inne animacje motywu."
+
+msgid "Corner radius"
+msgstr "Promień narożnika"
+
+msgid "Current / Pending MAC Address"
+msgstr "Aktualny / Oczekujący adres MAC"
+
+msgid "Custom CSS"
+msgstr "Własny CSS"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr ""
+"Dostosuj tło strony logowania, przezroczystość kart i promień rozmycia dla "
+"trybów jasnego i ciemnego."
+
+msgid "Dark mode"
+msgstr "Tryb ciemny"
+
+msgid "Disabled"
+msgstr "Wyłączone"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr ""
+"Wyświetl motywowany wskaźnik ładowania na górnej krawędzi podczas ładowania "
+"stron i przejść."
+
+msgid "Download and Install"
+msgstr "Pobierz i zainstaluj"
+
+msgid "Downloading on router"
+msgstr "Pobieranie na routerze"
+
+msgid "Enable page transition animation"
+msgstr "Włącz animację przejścia między stronami"
+
+msgid "Enable tab underline animation"
+msgstr "Włącz animację podkreślenia zakładki"
+
+msgid "Expecting: %s"
+msgstr "Oczekiwane: %s"
+
+msgid "Extra large (12px)"
+msgstr "Bardzo duże (12px)"
+
+msgid "Failed to check for updates"
+msgstr "Nie udało się sprawdzić dostępności aktualizacji"
+
+msgid "Failed to fetch current theme version."
+msgstr "Nie udało się pobrać bieżącej wersji motywu."
+
+msgid "Fast"
+msgstr "Szybko"
+
+msgid "Finished"
+msgstr "Zakończono"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "Motyw Fluent Design 2 dla LuCI"
+
+msgid "Fluent theme settings"
+msgstr "Ustawienia motywu Fluent"
+
+msgid "Follow system"
+msgstr "Dostosuj do systemu"
+
+msgid "Force dark mode"
+msgstr "Wymuś tryb ciemny"
+
+msgid "Force light mode"
+msgstr "Wymuś tryb jasny"
+
+msgid "Force LTR"
+msgstr "Wymuś układ lewo-do-prawo (LTR)"
+
+msgid "Force RTL"
+msgstr "Wymuś układ prawo-do-lewo (RTL)"
+
+msgid "General"
+msgstr "Ogólne"
+
+msgid "GitHub Token Required"
+msgstr "Wymagany token GitHub"
+
+msgid "Header height"
+msgstr "Wysokość nagłówka"
+
+msgid "Height of the top header bar in pixels."
+msgstr "Wysokość górnego paska nagłówka w pikselach."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr ""
+"Kolor HEX używany jako główny akcent Fluent, gdy interfejs jest wyświetlany "
+"w trybie ciemnym."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr ""
+"Kolor HEX używany jako główny akcent Fluent, gdy interfejs jest wyświetlany "
+"w trybie jasnym."
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "Kolor HEX używany dla elementów kontenerów/kart w trybie ciemnym."
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "Kolor HEX używany dla elementów kontenerów/kart w trybie jasnym."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr ""
+"Kolor HEX używany dla etykiet pasków postępu, gdy interfejs jest wyświetlany "
+"w trybie ciemnym."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr ""
+"Kolor HEX używany dla etykiet pasków postępu, gdy interfejs jest wyświetlany "
+"w trybie jasnym."
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "Kolor HEX używany jako tło głównej strony w trybie ciemnym."
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "Kolor HEX używany jako tło głównej strony w trybie jasnym."
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "Kolor HEX używany dla paska nawigacji w trybie ciemnym."
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "Kolor HEX używany dla paska nawigacji w trybie jasnym."
+
+msgid "Installation cancelled by user."
+msgstr "Instalacja anulowana przez użytkownika."
+
+msgid "Installed version"
+msgstr "Zainstalowana wersja"
+
+msgid "Installing package"
+msgstr "Instalowanie pakietu"
+
+msgid "Large"
+msgstr "Duży"
+
+msgid "Large (8px)"
+msgstr "Duży (8px)"
+
+msgid "Light mode"
+msgstr "Tryb jasny"
+
+msgid "Login"
+msgstr "Logowanie"
+
+msgid "Login card opacity"
+msgstr "Przezroczystość karty logowania"
+
+msgid "Login page"
+msgstr "Strona logowania"
+
+msgid "Medium"
+msgstr "Średni"
+
+msgid "Medium (4px)"
+msgstr "Średni (4px)"
+
+msgid "Navigation font weight"
+msgstr "Waga czcionki nawigacji"
+
+msgid "Next"
+msgstr "Następny"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "Dostępna wersja testowa (sprawdź, czy wymagana jest ponowna instalacja)."
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "Kanał wersji testowych (wersja przedpremierowa)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr ""
+"Nie znaleziono odpowiedniego pakietu dla architektury Twojego systemu w tej "
+"wersji."
+
+msgid "None"
+msgstr "Brak"
+
+msgid "Normal"
+msgstr "Normalny"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Przezroczystość karty logowania w trybie ciemnym. 0 to całkowita "
+"przezroczystość, a 1 to całkowita nieprzezroczystość."
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Przezroczystość karty logowania w trybie jasnym. 0 to całkowita "
+"przezroczystość, a 1 to całkowita nieprzezroczystość."
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"Opcjonalny surowy CSS wstrzykiwany do szablonu nagłówka FluentUI. Użyj tego "
+"do dodatkowych nadpisywań zmiennych --fluent-* lub modyfikacji specyficznych "
+"dla strony, które nie są dostępne jako dedykowane opcje."
+
+msgid "Package format"
+msgstr "Format pakietu"
+
+msgid "Page background"
+msgstr "Tło strony"
+
+msgid "Please enter your password."
+msgstr "Wprowadź swoje hasło."
+
+msgid "Please enter your username."
+msgstr "Wprowadź swoją nazwę użytkownika."
+
+msgid "Preset Vendor / Generator"
+msgstr "Gotowy zestaw dostawcy / generatora"
+
+msgid "Progress bar text color"
+msgstr "Kolor tekstu paska postępu"
+
+msgid "Random Local MAC"
+msgstr "Losowy lokalny adres MAC"
+
+msgid "Randomize MAC"
+msgstr "Losuj adres MAC"
+
+msgid "Reload Web Interface"
+msgstr "Przeładuj interfejs webowy"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr "Zastąp natywne elementy wyboru niestandardowym elementem rozwijanym motywu."
+
+msgid "Respect reduced-motion preference"
+msgstr "Uwzględnij preferencje dotyczące ograniczenia animacji."
+
+msgid "Retrying with token..."
+msgstr "Ponawianie próby z tokenem..."
+
+msgid "Rounded (6px)"
+msgstr "Zaokrąglone (6px)"
+
+msgid "Search menu items"
+msgstr "Wyszukaj pozycje menu"
+
+msgid "Search menu…"
+msgstr "Wyszukuj w menu…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "Wybierz głębokość cienia stosowaną do kart i paneli motywu."
+
+msgid "Select vendor prefix..."
+msgstr "Wybierz prefiks dostawcy..."
+
+msgid "Semibold"
+msgstr "Półpogrubienie"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"Ustawia podstawowy rozmiar czcionki interfejsu w pikselach. Większość tekstu "
+"motywu skaluje się od tej wartości za pomocą zmiennych CSS Fluent. Zalecany "
+"zakres: 12-18px."
+
+msgid "Show top loading bar"
+msgstr "Pokaż pasek ładowania na górze"
+
+msgid "Sidebar background"
+msgstr "Tło paska bocznego"
+
+msgid "Sidebar width"
+msgstr "Szerokość paska bocznego"
+
+msgid "Slow"
+msgstr "Wolno"
+
+msgid "Small"
+msgstr "Mały"
+
+msgid "Small (2px)"
+msgstr "Mały (2px)"
+
+msgid "Software Update"
+msgstr "Aktualizacja oprogramowania"
+
+msgid "Source code"
+msgstr "Kod źródłowy"
+
+msgid "Square (0px)"
+msgstr "Kwadrat (0px)"
+
+msgid "Stable Channel"
+msgstr "Stabilna wersja"
+
+msgid "Starting backend download..."
+msgstr "Rozpoczyna pobieranie pakietu..."
+
+msgid "Starting update process..."
+msgstr "Rozpoczyna proces aktualizacji..."
+
+msgid "Submit"
+msgstr "Zatwierdź"
+
+msgid "Switch theme mode"
+msgstr "Zmień tryb motywu"
+
+msgid "Text direction"
+msgstr "Kierunek tekstu"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr ""
+"Motyw jest instalowany na routerze. Logi są wyświetlane poniżej. Ponowne "
+"załadowanie interfejsu webowego zastosuje zmiany po ponownym uruchomieniu "
+"RPCD."
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr "Pakiet motywu jest gotowy. Czy chcesz kontynuować instalację?"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr ""
+"Token NIE wymaga żadnych uprawnień/zakresów (wystarczy dostęp publiczny "
+"tylko do odczytu)."
+
+msgid "Theme settings"
+msgstr "Ustawienia motywu"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr ""
+"Motyw został pomyślnie zaktualizowany! Próba ponownego uruchomienia usługi "
+"RPC, odśwież stronę za 5 sekund."
+
+msgid "Theme transition speed"
+msgstr "Prędkość animacji zmiany motywu"
+
+msgid "Triggering installation on router..."
+msgstr "Rozpoczyna instalację na routerze..."
+
+msgid "Update channel"
+msgstr "Kanał aktualizacji"
+
+msgid "Update failed"
+msgstr "Aktualizacja nie powiodła się"
+
+msgid "Upgrade Successful!"
+msgstr "Aktualizacja zakończona pomyślnie!"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Używaj niestandardowych list wyboru FluentUI"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr ""
+"Wykorzystaj wbudowaną w przeglądarkę View Transition API do animowania "
+"przejść między stronami LuCI, jeśli jest obsługiwana."
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr ""
+"Użyj preferencji systemu/przeglądarki lub zawsze renderuj motyw FluentUI z "
+"ustaloną paletą kolorów (jasną lub ciemną)."
+
+msgid "Username is required."
+msgstr "Nazwa użytkownika jest wymagana."
+
+msgid "valid HEX color value"
+msgstr "poprawna wartość koloru w formacie HEX"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr ""
+"Po włączeniu, animacje FluentUI uwzględniają preferencje dotyczące "
+"ograniczenia ruchu (np. oszczędzanie baterii) ustawione w przeglądarce lub "
+"systemie operacyjnym."
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "Szerokość głównego paska nawigacyjnego w pikselach."
+
+msgid "You can create a new token at"
+msgstr "Możesz utworzyć nowy token na"
+
+msgid "Your theme is up to date!"
+msgstr "Twój motyw jest aktualny!"

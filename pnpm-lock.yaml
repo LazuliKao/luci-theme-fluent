@@ -21,8 +21,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       '@lazulikao/luci-types':
-        specifier: github:LazuliKao/luci-types#cb80830
-        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/cb80830
+        specifier: github:LazuliKao/luci-types#2acba5f
+        version: https://codeload.github.com/LazuliKao/luci-types/tar.gz/2acba5f
       '@types/node':
         specifier: ^22.19.21
         version: 22.19.21
@@ -419,8 +419,8 @@ packages:
     engines: {node: '>=18.18.0'}
     hasBin: true
 
-  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/cb80830':
-    resolution: {tarball: https://codeload.github.com/LazuliKao/luci-types/tar.gz/cb80830}
+  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/2acba5f':
+    resolution: {tarball: https://codeload.github.com/LazuliKao/luci-types/tar.gz/2acba5f}
     version: 0.2.0
     engines: {node: '>=18.18.0'}
     hasBin: true
@@ -1509,7 +1509,7 @@ snapshots:
       tsx: 4.22.4
       typescript: 6.0.3
 
-  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/cb80830':
+  '@lazulikao/luci-types@https://codeload.github.com/LazuliKao/luci-types/tar.gz/2acba5f':
     dependencies:
       c12: 2.0.4
       chokidar: 5.0.0

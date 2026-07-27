@@ -1,0 +1,595 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "Eine neue Version ist verfügbar!"
+
+msgid "About"
+msgstr "Über"
+
+msgid "Accent color"
+msgstr "Akzentfarbe"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr ""
+"Passen Sie Layout, Typografie, Übergangszeiten, Schatten an und fügen Sie "
+"benutzerdefinierte CSS-Variablen oder -regeln hinzu, wenn die integrierten "
+"Steuerelemente nicht ausreichen."
+
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgid "Advanced MAC Selector"
+msgstr "Erweiterter MAC-Auswahler"
+
+msgid "and {count} more…"
+msgstr "und {count} weitere…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr ""
+"Animieren Sie die aktive Unterlinie beim Wechsel zwischen nativen LuCI-Tabs "
+"und thematischen Tab-Menüs."
+
+msgid "Animation"
+msgstr "Animation"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"API-Ratenlimit überschritten. Bitte geben Sie ein GitHub-Token ein, um "
+"fortzufahren. Dieses Token wird nur für Frontend-Anfragen verwendet und "
+"nicht im Router-Backend gespeichert."
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr ""
+"Gilt für Standard-Buttons, Eingabefelder, Auswahlmenüs und ähnliche "
+"Formularsteuerelemente innerhalb des Themes."
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "Automatisch (nur für arabische/persische Regionen)"
+
+msgid "Backdrop blur radius"
+msgstr "Radius der Hintergrundunschärfe"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "Backend (GHProxy-Beschleunigung)"
+
+msgid "Backend (Official GitHub)"
+msgstr "Backend (Offizielles GitHub)"
+
+msgid "Base font size"
+msgstr "Grundschriftgröße"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Unschärferadius in Pixeln hinter der Anmeldekarte im dunklen Modus. "
+"Verwenden Sie 0, um die Unschärfe zu deaktivieren."
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Unschärferadius in Pixeln hinter der Anmeldekarte im hellen Modus. Verwenden "
+"Sie 0, um die Unschärfe zu deaktivieren."
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Card background"
+msgstr "Kartenhintergrund"
+
+msgid "Card shadow"
+msgstr "Kartenschatten"
+
+msgid "Check for updates"
+msgstr "Nach Updates suchen"
+
+msgid "Checking for updates..."
+msgstr "Suche nach Updates..."
+
+msgid "Choose color"
+msgstr "Farbe auswählen"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"Wählen Sie die Dokumentrichtung für authentifizierte Seiten und "
+"Anmeldeseiten. Der automatische Modus löst arabische und persische "
+"Ländercodes (ar, ar_*, ar-*, fa, fa_*, fa-*) in RTL auf und verwendet "
+"standardmäßig LTR für fehlende oder nicht erkannte Ländercodes."
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Color mode"
+msgstr "Farbmodus"
+
+msgid "Colors"
+msgstr "Farben"
+
+msgid "Comfortable (42px)"
+msgstr "Komfortabel (42px)"
+
+msgid "Compact (32px)"
+msgstr "Kompakt (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"Konfigurieren Sie den Farbmodus, Akzentfarben, Layout-Größen, "
+"Animationsverhalten, das Erscheinungsbild der Anmeldeseite und erweiterte "
+"CSS-Überschreibungen für luci-theme-fluent."
+
+msgid "Confirm"
+msgstr "Bestätigen"
+
+msgid "Confirm Installation"
+msgstr "Installation bestätigen"
+
+msgid "Continue"
+msgstr "Fortfahren"
+
+msgid "Control height"
+msgstr "Höhe anpassen"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr ""
+"Steuert die Schriftstärke, die für Hauptnavigationsbezeichnungen und "
+"zugehörige Theme-Textelemente verwendet wird."
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr ""
+"Steuert die gemeinsamen Fluent-Eckenradien, die von Karten, Schaltflächen, "
+"Eingabefeldern und verwandten UI-Elementen verwendet werden."
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr ""
+"Steuert das gemeinsame Fluent-Übergangsverhalten, das für Menüs, Header und "
+"andere Theme-Animationen verwendet wird."
+
+msgid "Corner radius"
+msgstr "Eckenradius"
+
+msgid "Current / Pending MAC Address"
+msgstr "Aktuelle / Stehende MAC-Adresse"
+
+msgid "Custom CSS"
+msgstr "Benutzerdefiniertes CSS"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr ""
+"Passen Sie den Hintergrund der Anmeldeseite, die Deckkraft von Karten und "
+"den Unschärferadius für helle und dunkle Designs an."
+
+msgid "Dark mode"
+msgstr "Dunkles Design"
+
+msgid "Disabled"
+msgstr "Deaktiviert"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr ""
+"Zeigt den themenbezogenen Ladeindikator am oberen Rand während des "
+"Seitenladens und der Übergänge an."
+
+msgid "Download and Install"
+msgstr "Herunterladen und Installieren"
+
+msgid "Downloading on router"
+msgstr "Herunterladen auf dem Router"
+
+msgid "Enable page transition animation"
+msgstr "Seitenübergangsanimation aktivieren"
+
+msgid "Enable tab underline animation"
+msgstr "Tab-Unterstreichungsanimation aktivieren"
+
+msgid "Expecting: %s"
+msgstr "Erwartet: %s"
+
+msgid "Extra large (12px)"
+msgstr "Sehr groß (12px)"
+
+msgid "Failed to check for updates"
+msgstr "Fehler beim Prüfen auf Updates"
+
+msgid "Failed to fetch current theme version."
+msgstr "Fehler beim Abrufen der aktuellen Theme-Version."
+
+msgid "Fast"
+msgstr "Schnell"
+
+msgid "Finished"
+msgstr "Fertig"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "Fluent Design 2 Theme für LuCI"
+
+msgid "Fluent theme settings"
+msgstr "Fluent Theme Einstellungen"
+
+msgid "Follow system"
+msgstr "Systemeinstellungen übernehmen"
+
+msgid "Force dark mode"
+msgstr "Dunkelmodus erzwingen"
+
+msgid "Force light mode"
+msgstr "Helles Design erzwingen"
+
+msgid "Force LTR"
+msgstr "LTR erzwingen"
+
+msgid "Force RTL"
+msgstr "RTL erzwingen"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "GitHub Token Required"
+msgstr "GitHub-Token erforderlich"
+
+msgid "Header height"
+msgstr "Höhe der Kopfzeile"
+
+msgid "Height of the top header bar in pixels."
+msgstr "Höhe der oberen Kopfleiste in Pixeln."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr ""
+"HEX-Farbe, die als primäre Fluent-Akzentfarbe verwendet wird, wenn die "
+"Oberfläche im dunklen Modus dargestellt wird."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr ""
+"HEX-Farbe, die als primäre Fluent-Akzentfarbe verwendet wird, wenn die "
+"Oberfläche im hellen Modus dargestellt wird."
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "HEX-Farbe für Container-/Kartenelemente im dunklen Modus."
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "HEX-Farbe für Container-/Kartenelemente im hellen Modus."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr ""
+"HEX-Farbe für Fortschrittsbalkenbeschriftungen, wenn die Oberfläche im "
+"dunklen Modus dargestellt wird."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr ""
+"HEX-Farbe für Fortschrittsbalkenbeschriftungen, wenn die Oberfläche im "
+"hellen Modus dargestellt wird."
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "HEX-Farbe für den Hauptseitenhintergrund im dunklen Modus."
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "HEX-Farbe für den Hauptseitenhintergrund im hellen Modus."
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "HEX-Farbe für die Navigationsleiste im dunklen Modus."
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "HEX-Farbe für die Navigationsleiste im hellen Modus."
+
+msgid "Installation cancelled by user."
+msgstr "Installation durch Benutzer abgebrochen."
+
+msgid "Installed version"
+msgstr "Installierte Version"
+
+msgid "Installing package"
+msgstr "Paket wird installiert..."
+
+msgid "Large"
+msgstr "Groß"
+
+msgid "Large (8px)"
+msgstr "Groß (8px)"
+
+msgid "Light mode"
+msgstr "Helles Design"
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Login card opacity"
+msgstr "Deckkraft der Anmeldekarte"
+
+msgid "Login page"
+msgstr "Anmeldeseite"
+
+msgid "Medium"
+msgstr "Mittel"
+
+msgid "Medium (4px)"
+msgstr "Mittel (4px)"
+
+msgid "Navigation font weight"
+msgstr "Schriftstärke der Navigation"
+
+msgid "Next"
+msgstr "Weiter"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "Tägliche Build-Version verfügbar (Überprüfung auf Neuinstallation)."
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "Entwicklungsversion (Vorabversion)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr ""
+"Keine passende Paketdatei für Ihre Systemarchitektur in dieser Version "
+"gefunden."
+
+msgid "None"
+msgstr "Kein"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Deckkraft der Anmeldekarte im dunklen Modus. 0 ist vollständig transparent, "
+"1 ist vollständig undurchsichtig."
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Deckkraft der Anmeldekarte im hellen Modus. 0 ist vollständig transparent, 1 "
+"ist vollständig undurchsichtig."
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"Optionales CSS, das in die Fluent-Header-Vorlage eingefügt wird. Verwenden "
+"Sie dies für zusätzliche Überschreibungen von `--fluent-*`-Variablen oder "
+"seitenbezogene Anpassungen, die nicht als dedizierte Optionen verfügbar "
+"sind."
+
+msgid "Package format"
+msgstr "Paketformat"
+
+msgid "Page background"
+msgstr "Hintergrundfarbe der Seite"
+
+msgid "Please enter your password."
+msgstr "Bitte geben Sie Ihr Passwort ein."
+
+msgid "Please enter your username."
+msgstr "Bitte geben Sie Ihren Benutzernamen ein."
+
+msgid "Preset Vendor / Generator"
+msgstr "Vordefinierter Anbieter / Generator"
+
+msgid "Progress bar text color"
+msgstr "Textfarbe der Fortschrittsanzeige"
+
+msgid "Random Local MAC"
+msgstr "Zufällige lokale MAC-Adresse"
+
+msgid "Randomize MAC"
+msgstr "MAC-Adresse zufällig generieren"
+
+msgid "Reload Web Interface"
+msgstr "Weboberfläche neu laden"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr ""
+"Native Select-Elemente durch das benutzerdefinierte Dropdown-Widget des "
+"Themes ersetzen."
+
+msgid "Respect reduced-motion preference"
+msgstr "Reduzierte Bewegungseffekte berücksichtigen"
+
+msgid "Retrying with token..."
+msgstr "Erneuter Versuch mit Token..."
+
+msgid "Rounded (6px)"
+msgstr "Abgerundet (6px)"
+
+msgid "Search menu items"
+msgstr "Menüpunkte suchen"
+
+msgid "Search menu…"
+msgstr "Menü suchen…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "Wählen Sie die Schattenintensität für thematisierte Karten und Panels."
+
+msgid "Select vendor prefix..."
+msgstr "Vorgangspräfix auswählen..."
+
+msgid "Semibold"
+msgstr "Halbfett"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"Legt die Basisschriftgröße der Benutzeroberfläche in Pixeln fest. Die "
+"meisten Texte des Themes werden über die Fluent CSS-Variablen von diesem "
+"Wert aus skaliert. Empfohlener Bereich: 12-18px."
+
+msgid "Show top loading bar"
+msgstr "Ladebalken oben anzeigen"
+
+msgid "Sidebar background"
+msgstr "Hintergrund der Seitenleiste"
+
+msgid "Sidebar width"
+msgstr "Breite der Seitenleiste"
+
+msgid "Slow"
+msgstr "Langsam"
+
+msgid "Small"
+msgstr "Klein"
+
+msgid "Small (2px)"
+msgstr "Klein (2px)"
+
+msgid "Software Update"
+msgstr "Software-Update"
+
+msgid "Source code"
+msgstr "Quellcode"
+
+msgid "Square (0px)"
+msgstr "Quadratisch (0px)"
+
+msgid "Stable Channel"
+msgstr "Stabile Kanal"
+
+msgid "Starting backend download..."
+msgstr "Backend-Download wird gestartet..."
+
+msgid "Starting update process..."
+msgstr "Update-Prozess wird gestartet..."
+
+msgid "Submit"
+msgstr "Absenden"
+
+msgid "Switch theme mode"
+msgstr "Theme-Modus wechseln"
+
+msgid "Text direction"
+msgstr "Textrichtung"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr ""
+"Das Theme wird auf Ihrem Router installiert. Die Protokolle werden unten "
+"angezeigt. Durch Neuladen der Weboberfläche werden die Änderungen "
+"angewendet, sobald RPCD neu gestartet ist."
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr ""
+"Das Theme-Paket ist bereit. Sind Sie sicher, dass Sie mit der Installation "
+"fortfahren möchten?"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr ""
+"Der Token benötigt KEINE Berechtigungen/Scopes (ein schreibgeschützter "
+"öffentlicher Zugriff ist ausreichend)."
+
+msgid "Theme settings"
+msgstr "Theme-Einstellungen"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr ""
+"Theme erfolgreich aktualisiert! RPC-Dienst wird neu geladen, bitte Seite in "
+"5 Sekunden aktualisieren."
+
+msgid "Theme transition speed"
+msgstr "Übergangsgeschwindigkeit des Themes"
+
+msgid "Triggering installation on router..."
+msgstr "Installation auf dem Router wird gestartet..."
+
+msgid "Update channel"
+msgstr "Aktualisierungskanal"
+
+msgid "Update failed"
+msgstr "Update fehlgeschlagen"
+
+msgid "Upgrade Successful!"
+msgstr "Upgrade erfolgreich!"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Benutze benutzerdefinierte Fluent-Auswahllisten"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr ""
+"Verwende die Browser-View-Transition-API, um Navigationen zwischen "
+"LuCI-Seiten zu animieren, sofern unterstützt."
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr ""
+"Verwende die Systemeinstellung/Browserpräferenz oder zeige das Fluent-Theme "
+"immer in einer festen hellen oder dunklen Farbpalette an."
+
+msgid "Username is required."
+msgstr "Benutzername ist erforderlich."
+
+msgid "valid HEX color value"
+msgstr "gültiger HEX-Farbwert"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr ""
+"Wenn aktiviert, folgen Fluent-Animationen der Browser- oder "
+"Betriebssystempräferenz für reduzierte Bewegung."
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "Breite der Hauptnavigationsleiste in Pixeln."
+
+msgid "You can create a new token at"
+msgstr "Sie können einen neuen Token unter erstellen:"
+
+msgid "Your theme is up to date!"
+msgstr "Ihr Theme ist auf dem neuesten Stand!"

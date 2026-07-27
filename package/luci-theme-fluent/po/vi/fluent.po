@@ -1,0 +1,589 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "Một phiên bản mới đã có!"
+
+msgid "About"
+msgstr "Giới thiệu"
+
+msgid "Accent color"
+msgstr "Màu điểm nhấn"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr ""
+"Điều chỉnh bố cục, kiểu chữ, thời gian chuyển đổi, đổ bóng, và thêm các biến "
+"CSS hoặc quy tắc tùy chỉnh khi các điều khiển tích hợp không đủ."
+
+msgid "Advanced"
+msgstr "Nâng cao"
+
+msgid "Advanced MAC Selector"
+msgstr "Bộ chọn MAC nâng cao"
+
+msgid "and {count} more…"
+msgstr "và {count} mục khác…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr ""
+"Hoạt ảnh đường gạch chân khi chuyển đổi giữa các tab LuCI gốc và menu tab "
+"theo chủ đề."
+
+msgid "Animation"
+msgstr "Hiệu ứng"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"Vượt quá giới hạn tốc độ API. Vui lòng nhập một Token GitHub để tiếp tục. "
+"Token này chỉ được sử dụng cho các yêu cầu giao diện người dùng và sẽ không "
+"được lưu trên hệ thống của router."
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr ""
+"Áp dụng cho các nút, ô nhập liệu, trình chọn và các điều khiển biểu mẫu "
+"tương tự trong toàn bộ chủ đề."
+
+msgid "Author"
+msgstr "Tác giả"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "Tự động (chỉ dành cho ngôn ngữ Ả Rập/Ba Tư)"
+
+msgid "Backdrop blur radius"
+msgstr "Bán kính làm mờ nền"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "Hệ thống phía sau (GHProxy Acceleration)"
+
+msgid "Backend (Official GitHub)"
+msgstr "Phần nền (GitHub chính thức)"
+
+msgid "Base font size"
+msgstr "Kích thước phông chữ cơ bản"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Bán kính làm mờ (pixel) phía sau thẻ đăng nhập ở chế độ tối. Sử dụng 0 để "
+"tắt tính năng làm mờ."
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr ""
+"Bán kính làm mờ (pixel) phía sau thẻ đăng nhập ở chế độ sáng. Sử dụng 0 để "
+"tắt tính năng làm mờ."
+
+msgid "Cancel"
+msgstr "Hủy"
+
+msgid "Card background"
+msgstr "Nền thẻ"
+
+msgid "Card shadow"
+msgstr "Bóng đổ thẻ"
+
+msgid "Check for updates"
+msgstr "Kiểm tra bản cập nhật"
+
+msgid "Checking for updates..."
+msgstr "Đang kiểm tra bản cập nhật..."
+
+msgid "Choose color"
+msgstr "Chọn màu"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"Chọn hướng văn bản cho các trang xác thực và đăng nhập. Chế độ tự động sẽ "
+"chuyển đổi mã ngôn ngữ Ả Rập và Ba Tư (ar, ar_*, ar-*, fa, fa_*, fa-*) sang "
+"RTL và sử dụng LTR nếu không tìm thấy hoặc không nhận dạng được."
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "Color mode"
+msgstr "Chế độ màu"
+
+msgid "Colors"
+msgstr "Màu sắc"
+
+msgid "Comfortable (42px)"
+msgstr "Thoải mái (42px)"
+
+msgid "Compact (32px)"
+msgstr "Ngắn gọn (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"Cấu hình chế độ màu, màu điểm nhấn, kích thước bố cục, hành vi hoạt ảnh, "
+"giao diện trang đăng nhập và các tùy chỉnh CSS nâng cao cho "
+"luci-theme-fluent."
+
+msgid "Confirm"
+msgstr "Xác nhận"
+
+msgid "Confirm Installation"
+msgstr "Xác nhận cài đặt"
+
+msgid "Continue"
+msgstr "Tiếp tục"
+
+msgid "Control height"
+msgstr "Điều khiển chiều cao"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr ""
+"Điều khiển độ đậm của phông chữ được sử dụng bởi các nhãn điều hướng chính "
+"và các yếu tố văn bản chủ đề liên quan."
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr ""
+"Điều khiển bán kính góc chung của Fluent được sử dụng bởi thẻ, nút, ô nhập "
+"liệu và các thành phần giao diện người dùng liên quan."
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr ""
+"Điều khiển thời gian chuyển đổi chung của Fluent được sử dụng bởi menu, tiêu "
+"đề và các hoạt ảnh chủ đề khác."
+
+msgid "Corner radius"
+msgstr "Bán kính góc"
+
+msgid "Current / Pending MAC Address"
+msgstr "Địa chỉ MAC hiện tại / Đang chờ xử lý"
+
+msgid "Custom CSS"
+msgstr "CSS tùy chỉnh"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr ""
+"Tùy chỉnh nền trang đăng nhập, độ mờ của thẻ và bán kính làm mờ cho chế độ "
+"sáng và chế độ tối."
+
+msgid "Dark mode"
+msgstr "Chế độ tối"
+
+msgid "Disabled"
+msgstr "Vô hiệu hóa"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr ""
+"Hiển thị bộ tải (loading indicator) theo chủ đề ở cạnh trên trong quá trình "
+"tải trang và chuyển đổi."
+
+msgid "Download and Install"
+msgstr "Tải xuống và Cài đặt"
+
+msgid "Downloading on router"
+msgstr "Đang tải trên router"
+
+msgid "Enable page transition animation"
+msgstr "Bật hiệu ứng hoạt ảnh khi chuyển trang"
+
+msgid "Enable tab underline animation"
+msgstr "Bật hiệu ứng hoạt ảnh đường gạch dưới tab"
+
+msgid "Expecting: %s"
+msgstr "Dự kiến: %s"
+
+msgid "Extra large (12px)"
+msgstr "Rất lớn (12px)"
+
+msgid "Failed to check for updates"
+msgstr "Không thể kiểm tra bản cập nhật."
+
+msgid "Failed to fetch current theme version."
+msgstr "Không thể lấy phiên bản chủ đề hiện tại."
+
+msgid "Fast"
+msgstr "Nhanh"
+
+msgid "Finished"
+msgstr "Hoàn tất"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "Chủ đề Fluent Design 2 cho LuCI"
+
+msgid "Fluent theme settings"
+msgstr "Cài đặt chủ đề Fluent"
+
+msgid "Follow system"
+msgstr "Theo hệ thống"
+
+msgid "Force dark mode"
+msgstr "Bật chế độ tối."
+
+msgid "Force light mode"
+msgstr "Buộc sử dụng chế độ sáng"
+
+msgid "Force LTR"
+msgstr "Buộc sử dụng hướng từ trái sang phải (LTR)"
+
+msgid "Force RTL"
+msgstr "Buộc sử dụng hướng từ phải sang trái (RTL)"
+
+msgid "General"
+msgstr "Chung"
+
+msgid "GitHub Token Required"
+msgstr "Yêu cầu Token GitHub"
+
+msgid "Header height"
+msgstr "Chiều cao tiêu đề"
+
+msgid "Height of the top header bar in pixels."
+msgstr "Chiều cao của thanh tiêu đề phía trên, tính bằng pixel."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr ""
+"Màu HEX được sử dụng làm màu nhấn chính của Fluent khi giao diện hiển thị ở "
+"chế độ tối."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr ""
+"Màu HEX được sử dụng làm màu nhấn chính của Fluent khi giao diện hiển thị ở "
+"chế độ sáng."
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "Màu HEX được sử dụng cho các thành phần/thẻ trong chế độ tối."
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "Màu HEX được sử dụng cho các thành phần/thẻ trong chế độ sáng."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr ""
+"Màu HEX được sử dụng cho nhãn thanh tiến trình khi giao diện hiển thị ở chế "
+"độ tối."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr ""
+"Màu HEX được sử dụng cho nhãn thanh tiến trình khi giao diện hiển thị ở chế "
+"độ sáng."
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "Màu HEX được sử dụng cho nền trang chính trong chế độ tối."
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "Màu HEX được sử dụng cho nền trang chính trong chế độ sáng."
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "Màu HEX được sử dụng cho thanh bên điều hướng ở chế độ tối."
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "Màu HEX được sử dụng cho thanh bên điều hướng ở chế độ sáng."
+
+msgid "Installation cancelled by user."
+msgstr "Cài đặt bị hủy bởi người dùng."
+
+msgid "Installed version"
+msgstr "Phiên bản đã cài đặt"
+
+msgid "Installing package"
+msgstr "Đang cài đặt gói"
+
+msgid "Large"
+msgstr "Lớn"
+
+msgid "Large (8px)"
+msgstr "Lớn (8px)"
+
+msgid "Light mode"
+msgstr "Chế độ sáng"
+
+msgid "Login"
+msgstr "Đăng nhập"
+
+msgid "Login card opacity"
+msgstr "Độ mờ của thẻ đăng nhập"
+
+msgid "Login page"
+msgstr "Trang đăng nhập"
+
+msgid "Medium"
+msgstr "Trung bình"
+
+msgid "Medium (4px)"
+msgstr "Trung bình (4px)"
+
+msgid "Navigation font weight"
+msgstr "Độ đậm của phông chữ điều hướng"
+
+msgid "Next"
+msgstr "Tiếp theo"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "Phiên bản thử nghiệm hàng ngày có sẵn (kiểm tra cài đặt lại)."
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "Kênh Thử Nghiệm Hàng Ngày (Bản xem trước)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr ""
+"Không tìm thấy gói phù hợp cho kiến trúc hệ thống của bạn trong bản phát "
+"hành này."
+
+msgid "None"
+msgstr "Không"
+
+msgid "Normal"
+msgstr "Bình thường"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Độ mờ của thẻ đăng nhập ở chế độ tối. 0 là hoàn toàn trong suốt và 1 là hoàn "
+"toàn không xuyên thấu."
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr ""
+"Độ mờ của thẻ đăng nhập ở chế độ sáng. 0 là hoàn toàn trong suốt và 1 là "
+"hoàn toàn không xuyên thấu."
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"CSS thô tùy chọn được chèn vào mẫu tiêu đề Fluent. Sử dụng điều này để ghi "
+"đè các biến --fluent-* bổ sung hoặc tinh chỉnh cụ thể cho trang mà không "
+"được hiển thị dưới dạng các tùy chọn chuyên dụng."
+
+msgid "Package format"
+msgstr "Định dạng gói"
+
+msgid "Page background"
+msgstr "Nền trang"
+
+msgid "Please enter your password."
+msgstr "Vui lòng nhập mật khẩu của bạn."
+
+msgid "Please enter your username."
+msgstr "Vui lòng nhập tên người dùng của bạn."
+
+msgid "Preset Vendor / Generator"
+msgstr "Nhà cung cấp / Trình tạo mặc định"
+
+msgid "Progress bar text color"
+msgstr "Màu chữ thanh tiến trình"
+
+msgid "Random Local MAC"
+msgstr "MAC địa phương ngẫu nhiên"
+
+msgid "Randomize MAC"
+msgstr "Ngẫu nhiên hóa MAC"
+
+msgid "Reload Web Interface"
+msgstr "Tải lại giao diện web"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr ""
+"Thay thế các phần tử select mặc định bằng widget dropdown tùy chỉnh của chủ "
+"đề."
+
+msgid "Respect reduced-motion preference"
+msgstr "Tuân thủ cài đặt giảm hiệu ứng chuyển động"
+
+msgid "Retrying with token..."
+msgstr "Đang thử lại với token..."
+
+msgid "Rounded (6px)"
+msgstr "Bo tròn (6px)"
+
+msgid "Search menu items"
+msgstr "Tìm kiếm mục menu"
+
+msgid "Search menu…"
+msgstr "Tìm kiếm trong menu…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "Chọn độ sâu bóng áp dụng cho các thẻ và bảng điều khiển theo chủ đề."
+
+msgid "Select vendor prefix..."
+msgstr "Chọn tiền tố nhà cung cấp..."
+
+msgid "Semibold"
+msgstr "In đậm"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"Đặt kích thước phông chữ cơ sở của giao diện tính bằng pixel. Hầu hết văn "
+"bản của chủ đề được điều chỉnh dựa trên giá trị này thông qua các biến CSS "
+"Fluent. Phạm vi khuyến nghị: 12-18px."
+
+msgid "Show top loading bar"
+msgstr "Hiển thị thanh tải ở trên"
+
+msgid "Sidebar background"
+msgstr "Nền thanh bên"
+
+msgid "Sidebar width"
+msgstr "Chiều rộng thanh bên"
+
+msgid "Slow"
+msgstr "Chậm"
+
+msgid "Small"
+msgstr "Nhỏ"
+
+msgid "Small (2px)"
+msgstr "Nhỏ (2px)"
+
+msgid "Software Update"
+msgstr "Cập nhật phần mềm"
+
+msgid "Source code"
+msgstr "Mã nguồn"
+
+msgid "Square (0px)"
+msgstr "Vuông (0px)"
+
+msgid "Stable Channel"
+msgstr "Kênh ổn định"
+
+msgid "Starting backend download..."
+msgstr "Bắt đầu tải xuống phần mềm nền..."
+
+msgid "Starting update process..."
+msgstr "Bắt đầu quá trình cập nhật..."
+
+msgid "Submit"
+msgstr "Gửi"
+
+msgid "Switch theme mode"
+msgstr "Chuyển đổi chế độ giao diện"
+
+msgid "Text direction"
+msgstr "Hướng văn bản"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr ""
+"Giao diện đang được cài đặt trên router của bạn. Nhật ký hiển thị bên dưới. "
+"Tải lại giao diện web sẽ áp dụng các thay đổi sau khi RPCD khởi động lại."
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr "Gói giao diện đã sẵn sàng. Bạn có chắc chắn muốn tiếp tục cài đặt không?"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr ""
+"Token này KHÔNG yêu cầu bất kỳ quyền/phạm vi nào (truy cập công khai chỉ đọc "
+"là đủ)."
+
+msgid "Theme settings"
+msgstr "Cài đặt giao diện"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr ""
+"Giao diện đã được cập nhật thành công! Đang tải lại dịch vụ RPC, vui lòng "
+"làm mới trang sau 5 giây."
+
+msgid "Theme transition speed"
+msgstr "Tốc độ chuyển đổi giao diện"
+
+msgid "Triggering installation on router..."
+msgstr "Đang cài đặt trên router..."
+
+msgid "Update channel"
+msgstr "Kênh cập nhật"
+
+msgid "Update failed"
+msgstr "Cập nhật thất bại"
+
+msgid "Upgrade Successful!"
+msgstr "Nâng cấp thành công!"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Sử dụng các hộp chọn tùy chỉnh của Fluent"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr ""
+"Sử dụng View Transition API của trình duyệt để tạo hiệu ứng động khi chuyển "
+"giữa các trang LuCI, nếu được hỗ trợ."
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr ""
+"Sử dụng cài đặt ưu tiên của hệ thống/trình duyệt, hoặc luôn hiển thị giao "
+"diện Fluent với bảng màu sáng hoặc tối cố định."
+
+msgid "Username is required."
+msgstr "Tên người dùng là bắt buộc."
+
+msgid "valid HEX color value"
+msgstr "Giá trị màu HEX hợp lệ"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr ""
+"Khi bật, các hiệu ứng động của Fluent sẽ tuân theo cài đặt giảm chuyển động "
+"của trình duyệt hoặc hệ điều hành."
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "Độ rộng của thanh bên điều hướng chính tính bằng pixel."
+
+msgid "You can create a new token at"
+msgstr "Bạn có thể tạo một token mới tại"
+
+msgid "Your theme is up to date!"
+msgstr "Giao diện của bạn đã được cập nhật."

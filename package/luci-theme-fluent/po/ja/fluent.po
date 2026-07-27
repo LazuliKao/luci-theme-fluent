@@ -1,0 +1,536 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "新しいバージョンが利用可能です！"
+
+msgid "About"
+msgstr "情報"
+
+msgid "Accent color"
+msgstr "アクセントカラー"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr "レイアウト、タイポグラフィ、トランジションのタイミング、影を調整し、組み込みコントロールが不十分な場合に、カスタムCSS変数やルールを挿入できます。"
+
+msgid "Advanced"
+msgstr "詳細設定"
+
+msgid "Advanced MAC Selector"
+msgstr "高度なMACアドレス選択"
+
+msgid "and {count} more…"
+msgstr "および{count}個以上…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr "LuCIの標準タブとテーマ付きタブメニュー間を切り替える際に、アクティブなアンダーラインのアニメーションを表示します。"
+
+msgid "Animation"
+msgstr "アニメーション"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"APIレート制限を超えました。続行するには、GitHubトークンを入力してください。このトークンはフロントエンドのリクエストのみに使用され、ルーターのバ"
+"ックエンドには保存されません。"
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr "テーマ全体で、標準ボタン、入力フィールド、選択肢などのフォームコントロールに適用されます。"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "自動 (アラビア語/ペルシャ語ロケールのみ)"
+
+msgid "Backdrop blur radius"
+msgstr "背景のぼかし半径"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "バックエンド (GHProxyによる高速化)"
+
+msgid "Backend (Official GitHub)"
+msgstr "バックエンド (公式GitHub)"
+
+msgid "Base font size"
+msgstr "ベースフォントサイズ"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr "ダークモード時のログインカード背面のぼかし半径（ピクセル）。ぼかしを無効にするには0を使用してください。"
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr "ライトモード時のログインカード背面のぼかし半径（ピクセル）。ぼかしを無効にするには0を使用してください。"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Card background"
+msgstr "カード背景色"
+
+msgid "Card shadow"
+msgstr "カードの影"
+
+msgid "Check for updates"
+msgstr "アップデートを確認"
+
+msgid "Checking for updates..."
+msgstr "アップデートをチェック中..."
+
+msgid "Choose color"
+msgstr "色を選択"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"認証ページとログインページのドキュメント方向を選択します。自動モードでは、アラビア語およびペルシャ語のロケールコード (ar, ar_*, ar-*, "
+"fa, fa_*, fa-*) が RTL に解決され、不明または認識されないロケールの場合は LTR にフォールバックされます。"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Color mode"
+msgstr "カラーモード"
+
+msgid "Colors"
+msgstr "色"
+
+msgid "Comfortable (42px)"
+msgstr "快適 (42px)"
+
+msgid "Compact (32px)"
+msgstr "コンパクト (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"カラーモード、アクセントカラー、レイアウトサイズ、アニメーション設定、ログインページの外観、および luci-theme-fluent の高度な CSS "
+"上書きを設定します。"
+
+msgid "Confirm"
+msgstr "確認"
+
+msgid "Confirm Installation"
+msgstr "インストールを確認"
+
+msgid "Continue"
+msgstr "続行"
+
+msgid "Control height"
+msgstr "高さの制御"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr "メインナビゲーションラベルおよび関連するテーマテキストの装飾に使用されるフォントウェイトを制御します。"
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr "カード、ボタン、入力フィールド、および関連する UI 要素で使用される共通 Fluent コーナー半径値を制御します。"
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr "メニュー、ヘッダー、その他のテーマアニメーションで使用される共通 Fluent トランジションタイミングを制御します。"
+
+msgid "Corner radius"
+msgstr "コーナー半径"
+
+msgid "Current / Pending MAC Address"
+msgstr "現在の / 待機中の MAC アドレス"
+
+msgid "Custom CSS"
+msgstr "カスタム CSS"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr "ライトモードとダークモードのログインページ背景、カードの不透明度、およびぼかし半径をカスタマイズします。"
+
+msgid "Dark mode"
+msgstr "ダークモード"
+
+msgid "Disabled"
+msgstr "無効"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr "ページ読み込みおよび遷移中に、テーマ適用されたローディングインジケータを画面上部に表示します。"
+
+msgid "Download and Install"
+msgstr "ダウンロードとインストール"
+
+msgid "Downloading on router"
+msgstr "ルーターでのダウンロード中"
+
+msgid "Enable page transition animation"
+msgstr "ページ遷移アニメーションを有効にする"
+
+msgid "Enable tab underline animation"
+msgstr "タブのアンダーラインアニメーションを有効にする"
+
+msgid "Expecting: %s"
+msgstr "期待値: %s"
+
+msgid "Extra large (12px)"
+msgstr "非常に大きい (12px)"
+
+msgid "Failed to check for updates"
+msgstr "アップデートの確認に失敗しました"
+
+msgid "Failed to fetch current theme version."
+msgstr "現在のテーマバージョンの取得に失敗しました。"
+
+msgid "Fast"
+msgstr "高速"
+
+msgid "Finished"
+msgstr "完了"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "LuCI用のFluent Design 2テーマ"
+
+msgid "Fluent theme settings"
+msgstr "Fluentテーマの設定"
+
+msgid "Follow system"
+msgstr "システムに合わせる"
+
+msgid "Force dark mode"
+msgstr "ダークモードを強制する"
+
+msgid "Force light mode"
+msgstr "ライトモードを強制"
+
+msgid "Force LTR"
+msgstr "左から右 (LTR) を強制"
+
+msgid "Force RTL"
+msgstr "右から左 (RTL) を強制"
+
+msgid "General"
+msgstr "基本設定"
+
+msgid "GitHub Token Required"
+msgstr "GitHub トークンが必要です"
+
+msgid "Header height"
+msgstr "ヘッダーの高さ"
+
+msgid "Height of the top header bar in pixels."
+msgstr "上部のヘッダーバーの高さをピクセル単位で指定します。"
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr "インターフェースがダークモードで表示される際の、主要な Fluent アクセントカラー (HEX 形式)。"
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr "インターフェースがライトモードで表示される際の、主要な Fluent アクセントカラー (HEX 形式)。"
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "ダークモードでコンテナ/カード要素に使用する HEX カラー。"
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "ライトモードでコンテナ/カード要素に使用する HEX カラー。"
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr "ダークモードでインターフェースが表示される際の、プログレスバーのラベルに使用する HEX カラー。"
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr "ライトモードでインターフェースが表示される際の、プログレスバーのラベルに使用する HEX カラー。"
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "ダークモードでメインページの背景に使用する HEX カラー。"
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "ライトモードでメインページの背景に使用する HEX カラー。"
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "ダークモード時のナビゲーションサイドバーで使用するHEXカラー。"
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "ライトモード時のナビゲーションサイドバーで使用するHEXカラー。"
+
+msgid "Installation cancelled by user."
+msgstr "ユーザーによるインストールの中止。"
+
+msgid "Installed version"
+msgstr "インストール済みバージョン"
+
+msgid "Installing package"
+msgstr "パッケージのインストール中..."
+
+msgid "Large"
+msgstr "大"
+
+msgid "Large (8px)"
+msgstr "大 (8px)"
+
+msgid "Light mode"
+msgstr "ライトモード"
+
+msgid "Login"
+msgstr "ログイン"
+
+msgid "Login card opacity"
+msgstr "ログインカードの不透明度"
+
+msgid "Login page"
+msgstr "ログインページ"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Medium (4px)"
+msgstr "中 (4px)"
+
+msgid "Navigation font weight"
+msgstr "ナビゲーションフォントの太さ"
+
+msgid "Next"
+msgstr "次へ"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "最新のナイトリー版が利用可能です (再インストール確認)。"
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "ナイトリーチャンネル (プレリリース)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr "このリリースで、お客様のシステムアーキテクチャに一致するパッケージが見つかりませんでした。"
+
+msgid "None"
+msgstr "なし"
+
+msgid "Normal"
+msgstr "通常"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr "ダークモード時のログインカードの不透明度。0は完全に透明、1は完全に不透明です。"
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr "ライトモード時のログインカードの不透明度。0は完全に透明、1は完全に不透明です。"
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"Fluentヘッダーテンプレートに挿入されるオプションの生のCSS。追加の--fluent-*変数のオーバーライドや、専用のオプションとして公開されてい"
+"ないページ固有の調整に使用します。"
+
+msgid "Package format"
+msgstr "パッケージ形式"
+
+msgid "Page background"
+msgstr "ページの背景"
+
+msgid "Please enter your password."
+msgstr "パスワードを入力してください。"
+
+msgid "Please enter your username."
+msgstr "ユーザー名を入力してください。"
+
+msgid "Preset Vendor / Generator"
+msgstr "プリセットのベンダー/ジェネレーター"
+
+msgid "Progress bar text color"
+msgstr "プログレスバーのテキストの色"
+
+msgid "Random Local MAC"
+msgstr "ランダムなローカルMACアドレス"
+
+msgid "Randomize MAC"
+msgstr "MACアドレスをランダム化"
+
+msgid "Reload Web Interface"
+msgstr "Webインターフェースを再読み込み"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr "ネイティブの選択要素を、テーマ独自のドロップダウンウィジェットに置き換えます。"
+
+msgid "Respect reduced-motion preference"
+msgstr "アニメーションの抑制設定を尊重します"
+
+msgid "Retrying with token..."
+msgstr "トークンを使って再試行中..."
+
+msgid "Rounded (6px)"
+msgstr "角丸 (6px)"
+
+msgid "Search menu items"
+msgstr "メニュー項目を検索"
+
+msgid "Search menu…"
+msgstr "メニューを検索…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "テーマ適用カードやパネルに適用する影の深さを選択します。"
+
+msgid "Select vendor prefix..."
+msgstr "ベンダープレフィックスを選択..."
+
+msgid "Semibold"
+msgstr "セミボールド"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"ベースとなるインターフェースのフォントサイズをピクセル単位で設定します。ほとんどのテーマテキストは、Fluent "
+"CSS変数を通じてこの値からスケールされます。推奨範囲: 12-18px。"
+
+msgid "Show top loading bar"
+msgstr "上部のローディングバーを表示"
+
+msgid "Sidebar background"
+msgstr "サイドバーの背景"
+
+msgid "Sidebar width"
+msgstr "サイドバーの幅"
+
+msgid "Slow"
+msgstr "遅い"
+
+msgid "Small"
+msgstr "小さい"
+
+msgid "Small (2px)"
+msgstr "小さく (2px)"
+
+msgid "Software Update"
+msgstr "ソフトウェア更新"
+
+msgid "Source code"
+msgstr "ソースコード"
+
+msgid "Square (0px)"
+msgstr "正方形 (0px)"
+
+msgid "Stable Channel"
+msgstr "安定版チャンネル"
+
+msgid "Starting backend download..."
+msgstr "バックエンドのダウンロードを開始します..."
+
+msgid "Starting update process..."
+msgstr "更新プロセスを開始します..."
+
+msgid "Submit"
+msgstr "送信"
+
+msgid "Switch theme mode"
+msgstr "テーマモードを切り替える"
+
+msgid "Text direction"
+msgstr "テキスト方向"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr "テーマがルーターにインストールされています。ログは下記に表示されます。Webインターフェースを再読み込みすると、RPCDの再起動後に変更が適用されます。"
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr "テーマパッケージの準備が完了しました。インストールを実行しますか？"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr "このトークンには、権限/スコープは必要ありません (読み取り専用の公開アクセスで十分です)。"
+
+msgid "Theme settings"
+msgstr "テーマ設定"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr "テーマの更新に成功しました！RPCサービスを再読み込みします。5秒後にページをリフレッシュしてください。"
+
+msgid "Theme transition speed"
+msgstr "テーマ切り替え速度"
+
+msgid "Triggering installation on router..."
+msgstr "ルーターへのインストールを開始します..."
+
+msgid "Update channel"
+msgstr "更新チャンネル"
+
+msgid "Update failed"
+msgstr "更新に失敗しました"
+
+msgid "Upgrade Successful!"
+msgstr "アップグレード成功！"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Fluentカスタムセレクトドロップダウンを使用する"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr "対応している場合、ブラウザのView Transition APIを使用してLuCIページのナビゲーションをアニメーション表示します。"
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr "システム/ブラウザの設定に従うか、常にFluentテーマを固定されたライトまたはダークパレットでレンダリングします。"
+
+msgid "Username is required."
+msgstr "ユーザー名は必須です。"
+
+msgid "valid HEX color value"
+msgstr "有効なHEXカラー値"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr "有効にすると、Fluentのアニメーションはブラウザまたはオペレーティングシステムの低減モーション設定に従います。"
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "メインナビゲーションサイドバーの幅をピクセル単位で指定します。"
+
+msgid "You can create a new token at"
+msgstr "新しいトークンは"
+
+msgid "Your theme is up to date!"
+msgstr "テーマは最新です！"

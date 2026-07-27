@@ -3,83 +3,83 @@ msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
 "POT-Creation-Date: 2026-07-27 13:22+0800\n"
 "PO-Revision-Date: \n"
-"Last-Translator: LazuliKao\n"
+"Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
-"Language: zh_CN\n"
+"Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "A new version is available!"
-msgstr "发现有新版本！"
+msgstr "已發布新版本！"
 
 msgid "About"
-msgstr "关于"
+msgstr "關於"
 
 msgid "Accent color"
-msgstr "强调色"
+msgstr "主題色"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
 "variables or rules when the built-in controls are not enough."
-msgstr "调整布局、排版、过渡动画时间、阴影，并在内置控件不足时注入自定义 CSS 变量或规则。"
+msgstr "調整版面配置、字體樣式、轉場時機、陰影，以及在內建控制不夠的情況下，注入自訂 CSS 變數或規則。"
 
 msgid "Advanced"
-msgstr "高级"
+msgstr "進階"
 
 msgid "Advanced MAC Selector"
-msgstr "高级 MAC 选择器"
+msgstr "進階 MAC 位址選擇器"
 
 msgid "and {count} more…"
-msgstr "和 {count} 个更多..."
+msgstr "和 {count} 個項目…"
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
 "themed tab menus."
-msgstr "在切换原生 LuCI 标签页和主题化标签菜单时，为活动下划线添加动画。"
+msgstr "在切換原生 LuCI 標籤和主題化標籤菜單時，動態顯示活動底線。"
 
 msgid "Animation"
-msgstr "动画"
+msgstr "動畫"
 
 msgid ""
 "API rate limit exceeded. Please enter a GitHub Token to continue. This token "
 "is only used for frontend requests and will not be saved on the router "
 "backend."
-msgstr "API 调用频率已达上限。请输入 GitHub Token 以继续。此 token 只用于前端请求，不会保存在路由器后端。"
+msgstr "API 速率限制已達到。請輸入 GitHub Token 以繼續。此 Token僅用於前端請求，不會儲存在路由器後端。"
 
 msgid ""
 "Applies to standard buttons, inputs, selects, and similar form controls "
 "across the theme."
-msgstr "适用于整个主题中的标准按钮、输入框、选择框及类似表单控件。"
+msgstr "適用於標準按鈕、輸入框、選取元件以及主題中類似的表單控制項。"
 
 msgid "Author"
 msgstr "作者"
 
 msgid "Automatic (Arabic/Persian locales only)"
-msgstr "自动（仅阿拉伯语/波斯语语言环境）"
+msgstr "自動 (僅限阿拉伯語/波斯語地區設定)"
 
 msgid "Backdrop blur radius"
-msgstr "背景模糊半径"
+msgstr "背景模糊半徑"
 
 msgid "Backend (GHProxy Acceleration)"
-msgstr "后端 (GHProxy 加速)"
+msgstr "後端 (GHProxy 加速)"
 
 msgid "Backend (Official GitHub)"
-msgstr "后端 (官方 GitHub)"
+msgstr "後端 (官方 GitHub)"
 
 msgid "Base font size"
-msgstr "基础字体大小"
+msgstr "基礎字體大小"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
 "blur."
-msgstr "深色模式下，登录卡片背后的模糊半径（单位：像素）。使用 0 可禁用模糊效果。"
+msgstr "深色模式下，登入卡片背後的模糊半徑（以像素為單位）。使用 0 關閉模糊效果。"
 
 msgid ""
 "Blur radius in pixels behind the login card in light mode. Use 0 to disable "
 "blur."
-msgstr "亮色模式下，登录卡片背后的模糊半径（单位：像素）。使用 0 可禁用模糊效果。"
+msgstr "淺色模式下，登入卡片背後的模糊半徑（以像素為單位）。使用 0 關閉模糊效果。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -88,120 +88,120 @@ msgid "Card background"
 msgstr "卡片背景"
 
 msgid "Card shadow"
-msgstr "卡片阴影"
+msgstr "卡片陰影"
 
 msgid "Check for updates"
-msgstr "检查更新"
+msgstr "檢查更新"
 
 msgid "Checking for updates..."
-msgstr "正在检查更新..."
+msgstr "正在檢查更新..."
 
 msgid "Choose color"
-msgstr "选择颜色"
+msgstr "選擇顏色"
 
 msgid ""
 "Choose the document direction for authenticated and login pages. Automatic "
 "mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
 "fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
 msgstr ""
-"为已登录页面和登录页面选择文档方向。自动模式会将阿拉伯语和波斯语语言环境代码（ar、ar_*、ar-*、fa、fa_*、fa-*）解析为 "
-"RTL，对于缺失或无法识别的语言环境则回退为 LTR。"
+"為驗證和登入頁面選擇文件方向。自動模式會將阿拉伯語和波斯語的地區代碼 (ar, ar_*, ar-*, fa, fa_*, fa-*) 解析為從右到左 "
+"(RTL)，如果缺少或無法識別，則回退為從左到右 (LTR)。"
 
 msgid "Close"
-msgstr "关闭"
+msgstr "關閉"
 
 msgid "Color mode"
 msgstr "色彩模式"
 
 msgid "Colors"
-msgstr "颜色"
+msgstr "顏色"
 
 msgid "Comfortable (42px)"
-msgstr "舒适（42px）"
+msgstr "舒適 (42px)"
 
 msgid "Compact (32px)"
-msgstr "紧凑（32px）"
+msgstr "緊湊型 (32px)"
 
 msgid ""
 "Configure color mode, accent colors, layout sizing, animation behavior, "
 "login-page appearance, and advanced CSS overrides for luci-theme-fluent."
-msgstr "配置色彩模式、强调色、布局尺寸、动画行为、登录页面外观，以及用于 `luci-theme-fluent` 的高级 CSS 覆盖。"
+msgstr "設定色彩模式、主題色、版面配置大小、動畫效果、登入頁面外觀，以及針對 luci-theme-fluent 的進階 CSS 覆寫。"
 
 msgid "Confirm"
-msgstr "确认"
+msgstr "確認"
 
 msgid "Confirm Installation"
-msgstr "确认安装"
+msgstr "確認安裝"
 
 msgid "Continue"
-msgstr "继续"
+msgstr "繼續"
 
 msgid "Control height"
-msgstr "控件高度"
+msgstr "控制高度"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
 "text accents."
-msgstr "控制主导航标签及相关主题强调文本的字体粗细。"
+msgstr "控制用於主要導航標籤以及相關主題文字強調的字體粗細。"
 
 msgid ""
 "Controls the shared Fluent corner radius tokens used by cards, buttons, "
 "inputs, and related UI surfaces."
-msgstr "控制卡片、按钮、输入框及相关 UI 元素共享的 Fluent 圆角半径值。"
+msgstr "控制卡片、按鈕、輸入框和其他 UI 元素的 Fluent 角落圓角值。"
 
 msgid ""
 "Controls the shared Fluent transition timing used by menu, header, and other "
 "theme animations."
-msgstr "控制菜单、头部和其他主题动画中使用的共享 Fluent 过渡时间。"
+msgstr "控制菜單、頁首和其他主題動畫使用的 Fluent 過渡時長。"
 
 msgid "Corner radius"
-msgstr "圆角半径"
+msgstr "角落圓角"
 
 msgid "Current / Pending MAC Address"
-msgstr "当前 / 待定 MAC 地址"
+msgstr "目前 / 待處理 MAC 位址"
 
 msgid "Custom CSS"
-msgstr "自定义 CSS"
+msgstr "自訂 CSS"
 
 msgid ""
 "Customize the login page background, card opacity, and blur radius for light "
 "and dark modes."
-msgstr "自定义亮色模式和深色模式下登录页面的背景、卡片不透明度和模糊半径。"
+msgstr "自訂登入頁面背景、卡片不透明度，以及淺色和深色模式下的模糊半徑。"
 
 msgid "Dark mode"
 msgstr "深色模式"
 
 msgid "Disabled"
-msgstr "禁用"
+msgstr "已停用"
 
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
-msgstr "在页面加载和过渡期间，在顶部边缘显示主题化的加载指示器。"
+msgstr "在頁面載入和切換時，顯示主題化的載入指示器於頂端。"
 
 msgid "Download and Install"
-msgstr "下载并安装"
+msgstr "下載與安裝"
 
 msgid "Downloading on router"
-msgstr "正在路由器上下载..."
+msgstr "正在路由器上下載..."
 
 msgid "Enable page transition animation"
-msgstr "启用页面过渡动画"
+msgstr "啟用頁面轉場動畫"
 
 msgid "Enable tab underline animation"
-msgstr "启用标签页下划线动画"
+msgstr "啟用分頁下劃線動畫"
 
 msgid "Expecting: %s"
-msgstr "预期：%s"
+msgstr "預期值: %s"
 
 msgid "Extra large (12px)"
-msgstr "超大 (12像素)"
+msgstr "超大 (12px)"
 
 msgid "Failed to check for updates"
-msgstr "检查更新失败"
+msgstr "檢查更新失敗"
 
 msgid "Failed to fetch current theme version."
-msgstr "未能获取当前主题版本。"
+msgstr "無法取得目前主題版本。"
 
 msgid "Fast"
 msgstr "快速"
@@ -210,319 +210,319 @@ msgid "Finished"
 msgstr "完成"
 
 msgid "Fluent Design 2 theme for LuCI"
-msgstr "适用于 LuCI 的 Fluent Design 2 主题"
+msgstr "適用於 LuCI 的 Fluent Design 2 主題"
 
 msgid "Fluent theme settings"
-msgstr "Fluent 主题设置"
+msgstr "Fluent 主題設定"
 
 msgid "Follow system"
-msgstr "跟随系统"
+msgstr "遵循系統設定"
 
 msgid "Force dark mode"
-msgstr "强制深色模式"
+msgstr "強制深色模式"
 
 msgid "Force light mode"
-msgstr "强制亮色模式"
+msgstr "強制啟用淺色模式"
 
 msgid "Force LTR"
-msgstr "强制 LTR"
+msgstr "強制左向右 (LTR)"
 
 msgid "Force RTL"
-msgstr "强制 RTL"
+msgstr "強制從右向左 (RTL)"
 
 msgid "General"
-msgstr "常规"
+msgstr "一般設定"
 
 msgid "GitHub Token Required"
-msgstr "需要 GitHub Token"
+msgstr "需要 GitHub 令牌"
 
 msgid "Header height"
-msgstr "头部高度"
+msgstr "頁首高度"
 
 msgid "Height of the top header bar in pixels."
-msgstr "顶部标题栏的高度，单位为像素。"
+msgstr "頂部標題欄的高度，單位為像素。"
 
 msgid ""
 "HEX color used as the primary Fluent accent when the interface is rendered "
 "in dark mode."
-msgstr "在界面以深色模式渲染时，用作 Fluent 主要强调色的十六进制颜色。"
+msgstr "在深色模式下使用的主要 Fluent 主題顏色 (HEX)."
 
 msgid ""
 "HEX color used as the primary Fluent accent when the interface is rendered "
 "in light mode."
-msgstr "在界面以亮色模式渲染时，用作 Fluent 主要强调色的十六进制颜色。"
+msgstr "在淺色模式下使用的主要 Fluent 主題顏色 (HEX)."
 
 msgid "HEX color used for container/card elements in dark mode."
-msgstr "在深色模式下，用于容器/卡片元素的十六进制颜色。"
+msgstr "在深色模式下用於容器/卡片的顏色 (HEX)."
 
 msgid "HEX color used for container/card elements in light mode."
-msgstr "在亮色模式下，用于容器/卡片元素的十六进制颜色。"
+msgstr "在淺色模式下用於容器/卡片的顏色 (HEX)."
 
 msgid ""
 "HEX color used for progress-bar labels while the interface is rendered in "
 "dark mode."
-msgstr "在界面以深色模式渲染时，用于进度条标签的十六进制颜色。"
+msgstr "在深色模式下用於進度條標籤的顏色 (HEX)."
 
 msgid ""
 "HEX color used for progress-bar labels while the interface is rendered in "
 "light mode."
-msgstr "在界面以亮色模式渲染时，用于进度条标签的十六进制颜色。"
+msgstr "在淺色模式下用於進度條標籤的顏色 (HEX)."
 
 msgid "HEX color used for the main page background in dark mode."
-msgstr "在深色模式下，用于主页面的背景的十六进制颜色。"
+msgstr "在深色模式下使用的主要頁面背景顏色 (HEX)."
 
 msgid "HEX color used for the main page background in light mode."
-msgstr "在亮色模式下，用于主页面的背景的十六进制颜色。"
+msgstr "在淺色模式下使用的主要頁面背景顏色 (HEX)."
 
 msgid "HEX color used for the navigation sidebar in dark mode."
-msgstr "深色模式下导航侧边栏使用的十六进制颜色。"
+msgstr "深色模式下，導航側邊欄使用的十六進位顏色。"
 
 msgid "HEX color used for the navigation sidebar in light mode."
-msgstr "亮色模式下导航侧边栏使用的十六进制颜色。"
+msgstr "淺色模式下，導航側邊欄使用的十六進位顏色。"
 
 msgid "Installation cancelled by user."
-msgstr "用户已取消安装。"
+msgstr "使用者已取消安裝。"
 
 msgid "Installed version"
-msgstr "已安装版本"
+msgstr "已安裝版本"
 
 msgid "Installing package"
-msgstr "正在安装软件包"
+msgstr "正在安裝套件..."
 
 msgid "Large"
-msgstr "大号"
+msgstr "大"
 
 msgid "Large (8px)"
-msgstr "大号 (8px)"
+msgstr "大 (8px)"
 
 msgid "Light mode"
-msgstr "亮色模式"
+msgstr "淺色模式"
 
 msgid "Login"
-msgstr "登录"
+msgstr "登入"
 
 msgid "Login card opacity"
-msgstr "登录卡片不透明度"
+msgstr "登入卡片的透明度"
 
 msgid "Login page"
-msgstr "登录页"
+msgstr "登入頁面"
 
 msgid "Medium"
-msgstr "中号"
+msgstr "中等"
 
 msgid "Medium (4px)"
-msgstr "中号 (4px)"
+msgstr "中等 (4px)"
 
 msgid "Navigation font weight"
-msgstr "导航字体粗细"
+msgstr "導航字體粗細"
 
 msgid "Next"
 msgstr "下一步"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "有夜间构建可用（检查是否需要重新安装）。"
+msgstr "有可用的每日建置版本（重新安裝檢查）。"
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "夜间版本通道 (预发布)"
+msgstr "每日版本通道 (預發布)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
 "release."
-msgstr "在此版本中，未找到适用于您系统架构的软件包资源。"
+msgstr "此版本中未找到與您的系統架構相符的套件資源。"
 
 msgid "None"
-msgstr "无"
+msgstr "無"
 
 msgid "Normal"
-msgstr "常规"
+msgstr "正常"
 
 msgid ""
 "Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
 "fully opaque."
-msgstr "深色模式下登录卡片的不透明度。0 表示完全透明，1 表示完全不透明。"
+msgstr "深色模式下登入卡片的透明度。 0 為完全透明，1 為完全不透明。"
 
 msgid ""
 "Opacity of the login card in light mode. 0 is fully transparent and 1 is "
 "fully opaque."
-msgstr "亮色模式下登录卡片的不透明度。0 表示完全透明，1 表示完全不透明。"
+msgstr "淺色模式下登入卡片的透明度。 0 為完全透明，1 為完全不透明。"
 
 msgid ""
 "Optional raw CSS injected into the Fluent header template. Use this for "
 "extra --fluent-* variable overrides or page-specific tweaks that are not "
 "exposed as dedicated options."
-msgstr "在 Fluent 头部模板中注入可选的原始 CSS。用于额外的 `--fluent-*` 变量覆盖，或页面特定的调整，这些调整没有作为专门的选项暴露。"
+msgstr "可選的原始 CSS，會注入到 Fluent 頁首範本中。 用於額外的 `--fluent-*` 變數覆寫或特定頁面的調整，這些調整沒有提供專用的選項。"
 
 msgid "Package format"
-msgstr "软件包格式"
+msgstr "套件格式"
 
 msgid "Page background"
-msgstr "页面背景"
+msgstr "頁面背景"
 
 msgid "Please enter your password."
-msgstr "请输入您的密码。"
+msgstr "請輸入您的密碼。"
 
 msgid "Please enter your username."
-msgstr "请输入您的用户名。"
+msgstr "請輸入您的使用者名稱。"
 
 msgid "Preset Vendor / Generator"
-msgstr "预设厂商 / 生成器"
+msgstr "預設供應商 / 產生器"
 
 msgid "Progress bar text color"
-msgstr "进度条文本颜色"
+msgstr "進度條文字顏色"
 
 msgid "Random Local MAC"
-msgstr "随机本地 MAC"
+msgstr "隨機本機 MAC 位址"
 
 msgid "Randomize MAC"
-msgstr "随机化 MAC"
+msgstr "隨機 MAC 位址"
 
 msgid "Reload Web Interface"
-msgstr "重新加载网页界面"
+msgstr "重新載入網頁介面"
 
 msgid "Replace native select elements with the theme's custom dropdown widget."
-msgstr "使用主题的自定义下拉组件替换原生的选择元素。"
+msgstr "使用主題自訂的下拉式元件，取代原生選取元素。"
 
 msgid "Respect reduced-motion preference"
-msgstr "遵循减少动态效果偏好设置"
+msgstr "尊重減少動畫的設定"
 
 msgid "Retrying with token..."
-msgstr "正在使用令牌重试..."
+msgstr "正在使用 Token 重新嘗試..."
 
 msgid "Rounded (6px)"
-msgstr "圆角 (6px)"
+msgstr "圓角 (6px)"
 
 msgid "Search menu items"
-msgstr "搜索菜单项"
+msgstr "搜尋選單項目"
 
 msgid "Search menu…"
-msgstr "搜索菜单…"
+msgstr "搜尋選單…"
 
 msgid "Select the shadow depth applied to themed cards and panels."
-msgstr "选择应用于主题卡片和面板的阴影深度。"
+msgstr "選擇套用在主題卡片和面板上的陰影深度。"
 
 msgid "Select vendor prefix..."
-msgstr "选择厂商前缀..."
+msgstr "選擇供應商前綴..."
 
 msgid "Semibold"
-msgstr "半粗体"
+msgstr "粗體"
 
 msgid ""
 "Sets the base interface font size in pixels. Most theme text scales from "
 "this value through the Fluent CSS variables. Recommended range: 12-18px."
-msgstr "设置基础界面字体大小（像素）。大多数主题文本会根据 Fluent CSS 变量从该值进行缩放。建议范围：12-18px。"
+msgstr "設定介面基本字體大小（以像素為單位）。大部分主題文字會透過 Fluent CSS 變數從此值進行縮放。建議範圍：12-18px。"
 
 msgid "Show top loading bar"
-msgstr "显示顶部加载条"
+msgstr "顯示頂部載入條"
 
 msgid "Sidebar background"
-msgstr "侧边栏背景"
+msgstr "側邊欄背景"
 
 msgid "Sidebar width"
-msgstr "侧边栏宽度"
+msgstr "側邊欄寬度"
 
 msgid "Slow"
-msgstr "慢速"
+msgstr "較慢"
 
 msgid "Small"
-msgstr "小号"
+msgstr "小"
 
 msgid "Small (2px)"
-msgstr "小号 (2px)"
+msgstr "小 (2px)"
 
 msgid "Software Update"
-msgstr "软件更新"
+msgstr "軟體更新"
 
 msgid "Source code"
-msgstr "源代码"
+msgstr "原始碼"
 
 msgid "Square (0px)"
 msgstr "方形 (0px)"
 
 msgid "Stable Channel"
-msgstr "稳定版本通道"
+msgstr "穩定版本通道"
 
 msgid "Starting backend download..."
-msgstr "开始后端下载..."
+msgstr "正在開始後端下載..."
 
 msgid "Starting update process..."
-msgstr "启动更新过程..."
+msgstr "正在開始更新程序..."
 
 msgid "Submit"
 msgstr "提交"
 
 msgid "Switch theme mode"
-msgstr "切换主题模式"
+msgstr "切換主題模式"
 
 msgid "Text direction"
-msgstr "文本方向"
+msgstr "文字方向"
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "
 "Reloading the web interface will apply the changes once RPCD restarts."
-msgstr "主题正在安装到您的路由器。日志显示在下方。重新加载网页界面将在 RPCD 重启后应用更改。"
+msgstr "該主題正在安裝到您的路由器。 日誌顯示在下方。 重新載入網頁介面將在 RPCD 重啟後應用更改。"
 
 msgid ""
 "The theme package is ready. Are you sure you want to proceed with the "
 "installation?"
-msgstr "主题软件包已准备好。您确定要继续安装吗？"
+msgstr "主題套件已準備好。 您確定要繼續安裝嗎？"
 
 msgid ""
 "The token does NOT require any permissions/scopes to be granted (read-only "
 "public access is sufficient)."
-msgstr "该令牌不需要授予任何权限/范围（读取公共访问权限就足够了）。"
+msgstr "此權杖不需要任何權限/範圍，(僅讀取公開存取就足夠)。"
 
 msgid "Theme settings"
-msgstr "主题设置"
+msgstr "主題設定"
 
 msgid ""
 "Theme successfully updated! Reloading RPC service, please refresh the page "
 "in 5 seconds."
-msgstr "主题更新成功！正在重新加载 RPC 服务，请在 5 秒后刷新页面。"
+msgstr "主題已成功更新！正在重新載入 RPC 服務，請在 5 秒後刷新頁面。"
 
 msgid "Theme transition speed"
-msgstr "主题过渡速度"
+msgstr "主題切換速度"
 
 msgid "Triggering installation on router..."
-msgstr "触发路由器上的安装..."
+msgstr "正在路由器上安裝..."
 
 msgid "Update channel"
-msgstr "更新通道"
+msgstr "更新頻道"
 
 msgid "Update failed"
-msgstr "更新失败"
+msgstr "更新失敗"
 
 msgid "Upgrade Successful!"
-msgstr "升级成功！"
+msgstr "升級成功！"
 
 msgid "Use Fluent custom select dropdowns"
-msgstr "使用 Fluent 自定义下拉选择框"
+msgstr "使用 Fluent 自訂選取式下拉清單"
 
 msgid ""
 "Use the browser View Transition API to animate navigation between LuCI pages "
 "when supported."
-msgstr "当浏览器支持时，使用浏览器的 View Transition API 为 LuCI 页面之间的导航添加过渡动画。"
+msgstr "當支援時，使用瀏覽器的 View Transition API 動畫化 LuCI 頁面之間的導航。"
 
 msgid ""
 "Use the system/browser preference, or always render the Fluent theme in a "
 "fixed light or dark palette."
-msgstr "使用系统/浏览器的偏好设置，或始终以固定的亮色或深色配色渲染 Fluent 主题。"
+msgstr "使用系統/瀏覽器偏好設定，或強制以固定淺色或深色調配色顯示 Fluent 主題。"
 
 msgid "Username is required."
-msgstr "必须输入用户名。"
+msgstr "使用者名稱是必填欄位。"
 
 msgid "valid HEX color value"
-msgstr "有效的十六进制颜色值"
+msgstr "有效的 HEX 色彩值"
 
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
-msgstr "启用后，Fluent 动画将遵循浏览器或操作系统的减少动态效果偏好设置。"
+msgstr "啟用時，Fluent 動畫會遵循瀏覽器或作業系統的減少動畫偏好設定。"
 
 msgid "Width of the main navigation sidebar in pixels."
-msgstr "主导航侧边栏的宽度（像素）。"
+msgstr "主要導航側邊欄的寬度（以像素為單位）。"
 
 msgid "You can create a new token at"
-msgstr "您可以在这里创建新的令牌："
+msgstr "您可以在這裡建立新的 Token："
 
 msgid "Your theme is up to date!"
-msgstr "您的主题已是最新版本！"
+msgstr "您的主題已更新。"

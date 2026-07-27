@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-theme-fluent\n"
+"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: TranslateGemma\n"
+"Language-Team: LuCI Theme Fluent\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A new version is available!"
+msgstr "새 버전이 있습니다!"
+
+msgid "About"
+msgstr "정보"
+
+msgid "Accent color"
+msgstr "강조 색상"
+
+msgid ""
+"Adjust layout, typography, transition timing, shadows, and inject custom CSS "
+"variables or rules when the built-in controls are not enough."
+msgstr ""
+"내장 컨트롤로 충분하지 않은 경우, 레이아웃, 타이포그래피, 전환 시간, 그림자 등을 조정하고 사용자 정의 CSS 변수 또는 규칙을 "
+"추가합니다."
+
+msgid "Advanced"
+msgstr "고급 설정"
+
+msgid "Advanced MAC Selector"
+msgstr "고급 MAC 선택기"
+
+msgid "and {count} more…"
+msgstr "및 {count}개 더…"
+
+msgid ""
+"Animate the active underline when switching between native LuCI tabs and "
+"themed tab menus."
+msgstr "네이티브 LuCI 탭과 테마 적용된 탭 메뉴 간 전환 시 활성 밑줄 애니메이션을 표시합니다."
+
+msgid "Animation"
+msgstr "애니메이션"
+
+msgid ""
+"API rate limit exceeded. Please enter a GitHub Token to continue. This token "
+"is only used for frontend requests and will not be saved on the router "
+"backend."
+msgstr ""
+"API 요청 제한 초과. 계속하려면 GitHub 토큰을 입력하세요. 이 토큰은 프런트엔드 요청에만 사용되며 라우터 백엔드에 저장되지 "
+"않습니다."
+
+msgid ""
+"Applies to standard buttons, inputs, selects, and similar form controls "
+"across the theme."
+msgstr "표준 버튼, 입력 필드, 선택 상자 및 유사한 폼 컨트롤에 적용됩니다."
+
+msgid "Author"
+msgstr "작성자"
+
+msgid "Automatic (Arabic/Persian locales only)"
+msgstr "자동 (아랍어/페르시아어 지역 설정만 해당)"
+
+msgid "Backdrop blur radius"
+msgstr "배경 블러 반경"
+
+msgid "Backend (GHProxy Acceleration)"
+msgstr "백엔드 (GHProxy 가속)"
+
+msgid "Backend (Official GitHub)"
+msgstr "백엔드 (공식 GitHub)"
+
+msgid "Base font size"
+msgstr "기본 글꼴 크기"
+
+msgid ""
+"Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
+"blur."
+msgstr "다크 모드에서 로그인 카드 뒤쪽의 블러 반경 (픽셀). 블러를 사용하지 않으려면 0을 입력하세요."
+
+msgid ""
+"Blur radius in pixels behind the login card in light mode. Use 0 to disable "
+"blur."
+msgstr "라이트 모드에서 로그인 카드 뒤쪽의 블러 반경 (픽셀). 블러를 사용하지 않으려면 0을 입력하세요."
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Card background"
+msgstr "카드 배경"
+
+msgid "Card shadow"
+msgstr "카드 그림자"
+
+msgid "Check for updates"
+msgstr "업데이트 확인"
+
+msgid "Checking for updates..."
+msgstr "업데이트 확인 중..."
+
+msgid "Choose color"
+msgstr "색상 선택"
+
+msgid ""
+"Choose the document direction for authenticated and login pages. Automatic "
+"mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
+"fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+"인증 및 로그인 페이지의 문서 방향을 선택합니다. 자동 모드는 아랍어 및 페르시아어 로케일 코드(ar, ar_*, ar-*, fa, "
+"fa_*, fa-*)를 RTL로 처리하고, 누락되거나 인식되지 않는 로케일에 대해서는 LTR로 기본 설정됩니다."
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Color mode"
+msgstr "색상 모드"
+
+msgid "Colors"
+msgstr "색상"
+
+msgid "Comfortable (42px)"
+msgstr "편안함 (42px)"
+
+msgid "Compact (32px)"
+msgstr "압축 (32px)"
+
+msgid ""
+"Configure color mode, accent colors, layout sizing, animation behavior, "
+"login-page appearance, and advanced CSS overrides for luci-theme-fluent."
+msgstr ""
+"색상 모드, 강조 색상, 레이아웃 크기 조정, 애니메이션 동작, 로그인 페이지 모양 및 luci-theme-fluent용 고급 CSS "
+"설정을 구성합니다."
+
+msgid "Confirm"
+msgstr "확인"
+
+msgid "Confirm Installation"
+msgstr "설치 확인"
+
+msgid "Continue"
+msgstr "계속"
+
+msgid "Control height"
+msgstr "높이 조절"
+
+msgid ""
+"Controls the font weight used by main navigation labels and related theme "
+"text accents."
+msgstr "메인 탐색 레이블 및 관련 테마 텍스트 강조에 사용되는 글꼴 두께를 제어합니다."
+
+msgid ""
+"Controls the shared Fluent corner radius tokens used by cards, buttons, "
+"inputs, and related UI surfaces."
+msgstr "카드, 버튼, 입력 필드 등 Fluent UI 요소에 사용되는 공통 코너 반경 값을 제어합니다."
+
+msgid ""
+"Controls the shared Fluent transition timing used by menu, header, and other "
+"theme animations."
+msgstr "메뉴, 헤더 등 테마 애니메이션에 사용되는 공통 Fluent 전환 시간을 제어합니다."
+
+msgid "Corner radius"
+msgstr "코너 반경"
+
+msgid "Current / Pending MAC Address"
+msgstr "현재 / 대기 중인 MAC 주소"
+
+msgid "Custom CSS"
+msgstr "사용자 정의 CSS"
+
+msgid ""
+"Customize the login page background, card opacity, and blur radius for light "
+"and dark modes."
+msgstr "로그인 페이지 배경, 카드 불투명도 및 라이트 모드 및 다크 모드의 블러 반경을 사용자 정의합니다."
+
+msgid "Dark mode"
+msgstr "다크 모드"
+
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgid ""
+"Display the themed loading indicator at the top edge during page loads and "
+"transitions."
+msgstr "페이지 로딩 및 전환 시, 테마 적용된 로딩 표시기를 화면 상단에 표시합니다."
+
+msgid "Download and Install"
+msgstr "다운로드 및 설치"
+
+msgid "Downloading on router"
+msgstr "라우터에서 다운로드 중"
+
+msgid "Enable page transition animation"
+msgstr "페이지 전환 애니메이션 활성화"
+
+msgid "Enable tab underline animation"
+msgstr "탭 하단 선 애니메이션 활성화"
+
+msgid "Expecting: %s"
+msgstr "예상 값: %s"
+
+msgid "Extra large (12px)"
+msgstr "매우 큼 (12px)"
+
+msgid "Failed to check for updates"
+msgstr "업데이트 확인 실패"
+
+msgid "Failed to fetch current theme version."
+msgstr "현재 테마 버전 정보를 가져오는데 실패했습니다."
+
+msgid "Fast"
+msgstr "빠름"
+
+msgid "Finished"
+msgstr "완료"
+
+msgid "Fluent Design 2 theme for LuCI"
+msgstr "LuCI용 Fluent Design 2 테마"
+
+msgid "Fluent theme settings"
+msgstr "Fluent 테마 설정"
+
+msgid "Follow system"
+msgstr "시스템 설정 따르기"
+
+msgid "Force dark mode"
+msgstr "강제 다크 모드 적용"
+
+msgid "Force light mode"
+msgstr "라이트 모드 강제 적용"
+
+msgid "Force LTR"
+msgstr "왼쪽에서 오른쪽으로 (LTR) 강제 적용"
+
+msgid "Force RTL"
+msgstr "오른쪽에서 왼쪽으로 (RTL) 강제 적용"
+
+msgid "General"
+msgstr "일반 설정"
+
+msgid "GitHub Token Required"
+msgstr "GitHub 토큰 필요"
+
+msgid "Header height"
+msgstr "헤더 높이"
+
+msgid "Height of the top header bar in pixels."
+msgstr "상단 헤더 바의 높이를 픽셀 단위로 지정합니다."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in dark mode."
+msgstr "다크 모드에서 인터페이스가 표시될 때 사용되는 주요 Fluent 강조 색상의 HEX 코드입니다."
+
+msgid ""
+"HEX color used as the primary Fluent accent when the interface is rendered "
+"in light mode."
+msgstr "라이트 모드에서 인터페이스가 표시될 때 사용되는 주요 Fluent 강조 색상의 HEX 코드입니다."
+
+msgid "HEX color used for container/card elements in dark mode."
+msgstr "다크 모드에서 컨테이너/카드 요소에 사용되는 HEX 색상입니다."
+
+msgid "HEX color used for container/card elements in light mode."
+msgstr "라이트 모드에서 컨테이너/카드 요소에 사용되는 HEX 색상입니다."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"dark mode."
+msgstr "다크 모드에서 인터페이스가 표시될 때 진행률 표시줄 레이블에 사용되는 HEX 색상입니다."
+
+msgid ""
+"HEX color used for progress-bar labels while the interface is rendered in "
+"light mode."
+msgstr "라이트 모드에서 인터페이스가 표시될 때 진행률 표시줄 레이블에 사용되는 HEX 색상입니다."
+
+msgid "HEX color used for the main page background in dark mode."
+msgstr "다크 모드에서 메인 페이지 배경에 사용되는 HEX 색상입니다."
+
+msgid "HEX color used for the main page background in light mode."
+msgstr "라이트 모드에서 메인 페이지 배경에 사용되는 HEX 색상입니다."
+
+msgid "HEX color used for the navigation sidebar in dark mode."
+msgstr "다크 모드에서 탐색 사이드바에 사용되는 HEX 색상."
+
+msgid "HEX color used for the navigation sidebar in light mode."
+msgstr "라이트 모드에서 탐색 사이드바에 사용되는 HEX 색상."
+
+msgid "Installation cancelled by user."
+msgstr "사용자에 의해 설치가 취소되었습니다."
+
+msgid "Installed version"
+msgstr "설치된 버전"
+
+msgid "Installing package"
+msgstr "패키지 설치 중"
+
+msgid "Large"
+msgstr "큼"
+
+msgid "Large (8px)"
+msgstr "큼 (8px)"
+
+msgid "Light mode"
+msgstr "라이트 모드"
+
+msgid "Login"
+msgstr "로그인"
+
+msgid "Login card opacity"
+msgstr "로그인 카드 불투명도"
+
+msgid "Login page"
+msgstr "로그인 페이지"
+
+msgid "Medium"
+msgstr "중간 크기"
+
+msgid "Medium (4px)"
+msgstr "중간 크기 (4px)"
+
+msgid "Navigation font weight"
+msgstr "탐색 글꼴 두께"
+
+msgid "Next"
+msgstr "다음"
+
+msgid "Nightly build available (reinstallation check)."
+msgstr "매일 빌드 사용 가능 (재설치 확인)."
+
+msgid "Nightly Channel (Prerelease)"
+msgstr "개발 버전 채널 (미리 출시)"
+
+msgid ""
+"No matching package asset found for your system architecture in this "
+"release."
+msgstr "이 릴리스에서 시스템 아키텍처에 맞는 패키지 파일을 찾을 수 없습니다."
+
+msgid "None"
+msgstr "없음"
+
+msgid "Normal"
+msgstr "일반"
+
+msgid ""
+"Opacity of the login card in dark mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr "다크 모드에서 로그인 카드 불투명도. 0은 완전히 투명하고 1은 완전히 불투명합니다."
+
+msgid ""
+"Opacity of the login card in light mode. 0 is fully transparent and 1 is "
+"fully opaque."
+msgstr "라이트 모드에서 로그인 카드 불투명도. 0은 완전히 투명하고 1은 완전히 불투명합니다."
+
+msgid ""
+"Optional raw CSS injected into the Fluent header template. Use this for "
+"extra --fluent-* variable overrides or page-specific tweaks that are not "
+"exposed as dedicated options."
+msgstr ""
+"Fluent 헤더 템플릿에 추가되는 CSS입니다. --fluent-* 변수 재정의 또는 별도의 옵션으로 제공되지 않는 페이지별 수정 "
+"사항을 위해 사용하십시오."
+
+msgid "Package format"
+msgstr "패키지 형식"
+
+msgid "Page background"
+msgstr "페이지 배경"
+
+msgid "Please enter your password."
+msgstr "비밀번호를 입력하세요."
+
+msgid "Please enter your username."
+msgstr "사용자 이름을 입력하세요."
+
+msgid "Preset Vendor / Generator"
+msgstr "미리 설정된 공급업체 / 생성기"
+
+msgid "Progress bar text color"
+msgstr "진행률 표시줄 텍스트 색상"
+
+msgid "Random Local MAC"
+msgstr "임의 로컬 MAC 주소"
+
+msgid "Randomize MAC"
+msgstr "MAC 주소 무작위 변경"
+
+msgid "Reload Web Interface"
+msgstr "웹 인터페이스 재시작"
+
+msgid "Replace native select elements with the theme's custom dropdown widget."
+msgstr "네이티브 선택 요소를 테마의 사용자 정의 드롭다운 위젯으로 대체합니다."
+
+msgid "Respect reduced-motion preference"
+msgstr "화면 전환 효과 감소 옵션을 준수합니다."
+
+msgid "Retrying with token..."
+msgstr "토큰을 사용하여 다시 시도 중..."
+
+msgid "Rounded (6px)"
+msgstr "둥글게 (6px)"
+
+msgid "Search menu items"
+msgstr "메뉴 항목 검색"
+
+msgid "Search menu…"
+msgstr "메뉴 검색…"
+
+msgid "Select the shadow depth applied to themed cards and panels."
+msgstr "테마 적용된 카드 및 패널에 적용되는 그림자 깊이를 선택합니다."
+
+msgid "Select vendor prefix..."
+msgstr "벤더 접두사 선택..."
+
+msgid "Semibold"
+msgstr "굵게"
+
+msgid ""
+"Sets the base interface font size in pixels. Most theme text scales from "
+"this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+"기본 인터페이스 글꼴 크기를 픽셀 단위로 설정합니다. 대부분의 테마 텍스트는 Fluent CSS 변수를 통해 이 값에서 조정됩니다. 권장 "
+"범위: 12-18px."
+
+msgid "Show top loading bar"
+msgstr "상단 로딩 표시줄 숨기기"
+
+msgid "Sidebar background"
+msgstr "사이드바 배경"
+
+msgid "Sidebar width"
+msgstr "사이드바 너비"
+
+msgid "Slow"
+msgstr "느림"
+
+msgid "Small"
+msgstr "작게"
+
+msgid "Small (2px)"
+msgstr "작게 (2px)"
+
+msgid "Software Update"
+msgstr "소프트웨어 업데이트"
+
+msgid "Source code"
+msgstr "소스 코드"
+
+msgid "Square (0px)"
+msgstr "정사각형 (0px)"
+
+msgid "Stable Channel"
+msgstr "안정 채널"
+
+msgid "Starting backend download..."
+msgstr "백엔드 다운로드 시작..."
+
+msgid "Starting update process..."
+msgstr "업데이트 프로세스 시작..."
+
+msgid "Submit"
+msgstr "제출"
+
+msgid "Switch theme mode"
+msgstr "테마 모드 전환"
+
+msgid "Text direction"
+msgstr "텍스트 방향"
+
+msgid ""
+"The theme is being installed on your router. The logs are displayed below. "
+"Reloading the web interface will apply the changes once RPCD restarts."
+msgstr "테마가 라우터에 설치 중입니다. 로그는 아래에 표시됩니다. 웹 인터페이스를 다시 로드하면 RPCD가 재시작된 후 변경 사항이 적용됩니다."
+
+msgid ""
+"The theme package is ready. Are you sure you want to proceed with the "
+"installation?"
+msgstr "테마 패키지가 준비되었습니다. 설치를 진행하시겠습니까?"
+
+msgid ""
+"The token does NOT require any permissions/scopes to be granted (read-only "
+"public access is sufficient)."
+msgstr "토큰은 권한/범위 부여가 필요하지 않습니다 (읽기 전용 공개 액세스가 충분합니다)."
+
+msgid "Theme settings"
+msgstr "테마 설정"
+
+msgid ""
+"Theme successfully updated! Reloading RPC service, please refresh the page "
+"in 5 seconds."
+msgstr "테마 업데이트 성공! RPC 서비스를 다시 로드합니다. 페이지를 5초 후에 새로 고쳐주세요."
+
+msgid "Theme transition speed"
+msgstr "테마 전환 속도"
+
+msgid "Triggering installation on router..."
+msgstr "라우터에서 설치를 시작합니다..."
+
+msgid "Update channel"
+msgstr "업데이트 채널"
+
+msgid "Update failed"
+msgstr "업데이트 실패"
+
+msgid "Upgrade Successful!"
+msgstr "업그레이드 성공!"
+
+msgid "Use Fluent custom select dropdowns"
+msgstr "Fluent 사용자 정의 선택 드롭다운 사용"
+
+msgid ""
+"Use the browser View Transition API to animate navigation between LuCI pages "
+"when supported."
+msgstr "지원되는 경우, LuCI 페이지 간 탐색 시 브라우저의 View Transition API를 사용하여 애니메이션을 적용합니다."
+
+msgid ""
+"Use the system/browser preference, or always render the Fluent theme in a "
+"fixed light or dark palette."
+msgstr "시스템/브라우저 설정을 사용하거나, 항상 Fluent 테마를 고정된 밝은 또는 어두운 색상으로 표시합니다."
+
+msgid "Username is required."
+msgstr "사용자 이름이 필요합니다."
+
+msgid "valid HEX color value"
+msgstr "유효한 HEX 색상 값"
+
+msgid ""
+"When enabled, Fluent animations follow the browser or operating system "
+"reduced-motion preference."
+msgstr "활성화하면, Fluent 애니메이션은 브라우저 또는 운영 체제의 움직임 감소 설정을 따릅니다."
+
+msgid "Width of the main navigation sidebar in pixels."
+msgstr "주요 탐색 사이드바의 너비 (픽셀 단위)."
+
+msgid "You can create a new token at"
+msgstr "새 토큰을 다음에서 생성할 수 있습니다:"
+
+msgid "Your theme is up to date!"
+msgstr "귀하의 테마는 최신 버전입니다!"
