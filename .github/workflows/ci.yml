@@ -36,6 +36,13 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "Using CI version ${VERSION}"
 
+      - name: Sync version files
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent/Makefile
+          sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
+          grep '^PKG_VERSION:=' package/luci-theme-fluent/Makefile
+          grep '^  "version":' package.json
 
       - name: Pack prepared source
         run: tar --exclude=.git -czf "$RUNNER_TEMP/ci-source.tar.gz" .
