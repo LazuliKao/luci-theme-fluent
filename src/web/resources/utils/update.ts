@@ -75,19 +75,24 @@ export interface ReleaseInfo {
   body: string;
   html_url: string;
   package_asset: ReleaseAsset | null;
-  i18n_asset: ReleaseAsset | null;
+  i18n_assets: ReleaseAsset[];
 }
 
 // Declare RPC methods
-export const callGetVersion = rpc.declare<{ version: string; pkg_type: "ipk" | "apk"; i18n_zh_cn_installed?: boolean }>({
+export const callGetVersion = rpc.declare<{
+  version: string;
+  pkg_type: "ipk" | "apk";
+  i18n_zh_cn_installed?: boolean;
+  installed_i18n?: string[];
+}>({
   object: "luci.fluent",
   method: "get_version",
 });
 
-export const callStartDownload = rpc.declare<{ result: number; message?: string }, [string, string]>({
+export const callStartDownload = rpc.declare<{ result: number; message?: string }, [string, string?, string?]>({
   object: "luci.fluent",
   method: "start_download",
-  params: ["url", "i18n_url"],
+  params: ["url", "i18n_url", "i18n_urls"],
 });
 
 export const callCheckDownload = rpc.declare<{ size: number; running: boolean; code?: number }>({
@@ -95,10 +100,10 @@ export const callCheckDownload = rpc.declare<{ size: number; running: boolean; c
   method: "check_download",
 });
 
-export const callDoInstall = rpc.declare<{ result: number; message?: string }, [string, string]>({
+export const callDoInstall = rpc.declare<{ result: number; message?: string }, [string, string?, string?]>({
   object: "luci.fluent",
   method: "do_install",
-  params: ["hash", "i18n_hash"],
+  params: ["hash", "i18n_hash", "i18n_hashes"],
 });
 
 export class GitHubAPIError extends Error {
@@ -111,9 +116,34 @@ export class GitHubAPIError extends Error {
 }
 
 /**
+ * Match a specific language asset from GitHub release assets
+ */
+export function matchI18nAsset(assets: ReleaseAsset[], lang: string, pkgType: "ipk" | "apk"): ReleaseAsset | null {
+  const normLang = lang.toLowerCase().trim();
+  for (const asset of assets) {
+    const name = String(asset.name || "").toLowerCase();
+    if (pkgType === "apk") {
+      if (name.startsWith(`luci-i18n-fluent-${normLang}-`) && name.endsWith(".apk")) {
+        return asset;
+      }
+    } else {
+      if ((name.startsWith(`luci-i18n-fluent-${normLang}_`) || name.startsWith(`luci-i18n-fluent-${normLang}-`)) && name.endsWith(".ipk")) {
+        return asset;
+      }
+    }
+  }
+  return null;
+}
+
+/**
  * Fetch the latest release details from GitHub API
  */
-export async function fetchLatestRelease(channel: "stable" | "nightly", pkgType: "ipk" | "apk", token?: string): Promise<ReleaseInfo> {
+export async function fetchLatestRelease(
+  channel: "stable" | "nightly",
+  pkgType: "ipk" | "apk",
+  installedI18n: string[] = [],
+  token?: string,
+): Promise<ReleaseInfo> {
   const url = channel === "nightly" ? "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/tags/nightly" : "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/latest";
 
   const headers: Record<string, string> = {};
@@ -135,18 +165,21 @@ export async function fetchLatestRelease(channel: "stable" | "nightly", pkgType:
   const assets = data.assets || [];
 
   let package_asset: ReleaseAsset | null = null;
-  let i18n_asset: ReleaseAsset | null = null;
+  const i18n_assets: ReleaseAsset[] = [];
 
   for (const asset of assets) {
     const name = String(asset.name || "");
     if (pkgType === "apk" && name.startsWith("luci-theme-fluent") && name.endsWith(".apk")) {
       package_asset = asset;
-    } else if (pkgType === "ipk" && name.startsWith("luci-theme-fluent") && name.endsWith("_all.ipk")) {
+    } else if (pkgType === "ipk" && name.startsWith("luci-theme-fluent") && (name.endsWith("_all.ipk") || name.endsWith(".ipk"))) {
       package_asset = asset;
-    } else if (pkgType === "apk" && name.startsWith("luci-i18n-fluent") && name.endsWith(".apk")) {
-      i18n_asset = asset;
-    } else if (pkgType === "ipk" && name.startsWith("luci-i18n-fluent") && name.endsWith("_all.ipk")) {
-      i18n_asset = asset;
+    }
+  }
+
+  for (const lang of installedI18n) {
+    const matched = matchI18nAsset(assets, lang, pkgType);
+    if (matched && !i18n_assets.includes(matched)) {
+      i18n_assets.push(matched);
     }
   }
 
@@ -156,7 +189,7 @@ export async function fetchLatestRelease(channel: "stable" | "nightly", pkgType:
     body: String(data.body || ""),
     html_url: String(data.html_url || ""),
     package_asset,
-    i18n_asset,
+    i18n_assets,
   };
 }
 

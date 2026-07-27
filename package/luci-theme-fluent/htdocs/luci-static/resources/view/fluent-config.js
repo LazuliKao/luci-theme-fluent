@@ -551,7 +551,8 @@ const callStartDownload = update_t.declare({
     method: "start_download",
     params: [
         "url",
-        "i18n_url"
+        "i18n_url",
+        "i18n_urls"
     ]
 });
 const callCheckDownload = update_t.declare({
@@ -563,7 +564,8 @@ const callDoInstall = update_t.declare({
     method: "do_install",
     params: [
         "hash",
-        "i18n_hash"
+        "i18n_hash",
+        "i18n_hashes"
     ]
 });
 class GitHubAPIError extends Error {
@@ -572,28 +574,42 @@ class GitHubAPIError extends Error {
         super(t), this.name = "GitHubAPIError", this.status = e;
     }
 }
-async function fetchLatestRelease(t, e, l) {
-    let a = {};
-    l && (a.Authorization = `token ${l}`);
-    let s = await fetch("nightly" === t ? "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/tags/nightly" : "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/latest", {
-        headers: a
-    }), i = await s.json();
-    if (!s.ok) {
-        let t = i?.message ? `: ${i.message}` : "";
-        throw new GitHubAPIError(`GitHub API returned status ${s.status}${t}`, s.status);
+function matchI18nAsset(t, e, l) {
+    let s = e.toLowerCase().trim();
+    for (let e of t){
+        let t = String(e.name || "").toLowerCase();
+        if ("apk" === l) {
+            if (t.startsWith(`luci-i18n-fluent-${s}-`) && t.endsWith(".apk")) return e;
+        } else if ((t.startsWith(`luci-i18n-fluent-${s}_`) || t.startsWith(`luci-i18n-fluent-${s}-`)) && t.endsWith(".ipk")) return e;
     }
-    let r = i.assets || [], n = null, o = null;
-    for (let t of r){
+    return null;
+}
+async function fetchLatestRelease(t, e, l = [], s) {
+    let a = {};
+    s && (a.Authorization = `token ${s}`);
+    let r = await fetch("nightly" === t ? "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/tags/nightly" : "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/latest", {
+        headers: a
+    }), i = await r.json();
+    if (!r.ok) {
+        let t = i?.message ? `: ${i.message}` : "";
+        throw new GitHubAPIError(`GitHub API returned status ${r.status}${t}`, r.status);
+    }
+    let n = i.assets || [], o = null, u = [];
+    for (let t of n){
         let l = String(t.name || "");
-        "apk" === e && l.startsWith("luci-theme-fluent") && l.endsWith(".apk") || "ipk" === e && l.startsWith("luci-theme-fluent") && l.endsWith("_all.ipk") ? n = t : "apk" === e && l.startsWith("luci-i18n-fluent") && l.endsWith(".apk") ? o = t : "ipk" === e && l.startsWith("luci-i18n-fluent") && l.endsWith("_all.ipk") && (o = t);
+        "apk" === e && l.startsWith("luci-theme-fluent") && l.endsWith(".apk") ? o = t : "ipk" === e && l.startsWith("luci-theme-fluent") && (l.endsWith("_all.ipk") || l.endsWith(".ipk")) && (o = t);
+    }
+    for (let t of l){
+        let l = matchI18nAsset(n, t, e);
+        l && !u.includes(l) && u.push(l);
     }
     return {
         tag_name: String(i.tag_name || ""),
         published_at: String(i.published_at || ""),
         body: String(i.body || ""),
         html_url: String(i.html_url || ""),
-        package_asset: n,
-        i18n_asset: o
+        package_asset: o,
+        i18n_assets: u
     };
 }
 
@@ -603,7 +619,7 @@ let about_n = L.form, about_l = L.dom, about_i = "https://ghfast.top/";
 
 let about_p = about_n.DummyValue.extend({
     renderWidget: (n, p, h)=>{
-        let b = "1.0.1", f = "ipk", g = !1, y = jsxs("div", {
+        let b = "1.0.1", f = "ipk", g = [], y = jsxs("div", {
             class: "fluent-about-logo",
             children: [
                 jsx("img", {
@@ -771,17 +787,19 @@ let about_p = about_n.DummyValue.extend({
             about_l.content(T, [
                 document.createTextNode(e)
             ]), T.className = `fluent-update-status status-${t}`, T.style.display = "block";
-        }, A = (e, t, a)=>{
+        }, j = (e, t, a)=>{
             S.style.display = "block", $.style.display = "block", C.style.width = `${t}%`, C.className = `fluent-progress-bar__fill fill-${e}`, about_l.content($, [
                 document.createTextNode(`${a} (${t}%)`)
             ]);
-        }, N = ()=>{
+        }, A = ()=>{
             S.style.display = "none", $.style.display = "none";
         };
         (async ()=>{
             try {
                 let e = await callGetVersion();
-                b = e.version, f = e.pkg_type, g = !!e.i18n_zh_cn_installed;
+                b = e.version, f = e.pkg_type, g = e.installed_i18n || (e.i18n_zh_cn_installed ? [
+                    "zh-cn"
+                ] : []);
                 let t = m.querySelector(".fluent-about-current-version");
                 t && (t.textContent = `v${b}`);
                 let a = m.querySelector(".fluent-about-pkg-type");
@@ -790,10 +808,10 @@ let about_p = about_n.DummyValue.extend({
                 console.error("Failed to fetch version", e), P(_("Failed to fetch current theme version."), "error");
             }
         })();
-        let j = async (n)=>{
+        let z = async (n)=>{
             let r = w.value;
             try {
-                let a = await fetchLatestRelease(r, f, n);
+                let a = await fetchLatestRelease(r, f, g, n);
                 console.log(a), k.disabled = !1;
                 let u = b.replace(/^v/, "").trim(), p = a.tag_name.replace(/^v/, "").trim(), h = L.naturalCompare(p, u) > 0, y = !h && "nightly" !== r;
                 if (y ? P(_("Your theme is up to date!"), "success") : P(h ? _("A new version is available!") : _("Nightly build available (reinstallation check)."), h ? "warn" : "info"), !a.package_asset) return void P(_("No matching package asset found for your system architecture in this release."), "error");
@@ -831,16 +849,16 @@ let about_p = about_n.DummyValue.extend({
                     let n = a.package_asset;
                     if (!n) return void P(_("No matching package asset found for your system architecture in this release."), "error");
                     x.disabled = !0, w.disabled = !0, v.disabled = !0, k.disabled = !0, P(_("Starting update process..."), "info");
-                    let r = g ? a.i18n_asset : null, c = null, u = "";
-                    n.digest?.startsWith("sha256:") ? c = n.digest.replace("sha256:", "") : (console.warn("Unable to determine expected package hash from digest. Skipping verification."), c = "skip"), r?.digest?.startsWith("sha256:") && (u = r.digest.replace("sha256:", ""));
+                    let r = a.i18n_assets || [], c = null, u = [];
+                    for (let e of (n.digest?.startsWith("sha256:") ? c = n.digest.replace("sha256:", "") : (console.warn("Unable to determine expected package hash from digest. Skipping verification."), c = "skip"), r))e.digest?.startsWith("sha256:") ? u.push(e.digest.replace("sha256:", "")) : u.push("skip");
                     let p = async ()=>{
                         let a = v.value.includes("ghproxy");
-                        P(_("Starting backend download..."), "info"), A("download", 0, _("Downloading on router"));
-                        let p = a ? about_i + n.browser_download_url : n.browser_download_url, h = r ? a ? about_i + r.browser_download_url : r.browser_download_url : "", b = await callStartDownload(p, h);
+                        P(_("Starting backend download..."), "info"), j("download", 0, _("Downloading on router"));
+                        let p = a ? about_i + n.browser_download_url : n.browser_download_url, h = r.map((e)=>a ? about_i + e.browser_download_url : e.browser_download_url).join(" "), b = await callStartDownload(p, h.split(" ")[0] || "", h);
                         if (0 !== b.result) throw Error(b.message || "Failed to start router download.");
                         for(;;){
-                            let e = await callCheckDownload(), t = e.size || 0, a = n.size + (r ? r.size : 0), l = a > 0 ? Math.min(Math.round(t / a * 100), 100) : 0;
-                            if (A("download", l, `${_("Downloading on router")} (${(t / 1024).toFixed(0)} / ${(a / 1024).toFixed(0)} KB)`), !e.running) if (0 !== e.code) throw Error("Router background download failed or file is empty.");
+                            let e = await callCheckDownload(), t = e.size || 0, a = r.reduce((e, t)=>e + (t.size || 0), 0), l = n.size + a, i = l > 0 ? Math.min(Math.round(t / l * 100), 100) : 0;
+                            if (j("download", i, `${_("Downloading on router")} (${(t / 1024).toFixed(0)} / ${(l / 1024).toFixed(0)} KB)`), !e.running) if (0 !== e.code) throw Error("Router background download failed or file is empty.");
                             else break;
                             await new Promise((e)=>setTimeout(e, 1000));
                         }
@@ -876,8 +894,8 @@ let about_p = about_n.DummyValue.extend({
                                 ]
                             }));
                         })) throw Error(_("Installation cancelled by user."));
-                        P(_("Triggering installation on router..."), "info"), A("install", 100, _("Installing package"));
-                        let f = await callDoInstall(c, u);
+                        P(_("Triggering installation on router..."), "info"), j("install", 100, _("Installing package"));
+                        let f = await callDoInstall(c, u[0] || "", u.join(" "));
                         if (0 !== f.result) throw Error(f.message || "Router installation failed.");
                         let g = jsx("pre", {
                             style: "background: var(--fluent-code-bg, #1a1a1a); color: var(--fluent-text, #fff); padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 200px; overflow-y: auto; margin-top: 15px;"
@@ -907,7 +925,7 @@ let about_p = about_n.DummyValue.extend({
                             } catch  {
                                 break;
                             }
-                        })(), P(_("Theme successfully updated! Reloading RPC service, please refresh the page in 5 seconds."), "success"), A("done", 100, _("Finished"));
+                        })(), P(_("Theme successfully updated! Reloading RPC service, please refresh the page in 5 seconds."), "success"), j("done", 100, _("Finished"));
                         let y = jsx("button", {
                             class: "btn cbi-button cbi-button-action",
                             type: "button",
@@ -940,7 +958,7 @@ let about_p = about_n.DummyValue.extend({
                     try {
                         await p();
                     } catch (e) {
-                        console.error("Update failed", e), P(`${_("Update failed")}: ${e instanceof Error ? e.message : String(e)}`, "error"), x.disabled = !1, x.removeAttribute("disabled"), w.disabled = !1, w.removeAttribute("disabled"), v.disabled = !1, v.removeAttribute("disabled"), k.disabled = !1, k.removeAttribute("disabled"), N();
+                        console.error("Update failed", e), P(`${_("Update failed")}: ${e instanceof Error ? e.message : String(e)}`, "error"), x.disabled = !1, x.removeAttribute("disabled"), w.disabled = !1, w.removeAttribute("disabled"), v.disabled = !1, v.removeAttribute("disabled"), k.disabled = !1, k.removeAttribute("disabled"), A();
                     }
                 });
             } catch (n) {
@@ -982,7 +1000,7 @@ let about_p = about_n.DummyValue.extend({
                     });
                     d.addEventListener("click", ()=>{
                         let e = l.value.trim();
-                        L.ui.hideModal(), e && (P(_("Retrying with token..."), "info"), k.disabled = !0, j(e));
+                        L.ui.hideModal(), e && (P(_("Retrying with token..."), "info"), k.disabled = !0, z(e));
                     }), L.ui.showModal(_("GitHub Token Required"), jsxs(Fragment, {
                         children: [
                             i,
@@ -1003,7 +1021,7 @@ let about_p = about_n.DummyValue.extend({
             }
         };
         return k.addEventListener("click", ()=>{
-            P(_("Checking for updates..."), "info"), k.disabled = !0, E.style.display = "none", N(), j();
+            P(_("Checking for updates..."), "info"), k.disabled = !0, E.style.display = "none", A(), z();
         }), F;
     }
 });

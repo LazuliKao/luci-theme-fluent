@@ -17,7 +17,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
     // Current details from RPCD
     let currentVersion = "1.0.1";
     let pkgType: "ipk" | "apk" = "ipk";
-    let i18nZhCnInstalled = false;
+    let installedI18n: string[] = [];
 
     // UI state elements
     const logoEl = (
@@ -138,7 +138,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
         const res = await callGetVersion();
         currentVersion = res.version;
         pkgType = res.pkg_type;
-        i18nZhCnInstalled = !!res.i18n_zh_cn_installed;
+        installedI18n = res.installed_i18n || (res.i18n_zh_cn_installed ? ["zh-cn"] : []);
 
         const currentVerSpan = detailsEl.querySelector(".fluent-about-current-version");
         if (currentVerSpan) {
@@ -160,7 +160,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
       const channel = channelSelect.value as "stable" | "nightly";
 
       try {
-        const release = await fetchLatestRelease(channel, pkgType, token);
+        const release = await fetchLatestRelease(channel, pkgType, installedI18n, token);
         console.log(release);
         checkBtn.disabled = false;
 
@@ -229,10 +229,10 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
           checkBtn.disabled = true;
           setStatus(_("Starting update process..."), "info");
 
-          const i18nAsset = i18nZhCnInstalled ? release.i18n_asset : null;
+          const i18nAssets = release.i18n_assets || [];
 
           let expectedHash: string | null = null;
-          let expectedI18nHash: string = "";
+          const expectedI18nHashes: string[] = [];
 
           if (packageAsset.digest?.startsWith("sha256:")) {
             expectedHash = packageAsset.digest.replace("sha256:", "");
@@ -241,8 +241,12 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             expectedHash = "skip";
           }
 
-          if (i18nAsset?.digest?.startsWith("sha256:")) {
-            expectedI18nHash = i18nAsset.digest.replace("sha256:", "");
+          for (const asset of i18nAssets) {
+            if (asset.digest?.startsWith("sha256:")) {
+              expectedI18nHashes.push(asset.digest.replace("sha256:", ""));
+            } else {
+              expectedI18nHashes.push("skip");
+            }
           }
 
           // Step 1: Backend download and verify
@@ -289,9 +293,11 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             updateProgress("download", 0, _("Downloading on router"));
 
             const dlUrl = useProxy ? ghmirror + packageAsset.browser_download_url : packageAsset.browser_download_url;
-            const i18nDlUrl = i18nAsset ? (useProxy ? ghmirror + i18nAsset.browser_download_url : i18nAsset.browser_download_url) : "";
+            const i18nDlUrls = i18nAssets
+              .map((a) => (useProxy ? ghmirror + a.browser_download_url : a.browser_download_url))
+              .join(" ");
 
-            const startRes = await callStartDownload(dlUrl, i18nDlUrl);
+            const startRes = await callStartDownload(dlUrl, i18nDlUrls.split(" ")[0] || "", i18nDlUrls);
             if (startRes.result !== 0) {
               throw new Error(startRes.message || "Failed to start router download.");
             }
@@ -300,7 +306,8 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             while (true) {
               const checkRes = await callCheckDownload();
               const size = checkRes.size || 0;
-              const totalSize = packageAsset.size + (i18nAsset ? i18nAsset.size : 0);
+              const i18nTotalSize = i18nAssets.reduce((sum, a) => sum + (a.size || 0), 0);
+              const totalSize = packageAsset.size + i18nTotalSize;
               const percent = totalSize > 0 ? Math.min(Math.round((size / totalSize) * 100), 100) : 0;
               updateProgress("download", percent, `${_("Downloading on router")} (${(size / 1024).toFixed(0)} / ${(totalSize / 1024).toFixed(0)} KB)`);
 
@@ -321,7 +328,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             setStatus(_("Triggering installation on router..."), "info");
             updateProgress("install", 100, _("Installing package"));
 
-            const installRes = await callDoInstall(expectedHash, expectedI18nHash);
+            const installRes = await callDoInstall(expectedHash, expectedI18nHashes[0] || "", expectedI18nHashes.join(" "));
             if (installRes.result !== 0) {
               throw new Error(installRes.message || "Router installation failed.");
             }

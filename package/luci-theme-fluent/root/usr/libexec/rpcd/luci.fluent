@@ -15,7 +15,7 @@ readonly update_pkg="/tmp/fluent-update${PKG_EXT}"
 readonly i18n_pkg="/tmp/fluent-i18n-update${PKG_EXT}"
 
 case "$1" in
-"list")
+	"list")
 	json_init
 	json_add_object "avail"
 	json_close_object
@@ -33,12 +33,14 @@ case "$1" in
 	json_add_object "start_download"
 		json_add_string "url" "url"
 		json_add_string "i18n_url" "i18n_url"
+		json_add_string "i18n_urls" "i18n_urls"
 	json_close_object
 	json_add_object "check_download"
 	json_close_object
 	json_add_object "do_install"
 		json_add_string "hash" "hash"
 		json_add_string "i18n_hash" "i18n_hash"
+		json_add_string "i18n_hashes" "i18n_hashes"
 	json_close_object
 	json_add_object "get_install_log"
 	json_close_object
@@ -104,17 +106,17 @@ case "$1" in
 		version=""
 		pkg_type="ipk"
 		i18n_installed=0
+		installed_i18n=""
 		if command -v apk >/dev/null 2>&1; then
 			pkg_type="apk"
 			version=$(apk info -v luci-theme-fluent 2>/dev/null | sed 's/luci-theme-fluent-//')
-			if apk info -e luci-i18n-fluent-zh-cn >/dev/null 2>&1; then
-				i18n_installed=1
-			fi
+			installed_i18n=$(apk info 2>/dev/null | grep -E '^luci-i18n-fluent-' | sed 's/^luci-i18n-fluent-//')
 		else
 			version=$(opkg status luci-theme-fluent 2>/dev/null | grep -m1 'Version:' | awk '{print $2}')
-			if opkg status luci-i18n-fluent-zh-cn 2>/dev/null | grep -q "Status: install ok installed"; then
-				i18n_installed=1
-			fi
+			installed_i18n=$(opkg list-installed 2>/dev/null | grep -E '^luci-i18n-fluent-' | awk '{print $1}' | sed 's/^luci-i18n-fluent-//')
+		fi
+		if echo "$installed_i18n" | grep -q "^zh-cn$"; then
+			i18n_installed=1
 		fi
 		if [ -z "$version" ]; then
 			version="1.0.1-dev"
@@ -123,6 +125,11 @@ case "$1" in
 		json_add_string "version" "$version"
 		json_add_string "pkg_type" "$pkg_type"
 		json_add_boolean "i18n_zh_cn_installed" "$i18n_installed"
+		json_add_array "installed_i18n"
+		for lang in $installed_i18n; do
+			json_add_string "" "$lang"
+		done
+		json_close_array
 		json_dump
 		json_cleanup
 		;;
@@ -131,24 +138,31 @@ case "$1" in
 		json_load "$input"
 		json_get_var url "url"
 		json_get_var i18n_url "i18n_url"
+		json_get_var i18n_urls "i18n_urls"
 		json_cleanup
 
 		rm -f "$update_pkg"
-		rm -f "$i18n_pkg"
+		rm -f /tmp/fluent-i18n-*
 		rm -f /tmp/fluent-update.log
 		
 		if [ -n "$url" ]; then
 			download_cmd=""
 			if command -v uclient-fetch >/dev/null 2>&1; then
 				download_cmd="uclient-fetch -O $update_pkg \"$url\""
-				if [ -n "$i18n_url" ]; then
-					download_cmd="$download_cmd && uclient-fetch -O $i18n_pkg \"$i18n_url\""
-				fi
+				urls_to_dl="${i18n_urls:-$i18n_url}"
+				idx=1
+				for u in $urls_to_dl; do
+					download_cmd="$download_cmd && uclient-fetch -O /tmp/fluent-i18n-${idx}${PKG_EXT} \"$u\""
+					idx=$((idx + 1))
+				done
 			else
 				download_cmd="wget -O $update_pkg \"$url\""
-				if [ -n "$i18n_url" ]; then
-					download_cmd="$download_cmd && wget -O $i18n_pkg \"$i18n_url\""
-				fi
+				urls_to_dl="${i18n_urls:-$i18n_url}"
+				idx=1
+				for u in $urls_to_dl; do
+					download_cmd="$download_cmd && wget -O /tmp/fluent-i18n-${idx}${PKG_EXT} \"$u\""
+					idx=$((idx + 1))
+				done
 			fi
 			nohup sh -c "$download_cmd >/tmp/fluent-update.log 2>&1" >/dev/null 2>&1 &
 			echo '{ "result": 0 }'
@@ -159,7 +173,7 @@ case "$1" in
 	"check_download")
 		json_init
 		size1=$(ls -l $update_pkg 2>/dev/null | awk '{print $5}')
-		size2=$(ls -l $i18n_pkg 2>/dev/null | awk '{print $5}')
+		size2=$(ls -l /tmp/fluent-i18n-* 2>/dev/null | awk '{sum+=$5} END {print sum}')
 		size=$(( ${size1:-0} + ${size2:-0} ))
 		json_add_int "size" "$size"
 		
@@ -182,6 +196,7 @@ case "$1" in
 		json_load "$input"
 		json_get_var hash "hash"
 		json_get_var i18n_hash "i18n_hash"
+		json_get_var i18n_hashes "i18n_hashes"
 		json_cleanup
 
 		if [ -z "$hash" ]; then
@@ -206,22 +221,31 @@ case "$1" in
 			fi
 		fi
 
-		if [ -n "$i18n_hash" ] && [ -f "$i18n_pkg" ] && [ "$i18n_hash" != "skip" ]; then
-			if ! echo "$i18n_hash" | grep -qE '^[0-9a-fA-F]{64}$'; then
-				echo '{ "result": 255, "message": "Invalid i18n_hash parameter" }'
-				exit 255
-			fi
-			actual_i18n_hash=$(sha256sum "$i18n_pkg" | awk '{print $1}')
-			if [ "$actual_i18n_hash" != "$i18n_hash" ]; then
-				echo '{ "result": 255, "message": "i18n Hash verification failed" }'
-				exit 255
-			fi
+		hashes_to_check="${i18n_hashes:-$i18n_hash}"
+		if [ -n "$hashes_to_check" ]; then
+			idx=1
+			for h in $hashes_to_check; do
+				target_i18n_pkg="/tmp/fluent-i18n-${idx}${PKG_EXT}"
+				if [ -f "$target_i18n_pkg" ] && [ "$h" != "skip" ]; then
+					if ! echo "$h" | grep -qE '^[0-9a-fA-F]{64}$'; then
+						echo '{ "result": 255, "message": "Invalid i18n hash parameter" }'
+						exit 255
+					fi
+					actual_i18n_hash=$(sha256sum "$target_i18n_pkg" | awk '{print $1}')
+					if [ "$actual_i18n_hash" != "$h" ]; then
+						echo '{ "result": 255, "message": "i18n Hash verification failed" }'
+						exit 255
+					fi
+				fi
+				idx=$((idx + 1))
+			done
 		fi
 
 		install_cmd=""
 		pkgs="$update_pkg"
-		if [ -f "$i18n_pkg" ]; then
-			pkgs="$i18n_pkg $update_pkg"
+		i18n_files=$(ls /tmp/fluent-i18n-* 2>/dev/null)
+		if [ -n "$i18n_files" ]; then
+			pkgs="$pkgs $i18n_files"
 		fi
 
 		if command -v apk >/dev/null 2>&1; then
