@@ -21,8 +21,13 @@
     box-shadow: none;
   }
 
-  .cbi-section-node:not(:first-child) {
-    padding-top: var(--fluent-space-lg);
+  .cbi-section-node {
+    overflow-x: auto;
+    max-width: 100%;
+
+    &:not(:first-child) {
+      padding-top: var(--fluent-space-lg);
+    }
   }
   .cbi-section-remove.right + .cbi-section-node:has(+ .cbi-section-remove.right + .cbi-section-node) {
     border-bottom: 2px solid var(--fluent-card-border);

@@ -11,6 +11,9 @@ html {
 
 // Scrollable containers
 .cbi-section,
+.cbi-section-node,
+.cbi-section-table,
+.table,
 .modal,
 .main-content,
 .sidebar,
@@ -32,8 +35,11 @@ code {
 
 // Thin scrollbar for sidebars and smaller containers
 .sidebar,
-.cbi-section-node {
+.cbi-section-node,
+.cbi-section-table,
+.table {
   &::-webkit-scrollbar {
     width: 4px;
+    height: 4px;
   }
 }

@@ -1230,6 +1230,11 @@ input[type="week"]::-webkit-calendar-picker-indicator:hover {
   padding: 0;
 }
 
+.cbi-section .cbi-section-node {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .cbi-section .cbi-section-node:not(:first-child) {
   padding-top: var(--fluent-space-lg);
 }
@@ -1389,93 +1394,6 @@ input[type="week"]::-webkit-calendar-picker-indicator:hover {
   box-sizing: border-box;
   max-width: 100%;
   overflow: visible;
-}
-
-@media (max-width: 767px) {
-  .cbi-tblsection, .cbi-section.cbi-tblsection {
-    -webkit-overflow-scrolling: touch;
-    overflow-x: auto;
-  }
-
-  .cbi-tblsection::-webkit-scrollbar {
-    width: var(--fluent-scrollbar-width);
-    height: var(--fluent-scrollbar-width);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar {
-    width: var(--fluent-scrollbar-width);
-    height: var(--fluent-scrollbar-width);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar:horizontal {
-    height: var(--fluent-scrollbar-horizontal-height, 5px);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar:horizontal {
-    height: var(--fluent-scrollbar-horizontal-height, 5px);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-track {
-    background: var(--fluent-scrollbar-track-bg);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-track {
-    background: var(--fluent-scrollbar-track-bg);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-thumb {
-    background: var(--fluent-scrollbar-thumb-bg);
-    border-radius: 3px;
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb {
-    background: var(--fluent-scrollbar-thumb-bg);
-    border-radius: 3px;
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-thumb:hover {
-    background: var(--fluent-scrollbar-thumb-bg-hover);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb:hover {
-    background: var(--fluent-scrollbar-thumb-bg-hover);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg);
-    border-radius: var(--fluent-radius-circular, 10000px);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg);
-    border-radius: var(--fluent-radius-circular, 10000px);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
-  }
-
-  .cbi-tblsection::-webkit-scrollbar-corner {
-    background: none;
-    display: none;
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-scrollbar-corner {
-    background: none;
-    display: none;
-  }
-
-  .cbi-tblsection::-webkit-resizer {
-    background: none;
-  }
-
-  .cbi-section.cbi-tblsection::-webkit-resizer {
-    background: none;
-  }
 }
 
 .tr {
@@ -1725,95 +1643,13 @@ div.td, div.th {
   display: flex;
 }
 
-@media (max-width: 767px) {
-  .table, .cbi-section-table {
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
-    width: 100% !important;
-    max-width: 100% !important;
-    display: block !important;
-    overflow-x: auto !important;
-  }
-
-  .table::-webkit-scrollbar {
-    width: var(--fluent-scrollbar-width);
-    height: var(--fluent-scrollbar-width);
-  }
-
-  .cbi-section-table::-webkit-scrollbar {
-    width: var(--fluent-scrollbar-width);
-    height: var(--fluent-scrollbar-width);
-  }
-
-  .table::-webkit-scrollbar:horizontal {
-    height: var(--fluent-scrollbar-horizontal-height, 5px);
-  }
-
-  .cbi-section-table::-webkit-scrollbar:horizontal {
-    height: var(--fluent-scrollbar-horizontal-height, 5px);
-  }
-
-  .table::-webkit-scrollbar-track {
-    background: var(--fluent-scrollbar-track-bg);
-  }
-
-  .cbi-section-table::-webkit-scrollbar-track {
-    background: var(--fluent-scrollbar-track-bg);
-  }
-
-  .table::-webkit-scrollbar-thumb {
-    background: var(--fluent-scrollbar-thumb-bg);
-    border-radius: 3px;
-  }
-
-  .cbi-section-table::-webkit-scrollbar-thumb {
-    background: var(--fluent-scrollbar-thumb-bg);
-    border-radius: 3px;
-  }
-
-  .table::-webkit-scrollbar-thumb:hover {
-    background: var(--fluent-scrollbar-thumb-bg-hover);
-  }
-
-  .cbi-section-table::-webkit-scrollbar-thumb:hover {
-    background: var(--fluent-scrollbar-thumb-bg-hover);
-  }
-
-  .table::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg);
-    border-radius: var(--fluent-radius-circular, 10000px);
-  }
-
-  .cbi-section-table::-webkit-scrollbar-thumb:horizontal {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg);
-    border-radius: var(--fluent-radius-circular, 10000px);
-  }
-
-  .table::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
-  }
-
-  .cbi-section-table::-webkit-scrollbar-thumb:horizontal:hover {
-    background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
-  }
-
-  .table::-webkit-scrollbar-corner {
-    background: none;
-    display: none;
-  }
-
-  .cbi-section-table::-webkit-scrollbar-corner {
-    background: none;
-    display: none;
-  }
-
-  .table::-webkit-resizer {
-    background: none;
-  }
-
-  .cbi-section-table::-webkit-resizer {
-    background: none;
-  }
+.table, .cbi-section-table {
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  overflow-x: auto !important;
 }
 
 #modal_overlay {
@@ -5229,6 +5065,21 @@ html::-webkit-resizer {
   height: var(--fluent-scrollbar-width);
 }
 
+.cbi-section-node::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+.cbi-section-table::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+.table::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
 .modal::-webkit-scrollbar {
   width: var(--fluent-scrollbar-width);
   height: var(--fluent-scrollbar-width);
@@ -5258,6 +5109,18 @@ code::-webkit-scrollbar {
   height: var(--fluent-scrollbar-horizontal-height, 5px);
 }
 
+.cbi-section-node::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+.cbi-section-table::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+.table::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
 .modal::-webkit-scrollbar:horizontal {
   height: var(--fluent-scrollbar-horizontal-height, 5px);
 }
@@ -5282,6 +5145,18 @@ code::-webkit-scrollbar:horizontal {
   background: var(--fluent-scrollbar-track-bg);
 }
 
+.cbi-section-node::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+.cbi-section-table::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+.table::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
 .modal::-webkit-scrollbar-track {
   background: var(--fluent-scrollbar-track-bg);
 }
@@ -5303,6 +5178,21 @@ code::-webkit-scrollbar-track {
 }
 
 .cbi-section::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.cbi-section-node::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.cbi-section-table::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.table::-webkit-scrollbar-thumb {
   background: var(--fluent-scrollbar-thumb-bg);
   border-radius: 3px;
 }
@@ -5336,6 +5226,18 @@ code::-webkit-scrollbar-thumb {
   background: var(--fluent-scrollbar-thumb-bg-hover);
 }
 
+.cbi-section-node::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+.cbi-section-table::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+.table::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
 .modal::-webkit-scrollbar-thumb:hover {
   background: var(--fluent-scrollbar-thumb-bg-hover);
 }
@@ -5357,6 +5259,21 @@ code::-webkit-scrollbar-thumb:hover {
 }
 
 .cbi-section::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
+}
+
+.cbi-section-node::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
+}
+
+.cbi-section-table::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
+}
+
+.table::-webkit-scrollbar-thumb:horizontal {
   background: var(--fluent-scrollbar-thumb-horizontal-bg);
   border-radius: var(--fluent-radius-circular, 10000px);
 }
@@ -5390,6 +5307,18 @@ code::-webkit-scrollbar-thumb:horizontal {
   background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
 
+.cbi-section-node::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
+}
+
+.cbi-section-table::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
+}
+
+.table::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
+}
+
 .modal::-webkit-scrollbar-thumb:horizontal:hover {
   background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
 }
@@ -5411,6 +5340,21 @@ code::-webkit-scrollbar-thumb:horizontal:hover {
 }
 
 .cbi-section::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.cbi-section-node::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.cbi-section-table::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.table::-webkit-scrollbar-corner {
   background: none;
   display: none;
 }
@@ -5441,6 +5385,18 @@ code::-webkit-scrollbar-corner {
 }
 
 .cbi-section::-webkit-resizer {
+  background: none;
+}
+
+.cbi-section-node::-webkit-resizer {
+  background: none;
+}
+
+.cbi-section-table::-webkit-resizer {
+  background: none;
+}
+
+.table::-webkit-resizer {
   background: none;
 }
 
@@ -5511,10 +5467,22 @@ code::-webkit-resizer {
 
 .sidebar::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
 }
 
 .cbi-section-node::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
+}
+
+.cbi-section-table::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.table::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
 
 .cbi-progressbar {

@@ -9,19 +9,13 @@
   @include table-base;
 }
 
-// Table section wrapper — enables horizontal scrolling on mobile
+// Table section wrapper
 .cbi-tblsection,
 .cbi-section.cbi-tblsection {
   overflow-x: visible;
   overflow-y: visible;
   max-width: 100%;
   box-sizing: border-box;
-
-  @include mobile-only {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    @include custom-scrollbar;
-  }
 }
 
 // LuCI table structure (visual styles for all tables)
@@ -210,15 +204,12 @@ td.cbi-section-actions {
     flex-wrap: nowrap;
   }
 }
-@include mobile-only {
-  .table,
-  .cbi-section-table {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    box-sizing: border-box;
-    @include custom-scrollbar;
-  }
+.table,
+.cbi-section-table {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
