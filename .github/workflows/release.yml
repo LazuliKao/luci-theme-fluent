@@ -182,6 +182,9 @@ jobs:
     env:
       TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
       - name: Download all release artifacts
         uses: actions/download-artifact@v8
         with:
@@ -194,29 +197,22 @@ jobs:
           echo "All packages for release ${{ env.TAG }}:"
           find artifacts/ -type f \( -name "*.ipk" -o -name "*.apk" \) -exec ls -lh {} \;
 
+      - name: Generate Release Notes
+        run: |
+          python src/script/generate_release_notes.py \
+            --tag "${{ env.TAG }}" \
+            --repo "${{ github.repository }}" \
+            --version "${{ env.TAG }}" \
+            --commit "${{ github.sha }}" \
+            --dir "artifacts" \
+            --output "release_notes.md"
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.TAG }}
           name: "Release ${{ env.TAG }}"
-          body: |
-            ## LuCI Theme Fluent ${{ env.TAG }}
-
-            ### Packages
-            - `luci-theme-fluent` — FluentUI theme for OpenWrt LuCI
-            - `luci-i18n-fluent` — Translations
-
-            ### Installation
-
-            **OpenWrt 24.10.x (opkg/ipk):**
-            ```bash
-            opkg install luci-theme-fluent_*.ipk
-            ```
-
-            **OpenWrt 25.12.x (apk):**
-            ```bash
-            apk add luci-theme-fluent_*.apk
-            ```
+          body_path: release_notes.md
           files: |
             artifacts/**/*.ipk
             artifacts/**/*.apk

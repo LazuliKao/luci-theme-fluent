@@ -189,16 +189,32 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
       - name: Download all packages
         uses: actions/download-artifact@v8
         with:
           path: packages/
           pattern: packages-openwrt-*
           merge-multiple: true
+
       - name: List packages
         run: |
           echo "Nightly packages:"
           find packages/ -type f \( -name "*.ipk" -o -name "*.apk" \) -exec ls -lh {} \;
+
+      - name: Generate Release Notes
+        run: |
+          python src/script/generate_release_notes.py \
+            --tag "nightly" \
+            --repo "${{ github.repository }}" \
+            --version "${{ needs.prepare.outputs.version }}" \
+            --commit "${{ github.sha }}" \
+            --dir "packages" \
+            --output "release_notes.md" \
+            --is-nightly
+
       - name: Delete existing nightly tag
         uses: dev-drprasad/delete-tag-and-release@v1.1
         with:
@@ -212,26 +228,7 @@ jobs:
           tag_name: nightly
           name: "Nightly Build"
           overwrite_files: true
-          body: |
-            ## LuCI Theme Fluent - Nightly Build
-
-            Automatic build for package version `${{ needs.prepare.outputs.version }}` from commit `${{ github.sha }}`.
-
-            ### Packages
-            - `luci-theme-fluent` — FluentUI theme for OpenWrt LuCI
-            - `luci-i18n-fluent` — Translations
-
-            ### Installation
-
-            **OpenWrt 24.10.x (opkg/ipk):**
-            ```bash
-            opkg install luci-theme-fluent_*.ipk
-            ```
-
-            **OpenWrt 25.12.x (apk):**
-            ```bash
-            apk add luci-theme-fluent_*.apk
-            ```
+          body_path: release_notes.md
           files: |
             packages/**/*.ipk
             packages/**/*.apk
