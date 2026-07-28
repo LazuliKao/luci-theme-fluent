@@ -49,16 +49,6 @@ A FluentUI-inspired OpenWrt LuCI theme built with Rsbuild using pure TypeScript/
 
 ## Getting Started
 
-### Install from an OpenWrt source tree
-
-Clone this package into your OpenWrt package feed or package directory, then select it in `menuconfig`:
-
-```bash
-make menuconfig
-```
-
-Choose `LuCI -> Themes -> luci-theme-fluent`, then build your firmware or package as usual.
-
 ### Quick Install
 
 Auto-detects `opkg` / `apk` and installs the latest release by default:
@@ -90,6 +80,34 @@ opkg install /tmp/luci-theme-fluent_*.ipk
 # OpenWrt 25.12.x
 apk add --allow-untrusted /tmp/luci-theme-fluent-*.apk
 ```
+
+### Install from an OpenWrt source tree
+
+You can add this package to your OpenWrt build system in one of two ways:
+
+#### Option 1: Clone directly into the `package` directory
+```bash
+cd openwrt/package
+git clone https://github.com/LazuliKao/luci-theme-fluent.git
+```
+
+#### Option 2: Add to feeds
+Add the following line to your `feeds.conf.default`:
+```text
+src-git fluent https://github.com/LazuliKao/luci-theme-fluent.git
+```
+Then update and install the feed:
+```bash
+./scripts/feeds update fluent
+./scripts/feeds install -a -p fluent
+```
+
+After adding the package, configure and select it in `menuconfig`:
+```bash
+make menuconfig
+```
+
+Choose `LuCI -> Themes -> luci-theme-fluent`, then build your firmware or package as usual.
 
 ## Configuration
 

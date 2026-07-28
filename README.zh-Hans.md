@@ -49,16 +49,6 @@
 
 ## 快速上手
 
-### 从 OpenWrt 源码树安装
-
-将本仓库克隆到 OpenWrt 的 package feed 或 package 目录中,然后在 `menuconfig` 中选择:
-
-```bash
-make menuconfig
-```
-
-选择 `LuCI -> Themes -> luci-theme-fluent`,然后像往常一样构建固件或软件包即可。
-
 ### 一键安装
 
 脚本会自动检测 `opkg` / `apk`,默认安装最新正式版:
@@ -90,6 +80,34 @@ opkg install /tmp/luci-theme-fluent_*.ipk
 # OpenWrt 25.12.x
 apk add --allow-untrusted /tmp/luci-theme-fluent-*.apk
 ```
+
+### 从 OpenWrt 源码树安装
+
+你可以通过以下两种方式之一将本软件包添加到 OpenWrt 编译系统中：
+
+#### 方法一：直接克隆到 `package` 目录
+```bash
+cd openwrt/package
+git clone https://github.com/LazuliKao/luci-theme-fluent.git
+```
+
+#### 方法二：添加到 feeds
+在 `feeds.conf.default` 中添加以下行：
+```text
+src-git fluent https://github.com/LazuliKao/luci-theme-fluent.git
+```
+然后更新并安装 feed：
+```bash
+./scripts/feeds update fluent
+./scripts/feeds install -a -p fluent
+```
+
+添加软件包后，在 `menuconfig` 中进行配置和选择：
+```bash
+make menuconfig
+```
+
+选择 `LuCI -> Themes -> luci-theme-fluent`，然后像往常一样构建固件或软件包即可。
 
 ## 配置
 
