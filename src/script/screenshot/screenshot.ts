@@ -71,8 +71,8 @@ const MOBILE_LIGHT_EXTRA_PAGES = [
 ] as const;
 
 const OVERVIEW_BLUR_SELECTORS = [
-  "#view > div:nth-child(1) > div:nth-child(2) > table > tr:nth-child(2) > td:nth-child(2)",
-  "#view > div:nth-child(1) > div:nth-child(2) > table > tr:nth-child(6) > td:nth-child(2)",
+  "#view > div:nth-child(1) > div:nth-child(2) > .table-wrapper > table > tr:nth-child(2) > td:nth-child(2)",
+  "#view > div:nth-child(1) > div:nth-child(2) > .table-wrapper > table > tr:nth-child(6) > td:nth-child(2)",
 ] as const;
 
 const MASK_BLUR_CLASS = "fluent-mask-blur";

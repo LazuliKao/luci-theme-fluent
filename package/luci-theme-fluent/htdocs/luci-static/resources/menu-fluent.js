@@ -1580,6 +1580,32 @@ function log_viewer_i(i) {
     }), i.addEventListener("input", $), i.addEventListener("change", $);
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/table-wrapper.ts
+let table_wrapper_e = "table.table, table.cbi-section-table, div.table, div.cbi-section-table";
+function table_wrapper_t(e) {
+    let t = e.parentElement;
+    if (!t || t.classList.contains("table-wrapper")) return;
+    let n = document.createElement("div");
+    n.className = "table-wrapper", t.insertBefore(n, e), n.append(e);
+}
+function table_wrapper_n(n) {
+    n instanceof HTMLElement && n.matches(table_wrapper_e) && table_wrapper_t(n), n.querySelectorAll(table_wrapper_e).forEach((e)=>{
+        table_wrapper_t(e);
+    });
+}
+function setupTableWrappers() {
+    document.body && (table_wrapper_n(document), new MutationObserver((e)=>{
+        e.forEach((e)=>{
+            e.addedNodes.forEach((e)=>{
+                e instanceof Element && table_wrapper_n(e);
+            });
+        });
+    }).observe(document.body, {
+        childList: !0,
+        subtree: !0
+    }));
+}
+
 ;// CONCATENATED MODULE: ./web/resources/menu-fluent.tsx
 
 
@@ -1591,14 +1617,15 @@ function log_viewer_i(i) {
 
 
 
-function menu_fluent_p(e) {
+
+function menu_fluent_m(e) {
     document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
 }
-function menu_fluent_m() {
+function menu_fluent_h() {
     let e = localStorage.getItem("fluent-sidebar-state");
     return "collapsed" === e || "expanded" === e ? e : "expanded";
 }
-function menu_fluent_h() {
+function menu_fluent_f() {
     document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
         e.classList.remove("popup-open");
     }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
@@ -1608,7 +1635,7 @@ function menu_fluent_h() {
 const main = baseclass.extend({
     async __init__ () {
         let e = await ui.menu.load();
-        this.render(e), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer();
+        this.render(e), setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer();
     },
     render (e) {
         let t = e, n = "", a = ui.menu.getChildren(e);
@@ -1627,12 +1654,12 @@ const main = baseclass.extend({
         });
         i.forEach((e)=>{
             e.addEventListener("click", r);
-        }), l && l.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_p(menu_fluent_m()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_p(menu_fluent_m()) : document.body.setAttribute("data-sidebar-state", "expanded");
+        }), l && l.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_m(menu_fluent_h()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_m(menu_fluent_h()) : document.body.setAttribute("data-sidebar-state", "expanded");
         }), document.addEventListener("click", (e)=>{
             if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
             let t = e.target, n = document.querySelector("#mainmenu");
-            t && n?.contains(t) || menu_fluent_h();
+            t && n?.contains(t) || menu_fluent_f();
         });
     },
     handleMenuExpand (e) {
@@ -1652,7 +1679,7 @@ const main = baseclass.extend({
                     } else e.style.top = "", SlideAnimations.slideDown(e, "fast");
                     e.querySelectorAll("li > a").forEach((e)=>{
                         e.addEventListener("click", ()=>{
-                            menu_fluent_h();
+                            menu_fluent_f();
                         }, {
                             once: !0
                         });
@@ -1670,7 +1697,7 @@ const main = baseclass.extend({
         }), o = ui.menu.getChildren(a);
         if (0 === o.length || s > 2) return jsx(Fragment, {});
         for(let n = 0; n < o.length; n++){
-            let l = o[n], r = L.env.dispatchpath[s] === l.name && L.env.dispatchpath[s - 1] === a.name, c = this.renderMainMenu(l, `${i}/${l.name}`, s), u = c.children.length > 0, p = u ? "slide" : null, m = u ? "menu" : "item";
+            let l = o[n], r = L.env.dispatchpath[s] === l.name && L.env.dispatchpath[s - 1] === a.name, u = this.renderMainMenu(l, `${i}/${l.name}`, s), c = u.children.length > 0, p = c ? "slide" : null, m = c ? "menu" : "item";
             r && (d.classList.add("active"), p = p ? `${p} active` : "null active");
             let h = r ? `${m} active` : m, f = jsxs("li", {
                 class: p ?? void 0,
@@ -1690,7 +1717,7 @@ const main = baseclass.extend({
                             })
                         ]
                     }),
-                    c
+                    u
                 ]
             });
             d.appendChild(f);
@@ -1707,14 +1734,14 @@ const main = baseclass.extend({
         }), d = ui.menu.getChildren(t), o = null;
         if (0 === d.length) return jsx(Fragment, {});
         for(let t = 0; t < d.length; t++){
-            let n = d[t], i = L.env.dispatchpath[s + 2] === n.name, l = i ? " active" : "", c = jsx("li", {
+            let n = d[t], i = L.env.dispatchpath[s + 2] === n.name, l = i ? " active" : "", u = jsx("li", {
                 class: `tabmenu-item-${n.name}${l}`,
                 children: jsx("a", {
                     href: L.url(a, n.name),
                     children: _(n.title || "")
                 })
             });
-            r.appendChild(c), i && (o = n);
+            r.appendChild(u), i && (o = n);
         }
         if (l && (l.appendChild(r), l.style.display = "", o)) {
             let e = this.renderTabMenu(o, `${a}/${o.name}`, s);
@@ -1746,7 +1773,7 @@ const main = baseclass.extend({
     handleDesktopSidebarToggle (e) {
         if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
         let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-        menu_fluent_h(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_p(t), "expanded" === t && this.adjustBrandTextSize();
+        menu_fluent_f(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_m(t), "expanded" === t && this.adjustBrandTextSize();
     }
 });
 

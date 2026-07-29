@@ -7,6 +7,7 @@ import { setupThemeFeatures } from "./utils/theme-features";
 import { setupMenuSearch } from "./utils/menu-search";
 import { setupMacSelector } from "./utils/mac-selector";
 import { setupLogViewer } from "./utils/log-viewer";
+import { setupTableWrappers } from "./utils/table-wrapper";
 
 
 interface Module {
@@ -57,6 +58,7 @@ const module: Module = {
   async __init__(this: Module) {
     const data = await ui.menu.load();
     this.render(data);
+    setupTableWrappers();
     setupSelectionPause();
     setupErrorTooltips();
     setupFluentSelects();

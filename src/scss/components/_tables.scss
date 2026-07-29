@@ -38,15 +38,14 @@
   vertical-align: middle;
 
   // Avoid text being squeezed into a single column (Option 3)
-  word-break: keep-all;
-  overflow-wrap: break-word;
+  word-break: normal;
+  overflow-wrap: normal;
   min-width: 120px;
-  max-width: 320px;
+  max-width: none;
 
   &.nowrap,
   &:has(.ifacebadge),
-  &:has(input[type="checkbox"]),
-  &:has(input[type="radio"]),
+  &:has(input),
   &:has(.cbi-button),
   &:has(.btn),
   &:has(button),
@@ -204,12 +203,64 @@ td.cbi-section-actions {
     flex-wrap: nowrap;
   }
 }
-.table,
-.cbi-section-table {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: auto !important;
+.table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
+
+  > table.table,
+  > table.cbi-section-table,
+  > div.table,
+  > div.cbi-section-table {
+    // Override cascade.css and the legacy block table rule with native table formatting.
+    display: table !important;
+    width: 100%;
+    min-width: 100%;
+    max-width: none;
+    table-layout: auto;
+    border-collapse: collapse;
+    box-sizing: border-box;
+  }
+
+  > div.table,
+  > div.cbi-section-table {
+    > .thead {
+      display: table-header-group;
+    }
+
+    > .tbody {
+      display: table-row-group;
+    }
+
+    > .tfoot {
+      display: table-footer-group;
+    }
+
+    > .tr,
+    > .thead > .tr,
+    > .tbody > .tr,
+    > .tfoot > .tr {
+      display: table-row !important;
+    }
+
+    > .tr > .td,
+    > .tr > .th,
+    > .thead > .tr > .td,
+    > .thead > .tr > .th,
+    > .tbody > .tr > .td,
+    > .tbody > .tr > .th,
+    > .tfoot > .tr > .td,
+    > .tfoot > .tr > .th {
+      display: table-cell !important;
+    }
+
+    .tr[data-title]::before,
+    .td[data-title]::before {
+      content: none;
+    }
+  }
 }
