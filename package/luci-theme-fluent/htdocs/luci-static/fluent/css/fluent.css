@@ -9837,6 +9837,158 @@ body[data-page^="admin-status-overview"] > .main > .main-right > #maincontent .i
   display: none;
 }
 
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager {
+  justify-content: center;
+  gap: var(--fluent-space-xs);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0;
+  align-items: center !important;
+  display: flex !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button {
+  height: var(--fluent-btn-height);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  border-radius: var(--fluent-radius-md);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard),color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border: 1px solid #0000;
+  justify-content: center;
+  align-items: center;
+  padding: 0 16px;
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn:disabled, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button:disabled, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button:disabled {
+  color: var(--fluent-text-disabled);
+  background: var(--fluent-bg-active);
+  border-color: var(--fluent-bg-active);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn:focus-visible, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button:focus-visible, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button:focus-visible {
+  outline: 2px solid var(--fluent-focus-color);
+  outline-offset: 2px;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button {
+  background: var(--fluent-btn-secondary-bg);
+  color: var(--fluent-text);
+  border-color: var(--fluent-btn-secondary-border);
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn:hover, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button:hover, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button:hover {
+  background: var(--fluent-btn-secondary-bg-hover);
+  border-color: var(--fluent-btn-secondary-border-hover);
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn:active, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button:active, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button:active {
+  background: var(--fluent-btn-secondary-bg-active);
+  border-color: var(--fluent-btn-secondary-border-active);
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button {
+  border-radius: var(--fluent-radius-md);
+  min-width: 32px;
+  height: 32px;
+  font-weight: var(--fluent-font-weight-semibold);
+  color: var(--fluent-text);
+  background: var(--fluent-btn-secondary-bg);
+  border: 1px solid var(--fluent-btn-secondary-border);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard),transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  display: inline-flex;
+  flex: none !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.prev, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.next, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.prev, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.next, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.prev, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.next {
+  width: 32px;
+  padding: 0;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.prev:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.next:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.prev:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.next:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.prev:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.next:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.prev:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.prev:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.prev:before {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-chevron-left-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M12.353 15.854a.5.5 0 0 1-.707.001L6.162 10.39a.55.55 0 0 1 0-.78l5.484-5.464a.5.5 0 1 1 .706.708L7.188 10l5.164 5.147a.5.5 0 0 1 .001.707%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-chevron-left-20-regular);
+  mask-image: var(--fluent-mask-chevron-left-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .btn.next:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .cbi-button.next:before, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > button.next:before {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-chevron-right-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10L7.647 4.854a.5.5 0 0 1-.001-.707%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-chevron-right-20-regular);
+  mask-image: var(--fluent-mask-chevron-right-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > .text, body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .pager > span {
+  padding: 0 var(--fluent-space-md);
+  font-size: var(--fluent-font-size-sm);
+  color: var(--fluent-text-secondary);
+  font-weight: var(--fluent-font-weight-normal);
+  -webkit-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  line-height: 32px;
+  flex: none !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .controls > .pager {
+  flex: 100% !important;
+  max-width: 100% !important;
+}
+
+body[data-page="admin-system-package-manager"] > .main > .main-right > #maincontent .controls > .pager > * {
+  flex: none !important;
+  align-self: center !important;
+}
+
 body[data-page="admin-system-package-manager"] > #modal_overlay div.modal > .modal-content-wrap > ul:first-child {
   max-height: calc(85vh - 300px);
   overflow-y: auto;

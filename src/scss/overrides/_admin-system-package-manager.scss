@@ -1,4 +1,94 @@
 @use "overrides-utils" as *;
+@use "../icons" as *;
+@use "../mixins" as *;
+
+@include plugin("admin-system-package-manager") {
+  // ============================================================
+  // PAGER - FluentUI 2 Pagination Component
+  // ============================================================
+  .pager {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center;
+    gap: var(--fluent-space-xs);
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+
+    > .btn,
+    > .cbi-button,
+    > button {
+      @include button-secondary;
+      flex: 0 0 auto !important;
+      min-width: 32px;
+      height: 32px;
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--fluent-radius-md);
+      font-weight: var(--fluent-font-weight-semibold);
+      color: var(--fluent-text);
+      background: var(--fluent-btn-secondary-bg);
+      border: 1px solid var(--fluent-btn-secondary-border);
+      cursor: pointer;
+      user-select: none;
+      box-sizing: border-box;
+      transition:
+        background var(--fluent-duration-fast) var(--fluent-easing-standard),
+        border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+        transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+      &.prev,
+      &.next {
+        width: 32px;
+        padding: 0;
+        font-size: 0 !important;
+        line-height: 0 !important;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      &.prev::before {
+        @include fluent-mask-icon-by-name("chevron-left-20-regular", 16px, currentColor);
+      }
+
+      &.next::before {
+        @include fluent-mask-icon-by-name("chevron-right-20-regular", 16px, currentColor);
+      }
+    }
+
+    > .text,
+    > span {
+      flex: 0 0 auto !important;
+      padding: 0 var(--fluent-space-md);
+      font-size: var(--fluent-font-size-sm);
+      color: var(--fluent-text-secondary);
+      font-weight: var(--fluent-font-weight-normal);
+      line-height: 32px;
+      user-select: none;
+      white-space: nowrap;
+    }
+  }
+
+  // Override legacy .controls wrapper when wrapping .pager
+  .controls {
+    > .pager {
+      flex: 1 1 100% !important;
+      max-width: 100% !important;
+
+      > * {
+        flex: 0 0 auto !important;
+        align-self: center !important;
+      }
+    }
+  }
+}
 @include plugin-dialog("admin-system-package-manager") {
   div.modal {
     > .modal-content-wrap {
