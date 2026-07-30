@@ -3,11 +3,7 @@ const form = L.form;
 import { FLUENT_DEFAULTS } from "../../../fluent-defaults";
 
 export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
-  section.tab(
-    "advanced",
-    _("Advanced"),
-    _("Adjust layout, typography, transition timing, shadows, and inject custom CSS variables or rules when the built-in controls are not enough."),
-  );
+  section.tab("advanced", _("Advanced"), _("Adjust layout, typography, transition timing, shadows, and inject custom CSS variables or rules when the built-in controls are not enough."));
 
   {
     const option = section.taboption(
@@ -24,13 +20,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
   }
 
   {
-    const option = section.taboption(
-      "advanced",
-      form.Value,
-      "sidebar_width",
-      _("Sidebar width"),
-      _("Width of the main navigation sidebar in pixels."),
-    );
+    const option = section.taboption("advanced", form.Value, "sidebar_width", _("Sidebar width"), _("Width of the main navigation sidebar in pixels."));
     option.datatype = "range(200,420)";
     option.default = FLUENT_DEFAULTS.sidebar_width;
     option.rmempty = false;
@@ -38,13 +28,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
   }
 
   {
-    const option = section.taboption(
-      "advanced",
-      form.Value,
-      "header_height",
-      _("Header height"),
-      _("Height of the top header bar in pixels."),
-    );
+    const option = section.taboption("advanced", form.Value, "header_height", _("Header height"), _("Height of the top header bar in pixels."));
     option.datatype = "range(40,96)";
     option.default = FLUENT_DEFAULTS.header_height;
     option.rmempty = false;
@@ -70,13 +54,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
   }
 
   {
-    const option = section.taboption(
-      "advanced",
-      form.ListValue,
-      "card_shadow",
-      _("Card shadow"),
-      _("Select the shadow depth applied to themed cards and panels."),
-    );
+    const option = section.taboption("advanced", form.ListValue, "card_shadow", _("Card shadow"), _("Select the shadow depth applied to themed cards and panels."));
     option.value("none", _("None"));
     option.value("small", _("Small"));
     option.value("medium", _("Medium"));

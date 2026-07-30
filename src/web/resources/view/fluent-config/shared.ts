@@ -122,38 +122,20 @@ const publishPreview = (uciKey: string, value: string): void => {
   writePreviewStyle();
 };
 
-export const configureHexColorValue = (
-  option: LuCI.form.Value,
-  selectorSuffix: string,
-  useAnimationFrame = false,
-): void => {
+export const configureHexColorValue = (option: LuCI.form.Value, selectorSuffix: string, useAnimationFrame = false): void => {
   option.rmempty = false;
   option.validate = (sectionId: string, value: unknown) => {
     if (sectionId) {
-      return (
-        HEX_RE.test(String(value)) ||
-        _("Expecting: %s").format(_("valid HEX color value"))
-      );
+      return HEX_RE.test(String(value)) || _("Expecting: %s").format(_("valid HEX color value"));
     }
     return true;
   };
 
-  option.render = ((
-    sectionId: string,
-    optionIndex: number,
-    cfgvalue: unknown,
-  ) => {
-    const el = (form.Value.prototype.render as unknown as (...args: unknown[]) => Node).call(
-      option,
-      sectionId,
-      optionIndex,
-      cfgvalue,
-    );
+  option.render = ((sectionId: string, optionIndex: number, cfgvalue: unknown) => {
+    const el = (form.Value.prototype.render as unknown as (...args: unknown[]) => Node).call(option, sectionId, optionIndex, cfgvalue);
 
     const bindPicker = () => {
-      const textInput = document.querySelector<HTMLInputElement>(
-        `[id^="widget.cbid.fluent."][id$=".${selectorSuffix}"]`,
-      );
+      const textInput = document.querySelector<HTMLInputElement>(`[id^="widget.cbid.fluent."][id$=".${selectorSuffix}"]`);
       if (textInput) {
         createColorPicker(textInput, (value) => publishPreview(selectorSuffix, value));
       }
@@ -169,12 +151,8 @@ export const configureHexColorValue = (
   }) as unknown as () => Node | Promise<Node>;
 };
 
-export const createModeSubtabs = (
-  section: LuCI.form.TypedSection,
-  parentTab: string,
-  optionName: string,
-): LuCI.form.TypedSection => {
-  const container = section.taboption(parentTab, form.SectionValue, optionName, form.TypedSection, "global") ;
+export const createModeSubtabs = (section: LuCI.form.TypedSection, parentTab: string, optionName: string): LuCI.form.TypedSection => {
+  const container = section.taboption(parentTab, form.SectionValue, optionName, form.TypedSection, "global");
 
   const modeSection = container.subsection as LuCI.form.TypedSection;
   modeSection.anonymous = true;

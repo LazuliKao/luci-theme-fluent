@@ -22,7 +22,9 @@ export const registerGeneralTab = (section: LuCI.form.TypedSection): void => {
     option.value("ltr", _("Force LTR"));
     option.default = FLUENT_DEFAULTS.direction_mode;
     option.rmempty = false;
-    option.description = _("Choose the document direction for authenticated and login pages. Automatic mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-*) to RTL and falls back to LTR for missing or unrecognized locales.");
+    option.description = _(
+      "Choose the document direction for authenticated and login pages. Automatic mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-*) to RTL and falls back to LTR for missing or unrecognized locales.",
+    );
   }
 
   {

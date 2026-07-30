@@ -32,8 +32,18 @@ function formatTimestamp(timeStr: string): string {
   const timeMatch = timeStr.match(/(\d{2}:\d{2}:\d{2})/);
   if (timeMatch) {
     const monthMap: Record<string, string> = {
-      jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06",
-      jul: "07", aug: "08", sep: "09", oct: "10", nov: "11", dec: "12"
+      jan: "01",
+      feb: "02",
+      mar: "03",
+      apr: "04",
+      may: "05",
+      jun: "06",
+      jul: "07",
+      aug: "08",
+      sep: "09",
+      oct: "10",
+      nov: "11",
+      dec: "12",
     };
 
     // Pattern A: "23 Jul"
@@ -130,22 +140,30 @@ function enhanceSyslogTextarea(textarea: HTMLTextAreaElement) {
         <div class="fluent-log-viewer__stats">
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--lines">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--lines"></span>
-            <span class="fluent-log-viewer__badge-count" id="fluentLogCountLines">0</span>
+            <span class="fluent-log-viewer__badge-count" id="fluentLogCountLines">
+              0
+            </span>
             <span class="fluent-log-viewer__badge-label">{tr("行")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--errors">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--errors"></span>
-            <span class="fluent-log-viewer__badge-count" id="fluentLogCountErrors">0</span>
+            <span class="fluent-log-viewer__badge-count" id="fluentLogCountErrors">
+              0
+            </span>
             <span class="fluent-log-viewer__badge-label">{tr("错误")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--warnings">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--warnings"></span>
-            <span class="fluent-log-viewer__badge-count" id="fluentLogCountWarnings">0</span>
+            <span class="fluent-log-viewer__badge-count" id="fluentLogCountWarnings">
+              0
+            </span>
             <span class="fluent-log-viewer__badge-label">{tr("警告")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--disconnects">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--disconnects"></span>
-            <span class="fluent-log-viewer__badge-count" id="fluentLogCountDisconnects">0</span>
+            <span class="fluent-log-viewer__badge-count" id="fluentLogCountDisconnects">
+              0
+            </span>
             <span class="fluent-log-viewer__badge-label">{tr("断开")}</span>
           </span>
         </div>

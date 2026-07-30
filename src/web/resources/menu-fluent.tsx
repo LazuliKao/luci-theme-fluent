@@ -1,14 +1,13 @@
 import { setupErrorTooltips } from "./utils/error-tooltips";
-import { setupSelectionPause } from "./utils/poll-pause";
-import { SlideAnimations } from "./utils/slide-animations";
-import { setupFluentSelects } from "./utils/select-dropdown";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
-import { setupThemeFeatures } from "./utils/theme-features";
-import { setupMenuSearch } from "./utils/menu-search";
-import { setupMacSelector } from "./utils/mac-selector";
 import { setupLogViewer } from "./utils/log-viewer";
+import { setupMacSelector } from "./utils/mac-selector";
+import { setupMenuSearch } from "./utils/menu-search";
+import { setupSelectionPause } from "./utils/poll-pause";
+import { setupFluentSelects } from "./utils/select-dropdown";
+import { SlideAnimations } from "./utils/slide-animations";
 import { setupTableWrappers } from "./utils/table-wrapper";
-
+import { setupThemeFeatures } from "./utils/theme-features";
 
 interface Module {
   __init__: () => void;
@@ -169,11 +168,7 @@ const module: Module = {
     const isCollapsedDesktop = window.innerWidth > 768 && document.body.getAttribute("data-sidebar-state") === "collapsed";
     let shouldCollapse = false;
 
-    const openMenus = document.querySelectorAll(
-      isCollapsedDesktop
-        ? ".main .main-left .nav > li > ul.slide-menu.popup-open"
-        : ".main .main-left .nav > li > ul.slide-menu.active"
-    );
+    const openMenus = document.querySelectorAll(isCollapsedDesktop ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active");
     openMenus.forEach((ulNode) => {
       const ul = ulNode as HTMLElement;
 
@@ -284,7 +279,12 @@ const module: Module = {
       // Create menu item with link and submenu
       const menuItem = (
         <li class={slideClass ?? undefined}>
-          <a href={L.url(url, child.name)} onclick={currentLevel === 1 ? ui.createHandlerFn(this, "handleMenuExpand") : null} class={menuClassCombined} data-title={(child.title || "").replace(/ /g, "_")}>
+          <a
+            href={L.url(url, child.name)}
+            onclick={currentLevel === 1 ? ui.createHandlerFn(this, "handleMenuExpand") : null}
+            class={menuClassCombined}
+            data-title={(child.title || "").replace(/ /g, "_")}
+          >
             {currentLevel === 1 || currentLevel === 2 ? <span class="menu-icon"></span> : null}
             <span class="menu-label">{_(child.title || "")}</span>
           </a>

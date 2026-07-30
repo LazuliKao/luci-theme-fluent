@@ -31,20 +31,11 @@ export function getRectInlineStart(rect: DOMRect, direction: DocumentDirection, 
   return direction === "rtl" ? viewportInlineSize - rect.right : rect.left;
 }
 
-export function getPhysicalLeftFromInlineStart(
-  inlineGeometry: InlineGeometry,
-  direction: DocumentDirection,
-  viewportInlineSize: number,
-): number {
-  return direction === "rtl"
-    ? viewportInlineSize - inlineGeometry.inlineStart - inlineGeometry.inlineSize
-    : inlineGeometry.inlineStart;
+export function getPhysicalLeftFromInlineStart(inlineGeometry: InlineGeometry, direction: DocumentDirection, viewportInlineSize: number): number {
+  return direction === "rtl" ? viewportInlineSize - inlineGeometry.inlineStart - inlineGeometry.inlineSize : inlineGeometry.inlineStart;
 }
 
-export function applyInlineGeometryToStyle(
-  style: CSSStyleDeclaration,
-  inlineGeometry: InlineGeometry,
-): void {
+export function applyInlineGeometryToStyle(style: CSSStyleDeclaration, inlineGeometry: InlineGeometry): void {
   style.left = "auto";
   style.insetInlineStart = `${inlineGeometry.inlineStart}px`;
   style.width = `${inlineGeometry.inlineSize}px`;
@@ -60,10 +51,7 @@ export function setInlineCssCustomProperties(
     readonly inlineSize: string;
   },
 ): void {
-  style.setProperty(
-    propertyNames.inlineStart,
-    `${getPhysicalLeftFromInlineStart(inlineGeometry, direction, viewportInlineSize)}px`,
-  );
+  style.setProperty(propertyNames.inlineStart, `${getPhysicalLeftFromInlineStart(inlineGeometry, direction, viewportInlineSize)}px`);
   style.setProperty(propertyNames.inlineSize, `${inlineGeometry.inlineSize}px`);
 }
 

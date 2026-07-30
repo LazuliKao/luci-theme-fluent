@@ -41,10 +41,7 @@ function searchMenu(root: LuCI.ui.menu.MenuNode, query: string): SearchResult[] 
       }
 
       // Match against translated title (what the user sees) or raw title (fallback)
-      if (
-        (translatedTitle && normalize(translatedTitle).includes(q)) ||
-        (title && normalize(title).includes(q))
-      ) {
+      if ((translatedTitle && normalize(translatedTitle).includes(q)) || (title && normalize(title).includes(q))) {
         results.push({ node: child, url: childUrl, breadcrumb: [...childBreadcrumb] });
       }
 

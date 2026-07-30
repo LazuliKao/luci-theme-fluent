@@ -10,7 +10,8 @@ declare global {
 const form = L.form;
 const dom = L.dom as unknown as typeof LuCI.dom;
 const ghmirror = "https://ghfast.top/"; // Use GHProxy to bypass GitHub API rate limits
-import { callGetVersion, callDoInstall, callStartDownload, callCheckDownload, fetchLatestRelease, GitHubAPIError } from "../../../utils/update";
+
+import { callCheckDownload, callDoInstall, callGetVersion, callStartDownload, fetchLatestRelease, GitHubAPIError } from "../../../utils/update";
 
 const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).extend({
   renderWidget: (_section_id: string, _option_index: number, _cfgvalue: string) => {
@@ -293,9 +294,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             updateProgress("download", 0, _("Downloading on router"));
 
             const dlUrl = useProxy ? ghmirror + packageAsset.browser_download_url : packageAsset.browser_download_url;
-            const i18nDlUrls = i18nAssets
-              .map((a) => (useProxy ? ghmirror + a.browser_download_url : a.browser_download_url))
-              .join(" ");
+            const i18nDlUrls = i18nAssets.map((a) => (useProxy ? ghmirror + a.browser_download_url : a.browser_download_url)).join(" ");
 
             const startRes = await callStartDownload(dlUrl, i18nDlUrls.split(" ")[0] || "", i18nDlUrls);
             if (startRes.result !== 0) {

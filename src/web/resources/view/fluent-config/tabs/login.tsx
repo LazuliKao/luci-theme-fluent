@@ -16,8 +16,8 @@ const callFluentAvail = rpc.declare<number>({ object: "luci.fluent", method: "av
 const callFluentRemove = rpc.declare<number, [string]>({ object: "luci.fluent", method: "remove", params: ["filename"], expect: { result: 0 } });
 const callFluentRename = rpc.declare<number, [string]>({ object: "luci.fluent", method: "rename", params: ["newname"], expect: { result: 0 } });
 
-import { createModeSubtabs, transparencySteps } from "../shared";
 import { FLUENT_DEFAULTS } from "../../../fluent-defaults";
+import { createModeSubtabs, transparencySteps } from "../shared";
 
 const BACKGROUND_PATH = "/www/luci-static/fluent/background";
 const BACKGROUND_URL = "/luci-static/fluent/background/";
@@ -28,7 +28,10 @@ const getExtension = (filename: string): string => filename.split(".").pop()?.to
 const isSupportedBackground = (filename: string): boolean => SUPPORTED_BACKGROUND_EXTENSIONS.has(getExtension(filename));
 
 const sanitizeFilename = (filename: string): string => {
-  const basename = filename.replace(/^.*[\\/]/, "").replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
+  const basename = filename
+    .replace(/^.*[\\/]/, "")
+    .replace(/[^A-Za-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
   if (basename === "" || basename === "." || basename === ".." || !isSupportedBackground(basename)) {
     return `background-${Date.now()}.jpg`;
@@ -60,31 +63,27 @@ const createBackgroundPreview = (filename: string): HTMLElement => {
   const url = `${BACKGROUND_URL}${encodeURIComponent(filename)}`;
 
   if (extension === "mp4" || extension === "webm") {
-    return (
-      <video
-        class="fluent-bg-preview fluent-bg-preview-video"
-        muted
-        playsInline
-        preload="metadata"
-        src={url}
-      />
-    ) as HTMLElement;
+    return (<video class="fluent-bg-preview fluent-bg-preview-video" muted playsInline preload="metadata" src={url} />) as HTMLElement;
   }
 
-  return <div class="fluent-bg-preview" style={`background-image:url('${url.replace(/'/g, "%27")}')`} /> as HTMLElement;
+  return (<div class="fluent-bg-preview" style={`background-image:url('${url.replace(/'/g, "%27")}')`} />) as HTMLElement;
 };
 
 const renderNodeContent = (node: HTMLElement, children: Node | HTMLElement | DocumentFragment | (Node | HTMLElement | DocumentFragment)[]): void => {
   (dom as unknown as typeof LuCI.dom).content(node, children);
 };
 
-const CBIWallpaperManager = ((form.DummyValue as unknown as typeof LuCI.baseclass).extend({
+const CBIWallpaperManager = (form.DummyValue as unknown as typeof LuCI.baseclass).extend({
   renderWidget: function (_section_id: string, _option_index: number, _cfgvalue: string) {
-    const statusEl = <div class="cbi-value-description fluent-bg-status">Ready to upload or remove custom backgrounds.</div> as HTMLElement;
-    const hintEl = <div class="fluent-bg-hint">Supported formats: JPG, PNG, GIF, WEBP, MP4, WEBM.</div> as HTMLElement;
-    const uploadButton = <button class="btn cbi-button cbi-button-action" type="button">Upload background</button> as HTMLButtonElement;
-    const actionsEl = <div class="fluent-bg-actions">{uploadButton}</div> as HTMLElement;
-    const listEl = <div class="fluent-bg-list" /> as HTMLElement;
+    const statusEl = (<div class="cbi-value-description fluent-bg-status">Ready to upload or remove custom backgrounds.</div>) as HTMLElement;
+    const hintEl = (<div class="fluent-bg-hint">Supported formats: JPG, PNG, GIF, WEBP, MP4, WEBM.</div>) as HTMLElement;
+    const uploadButton = (
+      <button class="btn cbi-button cbi-button-action" type="button">
+        Upload background
+      </button>
+    ) as HTMLButtonElement;
+    const actionsEl = (<div class="fluent-bg-actions">{uploadButton}</div>) as HTMLElement;
+    const listEl = (<div class="fluent-bg-list" />) as HTMLElement;
 
     const setStatus = (message: string): void => {
       renderNodeContent(statusEl, [document.createTextNode(message)]);
@@ -110,9 +109,7 @@ const CBIWallpaperManager = ((form.DummyValue as unknown as typeof LuCI.baseclas
         .list(BACKGROUND_PATH)
         .catch((): LuCI.fs.FileStatEntry[] => [])
         .then((entries: LuCI.fs.FileStatEntry[]) => {
-          const files = entries
-            .filter((entry) => entry.type === "file" && isSupportedBackground(String(entry.name ?? "")))
-            .sort((a, b) => String(a.name ?? "").localeCompare(String(b.name ?? "")));
+          const files = entries.filter((entry) => entry.type === "file" && isSupportedBackground(String(entry.name ?? ""))).sort((a, b) => String(a.name ?? "").localeCompare(String(b.name ?? "")));
 
           if (!files.length) {
             renderEmpty();
@@ -123,7 +120,11 @@ const CBIWallpaperManager = ((form.DummyValue as unknown as typeof LuCI.baseclas
             listEl,
             files.map((entry) => {
               const filename = String(entry.name ?? "");
-              const deleteButton = <button class="btn cbi-button cbi-button-remove" type="button">Delete</button> as HTMLButtonElement;
+              const deleteButton = (
+                <button class="btn cbi-button cbi-button-remove" type="button">
+                  Delete
+                </button>
+              ) as HTMLButtonElement;
               const handleDelete = ui.createHandlerFn(this, () => {
                 setStatus(`Deleting ${filename}...`);
 
@@ -147,7 +148,9 @@ const CBIWallpaperManager = ((form.DummyValue as unknown as typeof LuCI.baseclas
                 <div class="fluent-bg-item">
                   {createBackgroundPreview(filename)}
                   <div class="fluent-bg-meta">
-                    <strong class="fluent-bg-name" title={filename}>{filename}</strong>
+                    <strong class="fluent-bg-name" title={filename}>
+                      {filename}
+                    </strong>
                     <span class="fluent-bg-size">{formatEntrySize(entry.size)}</span>
                   </div>
                   <div class="fluent-bg-item-actions">{deleteButton}</div>
@@ -204,23 +207,13 @@ const CBIWallpaperManager = ((form.DummyValue as unknown as typeof LuCI.baseclas
 
     return <div class="fluent-bg-manager">{[statusEl, hintEl, actionsEl, listEl]}</div>;
   },
-}) as unknown) as typeof LuCI.form.DummyValue;
+}) as unknown as typeof LuCI.form.DummyValue;
 
 export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
-  section.tab(
-    "login",
-    _("Login page"),
-    _("Customize the login page background, card opacity, and blur radius for light and dark modes."),
-  );
+  section.tab("login", _("Login page"), _("Customize the login page background, card opacity, and blur radius for light and dark modes."));
 
   {
-    const option = section.taboption(
-      "login",
-      form.ListValue,
-      "login_bg",
-      "Background source",
-      "Select the background image source for the login page.",
-    );
+    const option = section.taboption("login", form.ListValue, "login_bg", "Background source", "Select the background image source for the login page.");
     option.value("microsoft", "Microsoft dynamic canvas");
     option.value("custom", "Custom background");
     option.value("bing", "Bing daily wallpaper");
@@ -229,39 +222,21 @@ export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
   }
 
   {
-    const option = section.taboption(
-      "login",
-      CBIWallpaperManager,
-      "_bg_mgr",
-      "Custom backgrounds",
-      "Upload and manage custom background images for the login page.",
-    );
+    const option = section.taboption("login", CBIWallpaperManager, "_bg_mgr", "Custom backgrounds", "Upload and manage custom background images for the login page.");
     option.depends("login_bg", "custom");
   }
 
   const modeSection = createModeSubtabs(section, "login", "login_mode_tabs");
 
   {
-    const option = modeSection.taboption(
-      "light",
-      form.ListValue,
-      "transparency",
-      _("Login card opacity"),
-      _("Opacity of the login card in light mode. 0 is fully transparent and 1 is fully opaque."),
-    );
+    const option = modeSection.taboption("light", form.ListValue, "transparency", _("Login card opacity"), _("Opacity of the login card in light mode. 0 is fully transparent and 1 is fully opaque."));
     for (const step of transparencySteps) option.value(String(step));
     option.default = FLUENT_DEFAULTS.transparency;
     option.rmempty = false;
   }
 
   {
-    const option = modeSection.taboption(
-      "light",
-      form.Value,
-      "blur",
-      _("Backdrop blur radius"),
-      _("Blur radius in pixels behind the login card in light mode. Use 0 to disable blur."),
-    );
+    const option = modeSection.taboption("light", form.Value, "blur", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in light mode. Use 0 to disable blur."));
     option.datatype = "ufloat";
     option.default = FLUENT_DEFAULTS.blur;
     option.rmempty = false;
@@ -281,13 +256,7 @@ export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
   }
 
   {
-    const option = modeSection.taboption(
-      "dark",
-      form.Value,
-      "blur_dark",
-      _("Backdrop blur radius"),
-      _("Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."),
-    );
+    const option = modeSection.taboption("dark", form.Value, "blur_dark", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."));
     option.datatype = "ufloat";
     option.default = FLUENT_DEFAULTS.blur_dark;
     option.rmempty = false;

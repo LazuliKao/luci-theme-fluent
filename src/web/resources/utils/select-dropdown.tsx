@@ -1,9 +1,4 @@
-import {
-  getEffectiveDocumentDirection,
-  getRectInlineStart,
-  getViewportInlineSize,
-  setInlineCssCustomProperties,
-} from "./direction";
+import { getEffectiveDocumentDirection, getRectInlineStart, getViewportInlineSize, setInlineCssCustomProperties } from "./direction";
 
 /**
  * Monitor native select elements and dynamically replace/transform them
@@ -194,19 +189,11 @@ function updateDropdownPosition(customDropdown: HTMLElement, selectEl: HTMLSelec
 
   const maxListHeight = Math.min(selectEl.options.length * 32 + 10, 320, viewportHeight * 0.45);
   const openUp = spaceBelow < maxListHeight && spaceAbove > spaceBelow;
-  const availableHeight = Math.max(
-    64,
-    openUp
-      ? spaceAbove - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP
-      : spaceBelow - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP,
-  );
+  const availableHeight = Math.max(64, openUp ? spaceAbove - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP : spaceBelow - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP);
   const dropdownHeight = Math.min(maxListHeight, availableHeight);
   const dropdownInlineSize = Math.min(rect.width, viewportInlineSize - DROPDOWN_VIEWPORT_MARGIN * 2);
   const triggerInlineStart = getRectInlineStart(rect, direction, viewportInlineSize);
-  const dropdownInlineStart = Math.min(
-    Math.max(DROPDOWN_VIEWPORT_MARGIN, triggerInlineStart),
-    viewportInlineSize - dropdownInlineSize - DROPDOWN_VIEWPORT_MARGIN,
-  );
+  const dropdownInlineStart = Math.min(Math.max(DROPDOWN_VIEWPORT_MARGIN, triggerInlineStart), viewportInlineSize - dropdownInlineSize - DROPDOWN_VIEWPORT_MARGIN);
   const dropdownTop = openUp
     ? Math.max(DROPDOWN_VIEWPORT_MARGIN, rect.top - dropdownHeight - DROPDOWN_GAP)
     : Math.min(viewportHeight - DROPDOWN_VIEWPORT_MARGIN - dropdownHeight, rect.bottom + DROPDOWN_GAP);
@@ -372,11 +359,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
 
   // Close dropdown on click outside
   const clickOutsideHandler = (e: MouseEvent) => {
-    if (
-      !customDropdown.contains(e.target as Node) &&
-      e.target !== selectEl &&
-      customDropdown.hasAttribute("open")
-    ) {
+    if (!customDropdown.contains(e.target as Node) && e.target !== selectEl && customDropdown.hasAttribute("open")) {
       closeCustomDropdown(customDropdown);
     }
   };

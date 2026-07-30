@@ -138,12 +138,7 @@ export function matchI18nAsset(assets: ReleaseAsset[], lang: string, pkgType: "i
 /**
  * Fetch the latest release details from GitHub API
  */
-export async function fetchLatestRelease(
-  channel: "stable" | "nightly",
-  pkgType: "ipk" | "apk",
-  installedI18n: string[] = [],
-  token?: string,
-): Promise<ReleaseInfo> {
+export async function fetchLatestRelease(channel: "stable" | "nightly", pkgType: "ipk" | "apk", installedI18n: string[] = [], token?: string): Promise<ReleaseInfo> {
   const url = channel === "nightly" ? "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/tags/nightly" : "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/latest";
 
   const headers: Record<string, string> = {};
@@ -192,4 +187,3 @@ export async function fetchLatestRelease(
     i18n_assets,
   };
 }
-

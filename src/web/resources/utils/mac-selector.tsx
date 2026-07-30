@@ -62,7 +62,9 @@ function generateMacAddress(vendorPrefix?: string): string {
 
   // Locally administered unicast MAC: 2nd nibble of 1st byte is 2, 6, A, or E
   const localNibbles = ["2", "6", "A", "E"];
-  const firstNibble = Math.floor(Math.random() * 16).toString(16).toUpperCase();
+  const firstNibble = Math.floor(Math.random() * 16)
+    .toString(16)
+    .toUpperCase();
   const secondNibble = localNibbles[Math.floor(Math.random() * localNibbles.length)];
   const firstByte = `${firstNibble}${secondNibble}`;
 
@@ -87,15 +89,7 @@ function openMacOverlayModal(targetInput: HTMLInputElement) {
   const vendorSelectId = "fluent-mac-overlay-vendor-select";
 
   // 1. Modal Input Preview Box
-  const modalInput = (
-    <input
-      id={modalInputId}
-      type="text"
-      class="cbi-input-text fluent-mac-modal-input"
-      value={currentVal}
-      placeholder="00:00:00:00:00:00"
-    />
-  ) as HTMLInputElement;
+  const modalInput = (<input id={modalInputId} type="text" class="cbi-input-text fluent-mac-modal-input" value={currentVal} placeholder="00:00:00:00:00:00" />) as HTMLInputElement;
 
   // 2. Native LuCI Select Dropdown (Auto-transformed by setupFluentSelects)
   const vendorSelect = (
@@ -147,9 +141,7 @@ function openMacOverlayModal(targetInput: HTMLInputElement) {
   ) as HTMLButtonElement;
 
   // 5. Stacked Backdrop Container (z-index: 2500)
-  const closeBtn = (
-    <button type="button" class="fluent-mac-overlay-close" title={_("Close")}></button>
-  ) as HTMLButtonElement;
+  const closeBtn = (<button type="button" class="fluent-mac-overlay-close" title={_("Close")}></button>) as HTMLButtonElement;
 
   const backdrop = (
     <div class="fluent-mac-overlay-backdrop">
@@ -237,13 +229,7 @@ function enhanceMacInput(input: HTMLInputElement) {
   }
 
   // Create square edit button (Uses SCSS mask icon for edit)
-  const editBtn = (
-    <button
-      type="button"
-      class="cbi-button cbi-button-action fluent-mac-edit-btn"
-      title={_("Advanced MAC Selector")}
-    ></button>
-  ) as HTMLButtonElement;
+  const editBtn = (<button type="button" class="cbi-button cbi-button-action fluent-mac-edit-btn" title={_("Advanced MAC Selector")}></button>) as HTMLButtonElement;
 
   editBtn.addEventListener("click", (e) => {
     e.preventDefault();
