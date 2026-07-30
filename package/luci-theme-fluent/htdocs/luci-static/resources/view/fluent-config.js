@@ -323,7 +323,7 @@ const registerGeneralTab = (a)=>{
     }
 };
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_415c1fe03795183071a679fcf2fe2648/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_028b7449eab5baa7575a13f05d683cfa/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
     let { children: n, ...r } = t || {}, o = function e(t, n = []) {
@@ -361,7 +361,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_415c1fe03795183071a679fcf2fe2648/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_028b7449eab5baa7575a13f05d683cfa/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/login.tsx
@@ -809,11 +809,11 @@ let about_p = about_n.DummyValue.extend({
             }
         })();
         let z = async (n)=>{
-            let r = w.value;
+            let o = w.value;
             try {
-                let a = await fetchLatestRelease(r, f, g, n);
+                let a = await fetchLatestRelease(o, f, g, n);
                 console.log(a), k.disabled = !1;
-                let u = b.replace(/^v/, "").trim(), p = a.tag_name.replace(/^v/, "").trim(), h = L.naturalCompare(p, u) > 0, y = !h && "nightly" !== r;
+                let u = b.replace(/^v/, "").trim(), p = a.tag_name.replace(/^v/, "").trim(), h = L.naturalCompare(p, u) > 0, y = !h && "nightly" !== o;
                 if (y ? P(_("Your theme is up to date!"), "success") : P(h ? _("A new version is available!") : _("Nightly build available (reinstallation check)."), h ? "warn" : "info"), !a.package_asset) return void P(_("No matching package asset found for your system architecture in this release."), "error");
                 let m = a.body ? a.body : "", x = jsx("button", {
                     class: "btn cbi-button cbi-button-save",
@@ -849,15 +849,15 @@ let about_p = about_n.DummyValue.extend({
                     let n = a.package_asset;
                     if (!n) return void P(_("No matching package asset found for your system architecture in this release."), "error");
                     x.disabled = !0, w.disabled = !0, v.disabled = !0, k.disabled = !0, P(_("Starting update process..."), "info");
-                    let r = a.i18n_assets || [], c = null, u = [];
-                    for (let e of (n.digest?.startsWith("sha256:") ? c = n.digest.replace("sha256:", "") : (console.warn("Unable to determine expected package hash from digest. Skipping verification."), c = "skip"), r))e.digest?.startsWith("sha256:") ? u.push(e.digest.replace("sha256:", "")) : u.push("skip");
+                    let o = a.i18n_assets || [], c = null, u = [];
+                    for (let e of (n.digest?.startsWith("sha256:") ? c = n.digest.replace("sha256:", "") : (console.warn("Unable to determine expected package hash from digest. Skipping verification."), c = "skip"), o))e.digest?.startsWith("sha256:") ? u.push(e.digest.replace("sha256:", "")) : u.push("skip");
                     let p = async ()=>{
                         let a = v.value.includes("ghproxy");
                         P(_("Starting backend download..."), "info"), j("download", 0, _("Downloading on router"));
-                        let p = a ? about_i + n.browser_download_url : n.browser_download_url, h = r.map((e)=>a ? about_i + e.browser_download_url : e.browser_download_url).join(" "), b = await callStartDownload(p, h.split(" ")[0] || "", h);
+                        let p = a ? about_i + n.browser_download_url : n.browser_download_url, h = o.map((e)=>a ? about_i + e.browser_download_url : e.browser_download_url).join(" "), b = await callStartDownload(p, h.split(" ")[0] || "", h);
                         if (0 !== b.result) throw Error(b.message || "Failed to start router download.");
                         for(;;){
-                            let e = await callCheckDownload(), t = e.size || 0, a = r.reduce((e, t)=>e + (t.size || 0), 0), l = n.size + a, i = l > 0 ? Math.min(Math.round(t / l * 100), 100) : 0;
+                            let e = await callCheckDownload(), t = e.size || 0, a = o.reduce((e, t)=>e + (t.size || 0), 0), l = n.size + a, i = l > 0 ? Math.min(Math.round(t / l * 100), 100) : 0;
                             if (j("download", i, `${_("Downloading on router")} (${(t / 1024).toFixed(0)} / ${(l / 1024).toFixed(0)} KB)`), !e.running) if (0 !== e.code) throw Error("Router background download failed or file is empty.");
                             else break;
                             await new Promise((e)=>setTimeout(e, 1000));

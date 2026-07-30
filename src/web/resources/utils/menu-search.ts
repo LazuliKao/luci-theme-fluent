@@ -58,7 +58,7 @@ function searchMenu(root: LuCI.ui.menu.MenuNode, query: string): SearchResult[] 
 const SEARCH_BOX_CLASS = "fluent-menu-search";
 const OVERLAY_CLASS = "fluent-menu-search-overlay";
 
-function createSearchInput(root: LuCI.ui.menu.MenuNode): { input: HTMLInputElement; overlay: HTMLDivElement } {
+function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivElement; input: HTMLInputElement; overlay: HTMLDivElement } {
   // Container
   const container = document.createElement("div");
   container.className = SEARCH_BOX_CLASS;
@@ -160,7 +160,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { input: HTMLInputEleme
     // Position overlay below the search input
     const rect = input.getBoundingClientRect();
     overlay.style.left = "0";
-    overlay.style.top = rect.height + "px";
+    overlay.style.top = `${rect.height}px`;
   }
 
   function navigateTo(result: SearchResult) {
@@ -243,7 +243,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { input: HTMLInputEleme
   // Prevent overlay close when clicking inside overlay
   overlay.addEventListener("mousedown", (e) => e.preventDefault());
 
-  return { input, overlay };
+  return { container, input, overlay };
 }
 
 // ── Public API ──
@@ -260,8 +260,8 @@ export function setupMenuSearch(root: LuCI.ui.menu.MenuNode): void {
     if (!slot) return;
 
     slot.innerHTML = "";
-    const { input } = createSearchInput(root);
-    slot.appendChild(input.closest(`.${SEARCH_BOX_CLASS}`)!);
+    const { container, input } = createSearchInput(root);
+    slot.appendChild(container);
     inputs.push(input);
   };
 
