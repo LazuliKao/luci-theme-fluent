@@ -22,15 +22,27 @@
     "screenshot:run": "tsx src/script/screenshot/run.ts",
     "screenshot:showcase": "tsx src/script/screenshot/generate-showcase.ts",
     "screenshot:run:zh-Hans": "tsx src/script/screenshot/run.ts -- --lang=zh-Hans",
-    "screenshot:showcase:zh-Hans": "tsx src/script/screenshot/generate-showcase.ts -- --lang=zh-Hans"
+    "screenshot:showcase:zh-Hans": "tsx src/script/screenshot/generate-showcase.ts -- --lang=zh-Hans",
+    "typecheck": "cd src && pnpm exec tsc -p tsconfig.json --noEmit",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx,json}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
+    "@commitlint/types": "^21.2.0",
     "@dotenvx/dotenvx": "^2.19.1",
     "@iconify-json/fluent": "^1.2.51",
     "@iconify-json/fluent-mdl2": "^1.2.1",
     "@lazulikao/luci-types": "github:LazuliKao/luci-types#baa5cc0130c27f395d1de1099abb02d876ac3dbc",
     "@types/node": "^22.19.21",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.2.0",
     "playwright": "^1.61.0",
     "sass": "^1.101.0",
     "sharp": "^0.35.3",
