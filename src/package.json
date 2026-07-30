@@ -8,12 +8,12 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "@lazulikao/luci-types": "github:LazuliKao/luci-types#204c97d283ecce9770598329068a0616192394ba",
-    "@rspack/core": "^2.0.8",
-    "@rsbuild/core": "^2.0.15",
-    "@rsbuild/plugin-sass": "^1.5.3",
+    "@lazulikao/luci-types": "github:LazuliKao/luci-types#baa5cc0130c27f395d1de1099abb02d876ac3dbc",
+    "@rspack/core": "^2.1.7",
+    "@rsbuild/core": "^2.1.9",
+    "@rsbuild/plugin-sass": "^2.0.1",
     "@types/node": "^22.19.19",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
