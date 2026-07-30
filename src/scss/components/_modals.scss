@@ -240,7 +240,7 @@ body.modal-overlay-active {
   }
 
   // 2. Temporarily disable all form interaction on the page content during save flow
-  //    Covers both: .notice ("没有待应用的更改") and .spinning ("开始应用配置…")
+  //    Covers both: .notice ("没有待应用的更改") and .spinning ("开始应用配置...")
   //    We scope this to #maincontent so sidebar navigation and header utilities remain interactive
   &:has(#modal_overlay .modal.notice) #maincontent,
   &:has(#modal_overlay .modal.spinning) #maincontent {

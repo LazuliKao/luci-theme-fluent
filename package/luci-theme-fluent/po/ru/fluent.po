@@ -34,8 +34,8 @@ msgstr "Дополнительно"
 msgid "Advanced MAC Selector"
 msgstr "Расширенный выбор MAC-адресов"
 
-msgid "and {count} more…"
-msgstr "и ещё {count}…"
+msgid "and %d more..."
+msgstr "и ещё %d..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
@@ -432,8 +432,8 @@ msgstr "Скруглённый (6px)"
 msgid "Search menu items"
 msgstr "Поиск по пунктам меню"
 
-msgid "Search menu…"
-msgstr "Искать в меню…"
+msgid "Search menu..."
+msgstr "Искать в меню..."
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Выберите глубину тени для тематических карточек и панелей."

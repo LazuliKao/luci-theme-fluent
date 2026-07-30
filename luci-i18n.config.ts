@@ -9,7 +9,7 @@ export default defineConfig({
   translate: {
     enabled: true,
     translator: "openai",
-    batchSize: 15,
+    batchSize: 10,
     prompt: "src/script/translate.${locale}.md",
   },
   headers: {

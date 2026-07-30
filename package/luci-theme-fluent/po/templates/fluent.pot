@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-30 18:20+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Advanced MAC Selector"
 msgstr ""
 
-msgid "and {count} more…"
+msgid "and %d more..."
 msgstr ""
 
 msgid ""
@@ -54,6 +54,9 @@ msgid ""
 msgstr ""
 
 msgid "Author"
+msgstr ""
+
+msgid "Auto-scroll"
 msgstr ""
 
 msgid "Automatic (Arabic/Persian locales only)"
@@ -152,6 +155,12 @@ msgid ""
 "theme animations."
 msgstr ""
 
+msgid "Copied"
+msgstr ""
+
+msgid "Copy log"
+msgstr ""
+
 msgid "Corner radius"
 msgstr ""
 
@@ -172,12 +181,21 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+msgid "Disconnects"
+msgstr ""
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
 msgstr ""
 
 msgid "Download and Install"
+msgstr ""
+
+msgid "Download log"
+msgstr ""
+
+msgid "Downloaded"
 msgstr ""
 
 msgid "Downloading on router"
@@ -187,6 +205,9 @@ msgid "Enable page transition animation"
 msgstr ""
 
 msgid "Enable tab underline animation"
+msgstr ""
+
+msgid "Errors"
 msgstr ""
 
 msgid "Expecting: %s"
@@ -296,6 +317,12 @@ msgstr ""
 msgid "Light mode"
 msgstr ""
 
+msgid "Line %d"
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
 msgid "Login"
 msgstr ""
 
@@ -389,10 +416,16 @@ msgstr ""
 msgid "Rounded (6px)"
 msgstr ""
 
+msgid "Scroll to bottom"
+msgstr ""
+
+msgid "Scroll to top"
+msgstr ""
+
 msgid "Search menu items"
 msgstr ""
 
-msgid "Search menu…"
+msgid "Search menu..."
 msgstr ""
 
 msgid "Select the shadow depth applied to themed cards and panels."
@@ -480,6 +513,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr ""
 
+msgid "Toggle fullscreen"
+msgstr ""
+
 msgid "Triggering installation on router..."
 msgstr ""
 
@@ -511,12 +547,18 @@ msgstr ""
 msgid "valid HEX color value"
 msgstr ""
 
+msgid "Warnings"
+msgstr ""
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
 msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
+msgstr ""
+
+msgid "Word wrap"
 msgstr ""
 
 msgid "You can create a new token at"

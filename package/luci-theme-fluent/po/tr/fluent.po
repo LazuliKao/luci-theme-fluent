@@ -34,8 +34,8 @@ msgstr "Gelişmiş"
 msgid "Advanced MAC Selector"
 msgstr "Gelişmiş MAC Seçici"
 
-msgid "and {count} more…"
-msgstr "ve {count} daha fazla…"
+msgid "and %d more..."
+msgstr "ve %d daha fazla..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
@@ -438,8 +438,8 @@ msgstr "Yuvarlak (6px)"
 msgid "Search menu items"
 msgstr "Menü öğelerini ara"
 
-msgid "Search menu…"
-msgstr "Menüyü ara…"
+msgid "Search menu..."
+msgstr "Menüyü ara..."
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Temalı kartlara ve panellere uygulanan gölge derinliğini seçin."

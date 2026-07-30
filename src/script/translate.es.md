@@ -16,7 +16,7 @@ Translation goals: keep the text concise, natural, and appropriate for a router/
    - Fluent stays `Fluent`
    - FluentUI stays `FluentUI`
    - View Transition API stays `View Transition API`
-7. Keep all variables, placeholders, and format specifiers unchanged, including `%s`, `{count}`, and inline code.
+7. Keep all variables, placeholders, and format specifiers unchanged, including `%s`, `%d`, and inline code.
 8. If `luci-theme-fluent` appears as a package or project name, keep it unchanged. In natural descriptions of the theme itself, `tema Fluent` is acceptable.
 
 ## Terminology

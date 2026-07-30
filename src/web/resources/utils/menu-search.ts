@@ -67,7 +67,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivEle
   const input = document.createElement("input");
   input.type = "search";
   input.className = "fluent-menu-search-input";
-  input.placeholder = _("Search menu…");
+  input.placeholder = _("Search menu...");
   input.autocomplete = "off";
   input.spellcheck = false;
   input.setAttribute("aria-label", _("Search menu items"));
@@ -150,7 +150,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivEle
     if (results.length > 20) {
       const more = document.createElement("li");
       more.className = "fluent-menu-search-more";
-      more.textContent = _("and {count} more…").replace("{count}", String(results.length - 20));
+      more.textContent = _("and %d more...").format(results.length - 20);
       list.appendChild(more);
     }
 

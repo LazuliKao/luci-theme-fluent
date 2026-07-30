@@ -33,8 +33,8 @@ msgstr "پیشرفته"
 msgid "Advanced MAC Selector"
 msgstr "انتخابگر پیشرفته آدرس MAC"
 
-msgid "and {count} more…"
-msgstr "و {count} مورد دیگر…"
+msgid "and %d more..."
+msgstr "و %d مورد دیگر..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
@@ -431,8 +431,8 @@ msgstr "گرد (6px)"
 msgid "Search menu items"
 msgstr "جست‌وجوی موارد منو"
 
-msgid "Search menu…"
-msgstr "جست‌وجو در منو…"
+msgid "Search menu..."
+msgstr "جست‌وجو در منو..."
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "عمق سایه اعمال‌شده به کارت‌ها و پنل‌های پوسته را انتخاب کنید."

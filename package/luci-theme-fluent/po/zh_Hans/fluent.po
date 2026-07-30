@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-30 18:20+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -31,8 +31,8 @@ msgstr "高级"
 msgid "Advanced MAC Selector"
 msgstr "高级 MAC 选择器"
 
-msgid "and {count} more…"
-msgstr "和 {count} 个更多..."
+msgid "and %d more..."
+msgstr "和更多 %d 个..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
@@ -55,6 +55,9 @@ msgstr "适用于整个主题中的标准按钮、输入框、选择框及类似
 
 msgid "Author"
 msgstr "作者"
+
+msgid "Auto-scroll"
+msgstr "自动滚动"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "自动（仅阿拉伯语/波斯语语言环境）"
@@ -154,6 +157,12 @@ msgid ""
 "theme animations."
 msgstr "控制菜单、头部和其他主题动画中使用的共享 Fluent 过渡时间。"
 
+msgid "Copied"
+msgstr "已复制"
+
+msgid "Copy log"
+msgstr "复制日志"
+
 msgid "Corner radius"
 msgstr "圆角半径"
 
@@ -174,6 +183,9 @@ msgstr "深色模式"
 msgid "Disabled"
 msgstr "禁用"
 
+msgid "Disconnects"
+msgstr "断开"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -181,6 +193,12 @@ msgstr "在页面加载和过渡期间，在顶部边缘显示主题化的加载
 
 msgid "Download and Install"
 msgstr "下载并安装"
+
+msgid "Download log"
+msgstr "下载日志"
+
+msgid "Downloaded"
+msgstr "已下载"
 
 msgid "Downloading on router"
 msgstr "正在路由器上下载..."
@@ -190,6 +208,9 @@ msgstr "启用页面过渡动画"
 
 msgid "Enable tab underline animation"
 msgstr "启用标签页下划线动画"
+
+msgid "Errors"
+msgstr "错误"
 
 msgid "Expecting: %s"
 msgstr "预期：%s"
@@ -298,6 +319,12 @@ msgstr "大号 (8px)"
 msgid "Light mode"
 msgstr "亮色模式"
 
+msgid "Line %d"
+msgstr "第 %d 行"
+
+msgid "Lines"
+msgstr "行"
+
 msgid "Login"
 msgstr "登录"
 
@@ -391,11 +418,17 @@ msgstr "正在使用令牌重试..."
 msgid "Rounded (6px)"
 msgstr "圆角 (6px)"
 
+msgid "Scroll to bottom"
+msgstr "滚动到底部"
+
+msgid "Scroll to top"
+msgstr "滚动到顶部"
+
 msgid "Search menu items"
 msgstr "搜索菜单项"
 
-msgid "Search menu…"
-msgstr "搜索菜单…"
+msgid "Search menu..."
+msgstr "搜索菜单..."
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "选择应用于主题卡片和面板的阴影深度。"
@@ -482,6 +515,9 @@ msgstr "主题更新成功！正在重新加载 RPC 服务，请在 5 秒后刷�
 msgid "Theme transition speed"
 msgstr "主题过渡速度"
 
+msgid "Toggle fullscreen"
+msgstr "全屏查看"
+
 msgid "Triggering installation on router..."
 msgstr "触发路由器上的安装..."
 
@@ -513,6 +549,9 @@ msgstr "必须输入用户名。"
 msgid "valid HEX color value"
 msgstr "有效的十六进制颜色值"
 
+msgid "Warnings"
+msgstr "警告"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -520,6 +559,9 @@ msgstr "启用后，Fluent 动画将遵循浏览器或操作系统的减少动�
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "主导航侧边栏的宽度（像素）。"
+
+msgid "Word wrap"
+msgstr "自动换行"
 
 msgid "You can create a new token at"
 msgstr "您可以在这里创建新的令牌："

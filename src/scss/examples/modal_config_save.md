@@ -7,7 +7,7 @@
 ```html
 <div id="modal_overlay" tabindex="-1">
     <div class="modal alert-message notice spinning" role="dialog" aria-modal="true">
-        <p>开始应用配置…</p>
+        <p>开始应用配置...</p>
     </div>
 </div>
 ```
@@ -15,7 +15,7 @@
 ```html
 <div id="modal_overlay" tabindex="-1">
     <div class="modal alert-message notice spinning" role="dialog" aria-modal="true">
-        <p>正在等待配置被应用… 88s</p>
+        <p>正在等待配置被应用... 88s</p>
     </div>
 </div>
 ```

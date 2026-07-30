@@ -34,8 +34,8 @@ msgstr "Avanzado"
 msgid "Advanced MAC Selector"
 msgstr "Selector avanzado de dirección MAC"
 
-msgid "and {count} more…"
-msgstr "y {count} más…"
+msgid "and %d more…"
+msgstr "y %d más…"
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "

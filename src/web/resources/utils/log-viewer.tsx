@@ -17,10 +17,6 @@ interface ParsedLogLine {
 const LS_WRAP_KEY = "fluent-log-wordwrap";
 const LS_AUTOSCROLL_KEY = "fluent-log-autoscroll";
 
-function tr(str: string): string {
-  return typeof _ === "function" ? _(str) : str;
-}
-
 function formatTimestamp(timeStr: string): string {
   // If float seconds (dmesg): e.g. "0.000000" or "  1234.567890"
   if (/^\s*[\d.]+\s*$/.test(timeStr)) {
@@ -143,50 +139,50 @@ function enhanceSyslogTextarea(textarea: HTMLTextAreaElement) {
             <span class="fluent-log-viewer__badge-count" id="fluentLogCountLines">
               0
             </span>
-            <span class="fluent-log-viewer__badge-label">{tr("行")}</span>
+            <span class="fluent-log-viewer__badge-label">{_("Lines")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--errors">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--errors"></span>
             <span class="fluent-log-viewer__badge-count" id="fluentLogCountErrors">
               0
             </span>
-            <span class="fluent-log-viewer__badge-label">{tr("错误")}</span>
+            <span class="fluent-log-viewer__badge-label">{_("Errors")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--warnings">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--warnings"></span>
             <span class="fluent-log-viewer__badge-count" id="fluentLogCountWarnings">
               0
             </span>
-            <span class="fluent-log-viewer__badge-label">{tr("警告")}</span>
+            <span class="fluent-log-viewer__badge-label">{_("Warnings")}</span>
           </span>
           <span class="fluent-log-viewer__badge fluent-log-viewer__badge--disconnects">
             <span class="fluent-log-viewer__badge-icon fluent-log-viewer__badge-icon--disconnects"></span>
             <span class="fluent-log-viewer__badge-count" id="fluentLogCountDisconnects">
               0
             </span>
-            <span class="fluent-log-viewer__badge-label">{tr("断开")}</span>
+            <span class="fluent-log-viewer__badge-label">{_("Disconnects")}</span>
           </span>
         </div>
         <div class="fluent-log-viewer__toolbar">
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="wrap" title={tr("自动换行")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="wrap" title={_("Word wrap")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--wrap"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="autoscroll" title={tr("自动滚动")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="autoscroll" title={_("Auto-scroll")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--autoscroll"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="copy" title={tr("复制日志")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="copy" title={_("Copy log")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--copy"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="download" title={tr("下载日志")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="download" title={_("Download log")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--download"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="scroll-top" title={tr("滚动到顶部")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="scroll-top" title={_("Scroll to top")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--scroll-top"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="scroll-bottom" title={tr("滚动到底部")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="scroll-bottom" title={_("Scroll to bottom")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--scroll-bottom"></span>
           </button>
-          <button type="button" class="fluent-log-viewer__tool-btn" data-action="fullscreen" title={tr("全屏查看")}>
+          <button type="button" class="fluent-log-viewer__tool-btn" data-action="fullscreen" title={_("Toggle fullscreen")}>
             <span class="fluent-log-viewer__icon fluent-log-viewer__icon--fullscreen"></span>
           </button>
         </div>
@@ -254,7 +250,7 @@ function enhanceSyslogTextarea(textarea: HTMLTextAreaElement) {
     const text = textarea.value || textarea.textContent || "";
     copyToClipboard(text).then((success) => {
       if (success) {
-        showFeedback(copyBtn, tr("已复制"));
+        showFeedback(copyBtn, _("Copied"));
       }
     });
   });
@@ -275,7 +271,7 @@ function enhanceSyslogTextarea(textarea: HTMLTextAreaElement) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showFeedback(downloadBtn, tr("已下载"));
+    showFeedback(downloadBtn, _("Downloaded"));
   });
 
   scrollTopBtn.addEventListener("click", () => {
@@ -421,6 +417,7 @@ function enhanceSyslogTextarea(textarea: HTMLTextAreaElement) {
       const numEl = document.createElement("span");
       numEl.className = "fluent-log-viewer__line-number";
       numEl.textContent = String(l.lineNumber);
+      numEl.title = _("Line %d").format(l.lineNumber);
       lineEl.appendChild(numEl);
 
       if (l.time) {
