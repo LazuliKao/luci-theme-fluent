@@ -385,7 +385,7 @@ msgid "Next"
 msgstr "Suivant"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Version de développement disponible (vérification de réinstallation)."
+msgstr "Build Nightly disponible (vérification de réinstallation)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Canal Nightly (pré-version)"
@@ -580,7 +580,7 @@ msgid "Theme transition speed"
 msgstr "Vitesse de transition du thème"
 
 msgid "Toggle fullscreen"
-msgstr "Plein écran"
+msgstr "Basculer en plein écran"
 
 msgid "Triggering installation on router..."
 msgstr "Installation en cours sur le routeur..."

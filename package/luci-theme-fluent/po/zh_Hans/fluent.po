@@ -347,7 +347,7 @@ msgid "Next"
 msgstr "下一步"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "有夜间构建可用（检查是否需要重新安装）。"
+msgstr "有 Nightly 构建可用（检查是否需要重新安装）。"
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Nightly 通道 (预发布)"

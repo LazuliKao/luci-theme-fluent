@@ -269,10 +269,10 @@ msgid "Follow system"
 msgstr "Systemeinstellungen übernehmen"
 
 msgid "Force dark mode"
-msgstr "Dunkelmodus erzwingen"
+msgstr "Dunkles Design erzwingen"
 
 msgid "Force light mode"
-msgstr "Hellen Modus erzwingen"
+msgstr "Helles Design erzwingen"
 
 msgid "Force LTR"
 msgstr "LTR erzwingen"
@@ -345,7 +345,7 @@ msgid "Installed version"
 msgstr "Installierte Version"
 
 msgid "Installing package"
-msgstr "Paket wird installiert..."
+msgstr "Paket wird installiert"
 
 msgid "Large"
 msgstr "Groß"
@@ -384,7 +384,7 @@ msgid "Next"
 msgstr "Weiter"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Tägliche Build-Version verfügbar (Überprüfung auf Neuinstallation)."
+msgstr "Nightly-Build verfügbar (Prüfung auf Neuinstallation)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Nightly-Kanal (Vorabversion)"

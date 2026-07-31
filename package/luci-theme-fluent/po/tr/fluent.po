@@ -272,7 +272,7 @@ msgid "Force dark mode"
 msgstr "Karanlık modu zorla etkinleştir"
 
 msgid "Force light mode"
-msgstr "Açık modu zorla kullan"
+msgstr "Açık modu zorla etkinleştir"
 
 msgid "Force LTR"
 msgstr "Soldan sağa yönlendirmeyi (LTR) zorla kullan"
@@ -384,7 +384,7 @@ msgid "Next"
 msgstr "İleri"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Gece derlemesi mevcut (yeniden yükleme kontrolü)."
+msgstr "Nightly derlemesi mevcut (yeniden yükleme kontrolü)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Nightly Kanalı (Ön Sürüm)"
@@ -621,7 +621,7 @@ msgid "Width of the main navigation sidebar in pixels."
 msgstr "Ana gezinme yan çubuğunun genişliği (piksel cinsinden)."
 
 msgid "Word wrap"
-msgstr "Satır başı"
+msgstr "Metin kaydırma"
 
 msgid "You can create a new token at"
 msgstr "Yeni bir belirteç oluşturabileceğiniz adres:"

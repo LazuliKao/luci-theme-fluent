@@ -114,7 +114,7 @@ msgid "Checking for updates..."
 msgstr "Buscando actualizaciones..."
 
 msgid "Choose color"
-msgstr "Elige el color"
+msgstr "Elegir color"
 
 msgid ""
 "Choose the document direction for authenticated and login pages. Automatic "
@@ -385,7 +385,7 @@ msgid "Next"
 msgstr "Siguiente"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Versión de desarrollo disponible (verificación de reinstalación)."
+msgstr "Versión Nightly disponible (comprobación de reinstalación)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Canal Nightly (Lanzamiento anticipado)"
@@ -585,7 +585,7 @@ msgid "Triggering installation on router..."
 msgstr "Iniciando la instalación en el enrutador..."
 
 msgid "Update channel"
-msgstr "Actualizar canal"
+msgstr "Canal de actualización"
 
 msgid "Update failed"
 msgstr "La actualización falló"

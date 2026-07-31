@@ -396,7 +396,7 @@ msgid "Next"
 msgstr "Avanti"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Disponibile build notturna (controllo reinstallazione)."
+msgstr "Build Nightly disponibile (controllo reinstallazione)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Canale Nightly (Anteprima)"
@@ -431,7 +431,7 @@ msgid ""
 "extra --fluent-* variable overrides or page-specific tweaks that are not "
 "exposed as dedicated options."
 msgstr ""
-"CSS grezzo facoltativo iniettato nel template dell'header FluentUI. Usare "
+"CSS grezzo facoltativo iniettato nel template dell'header Fluent. Usare "
 "per sovrascrivere variabili --fluent-* aggiuntive o modifiche specifiche "
 "della pagina che non sono esposte come opzioni dedicate."
 
@@ -588,7 +588,7 @@ msgid "Theme transition speed"
 msgstr "Velocità di transizione del tema"
 
 msgid "Toggle fullscreen"
-msgstr "Schermo intero"
+msgstr "Attiva/disattiva schermo intero"
 
 msgid "Triggering installation on router..."
 msgstr "Avvio dell'installazione sul router..."

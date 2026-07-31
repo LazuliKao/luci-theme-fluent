@@ -44,7 +44,7 @@ msgstr ""
 "theo chủ đề."
 
 msgid "Animation"
-msgstr "Hiệu ứng"
+msgstr "Hoạt ảnh"
 
 msgid ""
 "API rate limit exceeded. Please enter a GitHub Token to continue. This token "
@@ -157,7 +157,7 @@ msgid "Continue"
 msgstr "Tiếp tục"
 
 msgid "Control height"
-msgstr "Điều khiển chiều cao"
+msgstr "Chiều cao điều khiển"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -206,7 +206,7 @@ msgid "Dark mode"
 msgstr "Chế độ tối"
 
 msgid "Disabled"
-msgstr "Vô hiệu hóa"
+msgstr "Đã vô hiệu hóa"
 
 msgid "Disconnects"
 msgstr "Ngắt kết nối"
@@ -382,7 +382,7 @@ msgid "Next"
 msgstr "Tiếp theo"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "Phiên bản thử nghiệm hàng ngày có sẵn (kiểm tra cài đặt lại)."
+msgstr "Có bản dựng Nightly (kiểm tra việc cài đặt lại)."
 
 msgid "Nightly Channel (Prerelease)"
 msgstr "Kênh Nightly (Bản xem trước)"
@@ -483,7 +483,7 @@ msgid "Select vendor prefix..."
 msgstr "Chọn tiền tố nhà cung cấp..."
 
 msgid "Semibold"
-msgstr "In đậm"
+msgstr "Bán đậm"
 
 msgid ""
 "Sets the base interface font size in pixels. Most theme text scales from "
@@ -568,7 +568,7 @@ msgstr ""
 "làm mới trang sau 5 giây."
 
 msgid "Theme transition speed"
-msgstr "Tốc độ chuyển đổi giao diện"
+msgstr "Tốc độ chuyển tiếp của giao diện"
 
 msgid "Toggle fullscreen"
 msgstr "Chuyển đổi toàn màn hình"
@@ -628,4 +628,4 @@ msgid "You can create a new token at"
 msgstr "Bạn có thể tạo một token mới tại:"
 
 msgid "Your theme is up to date!"
-msgstr "Giao diện của bạn đã được cập nhật."
+msgstr "Giao diện của bạn đã ở phiên bản mới nhất."

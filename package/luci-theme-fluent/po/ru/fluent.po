@@ -510,7 +510,7 @@ msgid "Source code"
 msgstr "Исходный код"
 
 msgid "Square (0px)"
-msgstr "Прямой угол (0px)"
+msgstr "Квадрат (0px)"
 
 msgid "Stable Channel"
 msgstr "Стабильный канал"
@@ -563,7 +563,7 @@ msgid "Theme transition speed"
 msgstr "Скорость переходов темы"
 
 msgid "Toggle fullscreen"
-msgstr "Развернуть на весь экран"
+msgstr "Переключить полноэкранный режим"
 
 msgid "Triggering installation on router..."
 msgstr "Запуск установки на роутере..."

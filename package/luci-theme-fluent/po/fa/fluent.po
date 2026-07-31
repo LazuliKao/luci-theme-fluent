@@ -254,7 +254,7 @@ msgid "Fast"
 msgstr "سریع"
 
 msgid "Finished"
-msgstr "تمام شد"
+msgstr "تکمیل شد"
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "پوسته Fluent Design 2 برای LuCI"
@@ -613,10 +613,10 @@ msgid "Width of the main navigation sidebar in pixels."
 msgstr "عرض نوار کناری اصلی ناوبری بر حسب پیکسل."
 
 msgid "Word wrap"
-msgstr "پیوسته کردن متن"
+msgstr "پیچش متن"
 
 msgid "You can create a new token at"
-msgstr "می‌توانید یک توکن جدید در اینجا ایجاد کنید"
+msgstr "می‌توانید یک توکن جدید در اینجا ایجاد کنید:"
 
 msgid "Your theme is up to date!"
 msgstr "پوسته شما به‌روز است!"

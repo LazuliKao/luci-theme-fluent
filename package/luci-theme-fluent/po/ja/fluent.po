@@ -144,7 +144,7 @@ msgid "Continue"
 msgstr "続行"
 
 msgid "Control height"
-msgstr "高さの制御"
+msgstr "コントロールの高さ"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -312,7 +312,7 @@ msgid "Installed version"
 msgstr "インストール済みバージョン"
 
 msgid "Installing package"
-msgstr "パッケージのインストール中..."
+msgstr "パッケージのインストール中"
 
 msgid "Large"
 msgstr "大"
@@ -351,10 +351,10 @@ msgid "Next"
 msgstr "次へ"
 
 msgid "Nightly build available (reinstallation check)."
-msgstr "最新のナイトリー版が利用可能です (再インストール確認)。"
+msgstr "Nightly ビルドが利用可能です (再インストール確認)。"
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "ナイトリーチャンネル (プレリリース)"
+msgstr "Nightly チャンネル (プレリリース)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -521,7 +521,7 @@ msgid ""
 msgstr "テーマの更新に成功しました！RPCサービスを再読み込みします。5秒後にページをリフレッシュしてください。"
 
 msgid "Theme transition speed"
-msgstr "テーマ切り替え速度"
+msgstr "テーマの遷移速度"
 
 msgid "Toggle fullscreen"
 msgstr "全画面表示を切り替え"
