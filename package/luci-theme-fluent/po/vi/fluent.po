@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -267,7 +267,7 @@ msgid "Follow system"
 msgstr "Theo hệ thống"
 
 msgid "Force dark mode"
-msgstr "Bật chế độ tối."
+msgstr "Buộc sử dụng chế độ tối"
 
 msgid "Force light mode"
 msgstr "Buộc sử dụng chế độ sáng"
@@ -385,7 +385,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Phiên bản thử nghiệm hàng ngày có sẵn (kiểm tra cài đặt lại)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Kênh Thử Nghiệm Hàng Ngày (Bản xem trước)"
+msgstr "Kênh Nightly (Bản xem trước)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -625,7 +625,7 @@ msgid "Word wrap"
 msgstr "Ngắt dòng chữ"
 
 msgid "You can create a new token at"
-msgstr "Bạn có thể tạo một token mới tại"
+msgstr "Bạn có thể tạo một token mới tại:"
 
 msgid "Your theme is up to date!"
 msgstr "Giao diện của bạn đã được cập nhật."

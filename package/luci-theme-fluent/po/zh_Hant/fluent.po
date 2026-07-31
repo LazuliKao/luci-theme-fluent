@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -18,7 +18,7 @@ msgid "About"
 msgstr "關於"
 
 msgid "Accent color"
-msgstr "主題色"
+msgstr "強調色"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -140,7 +140,7 @@ msgid "Continue"
 msgstr "繼續"
 
 msgid "Control height"
-msgstr "控制高度"
+msgstr "控制項高度"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -164,7 +164,7 @@ msgid "Copy log"
 msgstr "複製日誌"
 
 msgid "Corner radius"
-msgstr "角落圓角"
+msgstr "圓角半徑"
 
 msgid "Current / Pending MAC Address"
 msgstr "目前 / 待處理 MAC 位址"
@@ -350,7 +350,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "有可用的每日建置版本（重新安裝檢查）。"
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "每日版本通道 (預發布)"
+msgstr "Nightly 頻道 (預發布)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "

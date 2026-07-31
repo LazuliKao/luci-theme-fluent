@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: castillofrancodamian\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -267,7 +267,7 @@ msgid "Fluent theme settings"
 msgstr "Configuración del tema Fluent"
 
 msgid "Follow system"
-msgstr "Seguir el del sistema"
+msgstr "Seguir el sistema"
 
 msgid "Force dark mode"
 msgstr "Forzar modo oscuro"
@@ -388,7 +388,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Versión de desarrollo disponible (verificación de reinstalación)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Canal en desarrollo (Lanzamiento anticipado)"
+msgstr "Canal Nightly (Lanzamiento anticipado)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -634,7 +634,7 @@ msgid "Word wrap"
 msgstr "Ajuste de línea"
 
 msgid "You can create a new token at"
-msgstr "Puedes crear un nuevo token en"
+msgstr "Puedes crear un nuevo token en:"
 
 msgid "Your theme is up to date!"
 msgstr "¡Tu tema está actualizado!"

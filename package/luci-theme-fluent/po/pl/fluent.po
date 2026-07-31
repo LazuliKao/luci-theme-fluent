@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -385,7 +385,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Dostępna wersja testowa (sprawdź, czy wymagana jest ponowna instalacja)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Kanał wersji testowych (wersja przedpremierowa)"
+msgstr "Kanał Nightly (wersja przedpremierowa)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -625,7 +625,7 @@ msgid "Word wrap"
 msgstr "Zawijanie tekstu"
 
 msgid "You can create a new token at"
-msgstr "Możesz utworzyć nowy token na"
+msgstr "Możesz utworzyć nowy token pod adresem:"
 
 msgid "Your theme is up to date!"
 msgstr "Twój motyw jest aktualny!"

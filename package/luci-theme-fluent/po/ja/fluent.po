@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -244,7 +244,7 @@ msgid "Follow system"
 msgstr "システムに合わせる"
 
 msgid "Force dark mode"
-msgstr "ダークモードを強制する"
+msgstr "ダークモードを強制"
 
 msgid "Force light mode"
 msgstr "ライトモードを強制"
@@ -572,7 +572,7 @@ msgid "Word wrap"
 msgstr "折り返し表示"
 
 msgid "You can create a new token at"
-msgstr "新しいトークンは"
+msgstr "新しいトークンは以下で作成できます:"
 
 msgid "Your theme is up to date!"
 msgstr "テーマは最新です！"

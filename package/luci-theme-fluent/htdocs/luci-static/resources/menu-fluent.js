@@ -43,7 +43,7 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_8ff51c99d0adf2ae6bdb01bca68ed589/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_56625423b437cf272eb3bb3891954a2f/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
     let { children: n, ...r } = t || {}, o = function e(t, n = []) {
@@ -81,7 +81,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_8ff51c99d0adf2ae6bdb01bca68ed589/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_56625423b437cf272eb3bb3891954a2f/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/utils/error-tooltips.tsx

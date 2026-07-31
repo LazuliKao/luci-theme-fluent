@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -246,7 +246,7 @@ msgid "Follow system"
 msgstr "시스템 설정 따르기"
 
 msgid "Force dark mode"
-msgstr "강제 다크 모드 적용"
+msgstr "다크 모드 강제 적용"
 
 msgid "Force light mode"
 msgstr "라이트 모드 강제 적용"
@@ -356,7 +356,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "매일 빌드 사용 가능 (재설치 확인)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "개발 버전 채널 (미리 출시)"
+msgstr "Nightly 채널 (사전 공개)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -574,7 +574,7 @@ msgid "Word wrap"
 msgstr "단어 줄 바꿈"
 
 msgid "You can create a new token at"
-msgstr "새 토큰을 다음에서 생성할 수 있습니다:"
+msgstr "새 토큰은 다음에서 생성할 수 있습니다:"
 
 msgid "Your theme is up to date!"
 msgstr "귀하의 테마는 최신 버전입니다!"

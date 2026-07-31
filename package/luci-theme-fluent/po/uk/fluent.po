@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -158,7 +158,7 @@ msgid "Continue"
 msgstr "Продовжити"
 
 msgid "Control height"
-msgstr "Керувати висотою"
+msgstr "Висота елементів керування"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -388,7 +388,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Доступна нічна збірка (перевірка на необхідність перевстановлення)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Канал нічних збірок (версія для тестування)"
+msgstr "Канал Nightly (попередній випуск)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -626,7 +626,7 @@ msgid "Word wrap"
 msgstr "Перенос слів"
 
 msgid "You can create a new token at"
-msgstr "Ви можете створити новий токен за адресою"
+msgstr "Ви можете створити новий токен за адресою:"
 
 msgid "Your theme is up to date!"
 msgstr "Ваша тема оновлена!"

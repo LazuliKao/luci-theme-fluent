@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -350,7 +350,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "有夜间构建可用（检查是否需要重新安装）。"
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "夜间版本通道 (预发布)"
+msgstr "Nightly 通道 (预发布)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -159,7 +159,7 @@ msgid "Continue"
 msgstr "Continuer"
 
 msgid "Control height"
-msgstr "Contrôle la hauteur"
+msgstr "Hauteur des commandes"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -388,7 +388,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Version de développement disponible (vérification de réinstallation)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Canal des versions nocturnes (pré-version)."
+msgstr "Canal Nightly (pré-version)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -634,7 +634,7 @@ msgid "Word wrap"
 msgstr "Retour à la ligne"
 
 msgid "You can create a new token at"
-msgstr "Vous pouvez créer un nouveau jeton à"
+msgstr "Vous pouvez créer un nouveau jeton sur :"
 
 msgid "Your theme is up to date!"
 msgstr "Votre thème est à jour !"

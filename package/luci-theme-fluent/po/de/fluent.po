@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:28+0800\n"
+"POT-Creation-Date: 2026-07-31 10:43+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -159,7 +159,7 @@ msgid "Continue"
 msgstr "Fortfahren"
 
 msgid "Control height"
-msgstr "Höhe anpassen"
+msgstr "Steuerelementhöhe"
 
 msgid ""
 "Controls the font weight used by main navigation labels and related theme "
@@ -272,7 +272,7 @@ msgid "Force dark mode"
 msgstr "Dunkelmodus erzwingen"
 
 msgid "Force light mode"
-msgstr "Helles Design erzwingen"
+msgstr "Hellen Modus erzwingen"
 
 msgid "Force LTR"
 msgstr "LTR erzwingen"
@@ -387,7 +387,7 @@ msgid "Nightly build available (reinstallation check)."
 msgstr "Tägliche Build-Version verfügbar (Überprüfung auf Neuinstallation)."
 
 msgid "Nightly Channel (Prerelease)"
-msgstr "Entwicklungsversion (Vorabversion)"
+msgstr "Nightly-Kanal (Vorabversion)"
 
 msgid ""
 "No matching package asset found for your system architecture in this "
@@ -483,7 +483,7 @@ msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Wählen Sie die Schattenintensität für thematisierte Karten und Panels."
 
 msgid "Select vendor prefix..."
-msgstr "Vorgangspräfix auswählen..."
+msgstr "Hersteller-Präfix auswählen..."
 
 msgid "Semibold"
 msgstr "Halbfett"
@@ -524,7 +524,7 @@ msgid "Square (0px)"
 msgstr "Quadratisch (0px)"
 
 msgid "Stable Channel"
-msgstr "Stabile Kanal"
+msgstr "Stabiler Kanal"
 
 msgid "Starting backend download..."
 msgstr "Backend-Download wird gestartet..."
@@ -631,7 +631,7 @@ msgid "Word wrap"
 msgstr "Textumbruch"
 
 msgid "You can create a new token at"
-msgstr "Sie können einen neuen Token unter erstellen:"
+msgstr "Sie können einen neuen Token erstellen unter:"
 
 msgid "Your theme is up to date!"
 msgstr "Ihr Theme ist auf dem neuesten Stand!"
