@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -65,6 +65,9 @@ msgstr ""
 
 msgid "Author"
 msgstr "Auteur"
+
+msgid "Auto-scroll"
+msgstr "Défilement automatique"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "Automatique (uniquement pour les langues arabes/persanes)"
@@ -180,6 +183,12 @@ msgstr ""
 "Contrôle la durée des transitions Fluent partagées utilisées par les menus, "
 "les en-têtes et autres animations du thème."
 
+msgid "Copied"
+msgstr "Copié"
+
+msgid "Copy log"
+msgstr "Copier le journal"
+
 msgid "Corner radius"
 msgstr "Rayon des coins"
 
@@ -202,6 +211,9 @@ msgstr "Mode sombre"
 msgid "Disabled"
 msgstr "Désactivé"
 
+msgid "Disconnects"
+msgstr "Déconnexions"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -212,6 +224,12 @@ msgstr ""
 msgid "Download and Install"
 msgstr "Télécharger et installer"
 
+msgid "Download log"
+msgstr "Télécharger le journal"
+
+msgid "Downloaded"
+msgstr "Téléchargement terminé"
+
 msgid "Downloading on router"
 msgstr "Téléchargement sur le routeur"
 
@@ -220,6 +238,9 @@ msgstr "Activer l'animation de transition de page"
 
 msgid "Enable tab underline animation"
 msgstr "Activer l'animation du soulignement des onglets"
+
+msgid "Errors"
+msgstr "Erreurs"
 
 msgid "Expecting: %s"
 msgstr "Attendu : %s"
@@ -336,6 +357,12 @@ msgstr "Grand (8px)"
 msgid "Light mode"
 msgstr "Mode clair"
 
+msgid "Line %d"
+msgstr "Ligne %d"
+
+msgid "Lines"
+msgstr "Lignes"
+
 msgid "Login"
 msgstr "Connexion"
 
@@ -440,6 +467,12 @@ msgstr "Tentative avec le token..."
 
 msgid "Rounded (6px)"
 msgstr "Arrondi (6px)"
+
+msgid "Scroll to bottom"
+msgstr "Aller à la fin"
+
+msgid "Scroll to top"
+msgstr "Retour en haut"
 
 msgid "Search menu items"
 msgstr "Rechercher dans les éléments du menu"
@@ -546,6 +579,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr "Vitesse de transition du thème"
 
+msgid "Toggle fullscreen"
+msgstr "Plein écran"
+
 msgid "Triggering installation on router..."
 msgstr "Installation en cours sur le routeur..."
 
@@ -581,6 +617,9 @@ msgstr "Le nom d'utilisateur est requis."
 msgid "valid HEX color value"
 msgstr "valeur de couleur HEX valide"
 
+msgid "Warnings"
+msgstr "Avertissements"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -590,6 +629,9 @@ msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "Largeur de la barre latérale de navigation principale en pixels."
+
+msgid "Word wrap"
+msgstr "Retour à la ligne"
 
 msgid "You can create a new token at"
 msgstr "Vous pouvez créer un nouveau jeton à"

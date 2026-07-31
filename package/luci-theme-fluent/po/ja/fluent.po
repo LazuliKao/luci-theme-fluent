@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -57,6 +57,9 @@ msgstr "テーマ全体で、標準ボタン、入力フィールド、選択肢
 
 msgid "Author"
 msgstr "作者"
+
+msgid "Auto-scroll"
+msgstr "自動スクロール"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "自動 (アラビア語/ペルシャ語ロケールのみ)"
@@ -158,6 +161,12 @@ msgid ""
 "theme animations."
 msgstr "メニュー、ヘッダー、その他のテーマアニメーションで使用される共通 Fluent トランジションタイミングを制御します。"
 
+msgid "Copied"
+msgstr "コピー済み"
+
+msgid "Copy log"
+msgstr "ログをコピー"
+
 msgid "Corner radius"
 msgstr "コーナー半径"
 
@@ -178,6 +187,9 @@ msgstr "ダークモード"
 msgid "Disabled"
 msgstr "無効"
 
+msgid "Disconnects"
+msgstr "切断回数"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -185,6 +197,12 @@ msgstr "ページ読み込みおよび遷移中に、テーマ適用されたロ
 
 msgid "Download and Install"
 msgstr "ダウンロードとインストール"
+
+msgid "Download log"
+msgstr "ログのダウンロード"
+
+msgid "Downloaded"
+msgstr "ダウンロード完了"
 
 msgid "Downloading on router"
 msgstr "ルーターでのダウンロード中"
@@ -194,6 +212,9 @@ msgstr "ページ遷移アニメーションを有効にする"
 
 msgid "Enable tab underline animation"
 msgstr "タブのアンダーラインアニメーションを有効にする"
+
+msgid "Errors"
+msgstr "エラー"
 
 msgid "Expecting: %s"
 msgstr "期待値: %s"
@@ -302,6 +323,12 @@ msgstr "大 (8px)"
 msgid "Light mode"
 msgstr "ライトモード"
 
+msgid "Line %d"
+msgstr "%d 行目"
+
+msgid "Lines"
+msgstr "行数"
+
 msgid "Login"
 msgstr "ログイン"
 
@@ -397,6 +424,12 @@ msgstr "トークンを使って再試行中..."
 msgid "Rounded (6px)"
 msgstr "角丸 (6px)"
 
+msgid "Scroll to bottom"
+msgstr "下部にスクロール"
+
+msgid "Scroll to top"
+msgstr "上部へスクロール"
+
 msgid "Search menu items"
 msgstr "メニュー項目を検索"
 
@@ -490,6 +523,9 @@ msgstr "テーマの更新に成功しました！RPCサービスを再読み込
 msgid "Theme transition speed"
 msgstr "テーマ切り替え速度"
 
+msgid "Toggle fullscreen"
+msgstr "全画面表示を切り替え"
+
 msgid "Triggering installation on router..."
 msgstr "ルーターへのインストールを開始します..."
 
@@ -521,6 +557,9 @@ msgstr "ユーザー名は必須です。"
 msgid "valid HEX color value"
 msgstr "有効なHEXカラー値"
 
+msgid "Warnings"
+msgstr "警告"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -528,6 +567,9 @@ msgstr "有効にすると、Fluentのアニメーションはブラウザまた
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "メインナビゲーションサイドバーの幅をピクセル単位で指定します。"
+
+msgid "Word wrap"
+msgstr "折り返し表示"
 
 msgid "You can create a new token at"
 msgstr "新しいトークンは"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -59,6 +59,9 @@ msgstr "표준 버튼, 입력 필드, 선택 상자 및 유사한 폼 컨트롤�
 
 msgid "Author"
 msgstr "작성자"
+
+msgid "Auto-scroll"
+msgstr "자동 스크롤"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "자동 (아랍어/페르시아어 지역 설정만 해당)"
@@ -160,6 +163,12 @@ msgid ""
 "theme animations."
 msgstr "메뉴, 헤더 등 테마 애니메이션에 사용되는 공통 Fluent 전환 시간을 제어합니다."
 
+msgid "Copied"
+msgstr "복사됨"
+
+msgid "Copy log"
+msgstr "로그 복사"
+
 msgid "Corner radius"
 msgstr "코너 반경"
 
@@ -180,6 +189,9 @@ msgstr "다크 모드"
 msgid "Disabled"
 msgstr "사용 안 함"
 
+msgid "Disconnects"
+msgstr "연결 끊김"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -187,6 +199,12 @@ msgstr "페이지 로딩 및 전환 시, 테마 적용된 로딩 표시기를 �
 
 msgid "Download and Install"
 msgstr "다운로드 및 설치"
+
+msgid "Download log"
+msgstr "로그 다운로드"
+
+msgid "Downloaded"
+msgstr "다운로드 완료"
 
 msgid "Downloading on router"
 msgstr "라우터에서 다운로드 중"
@@ -196,6 +214,9 @@ msgstr "페이지 전환 애니메이션 활성화"
 
 msgid "Enable tab underline animation"
 msgstr "탭 하단 선 애니메이션 활성화"
+
+msgid "Errors"
+msgstr "오류"
 
 msgid "Expecting: %s"
 msgstr "예상 값: %s"
@@ -304,6 +325,12 @@ msgstr "큼 (8px)"
 msgid "Light mode"
 msgstr "라이트 모드"
 
+msgid "Line %d"
+msgstr "%d번째 줄"
+
+msgid "Lines"
+msgstr "줄 수"
+
 msgid "Login"
 msgstr "로그인"
 
@@ -399,6 +426,12 @@ msgstr "토큰을 사용하여 다시 시도 중..."
 msgid "Rounded (6px)"
 msgstr "둥글게 (6px)"
 
+msgid "Scroll to bottom"
+msgstr "맨 아래로 스크롤"
+
+msgid "Scroll to top"
+msgstr "맨 위로 이동"
+
 msgid "Search menu items"
 msgstr "메뉴 항목 검색"
 
@@ -492,6 +525,9 @@ msgstr "테마 업데이트 성공! RPC 서비스를 다시 로드합니다. 페
 msgid "Theme transition speed"
 msgstr "테마 전환 속도"
 
+msgid "Toggle fullscreen"
+msgstr "전체 화면 전환"
+
 msgid "Triggering installation on router..."
 msgstr "라우터에서 설치를 시작합니다..."
 
@@ -523,6 +559,9 @@ msgstr "사용자 이름이 필요합니다."
 msgid "valid HEX color value"
 msgstr "유효한 HEX 색상 값"
 
+msgid "Warnings"
+msgstr "경고"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -530,6 +569,9 @@ msgstr "활성화하면, Fluent 애니메이션은 브라우저 또는 운영 �
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "주요 탐색 사이드바의 너비 (픽셀 단위)."
+
+msgid "Word wrap"
+msgstr "단어 줄 바꿈"
 
 msgid "You can create a new token at"
 msgstr "새 토큰을 다음에서 생성할 수 있습니다:"

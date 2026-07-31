@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: castillofrancodamian\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -34,8 +34,8 @@ msgstr "Avanzado"
 msgid "Advanced MAC Selector"
 msgstr "Selector avanzado de dirección MAC"
 
-msgid "and %d more…"
-msgstr "y %d más…"
+msgid "and %d more..."
+msgstr "y %d más..."
 
 msgid ""
 "Animate the active underline when switching between native LuCI tabs and "
@@ -65,6 +65,9 @@ msgstr ""
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Auto-scroll"
+msgstr "Desplazamiento automático"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "Automático (solo para configuraciones regionales árabe/persa)"
@@ -180,6 +183,12 @@ msgstr ""
 "Controla la sincronización de transición compartida de Fluent utilizada por "
 "las animaciones de menú, encabezado y otros temas."
 
+msgid "Copied"
+msgstr "Copiado"
+
+msgid "Copy log"
+msgstr "Copiar registro"
+
 msgid "Corner radius"
 msgstr "Radio de esquina"
 
@@ -202,6 +211,9 @@ msgstr "Modo oscuro"
 msgid "Disabled"
 msgstr "Desactivado"
 
+msgid "Disconnects"
+msgstr "Desconexiones"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -212,6 +224,12 @@ msgstr ""
 msgid "Download and Install"
 msgstr "Descargar e instalar"
 
+msgid "Download log"
+msgstr "Descargar registro"
+
+msgid "Downloaded"
+msgstr "Descargado"
+
 msgid "Downloading on router"
 msgstr "Descargando en el enrutador"
 
@@ -220,6 +238,9 @@ msgstr "Activar la animación de transición de página"
 
 msgid "Enable tab underline animation"
 msgstr "Activar la animación de subrayado de la pestaña"
+
+msgid "Errors"
+msgstr "Errores"
 
 msgid "Expecting: %s"
 msgstr "Esperando: %s"
@@ -336,6 +357,12 @@ msgstr "Grande (8 píxeles)"
 msgid "Light mode"
 msgstr "Modo claro"
 
+msgid "Line %d"
+msgstr "Línea %d"
+
+msgid "Lines"
+msgstr "Líneas"
+
 msgid "Login"
 msgstr "Acceso"
 
@@ -441,11 +468,17 @@ msgstr "Reintentando con token..."
 msgid "Rounded (6px)"
 msgstr "Redondeado (6px)"
 
+msgid "Scroll to bottom"
+msgstr "Desplazarse al final"
+
+msgid "Scroll to top"
+msgstr "Desplazarse a la parte superior"
+
 msgid "Search menu items"
 msgstr "Buscar elementos del menú"
 
-msgid "Search menu…"
-msgstr "Buscar menú…"
+msgid "Search menu..."
+msgstr "Menú de búsqueda..."
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr ""
@@ -545,6 +578,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr "Velocidad de transición del tema"
 
+msgid "Toggle fullscreen"
+msgstr "Alternar pantalla completa"
+
 msgid "Triggering installation on router..."
 msgstr "Iniciando la instalación en el enrutador..."
 
@@ -581,6 +617,9 @@ msgstr "Se requiere nombre de usuario."
 msgid "valid HEX color value"
 msgstr "valor de color HEX válido"
 
+msgid "Warnings"
+msgstr "Advertencias"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -590,6 +629,9 @@ msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "Ancho de la barra lateral de navegación principal en píxeles."
+
+msgid "Word wrap"
+msgstr "Ajuste de línea"
 
 msgid "You can create a new token at"
 msgstr "Puedes crear un nuevo token en"

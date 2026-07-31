@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -64,6 +64,9 @@ msgstr ""
 
 msgid "Author"
 msgstr "Autor"
+
+msgid "Auto-scroll"
+msgstr "Automatyczne przewijanie"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "Automatyczne (tylko dla lokalizacji arabskich/perskich)"
@@ -177,6 +180,12 @@ msgstr ""
 "Kontroluje współdzielone czasy trwania animacji Fluent, używane przez menu, "
 "nagłówek i inne animacje motywu."
 
+msgid "Copied"
+msgstr "Skopiowano"
+
+msgid "Copy log"
+msgstr "Kopiuj log"
+
 msgid "Corner radius"
 msgstr "Promień narożnika"
 
@@ -199,6 +208,9 @@ msgstr "Tryb ciemny"
 msgid "Disabled"
 msgstr "Wyłączone"
 
+msgid "Disconnects"
+msgstr "Rozłączenia"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -209,6 +221,12 @@ msgstr ""
 msgid "Download and Install"
 msgstr "Pobierz i zainstaluj"
 
+msgid "Download log"
+msgstr "Pobierz log"
+
+msgid "Downloaded"
+msgstr "Pobrane"
+
 msgid "Downloading on router"
 msgstr "Pobieranie na routerze"
 
@@ -217,6 +235,9 @@ msgstr "Włącz animację przejścia między stronami"
 
 msgid "Enable tab underline animation"
 msgstr "Włącz animację podkreślenia zakładki"
+
+msgid "Errors"
+msgstr "Błędy"
 
 msgid "Expecting: %s"
 msgstr "Oczekiwane: %s"
@@ -333,6 +354,12 @@ msgstr "Duży (8px)"
 msgid "Light mode"
 msgstr "Tryb jasny"
 
+msgid "Line %d"
+msgstr "Linia %d"
+
+msgid "Lines"
+msgstr "Linii"
+
 msgid "Login"
 msgstr "Logowanie"
 
@@ -435,6 +462,12 @@ msgstr "Ponawianie próby z tokenem..."
 msgid "Rounded (6px)"
 msgstr "Zaokrąglone (6px)"
 
+msgid "Scroll to bottom"
+msgstr "Przewiń na dół"
+
+msgid "Scroll to top"
+msgstr "Przewiń do góry"
+
 msgid "Search menu items"
 msgstr "Wyszukaj pozycje menu"
 
@@ -536,6 +569,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr "Prędkość animacji zmiany motywu"
 
+msgid "Toggle fullscreen"
+msgstr "Tryb pełnoekranowy"
+
 msgid "Triggering installation on router..."
 msgstr "Rozpoczyna instalację na routerze..."
 
@@ -571,6 +607,9 @@ msgstr "Nazwa użytkownika jest wymagana."
 msgid "valid HEX color value"
 msgstr "poprawna wartość koloru w formacie HEX"
 
+msgid "Warnings"
+msgstr "Ostrzeżenia"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -581,6 +620,9 @@ msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "Szerokość głównego paska nawigacyjnego w pikselach."
+
+msgid "Word wrap"
+msgstr "Zawijanie tekstu"
 
 msgid "You can create a new token at"
 msgstr "Możesz utworzyć nowy token na"

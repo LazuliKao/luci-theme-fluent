@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -63,6 +63,9 @@ msgstr ""
 
 msgid "Author"
 msgstr "نویسنده"
+
+msgid "Auto-scroll"
+msgstr "اسکرول خودکار"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "خودکار (فقط برای زبان‌های عربی/پارسی)"
@@ -176,6 +179,12 @@ msgstr ""
 "زمان‌بندی گذار مشترک Fluent را که در منو، سربرگ و دیگر انیمیشن‌های پوسته "
 "استفاده می‌شود کنترل می‌کند."
 
+msgid "Copied"
+msgstr "کپی شد"
+
+msgid "Copy log"
+msgstr "کپی لاگ"
+
 msgid "Corner radius"
 msgstr "شعاع گوشه"
 
@@ -198,6 +207,9 @@ msgstr "حالت تیره"
 msgid "Disabled"
 msgstr "غیرفعال"
 
+msgid "Disconnects"
+msgstr "قطع شدن‌ها"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -208,6 +220,12 @@ msgstr ""
 msgid "Download and Install"
 msgstr "دانلود و نصب"
 
+msgid "Download log"
+msgstr "دانلود لاگ"
+
+msgid "Downloaded"
+msgstr "دانلود شد"
+
 msgid "Downloading on router"
 msgstr "در حال دانلود روی روتر"
 
@@ -216,6 +234,9 @@ msgstr "فعال‌سازی انیمیشن گذار صفحه"
 
 msgid "Enable tab underline animation"
 msgstr "فعال‌سازی انیمیشن زیرخط زبانه"
+
+msgid "Errors"
+msgstr "خطاها"
 
 msgid "Expecting: %s"
 msgstr "مورد انتظار: %s"
@@ -332,6 +353,12 @@ msgstr "بزرگ (8px)"
 msgid "Light mode"
 msgstr "حالت روشن"
 
+msgid "Line %d"
+msgstr "سطر %d"
+
+msgid "Lines"
+msgstr "سطرها"
+
 msgid "Login"
 msgstr "ورود"
 
@@ -427,6 +454,12 @@ msgstr "تلاش دوباره با توکن..."
 
 msgid "Rounded (6px)"
 msgstr "گرد (6px)"
+
+msgid "Scroll to bottom"
+msgstr "رفتن به پایین"
+
+msgid "Scroll to top"
+msgstr "رفتن به بالا"
 
 msgid "Search menu items"
 msgstr "جست‌وجوی موارد منو"
@@ -528,6 +561,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr "سرعت گذار پوسته"
 
+msgid "Toggle fullscreen"
+msgstr "تغییر وضعیت تمام صفحه"
+
 msgid "Triggering installation on router..."
 msgstr "در حال آغاز نصب روی روتر..."
 
@@ -563,6 +599,9 @@ msgstr "نام کاربری الزامی است."
 msgid "valid HEX color value"
 msgstr "مقدار معتبر رنگ HEX"
 
+msgid "Warnings"
+msgstr "هشدارها"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -572,6 +611,9 @@ msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "عرض نوار کناری اصلی ناوبری بر حسب پیکسل."
+
+msgid "Word wrap"
+msgstr "پیوسته کردن متن"
 
 msgid "You can create a new token at"
 msgstr "می‌توانید یک توکن جدید در اینجا ایجاد کنید"

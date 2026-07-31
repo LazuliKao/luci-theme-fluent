@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-27 13:22+0800\n"
+"POT-Creation-Date: 2026-07-31 10:28+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -65,6 +65,9 @@ msgstr ""
 
 msgid "Author"
 msgstr "Автор"
+
+msgid "Auto-scroll"
+msgstr "Автопрокрутка"
 
 msgid "Automatic (Arabic/Persian locales only)"
 msgstr "Автоматически (только для арабских и персидских локалей)"
@@ -179,6 +182,12 @@ msgstr ""
 "Определяет общую длительность переходов Fluent для меню, верхней панели и "
 "других анимаций темы."
 
+msgid "Copied"
+msgstr "Скопировано"
+
+msgid "Copy log"
+msgstr "Копировать журнал"
+
 msgid "Corner radius"
 msgstr "Радиус скругления"
 
@@ -201,6 +210,9 @@ msgstr "Тёмный режим"
 msgid "Disabled"
 msgstr "Отключено"
 
+msgid "Disconnects"
+msgstr "Отключения"
+
 msgid ""
 "Display the themed loading indicator at the top edge during page loads and "
 "transitions."
@@ -211,6 +223,12 @@ msgstr ""
 msgid "Download and Install"
 msgstr "Скачать и установить"
 
+msgid "Download log"
+msgstr "Загрузить журнал"
+
+msgid "Downloaded"
+msgstr "Загружено"
+
 msgid "Downloading on router"
 msgstr "Загрузка на роутере"
 
@@ -219,6 +237,9 @@ msgstr "Включить анимацию переходов между стра
 
 msgid "Enable tab underline animation"
 msgstr "Включить анимацию подчёркивания вкладок"
+
+msgid "Errors"
+msgstr "Ошибки"
 
 msgid "Expecting: %s"
 msgstr "Ожидается: %s"
@@ -327,6 +348,12 @@ msgstr "Большой (8px)"
 msgid "Light mode"
 msgstr "Светлый режим"
 
+msgid "Line %d"
+msgstr "Строка %d"
+
+msgid "Lines"
+msgstr "Строки"
+
 msgid "Login"
 msgstr "Вход"
 
@@ -429,6 +456,12 @@ msgstr "Повторная попытка с токеном..."
 msgid "Rounded (6px)"
 msgstr "Скруглённый (6px)"
 
+msgid "Scroll to bottom"
+msgstr "Прокрутить вниз"
+
+msgid "Scroll to top"
+msgstr "Прокрутить вверх"
+
 msgid "Search menu items"
 msgstr "Поиск по пунктам меню"
 
@@ -529,6 +562,9 @@ msgstr ""
 msgid "Theme transition speed"
 msgstr "Скорость переходов темы"
 
+msgid "Toggle fullscreen"
+msgstr "Развернуть на весь экран"
+
 msgid "Triggering installation on router..."
 msgstr "Запуск установки на роутере..."
 
@@ -564,6 +600,9 @@ msgstr "Требуется имя пользователя."
 msgid "valid HEX color value"
 msgstr "корректное значение HEX-цвета"
 
+msgid "Warnings"
+msgstr "Предупреждения"
+
 msgid ""
 "When enabled, Fluent animations follow the browser or operating system "
 "reduced-motion preference."
@@ -573,6 +612,9 @@ msgstr ""
 
 msgid "Width of the main navigation sidebar in pixels."
 msgstr "Ширина основной боковой панели навигации в пикселях."
+
+msgid "Word wrap"
+msgstr "Перенос слов"
 
 msgid "You can create a new token at"
 msgstr "Новый токен можно создать здесь:"
