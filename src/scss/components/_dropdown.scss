@@ -850,8 +850,8 @@ cbi-dropdown,
       inset-inline-start: var(--fluent-dropdown-left) !important;
       inset-inline-end: auto !important;
       min-width: var(--fluent-dropdown-width);
-      width: max-content;
-      max-width: calc(100vw - 16px) !important;
+      // width: max-content;
+      // max-width: calc(100vw - 16px) !important;
       max-height: var(--fluent-dropdown-max-height);
       margin: 0 !important;
       z-index: calc(var(--fluent-zindex-dropdown) + 1);
@@ -865,8 +865,8 @@ cbi-dropdown,
       position: fixed !important;
       position-anchor: --fluent-cbi-dropdown-active !important;
       min-width: anchor-size(width) !important;
-      width: max-content !important;
-      max-width: calc(100vw - 16px) !important;
+      // width: max-content !important;
+      // max-width: calc(100vw - 16px) !important;
       margin: 0 !important;
       left: anchor(left) !important;
       right: auto !important;

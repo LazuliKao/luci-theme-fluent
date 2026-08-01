@@ -6651,13 +6651,11 @@ cbi-dropdown.fluent-custom-select[data-open-direction="down"][open] > ul.dropdow
 
 cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown, .cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropdown {
   min-width: var(--fluent-dropdown-width);
-  width: max-content;
   max-height: var(--fluent-dropdown-max-height);
   z-index: calc(var(--fluent-zindex-dropdown) + 1);
   position: fixed;
   top: var(--fluent-dropdown-top) !important;
   bottom: auto !important;
-  max-width: calc(100vw - 16px) !important;
   margin: 0 !important;
   inset-inline-start: var(--fluent-dropdown-left) !important;
   inset-inline-end: auto !important;
@@ -6667,8 +6665,6 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
   cbi-dropdown[open] > ul.dropdown, .cbi-dropdown[open] > ul.dropdown {
     position-anchor: --fluent-cbi-dropdown-active !important;
     min-width: anchor-size(width) !important;
-    width: max-content !important;
-    max-width: calc(100vw - 16px) !important;
     left: anchor(left) !important;
     margin: 0 !important;
     position: fixed !important;
