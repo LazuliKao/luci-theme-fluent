@@ -9819,6 +9819,15 @@ body[data-page="admin-status-channel_analysis"] > .main > .main-right > #maincon
   stroke: var(--fluent-text-secondary) !important;
 }
 
+body[data-page="admin-status-channel_analysis"] > .main > .main-right > #maincontent div[data-tab]:not([data-tab-active="true"]):not([tab-active="true"]) {
+  visibility: hidden !important;
+  width: 100% !important;
+  height: 0 !important;
+  display: block !important;
+  position: absolute !important;
+  overflow: hidden !important;
+}
+
 body[data-page^="admin-status-realtime"] > .main > .main-right > #maincontent .cbi-section div[style*="background:#fff"] {
   background: var(--fluent-card-bg) !important;
   border-radius: var(--fluent-card-radius) !important;

@@ -14,4 +14,14 @@
       stroke: var(--fluent-text-secondary) !important;
     }
   }
+
+  // Minimal override: prevent offsetWidth=0 for inactive tab graphs
+  div[data-tab]:not([data-tab-active="true"]):not([tab-active="true"]) {
+    display: block !important;
+    position: absolute !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
 }
