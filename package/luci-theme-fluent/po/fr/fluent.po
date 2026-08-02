@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:47+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Une nouvelle version est disponible !"
 
 msgid "About"
 msgstr "À propos"
+
+msgid "Above bar, end"
+msgstr "Fin de la barre, en haut"
+
+msgid "Above bar, start"
+msgstr "Début de la barre, en haut"
 
 msgid "Accent color"
 msgstr "Couleur d'accentuation"
@@ -83,6 +89,12 @@ msgstr "Backend (GitHub officiel)"
 
 msgid "Base font size"
 msgstr "Taille de police de base"
+
+msgid "Below bar, end"
+msgstr "Fin de la barre, en bas"
+
+msgid "Below bar, start"
+msgstr "Début de la barre, en bas"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -439,11 +451,21 @@ msgstr "Veuillez entrer votre mot de passe."
 msgid "Please enter your username."
 msgstr "Veuillez entrer votre nom d'utilisateur."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Position des étiquettes de la barre de progression par rapport à la barre. "
+"L'alignement du début/de la fin suit la direction du texte (LTR ou RTL)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Fournisseur / Générateur par défaut"
 
 msgid "Progress bar text color"
 msgstr "Couleur du texte de la barre de progression"
+
+msgid "Progress bar text position"
+msgstr "Position du texte de la barre de progression"
 
 msgid "Random Local MAC"
 msgstr "MAC local aléatoire"

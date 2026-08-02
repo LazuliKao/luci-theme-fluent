@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Một phiên bản mới đã có!"
 
 msgid "About"
 msgstr "Giới thiệu"
+
+msgid "Above bar, end"
+msgstr "Cuối thanh."
+
+msgid "Above bar, start"
+msgstr "Đầu thanh."
 
 msgid "Accent color"
 msgstr "Màu điểm nhấn"
@@ -82,6 +88,12 @@ msgstr "Phần nền (GitHub chính thức)"
 
 msgid "Base font size"
 msgstr "Kích thước phông chữ cơ bản"
+
+msgid "Below bar, end"
+msgstr "Kết thúc dưới thanh."
+
+msgid "Below bar, start"
+msgstr "Bắt đầu dưới thanh."
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -435,11 +447,21 @@ msgstr "Vui lòng nhập mật khẩu của bạn."
 msgid "Please enter your username."
 msgstr "Vui lòng nhập tên người dùng của bạn."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Vị trí nhãn của thanh tiến trình so với thanh. Căn chỉnh bắt đầu/kết thúc "
+"theo hướng văn bản (trái-phải hoặc phải-trái)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Nhà cung cấp / Trình tạo mặc định"
 
 msgid "Progress bar text color"
 msgstr "Màu chữ thanh tiến trình"
+
+msgid "Progress bar text position"
+msgstr "Vị trí văn bản trên thanh tiến trình."
 
 msgid "Random Local MAC"
 msgstr "MAC địa phương ngẫu nhiên"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "新しいバージョンが利用可能です！"
 
 msgid "About"
 msgstr "情報"
+
+msgid "Above bar, end"
+msgstr "バーの上、終了"
+
+msgid "Above bar, start"
+msgstr "バーの上、開始"
 
 msgid "Accent color"
 msgstr "アクセントカラー"
@@ -75,6 +81,12 @@ msgstr "バックエンド (公式GitHub)"
 
 msgid "Base font size"
 msgstr "ベースフォントサイズ"
+
+msgid "Below bar, end"
+msgstr "バーの下、終了"
+
+msgid "Below bar, start"
+msgstr "バーの下、開始"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -397,11 +409,19 @@ msgstr "パスワードを入力してください。"
 msgid "Please enter your username."
 msgstr "ユーザー名を入力してください。"
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr "プログレスバーのラベルの位置は、バーに対して相対的に設定されます。開始/終了位置は、テキスト方向（LTRまたはRTL）に従います。"
+
 msgid "Preset Vendor / Generator"
 msgstr "プリセットのベンダー/ジェネレーター"
 
 msgid "Progress bar text color"
 msgstr "プログレスバーのテキストの色"
+
+msgid "Progress bar text position"
+msgstr "プログレスバーのテキスト位置"
 
 msgid "Random Local MAC"
 msgstr "ランダムなローカルMACアドレス"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:46+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "发现有新版本！"
 
 msgid "About"
 msgstr "关于"
+
+msgid "Above bar, end"
+msgstr "上方末尾"
+
+msgid "Above bar, start"
+msgstr "上方起始位置"
 
 msgid "Accent color"
 msgstr "强调色"
@@ -73,6 +79,12 @@ msgstr "后端 (官方 GitHub)"
 
 msgid "Base font size"
 msgstr "基础字体大小"
+
+msgid "Below bar, end"
+msgstr "下方末尾"
+
+msgid "Below bar, start"
+msgstr "下方起始位置"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -391,11 +403,19 @@ msgstr "请输入您的密码。"
 msgid "Please enter your username."
 msgstr "请输入您的用户名。"
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr "进度条标签相对于进度条的位置。起始/末尾对齐方式会跟随文本方向（从左往右或从右往左）。"
+
 msgid "Preset Vendor / Generator"
 msgstr "预设厂商 / 生成器"
 
 msgid "Progress bar text color"
 msgstr "进度条文本颜色"
+
+msgid "Progress bar text position"
+msgstr "进度条文本位置"
 
 msgid "Random Local MAC"
 msgstr "随机本地 MAC"

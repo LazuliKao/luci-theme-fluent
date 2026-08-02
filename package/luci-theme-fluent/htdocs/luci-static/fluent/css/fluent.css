@@ -5477,7 +5477,7 @@ code::-webkit-resizer {
   background: var(--fluent-progress-bg);
   border-radius: var(--fluent-radius-circular, 10000px);
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
 }
 
@@ -5487,7 +5487,7 @@ code::-webkit-resizer {
   border-radius: var(--fluent-radius-circular, 10000px);
   transition: width var(--fluent-duration-normal) var(--fluent-easing-decelerate);
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   overflow: hidden;
 }
@@ -5499,7 +5499,7 @@ html[dir="rtl"] .cbi-progressbar > div, body[data-fluent-dir="rtl"] .cbi-progres
 
 .cbi-progressbar:after {
   content: attr(title);
-  color: var(--fluent-text-secondary);
+  color: var(--fluent-progressbar-font-color);
   font-family: var(--fluent-font-family);
   font-size: var(--fluent-font-size-sm, 12px);
   font-weight: var(--fluent-font-weight-regular, 400);
@@ -5508,7 +5508,7 @@ html[dir="rtl"] .cbi-progressbar > div, body[data-fluent-dir="rtl"] .cbi-progres
   text-overflow: ellipsis;
   pointer-events: none;
   position: absolute;
-  top: 8px;
+  top: 0;
   left: 0;
   right: 0;
   overflow: hidden;
@@ -5516,6 +5516,24 @@ html[dir="rtl"] .cbi-progressbar > div, body[data-fluent-dir="rtl"] .cbi-progres
 
 html[dir="rtl"] .cbi-progressbar:after, body[data-fluent-dir="rtl"] .cbi-progressbar:after {
   text-align: right;
+  direction: ltr;
+}
+
+body[data-progressbar-text="bottom-start"] .cbi-progressbar:before, body[data-progressbar-text="bottom-end"] .cbi-progressbar:before, body[data-progressbar-text="bottom-start"] .cbi-progressbar > div, body[data-progressbar-text="bottom-end"] .cbi-progressbar > div {
+  top: 0;
+  bottom: auto;
+}
+
+body[data-progressbar-text="bottom-start"] .cbi-progressbar:after, body[data-progressbar-text="bottom-end"] .cbi-progressbar:after {
+  top: 8px;
+}
+
+body[data-progressbar-text="top-end"] .cbi-progressbar:after, body[data-progressbar-text="bottom-end"] .cbi-progressbar:after {
+  text-align: end;
+}
+
+html[dir="rtl"] body[data-progressbar-text="top-end"] .cbi-progressbar:after, body[data-fluent-dir="rtl"] body[data-progressbar-text="top-end"] .cbi-progressbar:after, html[dir="rtl"] body[data-progressbar-text="bottom-end"] .cbi-progressbar:after, body[data-fluent-dir="rtl"] body[data-progressbar-text="bottom-end"] .cbi-progressbar:after {
+  text-align: left;
   direction: ltr;
 }
 

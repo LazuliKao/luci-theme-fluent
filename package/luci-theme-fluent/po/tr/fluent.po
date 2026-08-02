@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Yeni bir sürüm mevcut!"
 
 msgid "About"
 msgstr "Hakkında"
+
+msgid "Above bar, end"
+msgstr "Çubuk üzerindeki son kısım"
+
+msgid "Above bar, start"
+msgstr "Çubuk üzerindeki başlangıç kısmı"
 
 msgid "Accent color"
 msgstr "Vurgu rengi"
@@ -83,6 +89,12 @@ msgstr "Arka Uç (Resmi GitHub)"
 
 msgid "Base font size"
 msgstr "Temel yazı boyutu"
+
+msgid "Below bar, end"
+msgstr "Çubuğun altındaki son kısım"
+
+msgid "Below bar, start"
+msgstr "Çubuğun altındaki başlangıç kısmı"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -435,11 +447,21 @@ msgstr "Lütfen şifrenizi girin."
 msgid "Please enter your username."
 msgstr "Lütfen kullanıcı adınızı girin."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"İlerleme çubuğu etiketlerinin, çubukla ilişkili konumu. Başlangıç/bitiş "
+"hizalaması metin yönüne (SOL-SAĞ veya SAĞ-SOL) göre belirlenir."
+
 msgid "Preset Vendor / Generator"
 msgstr "Önceden Ayarlanmış Satıcı / Oluşturucu"
 
 msgid "Progress bar text color"
 msgstr "İlerleme çubuğu metin rengi"
+
+msgid "Progress bar text position"
+msgstr "İlerleme çubuğu metni konumu"
 
 msgid "Random Local MAC"
 msgstr "Rastgele Yerel MAC Adresi"

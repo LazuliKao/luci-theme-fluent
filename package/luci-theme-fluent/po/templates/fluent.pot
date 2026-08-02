@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:46+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,6 +15,12 @@ msgid "A new version is available!"
 msgstr ""
 
 msgid "About"
+msgstr ""
+
+msgid "Above bar, end"
+msgstr ""
+
+msgid "Above bar, start"
 msgstr ""
 
 msgid "Accent color"
@@ -72,6 +78,12 @@ msgid "Backend (Official GitHub)"
 msgstr ""
 
 msgid "Base font size"
+msgstr ""
+
+msgid "Below bar, end"
+msgstr ""
+
+msgid "Below bar, start"
 msgstr ""
 
 msgid ""
@@ -389,10 +401,18 @@ msgstr ""
 msgid "Please enter your username."
 msgstr ""
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+
 msgid "Preset Vendor / Generator"
 msgstr ""
 
 msgid "Progress bar text color"
+msgstr ""
+
+msgid "Progress bar text position"
 msgstr ""
 
 msgid "Random Local MAC"

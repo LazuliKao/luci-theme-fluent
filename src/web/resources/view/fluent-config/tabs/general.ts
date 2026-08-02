@@ -50,4 +50,15 @@ export const registerGeneralTab = (section: LuCI.form.TypedSection): void => {
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? option.enabled : option.disabled;
     option.rmempty = false;
   }
+
+  {
+    const option = section.taboption("general", form.ListValue, "progressbar_text_position", _("Progress bar text position"));
+    option.value("top-start", _("Above bar, start"));
+    option.value("bottom-start", _("Below bar, start"));
+    option.value("top-end", _("Above bar, end"));
+    option.value("bottom-end", _("Below bar, end"));
+    option.default = FLUENT_DEFAULTS.progressbar_text_position;
+    option.rmempty = false;
+    option.description = _("Position of progress-bar labels relative to the bar. Start/end alignment follows the text direction (LTR or RTL).");
+  }
 };

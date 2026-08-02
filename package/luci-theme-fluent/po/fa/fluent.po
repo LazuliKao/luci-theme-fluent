@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:47+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "نسخه جدیدی در دسترس است!"
 
 msgid "About"
 msgstr "درباره"
+
+msgid "Above bar, end"
+msgstr "بالای نوار، پایان"
+
+msgid "Above bar, start"
+msgstr "بالای نوار، شروع"
 
 msgid "Accent color"
 msgstr "رنگ تأکیدی"
@@ -81,6 +87,12 @@ msgstr "بک‌اند (GitHub رسمی)"
 
 msgid "Base font size"
 msgstr "اندازه پایه فونت"
+
+msgid "Below bar, end"
+msgstr "زیر نوار، پایان"
+
+msgid "Below bar, start"
+msgstr "زیر نوار، شروع"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -428,11 +440,21 @@ msgstr "لطفاً گذرواژه خود را وارد کنید."
 msgid "Please enter your username."
 msgstr "لطفاً نام کاربری خود را وارد کنید."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"موقعیت برچسب‌های نوار پیشرفت نسبت به نوار. تراز شروع/پایان از جهت متن (LTR "
+"یا RTL) پیروی می‌کند."
+
 msgid "Preset Vendor / Generator"
 msgstr "تنظیمات پیش‌فرض فروشنده / تولیدکننده"
 
 msgid "Progress bar text color"
 msgstr "رنگ متن نوار پیشرفت"
+
+msgid "Progress bar text position"
+msgstr "موقعیت متن نوار پیشرفت"
 
 msgid "Random Local MAC"
 msgstr "آدرس MAC محلی تصادفی"

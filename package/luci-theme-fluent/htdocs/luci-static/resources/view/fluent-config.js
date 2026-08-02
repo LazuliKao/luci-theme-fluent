@@ -75,7 +75,8 @@ const FLUENT_DEFAULTS = {
     tab_animation: "1",
     prefers_reduced_motion: "1",
     loading_bar: "1",
-    direction_mode: "auto"
+    direction_mode: "auto",
+    progressbar_text_position: "top-start"
 };
 const fluentFlagDefault = (r)=>"1" === r;
 
@@ -318,8 +319,12 @@ const registerGeneralTab = (a)=>{
         o.value("32", _("Compact (32px)")), o.value("42", _("Comfortable (42px)")), o.default = FLUENT_DEFAULTS.control_height, o.rmempty = !1, o.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
     }
     {
-        let l = a.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
-        l.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? l.enabled : l.disabled, l.rmempty = !1;
+        let r = a.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
+        r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, r.rmempty = !1;
+    }
+    {
+        let o = a.taboption("general", general_e.ListValue, "progressbar_text_position", _("Progress bar text position"));
+        o.value("top-start", _("Above bar, start")), o.value("bottom-start", _("Below bar, start")), o.value("top-end", _("Above bar, end")), o.value("bottom-end", _("Below bar, end")), o.default = FLUENT_DEFAULTS.progressbar_text_position, o.rmempty = !1, o.description = _("Position of progress-bar labels relative to the bar. Start/end alignment follows the text direction (LTR or RTL).");
     }
 };
 

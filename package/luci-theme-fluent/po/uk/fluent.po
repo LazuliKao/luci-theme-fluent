@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Доступна нова версія!"
 
 msgid "About"
 msgstr "Про"
+
+msgid "Above bar, end"
+msgstr "Кінець над смужкою"
+
+msgid "Above bar, start"
+msgstr "Початок над смужкою"
 
 msgid "Accent color"
 msgstr "Акцентний колір"
@@ -82,6 +88,12 @@ msgstr "Backend (Офіційний GitHub)"
 
 msgid "Base font size"
 msgstr "Розмір базового шрифту"
+
+msgid "Below bar, end"
+msgstr "Кінець під смужкою"
+
+msgid "Below bar, start"
+msgstr "Початок під смужкою"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -438,11 +450,21 @@ msgstr "Будь ласка, введіть ваш пароль."
 msgid "Please enter your username."
 msgstr "Будь ласка, введіть ваше ім'я користувача."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Розташування міток прогрес-бару відносно смужки. Вирівнювання початку/кінця "
+"відповідає напрямку тексту (зліва направо або справа наліво)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Попередньо заданий виробник / генератор"
 
 msgid "Progress bar text color"
 msgstr "Колір тексту індикатора прогресу"
+
+msgid "Progress bar text position"
+msgstr "Позиція тексту прогрес-бару"
 
 msgid "Random Local MAC"
 msgstr "Випадкова локальна MAC-адреса"
@@ -554,7 +576,9 @@ msgstr "Пакет теми готовий. Ви впевнені, що хоче
 msgid ""
 "The token does NOT require any permissions/scopes to be granted (read-only "
 "public access is sufficient)."
-msgstr "Цей токен НЕ потребує жодних дозволів/областей (достатньо публічного доступу лише для читання)."
+msgstr ""
+"Цей токен НЕ потребує жодних дозволів/областей (достатньо публічного доступу "
+"лише для читання)."
 
 msgid "Theme settings"
 msgstr "Налаштування теми"

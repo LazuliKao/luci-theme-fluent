@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "새 버전이 있습니다!"
 
 msgid "About"
 msgstr "정보"
+
+msgid "Above bar, end"
+msgstr "막대 위, 끝"
+
+msgid "Above bar, start"
+msgstr "막대 위, 시작"
 
 msgid "Accent color"
 msgstr "강조 색상"
@@ -77,6 +83,12 @@ msgstr "백엔드 (공식 GitHub)"
 
 msgid "Base font size"
 msgstr "기본 글꼴 크기"
+
+msgid "Below bar, end"
+msgstr "막대 아래, 끝"
+
+msgid "Below bar, start"
+msgstr "막대 아래, 시작"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -399,11 +411,19 @@ msgstr "비밀번호를 입력하세요."
 msgid "Please enter your username."
 msgstr "사용자 이름을 입력하세요."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr "진행률 표시 막대의 레이블 위치는 막대에 상대적입니다. 시작/끝 정렬은 텍스트 방향(LTR 또는 RTL)을 따릅니다."
+
 msgid "Preset Vendor / Generator"
 msgstr "미리 설정된 공급업체 / 생성기"
 
 msgid "Progress bar text color"
 msgstr "진행률 표시줄 텍스트 색상"
+
+msgid "Progress bar text position"
+msgstr "진행률 표시 막대 텍스트 위치"
 
 msgid "Random Local MAC"
 msgstr "임의 로컬 MAC 주소"

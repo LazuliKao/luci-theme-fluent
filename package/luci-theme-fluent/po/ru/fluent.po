@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:47+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Доступна новая версия!"
 
 msgid "About"
 msgstr "О теме"
+
+msgid "Above bar, end"
+msgstr "Над полосой, конец"
+
+msgid "Above bar, start"
+msgstr "Над полосой, начало"
 
 msgid "Accent color"
 msgstr "Акцентный цвет"
@@ -83,6 +89,12 @@ msgstr "Серверная часть (официальный GitHub)"
 
 msgid "Base font size"
 msgstr "Базовый размер шрифта"
+
+msgid "Below bar, end"
+msgstr "Под полосой, конец"
+
+msgid "Below bar, start"
+msgstr "Под полосой, начало"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -427,11 +439,21 @@ msgstr "Введите пароль."
 msgid "Please enter your username."
 msgstr "Введите имя пользователя."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Положение текста индикатора прогресса относительно полосы. Выравнивание "
+"начала/конца следует направлению текста (слева направо или справа налево)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Предустановленный производитель / генератор"
 
 msgid "Progress bar text color"
 msgstr "Цвет текста индикатора прогресса"
+
+msgid "Progress bar text position"
+msgstr "Положение текста полосы прогресса"
 
 msgid "Random Local MAC"
 msgstr "Случайный локальный MAC-адрес"

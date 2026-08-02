@@ -30,6 +30,7 @@ export const FLUENT_DEFAULTS = {
   prefers_reduced_motion: "1",
   loading_bar: "1",
   direction_mode: "auto",
+  progressbar_text_position: "top-start",
 } as const;
 
 export const fluentFlagDefault = (value: string): boolean => value === "1";

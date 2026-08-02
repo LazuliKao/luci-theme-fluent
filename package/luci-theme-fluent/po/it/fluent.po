@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:48+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "È disponibile una nuova versione!"
 
 msgid "About"
 msgstr "Informazioni"
+
+msgid "Above bar, end"
+msgstr "Fine barra, estremità"
+
+msgid "Above bar, start"
+msgstr "Inizio barra"
 
 msgid "Accent color"
 msgstr "Colore accento"
@@ -83,6 +89,12 @@ msgstr "Backend (GitHub ufficiale)"
 
 msgid "Base font size"
 msgstr "Dimensione base del font"
+
+msgid "Below bar, end"
+msgstr "Fine barra"
+
+msgid "Below bar, start"
+msgstr "Inizio barra"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -431,9 +443,9 @@ msgid ""
 "extra --fluent-* variable overrides or page-specific tweaks that are not "
 "exposed as dedicated options."
 msgstr ""
-"CSS grezzo facoltativo iniettato nel template dell'header Fluent. Usare "
-"per sovrascrivere variabili --fluent-* aggiuntive o modifiche specifiche "
-"della pagina che non sono esposte come opzioni dedicate."
+"CSS grezzo facoltativo iniettato nel template dell'header Fluent. Usare per "
+"sovrascrivere variabili --fluent-* aggiuntive o modifiche specifiche della "
+"pagina che non sono esposte come opzioni dedicate."
 
 msgid "Package format"
 msgstr "Formato pacchetto"
@@ -447,11 +459,22 @@ msgstr "Inserisci la tua password."
 msgid "Please enter your username."
 msgstr "Inserisci il tuo nome utente."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Posizione delle etichette della barra di avanzamento rispetto alla barra. "
+"L'allineamento inizio/fine segue la direzione del testo (da sinistra a "
+"destra o da destra a sinistra)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Produttore / Generatore predefinito"
 
 msgid "Progress bar text color"
 msgstr "Colore del testo della barra di avanzamento"
+
+msgid "Progress bar text position"
+msgstr "Posizione del testo nella barra di avanzamento"
 
 msgid "Random Local MAC"
 msgstr "MAC locale casuale"

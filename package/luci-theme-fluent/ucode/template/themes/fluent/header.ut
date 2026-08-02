@@ -55,6 +55,7 @@
   let dark_page_bg = defaults.dark_page_bg;
   let dark_card_bg = defaults.dark_card_bg;
   let dark_sidebar_bg = defaults.dark_sidebar_bg;
+  let progressbar_text_position = defaults.progressbar_text_position;
   let direction = {};
   include('themes/fluent/direction', { cfg, defaults, direction });
 
@@ -104,6 +105,7 @@
     tab_animation = cfg.get_first('fluent', 'global', 'tab_animation') || tab_animation;
     prefers_reduced_motion = cfg.get_first('fluent', 'global', 'prefers_reduced_motion') || prefers_reduced_motion;
     loading_bar = cfg.get_first('fluent', 'global', 'loading_bar') || loading_bar;
+    progressbar_text_position = cfg.get_first('fluent', 'global', 'progressbar_text_position') || progressbar_text_position;
 
     bar_color = mode === 'dark' ? dark_primary : primary;
     main_left_font_color = font_weight === 'normal' ? '#5f6368' : '#69758c';
@@ -317,6 +319,7 @@
   data-tab-animation="{{ tab_animation }}"
   data-prefers-reduced-motion="{{ prefers_reduced_motion }}"
   data-loading-bar="{{ loading_bar }}"
+  data-progressbar-text="{{ progressbar_text_position }}"
   data-sidebar-state="expanded">
   {% if (ctx.authsession) { %}
   <script>

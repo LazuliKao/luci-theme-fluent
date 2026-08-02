@@ -1,6 +1,7 @@
 // ============================================================
 // PROGRESS - FluentUI 2 Progress Bar Styles
 // Height: 4px, Rounded ends
+// Default text position: top-start (text above bar, start-aligned)
 // ============================================================
 
 @use "../mixins" as *;
@@ -15,11 +16,11 @@
   box-sizing: border-box;
   isolation: isolate;
 
-  // Track (background bar)
+  // Track (background bar) — default at bottom
   &::before {
     content: "";
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: var(--fluent-progress-height, 4px);
@@ -27,10 +28,10 @@
     border-radius: var(--fluent-radius-circular, 10000px);
   }
 
-  // Progress Fill
+  // Progress Fill — default at bottom
   > div {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     height: var(--fluent-progress-height, 4px);
     background: var(--fluent-progress-bar-bg);
@@ -44,11 +45,11 @@
     }
   }
 
-  // Label Text (title attribute)
+  // Label Text (title attribute) — default at top, start-aligned
   &::after {
     content: attr(title);
     position: absolute;
-    top: 8px;
+    top: 0;
     left: 0;
     right: 0;
     color: var(--fluent-progressbar-font-color);
@@ -64,6 +65,41 @@
     @include rtl {
       direction: ltr;
       text-align: right;
+    }
+  }
+}
+
+// ── Position variants ────────────────────────────────────────
+
+// bottom-start / bottom-end: bar on top, text below
+body[data-progressbar-text="bottom-start"],
+body[data-progressbar-text="bottom-end"] {
+  .cbi-progressbar {
+    &::before {
+      top: 0;
+      bottom: auto;
+    }
+
+    > div {
+      top: 0;
+      bottom: auto;
+    }
+
+    &::after {
+      top: 8px;
+    }
+  }
+}
+
+// top-end / bottom-end: end-aligned text
+body[data-progressbar-text="top-end"],
+body[data-progressbar-text="bottom-end"] {
+  .cbi-progressbar::after {
+    text-align: end;
+
+    @include rtl {
+      direction: ltr;
+      text-align: left;
     }
   }
 }

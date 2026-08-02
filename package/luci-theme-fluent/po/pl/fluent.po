@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:49+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Dostępna jest nowa wersja!"
 
 msgid "About"
 msgstr "O programie"
+
+msgid "Above bar, end"
+msgstr "Powyżej paska, koniec"
+
+msgid "Above bar, start"
+msgstr "Powyżej paska, początek"
 
 msgid "Accent color"
 msgstr "Kolor akcentu"
@@ -82,6 +88,12 @@ msgstr "Backend (Oficjalny GitHub)"
 
 msgid "Base font size"
 msgstr "Podstawowy rozmiar czcionki"
+
+msgid "Below bar, end"
+msgstr "Poniżej paska, koniec"
+
+msgid "Below bar, start"
+msgstr "Poniżej paska, początek"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -419,8 +431,8 @@ msgid ""
 "extra --fluent-* variable overrides or page-specific tweaks that are not "
 "exposed as dedicated options."
 msgstr ""
-"Opcjonalny surowy CSS wstrzykiwany do szablonu nagłówka Fluent. Użyj tego "
-"do dodatkowych nadpisywań zmiennych --fluent-* lub modyfikacji specyficznych "
+"Opcjonalny surowy CSS wstrzykiwany do szablonu nagłówka Fluent. Użyj tego do "
+"dodatkowych nadpisywań zmiennych --fluent-* lub modyfikacji specyficznych "
 "dla strony, które nie są dostępne jako dedykowane opcje."
 
 msgid "Package format"
@@ -435,11 +447,21 @@ msgstr "Wprowadź swoje hasło."
 msgid "Please enter your username."
 msgstr "Wprowadź swoją nazwę użytkownika."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Położenie etykiet paska postępu względem paska. Wyjustowanie początku/końca "
+"podąża za kierunkiem tekstu (LTR lub RTL)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Gotowy zestaw dostawcy / generatora"
 
 msgid "Progress bar text color"
 msgstr "Kolor tekstu paska postępu"
+
+msgid "Progress bar text position"
+msgstr "Pozycja tekstu na pasku postępu"
 
 msgid "Random Local MAC"
 msgstr "Losowy lokalny adres MAC"

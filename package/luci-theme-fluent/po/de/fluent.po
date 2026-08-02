@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-02 22:47+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -16,6 +16,12 @@ msgstr "Eine neue Version ist verfügbar!"
 
 msgid "About"
 msgstr "Über"
+
+msgid "Above bar, end"
+msgstr "Über dem Balken, Ende"
+
+msgid "Above bar, start"
+msgstr "Über dem Balken, Anfang"
 
 msgid "Accent color"
 msgstr "Akzentfarbe"
@@ -83,6 +89,12 @@ msgstr "Backend (Offizielles GitHub)"
 
 msgid "Base font size"
 msgstr "Grundschriftgröße"
+
+msgid "Below bar, end"
+msgstr "Unterhalb des Balkens, Ende"
+
+msgid "Below bar, start"
+msgstr "Unterhalb des Balkens, Anfang"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -438,11 +450,21 @@ msgstr "Bitte geben Sie Ihr Passwort ein."
 msgid "Please enter your username."
 msgstr "Bitte geben Sie Ihren Benutzernamen ein."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Position der Fortschrittsbalken-Beschriftungen relativ zum Balken. Die "
+"Ausrichtung (Anfang/Ende) folgt der Textrichtung (LTR oder RTL)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Vordefinierter Anbieter / Generator"
 
 msgid "Progress bar text color"
 msgstr "Textfarbe der Fortschrittsanzeige"
+
+msgid "Progress bar text position"
+msgstr "Textposition des Fortschrittsbalkens"
 
 msgid "Random Local MAC"
 msgstr "Zufällige lokale MAC-Adresse"
