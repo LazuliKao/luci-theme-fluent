@@ -160,19 +160,6 @@
       min-height: var(--fluent-input-height);
     }
 
-    > .cbi-dropdown > ul {
-      width: 100%;
-      min-width: 0;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    > .cbi-dropdown > ul > li {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
     // Fixed width add button when present to prevent layout shift and ensure consistent appearance
     > .cbi-button-add {
       flex: 0 0 var(--fluent-input-height);

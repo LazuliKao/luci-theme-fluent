@@ -156,7 +156,8 @@ cbi-dropdown,
 
     // Fallback for browsers without :has() support
     > li[placeholder]:only-of-type {
-      display: inline;
+      display: inline-flex;
+      align-items: center;
       color: var(--fluent-text-disabled);
     }
   }
@@ -308,7 +309,7 @@ cbi-dropdown,
     // min-width: 100%;
     max-width: 80vw !important;
     overflow-y: auto;
-    max-height: min(350px, 50vh);
+    max-height: min(350px, 50vh) !important;
     // Appearance
     background-color: var(--fluent-dropdown-bg);
     border: 1px solid var(--fluent-dropdown-border);
@@ -320,8 +321,7 @@ cbi-dropdown,
 
     // Position
     position: absolute;
-    inset-inline: 0 !important;
-    margin-inline: 0 !important;
+    min-width: 100%;
     z-index: var(--fluent-zindex-dropdown);
 
     // Padding
@@ -390,10 +390,11 @@ cbi-dropdown,
       // Allow rich elements (e.g. descriptions, badges) to wrap normally
       &:has(.hide-close),
       &:has(div) {
+        height: auto !important;
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: clip !important;
-        align-items: center !important;
+        align-items: flex-start !important;
 
         label {
           white-space: normal !important;
@@ -404,7 +405,9 @@ cbi-dropdown,
 
         .hide-close {
           min-width: unset !important;
-          width: auto !important;
+          width: 100% !important;
+          white-space: normal !important;
+          word-break: break-word;
         }
       }
 
