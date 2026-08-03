@@ -30,4 +30,5 @@
   defaults.prefers_reduced_motion = "1";
   defaults.loading_bar = "1";
   defaults.direction_mode = "auto";
+  defaults.progressbar_text_position = "top-start";
 %}
