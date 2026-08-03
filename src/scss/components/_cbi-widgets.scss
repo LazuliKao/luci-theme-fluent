@@ -203,14 +203,11 @@ select.cbi-input-invalid {
 div[depends],
 [data-depends] {
   min-width: 0;
-  transition:
-    opacity var(--fluent-duration-fast) var(--fluent-easing-standard),
-    transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
 
   &[hidden],
   &[style*="display:none"] {
     opacity: 0;
-    transform: translateY(calc(var(--fluent-space-xs) * -1));
   }
 }
 
