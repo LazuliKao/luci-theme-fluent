@@ -159,7 +159,7 @@ $breakpoint-xxl: 1400px;
 // BUTTON BASE (FluentUI Button)
 // Height: 32px, Radius: 4px, Padding: 0 16px
 // ============================================================
-@mixin button-base {
+%button-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -194,11 +194,15 @@ $breakpoint-xxl: 1400px;
   }
 }
 
+@mixin button-base {
+  @extend %button-base;
+}
+
 // ============================================================
 // BUTTON VARIANTS (FluentUI)
 // ============================================================
-@mixin button-primary {
-  @include button-base;
+%button-primary {
+  @extend %button-base;
   background: var(--fluent-btn-primary-bg);
   color: var(--fluent-text-on-primary);
   border-color: var(--fluent-btn-primary-bg);
@@ -214,8 +218,12 @@ $breakpoint-xxl: 1400px;
   }
 }
 
-@mixin button-secondary {
-  @include button-base;
+@mixin button-primary {
+  @extend %button-primary;
+}
+
+%button-secondary {
+  @extend %button-base;
   background: var(--fluent-btn-secondary-bg);
   color: var(--fluent-text);
   border-color: var(--fluent-btn-secondary-border);
@@ -231,8 +239,12 @@ $breakpoint-xxl: 1400px;
   }
 }
 
-@mixin button-text {
-  @include button-base;
+@mixin button-secondary {
+  @extend %button-secondary;
+}
+
+%button-text {
+  @extend %button-base;
   background: transparent;
   color: var(--fluent-text);
   border-color: transparent;
@@ -244,6 +256,10 @@ $breakpoint-xxl: 1400px;
   &:active {
     background: var(--fluent-bg-active);
   }
+}
+
+@mixin button-text {
+  @extend %button-text;
 }
 // for div(dropdown)
 @mixin input-focus-ripple-v1 {
@@ -283,14 +299,10 @@ $breakpoint-xxl: 1400px;
   }
 }
 // for void elements like input
-@mixin input-focus-ripple-v2($extra-bg: null, $extra-position: null, $extra-size: null) {
-  @if $extra-bg {
-    @include inline-end-background($extra-bg, $extra-position, center, $extra-size);
-  } @else {
-    background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
-    background-position: center bottom;
-    background-size: 0 2px;
-  }
+%input-focus-ripple-v2-base {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  background-position: center bottom;
+  background-size: 0 2px;
   background-repeat: no-repeat;
   background-origin: border-box;
   transition:
@@ -305,20 +317,40 @@ $breakpoint-xxl: 1400px;
   &:focus {
     outline: none;
     border-bottom-color: var(--fluent-input-border-bottom-focus);
-    @if $extra-bg {
+    background-size: 100% 2px;
+  }
+}
+
+@mixin input-focus-ripple-v2($extra-bg: null, $extra-position: null, $extra-size: null) {
+  @if $extra-bg {
+    @include inline-end-background($extra-bg, $extra-position, center, $extra-size);
+    background-repeat: no-repeat;
+    background-origin: border-box;
+    transition:
+      background-size var(--fluent-duration-fast) var(--fluent-easing-standard),
+      border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    &:hover:not([disabled]):not(:focus) {
+      border-color: var(--fluent-input-border-hover);
+      border-bottom-color: var(--fluent-input-border-bottom-hover);
+    }
+
+    &:focus {
+      outline: none;
+      border-bottom-color: var(--fluent-input-border-bottom-focus);
       background-size:
         100% 2px,
         $extra-size;
-    } @else {
-      background-size: 100% 2px;
     }
+  } @else {
+    @extend %input-focus-ripple-v2-base;
   }
 }
 // ============================================================
 // INPUT BASE (FluentUI Input)
 // Height: 32px, Radius: 4px, Bottom-border indicator
 // ============================================================
-@mixin input-base {
+%input-base {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -341,6 +373,10 @@ $breakpoint-xxl: 1400px;
   &::placeholder {
     color: var(--fluent-text-disabled);
   }
+}
+
+@mixin input-base {
+  @extend %input-base;
 }
 
 // ============================================================

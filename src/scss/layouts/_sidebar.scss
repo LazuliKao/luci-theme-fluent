@@ -84,12 +84,12 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
 
   .main-left .nav > li > a:first-child[data-title="#{$title}"] .menu-icon::before,
   .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon::before {
-    @include set-icon-mask("data:image/svg+xml,#{$svg-reg-encoded}");
+    @include set-icon-data("data:image/svg+xml,#{$svg-reg-encoded}");
   }
 
   .main-left .nav > li > a:first-child[data-title="#{$title}"] .menu-icon::after,
   .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon::after {
-    @include set-icon-mask("data:image/svg+xml,#{$svg-fill-encoded}");
+    @include set-icon-data("data:image/svg+xml,#{$svg-fill-encoded}");
   }
 
   .main-left .nav li.slide .slide-menu[data-parent="#{$title}"] li a .menu-icon {
@@ -202,16 +202,18 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
         mask-size: contain;
         mask-repeat: no-repeat;
         mask-position: center;
+        mask-image: var(--icon-data);
+        -webkit-mask-image: var(--icon-data);
         transition: opacity var(--fluent-duration-normal) var(--fluent-easing-standard);
       }
 
       &::before {
-        @include set-icon-mask("data:image/svg+xml,#{$default-reg-encoded}");
+        @include set-icon-data("data:image/svg+xml,#{$default-reg-encoded}");
         opacity: 1;
       }
 
       &::after {
-        @include set-icon-mask("data:image/svg+xml,#{$default-fill-encoded}");
+        @include set-icon-data("data:image/svg+xml,#{$default-fill-encoded}");
         opacity: 0;
       }
     }
@@ -384,16 +386,18 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
                 mask-size: contain;
                 mask-repeat: no-repeat;
                 mask-position: center;
+                mask-image: var(--icon-data);
+                -webkit-mask-image: var(--icon-data);
                 transition: opacity var(--fluent-duration-normal) var(--fluent-easing-standard);
               }
 
               &::before {
-                @include set-icon-mask("data:image/svg+xml,#{$default-reg-encoded}");
+                @include set-icon-data("data:image/svg+xml,#{$default-reg-encoded}");
                 opacity: 1;
               }
 
               &::after {
-                @include set-icon-mask("data:image/svg+xml,#{$default-fill-encoded}");
+                @include set-icon-data("data:image/svg+xml,#{$default-fill-encoded}");
                 opacity: 0;
               }
             }
@@ -906,11 +910,11 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
                   $svg-fill-encoded: str-replace(str-replace($svg-fill, "<", "%3C"), ">", "%3E");
 
                   &::before {
-                    @include set-icon-mask("data:image/svg+xml,#{$svg-reg-encoded}");
+                    @include set-icon-data("data:image/svg+xml,#{$svg-reg-encoded}");
                   }
 
                   &::after {
-                    @include set-icon-mask("data:image/svg+xml,#{$svg-fill-encoded}");
+                    @include set-icon-data("data:image/svg+xml,#{$svg-fill-encoded}");
                   }
                 }
               }

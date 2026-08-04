@@ -136,6 +136,12 @@
     mask-image: var(--icon-data);
   }
 }
+
+@mixin set-icon-data($icon) {
+  // Escape double quotes in SVG data URI to prevent broken url() parsing
+  $escaped: str-replace($icon, '"', "%22");
+  --icon-data: url("#{$escaped}");
+}
 $mask-content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
 // $mask-content: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 @mixin set-mask-content() {
