@@ -766,18 +766,18 @@ cbi-dropdown,
       border-radius: inherit !important;
       box-shadow: none !important;
       padding: 5px var(--fluent-space-xs) !important;
-      color: #111 !important; // Dark text for pastel contrast
+      color: var(--fluent-zonebadge-text) !important; // Dark text for pastel contrast
 
       strong,
       em {
-        color: #111 !important;
+        color: inherit !important;
         line-height: 1.2 !important;
         display: inline-flex !important;
         align-items: center !important;
       }
 
       .ifacebadge {
-        color: #111 !important;
+        color: var(--fluent-zonebadge-text) !important;
         background: rgba(255, 255, 255, 0.6) !important;
         border-color: rgba(0, 0, 0, 0.1) !important;
         display: inline-flex !important;
@@ -794,7 +794,7 @@ cbi-dropdown,
         em,
         strong,
         span {
-          color: #111 !important;
+          color: inherit !important;
           line-height: inherit !important;
         }
 
@@ -802,7 +802,7 @@ cbi-dropdown,
           width: 14px !important;
           height: 14px !important;
           vertical-align: middle !important;
-          background: transparent !important; // Remove black square background
+          background: currentColor !important; // Use currentColor (which is the zonebadge text color) as the icon mask fill
         }
       }
     }
@@ -842,12 +842,12 @@ cbi-dropdown,
       font-size: var(--fluent-font-size-sm) !important;
       box-shadow: none !important;
       border: none !important;
-      color: #111 !important;
+      color: var(--fluent-zonebadge-text) !important;
 
       strong,
       em,
       span {
-        color: #111 !important;
+        color: inherit !important;
         font-size: inherit !important;
       }
 

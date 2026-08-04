@@ -74,6 +74,7 @@
   --fluent-scrollbar-track-bg: transparent;
   --fluent-progress-height: 4px;
   --fluent-badge-radius: 10px;
+  --fluent-zonebadge-text: #111;
   --fluent-toast-radius: var(--fluent-radius-lg);
   --fluent-dropdown-max-height-limit: 350px;
   --fluent-dropdown-max-height: var(--fluent-dropdown-max-height-limit);
@@ -3189,7 +3190,7 @@ td > .ifacebadge, .td > .ifacebadge {
   border-radius: var(--fluent-radius-lg);
   background: var(--fluent-card-bg);
   box-shadow: var(--fluent-card-shadow);
-  color: #111;
+  color: var(--fluent-zonebadge-text);
   flex-wrap: wrap;
   justify-content: center;
   display: inline-flex;
@@ -3251,7 +3252,7 @@ td > .ifacebadge, .td > .ifacebadge {
 }
 
 .zonebadge > em, .zonebadge > strong {
-  color: #111;
+  color: inherit;
   font-style: normal;
   line-height: var(--fluent-line-height-normal);
 }
@@ -6672,7 +6673,7 @@ cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge {
   border-radius: inherit !important;
   box-shadow: none !important;
   padding: 5px var(--fluent-space-xs) !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   flex-wrap: wrap !important;
   margin: 0 !important;
@@ -6690,7 +6691,7 @@ cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge {
   border-radius: inherit !important;
   box-shadow: none !important;
   padding: 5px var(--fluent-space-xs) !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   flex-wrap: wrap !important;
   margin: 0 !important;
@@ -6698,35 +6699,35 @@ cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge {
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge {
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   min-height: unset !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: auto !important;
@@ -6742,7 +6743,7 @@ cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadg
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge {
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   min-height: unset !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: auto !important;
@@ -6758,45 +6759,45 @@ cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadg
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge em {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge span {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge em {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge span {
-  color: #111 !important;
+  color: inherit !important;
   line-height: inherit !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge img {
   vertical-align: middle !important;
-  background: none !important;
+  background: currentColor !important;
   width: 14px !important;
   height: 14px !important;
 }
 
 .cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge img {
   vertical-align: middle !important;
-  background: none !important;
+  background: currentColor !important;
   width: 14px !important;
   height: 14px !important;
 }
@@ -6920,7 +6921,7 @@ cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge {
   min-height: 20px !important;
   font-size: var(--fluent-font-size-sm) !important;
   box-shadow: none !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   align-items: center !important;
   padding-inline-start: var(--fluent-space-sm) !important;
@@ -6934,7 +6935,7 @@ cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
   min-height: 20px !important;
   font-size: var(--fluent-font-size-sm) !important;
   box-shadow: none !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   align-items: center !important;
   padding-inline-start: var(--fluent-space-sm) !important;
@@ -6948,7 +6949,7 @@ cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
   min-height: 20px !important;
   font-size: var(--fluent-font-size-sm) !important;
   box-shadow: none !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   align-items: center !important;
   padding-inline-start: var(--fluent-space-sm) !important;
@@ -6962,7 +6963,7 @@ cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
   min-height: 20px !important;
   font-size: var(--fluent-font-size-sm) !important;
   box-shadow: none !important;
-  color: #111 !important;
+  color: var(--fluent-zonebadge-text) !important;
   border: none !important;
   align-items: center !important;
   padding-inline-start: var(--fluent-space-sm) !important;
@@ -6970,62 +6971,62 @@ cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
 }
 
 cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
 .cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
+  color: inherit !important;
   font-size: inherit !important;
 }
 
