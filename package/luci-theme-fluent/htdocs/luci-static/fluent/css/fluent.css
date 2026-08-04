@@ -4033,12 +4033,11 @@ select.cbi-input-invalid {
 
 div[depends], [data-depends] {
   min-width: 0;
-  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard),transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
 div[depends][hidden], div[depends][style*="display:none"], [data-depends][hidden], [data-depends][style*="display:none"] {
   opacity: 0;
-  transform: translateY(calc(var(--fluent-space-xs) * -1));
 }
 
 div.tr[data-title] {
@@ -4359,7 +4358,7 @@ input[type="checkbox"]:before {
   display: block !important;
   position: absolute !important;
   inset-inline-start: 3px !important;
-  box-shadow: 0 1px 2px #00000024 !important;
+  box-shadow: 0 0 2px #0000003d, 0 1px 2px #00000047 !important;
 }
 
 input[type="checkbox"]:checked {
@@ -5747,7 +5746,8 @@ cbi-dropdown > ul:not(.dropdown):not(:has(li[selected])):not(:has(li[display])) 
 
 cbi-dropdown > ul:not(.dropdown) > li[placeholder]:only-of-type, .cbi-dropdown > ul:not(.dropdown) > li[placeholder]:only-of-type {
   color: var(--fluent-text-disabled);
-  display: inline;
+  align-items: center;
+  display: inline-flex;
 }
 
 cbi-dropdown:has(ul:not(.dropdown) > li[selected]) > ul:not(.dropdown) > li[placeholder] {
@@ -5894,8 +5894,8 @@ cbi-dropdown[open] > ul.dropdown, .cbi-dropdown[open] > ul.dropdown {
   background-color: var(--fluent-dropdown-bg);
   border: 1px solid var(--fluent-dropdown-border);
   border-radius: var(--fluent-radius-md);
-  max-height: min(350px, 50vh);
   box-shadow: var(--fluent-dropdown-shadow);
+  min-width: 100%;
   z-index: var(--fluent-zindex-dropdown);
   padding: var(--fluent-space-xxs);
   margin: 0;
@@ -5909,8 +5909,7 @@ cbi-dropdown[open] > ul.dropdown, .cbi-dropdown[open] > ul.dropdown {
   position: absolute;
   overflow-y: auto;
   max-width: 80vw !important;
-  margin-inline: 0 !important;
-  inset-inline: 0 !important;
+  max-height: min(350px, 50vh) !important;
 }
 
 cbi-dropdown[open] > ul.dropdown::-webkit-scrollbar {
@@ -5976,28 +5975,32 @@ cbi-dropdown[open] > ul.dropdown > li, .cbi-dropdown[open] > ul.dropdown > li {
 cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) {
   white-space: normal !important;
   text-overflow: clip !important;
-  align-items: center !important;
+  align-items: flex-start !important;
+  height: auto !important;
   overflow: visible !important;
 }
 
 cbi-dropdown[open] > ul.dropdown > li:has(div) {
   white-space: normal !important;
   text-overflow: clip !important;
-  align-items: center !important;
+  align-items: flex-start !important;
+  height: auto !important;
   overflow: visible !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) {
   white-space: normal !important;
   text-overflow: clip !important;
-  align-items: center !important;
+  align-items: flex-start !important;
+  height: auto !important;
   overflow: visible !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(div) {
   white-space: normal !important;
   text-overflow: clip !important;
-  align-items: center !important;
+  align-items: flex-start !important;
+  height: auto !important;
   overflow: visible !important;
 }
 
@@ -6030,23 +6033,31 @@ cbi-dropdown[open] > ul.dropdown > li:has(div) label {
 }
 
 cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) .hide-close {
+  word-break: break-word;
   min-width: unset !important;
-  width: auto !important;
+  white-space: normal !important;
+  width: 100% !important;
 }
 
 cbi-dropdown[open] > ul.dropdown > li:has(div) .hide-close {
+  word-break: break-word;
   min-width: unset !important;
-  width: auto !important;
+  white-space: normal !important;
+  width: 100% !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(.hide-close) .hide-close {
+  word-break: break-word;
   min-width: unset !important;
-  width: auto !important;
+  white-space: normal !important;
+  width: 100% !important;
 }
 
 .cbi-dropdown[open] > ul.dropdown > li:has(div) .hide-close {
+  word-break: break-word;
   min-width: unset !important;
-  width: auto !important;
+  white-space: normal !important;
+  width: 100% !important;
 }
 
 cbi-dropdown[open] > ul.dropdown > li, .cbi-dropdown[open] > ul.dropdown > li {
@@ -6298,6 +6309,7 @@ cbi-dropdown ul.dropdown > li input[type="checkbox"], .cbi-dropdown ul.dropdown 
   min-width: 16px !important;
   height: 16px !important;
   min-height: 16px !important;
+  margin: 0 !important;
   cursor: pointer !important;
   vertical-align: middle !important;
   box-sizing: border-box !important;
@@ -6305,7 +6317,6 @@ cbi-dropdown ul.dropdown > li input[type="checkbox"], .cbi-dropdown ul.dropdown 
   border-radius: 4px !important;
   justify-content: center !important;
   align-items: center !important;
-  margin: 0 !important;
   margin-inline-end: var(--fluent-space-sm) !important;
   transition: background-color .1s, border-color .1s !important;
   display: inline-flex !important;
@@ -6683,8 +6694,9 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
   cbi-dropdown[open] > ul.dropdown, .cbi-dropdown[open] > ul.dropdown {
     position-anchor: --fluent-cbi-dropdown-active !important;
     min-width: anchor-size(width) !important;
-    left: anchor(left) !important;
     margin: 0 !important;
+    margin-top: var(--fluent-space-xxs) !important;
+    left: anchor(left) !important;
     position: fixed !important;
     right: auto !important;
   }
@@ -6702,6 +6714,8 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
   cbi-dropdown[open] > ul.dropdown[style*="bottom"], .cbi-dropdown[open] > ul.dropdown[style*="bottom"], cbi-dropdown[data-open-direction="up"][open] > ul.dropdown, .cbi-dropdown[data-open-direction="up"][open] > ul.dropdown {
     top: auto !important;
     bottom: anchor(top) !important;
+    margin-top: 0 !important;
+    margin-bottom: var(--fluent-space-xxs) !important;
   }
 }
 
@@ -7228,19 +7242,6 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 .cbi-dynlist > .add-item > .cbi-dropdown {
   height: var(--fluent-input-height);
   min-height: var(--fluent-input-height);
-}
-
-.cbi-dynlist > .add-item > .cbi-dropdown > ul {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.cbi-dynlist > .add-item > .cbi-dropdown > ul > li {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .cbi-dynlist > .add-item > .cbi-button-add {
