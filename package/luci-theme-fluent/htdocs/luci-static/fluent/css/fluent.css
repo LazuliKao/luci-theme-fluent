@@ -1498,9 +1498,10 @@ div.td, div.th {
 
 .modal .modal-content-wrap, .modal > .cbi-map {
   padding-bottom: var(--fluent-space-xs);
+  overflow-y: auto;
+  overflow-y: overlay;
   flex: auto;
   min-height: 20px;
-  overflow-y: auto;
 }
 
 .modal .modal-content-wrap::-webkit-scrollbar {

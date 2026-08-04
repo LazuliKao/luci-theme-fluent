@@ -108,6 +108,7 @@
     padding-bottom: var(--fluent-space-xs);
     flex: 1 1 auto;
     overflow-y: auto;
+    overflow-y: overlay; // Overlay scrollbar: doesn't reserve gutter space when content fits
     min-height: 20px; // Essential for nested flexbox scrolling
     @include custom-scrollbar;
   }
