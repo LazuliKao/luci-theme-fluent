@@ -85,7 +85,8 @@ cbi-dropdown,
 
   // Prevent keyboard focus-trap/hidden-input div from occupying flex layout space
   > div {
-    &, &[tabindex="0"] {
+    &,
+    &[tabindex="0"] {
       position: absolute !important;
       width: 0 !important;
       height: 0 !important;
@@ -115,9 +116,11 @@ cbi-dropdown,
     pointer-events: none;
     height: 100%;
     min-height: unset;
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
 
     > li {
       display: none;
+      flex-shrink: 0; // Prevent selected items/tags from being squished
       padding: 0 !important;
       margin: 0;
       overflow: hidden;
@@ -149,10 +152,12 @@ cbi-dropdown,
       }
 
       // Separate multiple selected items in the preview list with a comma and space
-      &[display]:not([display="0"])::before {
-        content: ",\00a0";
-        margin-inline-end: 2px;
-        color: var(--fluent-text-secondary);
+      &[display] ~ li[selected] {
+        &::before {
+          content: ",\00a0";
+          margin-inline-end: 2px;
+          color: var(--fluent-text-secondary);
+        }
       }
 
       // If the selected/displayed preview item is a placeholder, style it as muted/disabled text
@@ -183,11 +188,7 @@ cbi-dropdown,
     display: none;
   }
 
-  // In multi-select dropdowns, hide preview items without display attribute (since they overflow into span.more)
-  &[multiple] > ul.preview > li:not([display]),
-  &[multiple] > ul:not(.dropdown) > li:not([display]) {
-    display: none !important;
-  }
+  // In multi-select dropdowns, allow all selected preview items to render; they will be clipped/faded by container overflow mask.
 
   // ----------------------------------------------------------
   // OPEN / EXPAND INDICATOR (chevron)
@@ -453,7 +454,6 @@ cbi-dropdown,
         width: 100%;
         gap: var(--fluent-space-xxs);
       }
-
 
       // Hover state
       &:hover {
@@ -748,7 +748,9 @@ cbi-dropdown,
       display: none !important;
       content: none !important;
     }
-
+    > form {
+      margin-inline-start: var(--fluent-space-xs) !important;
+    }
     .zonebadge {
       display: flex !important;
       align-items: center !important;
@@ -894,7 +896,6 @@ cbi-dropdown,
       margin: 0 !important;
       z-index: calc(var(--fluent-zindex-dropdown) + 1);
     }
-
   }
 
   // Position open dropdowns (both native and custom select) using anchor positioning when supported
@@ -966,4 +967,3 @@ cbi-dropdown:not([optional]),
     display: none;
   }
 }
-

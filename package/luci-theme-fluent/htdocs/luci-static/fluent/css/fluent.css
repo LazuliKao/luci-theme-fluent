@@ -5707,6 +5707,8 @@ cbi-dropdown > ul.preview, cbi-dropdown > ul:not(.dropdown), .cbi-dropdown > ul.
   list-style: none;
   display: flex;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
 }
 
 cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
@@ -5725,6 +5727,8 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   list-style: none;
   display: flex;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
 }
 
 .cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
@@ -5743,12 +5747,15 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   list-style: none;
   display: flex;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
 }
 
 cbi-dropdown > ul.preview > li, cbi-dropdown > ul:not(.dropdown) > li, .cbi-dropdown > ul.preview > li, .cbi-dropdown > ul:not(.dropdown) > li {
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
+  flex-shrink: 0;
   margin: 0;
   line-height: 20px;
   display: none;
@@ -5760,6 +5767,7 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
+  flex-shrink: 0;
   margin: 0;
   line-height: 20px;
   display: none;
@@ -5771,6 +5779,7 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
+  flex-shrink: 0;
   margin: 0;
   line-height: 20px;
   display: none;
@@ -5856,19 +5865,19 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   display: inline-flex;
 }
 
-cbi-dropdown > ul.preview > li[display]:not([display="0"]):before, cbi-dropdown > ul:not(.dropdown) > li[display]:not([display="0"]):before, .cbi-dropdown > ul.preview > li[display]:not([display="0"]):before, .cbi-dropdown > ul:not(.dropdown) > li[display]:not([display="0"]):before {
+cbi-dropdown > ul.preview > li[display] ~ li[selected]:before, cbi-dropdown > ul:not(.dropdown) > li[display] ~ li[selected]:before, .cbi-dropdown > ul.preview > li[display] ~ li[selected]:before, .cbi-dropdown > ul:not(.dropdown) > li[display] ~ li[selected]:before {
   content: ", ";
   color: var(--fluent-text-secondary);
   margin-inline-end: 2px;
 }
 
-cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display]:not([display="0"]):before {
+cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display] ~ li[selected]:before {
   content: ", ";
   color: var(--fluent-text-secondary);
   margin-inline-end: 2px;
 }
 
-.cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display]:not([display="0"]):before {
+.cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display] ~ li[selected]:before {
   content: ", ";
   color: var(--fluent-text-secondary);
   margin-inline-end: 2px;
@@ -5964,10 +5973,6 @@ cbi-dropdown:has(ul:not(.dropdown) > li[display]:not([placeholder])) > ul:not(.d
 
 .cbi-dropdown:has(ul:not(.dropdown) > li[display]:not([placeholder])) > ul:not(.dropdown) > li[placeholder] {
   display: none;
-}
-
-cbi-dropdown[multiple] > ul.preview > li:not([display]), cbi-dropdown[multiple] > ul:not(.dropdown) > li:not([display]), .cbi-dropdown[multiple] > ul.preview > li:not([display]), .cbi-dropdown[multiple] > ul:not(.dropdown) > li:not([display]) {
-  display: none !important;
 }
 
 cbi-dropdown > span.open, .cbi-dropdown > span.open {
@@ -6646,6 +6651,14 @@ cbi-dropdown ul.dropdown > li:has(.zonebadge):before {
 .cbi-dropdown ul.dropdown > li:has(.zonebadge):before {
   content: none !important;
   display: none !important;
+}
+
+cbi-dropdown ul.dropdown > li:has(.zonebadge) > form {
+  margin-inline-start: var(--fluent-space-xs) !important;
+}
+
+.cbi-dropdown ul.dropdown > li:has(.zonebadge) > form {
+  margin-inline-start: var(--fluent-space-xs) !important;
 }
 
 cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge {
