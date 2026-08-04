@@ -6631,37 +6631,37 @@ cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected
   background-color: var(--fluent-text-disabled) !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) {
   background: none !important;
   padding: 0 !important;
   padding-inline-start: 0 !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) {
   background: none !important;
   padding: 0 !important;
   padding-inline-start: 0 !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge):before {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge):before {
   content: none !important;
   display: none !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge):before {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge):before {
   content: none !important;
   display: none !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) > form {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) > form {
   margin-inline-start: var(--fluent-space-xs) !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) > form {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) > form {
   margin-inline-start: var(--fluent-space-xs) !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge {
   justify-content: flex-start !important;
   align-items: center !important;
   gap: 4px var(--fluent-space-xs) !important;
@@ -6679,7 +6679,7 @@ cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge {
   display: flex !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge {
   justify-content: flex-start !important;
   align-items: center !important;
   gap: 4px var(--fluent-space-xs) !important;
@@ -6697,35 +6697,35 @@ cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge {
   display: flex !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge strong {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge em {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge strong {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge em {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   align-items: center !important;
   line-height: 1.2 !important;
   display: inline-flex !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge {
   color: #111 !important;
   min-height: unset !important;
   border-radius: var(--fluent-radius-sm) !important;
@@ -6741,7 +6741,7 @@ cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: inline-flex !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge {
   color: #111 !important;
   min-height: unset !important;
   border-radius: var(--fluent-radius-sm) !important;
@@ -6757,91 +6757,83 @@ cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: inline-flex !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge em {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge em {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge strong {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge strong {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge span {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge span {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge em {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge em {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge strong {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge strong {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge span {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge span {
   color: #111 !important;
   line-height: inherit !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge img {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge img {
   vertical-align: middle !important;
   background: none !important;
   width: 14px !important;
   height: 14px !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge img {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) .zonebadge .ifacebadge img {
   vertical-align: middle !important;
   background: none !important;
   width: 14px !important;
   height: 14px !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge):hover .zonebadge {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge):hover .zonebadge {
   background-image: linear-gradient(#0000000d, #0000000d) !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge):hover .zonebadge {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge):hover .zonebadge {
   background-image: linear-gradient(#0000000d, #0000000d) !important;
 }
 
-cbi-dropdown ul.dropdown > li:has(.zonebadge).focus .zonebadge {
+cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge).focus .zonebadge {
   background-image: linear-gradient(#00000014, #00000014) !important;
 }
 
-.cbi-dropdown ul.dropdown > li:has(.zonebadge).focus .zonebadge {
+.cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge).focus .zonebadge {
   background-image: linear-gradient(#00000014, #00000014) !important;
 }
 
-cbi-dropdown > ul.preview > li:has(.zonebadge) {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) {
   display: none;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) {
   display: none;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) {
   display: none;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) {
   display: none;
 }
 
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) {
-  display: none;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) {
-  display: none;
-}
-
-cbi-dropdown > ul.preview > li:has(.zonebadge)[selected] {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge)[selected] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6851,7 +6843,7 @@ cbi-dropdown > ul.preview > li:has(.zonebadge)[selected] {
   display: inline-flex !important;
 }
 
-cbi-dropdown > ul.preview > li:has(.zonebadge)[display] {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge)[display] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6861,7 +6853,7 @@ cbi-dropdown > ul.preview > li:has(.zonebadge)[display] {
   display: inline-flex !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[selected] {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge)[selected] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6871,7 +6863,7 @@ cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[selected] {
   display: inline-flex !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[display] {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge)[display] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6881,7 +6873,7 @@ cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[display] {
   display: inline-flex !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[selected] {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge)[selected] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6891,7 +6883,7 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[selected] {
   display: inline-flex !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[display] {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge)[display] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6901,7 +6893,7 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[display] {
   display: inline-flex !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge)[selected] {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge)[selected] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6911,7 +6903,7 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[display] {
   display: inline-flex !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge)[display] {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge)[display] {
   border-radius: var(--fluent-radius-sm) !important;
   background: none !important;
   border: none !important;
@@ -6921,47 +6913,7 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[display] {
   display: inline-flex !important;
 }
 
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[selected] {
-  border-radius: var(--fluent-radius-sm) !important;
-  background: none !important;
-  border: none !important;
-  align-items: center !important;
-  margin: 2px !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-}
-
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge)[display] {
-  border-radius: var(--fluent-radius-sm) !important;
-  background: none !important;
-  border: none !important;
-  align-items: center !important;
-  margin: 2px !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[selected] {
-  border-radius: var(--fluent-radius-sm) !important;
-  background: none !important;
-  border: none !important;
-  align-items: center !important;
-  margin: 2px !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge)[display] {
-  border-radius: var(--fluent-radius-sm) !important;
-  background: none !important;
-  border: none !important;
-  align-items: center !important;
-  margin: 2px !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-}
-
-cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge {
   padding: 2px var(--fluent-space-sm) !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: 20px !important;
@@ -6975,7 +6927,7 @@ cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge {
   display: inline-flex !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
   padding: 2px var(--fluent-space-sm) !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: 20px !important;
@@ -6989,7 +6941,7 @@ cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge {
   display: inline-flex !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge {
   padding: 2px var(--fluent-space-sm) !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: 20px !important;
@@ -7003,7 +6955,7 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge {
   display: inline-flex !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge {
   padding: 2px var(--fluent-space-sm) !important;
   border-radius: var(--fluent-radius-sm) !important;
   height: 20px !important;
@@ -7017,145 +6969,79 @@ cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge {
   display: inline-flex !important;
 }
 
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge {
-  padding: 2px var(--fluent-space-sm) !important;
-  border-radius: var(--fluent-radius-sm) !important;
-  height: 20px !important;
-  min-height: 20px !important;
-  font-size: var(--fluent-font-size-sm) !important;
-  box-shadow: none !important;
-  color: #111 !important;
-  border: none !important;
-  align-items: center !important;
-  padding-inline-start: var(--fluent-space-sm) !important;
-  display: inline-flex !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge {
-  padding: 2px var(--fluent-space-sm) !important;
-  border-radius: var(--fluent-radius-sm) !important;
-  height: 20px !important;
-  min-height: 20px !important;
-  font-size: var(--fluent-font-size-sm) !important;
-  box-shadow: none !important;
-  color: #111 !important;
-  border: none !important;
-  align-items: center !important;
-  padding-inline-start: var(--fluent-space-sm) !important;
-  display: inline-flex !important;
-}
-
-cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge strong {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge em {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge span {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge span {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge strong {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge em {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge span {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge span {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge strong {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge em {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge span {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge span {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge strong {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge strong {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge em {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge em {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge span {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge span {
   color: #111 !important;
   font-size: inherit !important;
 }
 
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge strong {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge em {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge span {
-  color: #111 !important;
-  font-size: inherit !important;
-}
-
-cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge .ifacebadge {
+cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: none !important;
 }
 
-cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge .ifacebadge {
+cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: none !important;
 }
 
-cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
+.cbi-dropdown:not([open]) > ul > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: none !important;
 }
 
-.cbi-dropdown > ul.preview > li:has(.zonebadge) .zonebadge .ifacebadge {
-  display: none !important;
-}
-
-.cbi-dropdown > ul:not(.dropdown) > li:has(.zonebadge) .zonebadge .ifacebadge {
-  display: none !important;
-}
-
-.cbi-dropdown:not([open]) > ul.dropdown > li:has(.zonebadge) .zonebadge .ifacebadge {
+.cbi-dropdown[open] > ul.preview > li:has(.zonebadge) .zonebadge .ifacebadge {
   display: none !important;
 }
 

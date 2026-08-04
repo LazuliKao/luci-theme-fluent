@@ -739,7 +739,7 @@ cbi-dropdown,
   // ZONEBADGE STYLING SPECIAL ADAPTATION
   // ----------------------------------------------------------
   // Style zonebadge elements inside the dropdown options list
-  ul.dropdown > li:has(.zonebadge) {
+  &[open] > ul:not(.preview) > li:has(.zonebadge) {
     padding: 0 !important;
     padding-inline-start: 0 !important;
     background: transparent !important;
@@ -816,9 +816,8 @@ cbi-dropdown,
   }
 
   // Style selected zone badges inside the collapsed preview bar as neat tags
-  > ul.preview > li:has(.zonebadge),
-  > ul:not(.dropdown) > li:has(.zonebadge),
-  &:not([open]) > ul.dropdown > li:has(.zonebadge) {
+  &:not([open]) > ul > li:has(.zonebadge),
+  &[open] > ul.preview > li:has(.zonebadge) {
     display: none; // Unselected items stay hidden
 
     &[selected],
