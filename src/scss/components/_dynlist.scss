@@ -223,4 +223,23 @@
   > .cbi-dynlist > .add-item[ondrop] > input {
     min-width: 13rem;
   }
+
+  // Hide placeholder in dropdown inside dynlist, even if it is optional
+  cbi-dropdown,
+  .cbi-dropdown {
+    > ul.dropdown > li[placeholder] {
+      display: none !important;
+    }
+
+    // Hide selection checkmark and reset padding for dropdown options
+    > ul.dropdown > li {
+      padding-inline-start: var(--fluent-space-xs) !important;
+
+      &::before,
+      &::after {
+        content: none !important;
+        display: none !important;
+      }
+    }
+  }
 }

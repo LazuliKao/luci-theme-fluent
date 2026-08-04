@@ -97,7 +97,9 @@ cbi-dropdown,
   // ----------------------------------------------------------
   // PREVIEW AREA (selected items display)
   // ----------------------------------------------------------
-  > ul:not(.dropdown) {
+  > ul.preview,
+  > ul:not(.dropdown),
+  &:not([open]):not(:has(> ul:not(.dropdown))):not(:has(> ul.preview)) > ul.dropdown {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
@@ -116,7 +118,7 @@ cbi-dropdown,
 
     > li {
       display: none;
-      padding: 0;
+      padding: 0 !important;
       margin: 0;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -130,21 +132,32 @@ cbi-dropdown,
         display: none !important;
       }
 
-      // Reset any legacy inline-start border from LuCI core markup.
+      // Reset any legacy inline-start border or checkmark mask from LuCI core markup / single select.
       border-inline-start: none !important;
+      padding-inline-start: 0 !important;
 
-      // Show only selected or displayed items in preview
-      &[selected],
-      &[display] {
+      &::before {
+        mask-image: none !important;
+        background-color: transparent !important;
+      }
+
+      // Show items marked for display by LuCI or selected
+      &[display],
+      &[selected] {
         display: inline-flex;
         align-items: center;
       }
 
       // Separate multiple selected items in the preview list with a comma and space
       &[display]:not([display="0"])::before {
-        content: ", ";
-        margin-inline-end: 4px;
+        content: ",\00a0";
+        margin-inline-end: 2px;
         color: var(--fluent-text-secondary);
+      }
+
+      // If the selected/displayed preview item is a placeholder, style it as muted/disabled text
+      &[placeholder] {
+        color: var(--fluent-text-disabled);
       }
     }
 
@@ -163,9 +176,17 @@ cbi-dropdown,
   }
 
   // Hide placeholder when there's any selection (parent-level :has())
-  &:has(ul:not(.dropdown) > li[selected]) > ul:not(.dropdown) > li[placeholder],
-  &:has(ul:not(.dropdown) > li[display]) > ul:not(.dropdown) > li[placeholder] {
+  &:has(ul.preview > li[selected]:not([placeholder])) > ul.preview > li[placeholder],
+  &:has(ul.preview > li[display]:not([placeholder])) > ul.preview > li[placeholder],
+  &:has(ul:not(.dropdown) > li[selected]:not([placeholder])) > ul:not(.dropdown) > li[placeholder],
+  &:has(ul:not(.dropdown) > li[display]:not([placeholder])) > ul:not(.dropdown) > li[placeholder] {
     display: none;
+  }
+
+  // In multi-select dropdowns, hide preview items without display attribute (since they overflow into span.more)
+  &[multiple] > ul.preview > li:not([display]),
+  &[multiple] > ul:not(.dropdown) > li:not([display]) {
+    display: none !important;
   }
 
   // ----------------------------------------------------------
@@ -180,7 +201,7 @@ cbi-dropdown,
     height: 24px;
     min-width: 24px;
     cursor: pointer;
-    margin-inline-start: var(--fluent-space-xxs);
+    margin-inline-start: auto !important;
     margin-inline-end: 0;
     color: var(--fluent-text-secondary);
     transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
@@ -253,6 +274,7 @@ cbi-dropdown,
     padding: 0;
     overflow: visible;
 
+    > ul.preview,
     > ul:not(.dropdown),
     > span.more {
       min-width: 0;
@@ -288,28 +310,34 @@ cbi-dropdown,
   }
 
   // Hide preview when empty
-  &[empty] > ul:not(.dropdown) {
-    display: none;
+  &[empty] > ul.preview,
+  &[empty] > ul:not(.dropdown),
+  &[empty]:not([open]) > ul.dropdown {
+    display: none !important;
   }
 
   // ----------------------------------------------------------
   // DROPDOWN LIST (Listbox)
   // ----------------------------------------------------------
-  > ul.dropdown {
-    display: none;
+  &:not([open]):has(> ul:not(.dropdown)) > ul.dropdown,
+  &:not([open]):has(> ul.preview) > ul.dropdown:not(.preview) {
+    display: none !important;
+  }
+
+  > ul.dropdown:not(.preview) {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  &[open] > ul.dropdown {
+  &[open] > ul.dropdown:not(.preview) {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     // min-width: 100%;
     max-width: 80vw !important;
     overflow-y: auto;
-    max-height: min(350px, 50vh) !important;
+    max-height: min(var(--fluent-dropdown-max-height-limit), var(--fluent-dropdown-max-height), 45vh) !important;
     // Appearance
     background-color: var(--fluent-dropdown-bg);
     border: 1px solid var(--fluent-dropdown-border);
@@ -365,6 +393,7 @@ cbi-dropdown,
       box-sizing: border-box;
       position: relative;
       width: 100%;
+      flex-shrink: 0; // prevent Flex items from shrinking when the container's max-height is insufficient
 
       // Size
       min-height: var(--fluent-input-height);
@@ -425,15 +454,6 @@ cbi-dropdown,
         gap: var(--fluent-space-xxs);
       }
 
-      // Placeholder option
-      &[placeholder] {
-        color: var(--fluent-text-disabled);
-      }
-
-      // Hide placeholder in dropdown when something is selected
-      &[placeholder]:not(:only-child) {
-        display: none;
-      }
 
       // Hover state
       &:hover {
@@ -550,7 +570,7 @@ cbi-dropdown,
   li .hide-open {
     display: inline-block;
   }
-  &[open] > ul.dropdown > li {
+  &[open] > ul.dropdown:not(.preview) > li {
     .hide-open {
       display: none !important;
     }
@@ -562,7 +582,7 @@ cbi-dropdown,
   // ----------------------------------------------------------
   // MULTI-SELECT DROPDOWN OPTIMIZATION (FluentUI Style Checkboxes)
   // ----------------------------------------------------------
-  ul.dropdown > li {
+  ul.dropdown:not(.preview) > li {
     form {
       display: inline-flex !important;
       align-items: center !important;
@@ -683,9 +703,9 @@ cbi-dropdown,
   }
 
   // Single-select dropdown option checkmark (FluentUI style)
-  &:not([multiple]) > ul.dropdown > li {
+  &:not([multiple]) > ul.dropdown:not(.preview) > li {
     position: relative !important;
-    padding-inline-start: 32px !important;
+    padding-inline-start: 32px;
 
     &::before {
       content: "" !important;
@@ -721,13 +741,20 @@ cbi-dropdown,
   // Style zonebadge elements inside the dropdown options list
   ul.dropdown > li:has(.zonebadge) {
     padding: 0 !important;
+    padding-inline-start: 0 !important;
     background: transparent !important;
+
+    &::before {
+      display: none !important;
+      content: none !important;
+    }
 
     .zonebadge {
       display: flex !important;
       align-items: center !important;
+      flex-wrap: wrap !important;
       justify-content: flex-start !important;
-      gap: var(--fluent-space-sm) !important; // Add gap spacing between badge name and interface badges
+      gap: 4px var(--fluent-space-xs) !important; // Clean gap spacing between badge name and interface badges
       width: 100% !important;
       height: 100% !important;
       min-height: var(--fluent-input-height) !important;
@@ -740,23 +767,39 @@ cbi-dropdown,
       color: #111 !important; // Dark text for pastel contrast
 
       strong,
-      em,
-      span {
+      em {
         color: #111 !important;
+        line-height: 1.2 !important;
+        display: inline-flex !important;
+        align-items: center !important;
       }
 
       .ifacebadge {
-        color: var(--fluent-text) !important;
+        color: #111 !important;
         background: rgba(255, 255, 255, 0.6) !important;
         border-color: rgba(0, 0, 0, 0.1) !important;
         display: inline-flex !important;
         align-items: center !important;
-        gap: 2px !important;
-        padding: 1px 4px !important;
+        justify-content: center !important;
+        gap: 4px !important;
+        padding: 1px 5px !important;
+        min-height: unset !important;
+        height: auto !important;
+        line-height: 1.2 !important;
         border-radius: var(--fluent-radius-sm) !important;
         font-size: var(--fluent-font-size-xs) !important;
 
+        em,
+        strong,
+        span {
+          color: #111 !important;
+          line-height: inherit !important;
+        }
+
         img {
+          width: 14px !important;
+          height: 14px !important;
+          vertical-align: middle !important;
           background: transparent !important; // Remove black square background
         }
       }
@@ -770,19 +813,10 @@ cbi-dropdown,
     }
   }
 
-  // Adjust padding for checkmark space in single-select zonebadge options
-  &:not([multiple]) > ul.dropdown > li:has(.zonebadge) {
-    .zonebadge {
-      padding-inline-start: 32px !important;
-    }
-
-    &[selected]::before {
-      background-color: #111 !important; // Force dark checkmark color on pastel background
-    }
-  }
-
   // Style selected zone badges inside the collapsed preview bar as neat tags
-  > ul:not(.dropdown) > li:has(.zonebadge) {
+  > ul.preview > li:has(.zonebadge),
+  > ul:not(.dropdown) > li:has(.zonebadge),
+  &:not([open]) > ul.dropdown > li:has(.zonebadge) {
     display: none; // Unselected items stay hidden
 
     &[selected],
@@ -800,6 +834,7 @@ cbi-dropdown,
       display: inline-flex !important;
       align-items: center !important;
       padding: 2px var(--fluent-space-sm) !important;
+      padding-inline-start: var(--fluent-space-sm) !important;
       min-height: 20px !important;
       height: 20px !important;
       border-radius: var(--fluent-radius-sm) !important;
@@ -823,7 +858,7 @@ cbi-dropdown,
 
   // Position custom select options list based on direction
   &.fluent-custom-select {
-    &[data-open-direction="up"][open] > ul.dropdown {
+    &[data-open-direction="up"][open] > ul.dropdown:not(.preview) {
       bottom: 100%;
       top: auto !important;
       margin-top: 0 !important;
@@ -834,7 +869,7 @@ cbi-dropdown,
       width: max-content;
       inset-inline-end: auto !important;
     }
-    &[data-open-direction="down"][open] > ul.dropdown {
+    &[data-open-direction="down"][open] > ul.dropdown:not(.preview) {
       top: 100%;
       bottom: auto !important;
       margin-bottom: 0 !important;
@@ -846,7 +881,7 @@ cbi-dropdown,
       inset-inline-end: auto !important;
     }
 
-    &[data-fluent-floating="modal"][open] > ul.dropdown {
+    &[data-fluent-floating="modal"][open] > ul.dropdown:not(.preview) {
       position: fixed;
       top: var(--fluent-dropdown-top) !important;
       bottom: auto !important;
@@ -863,13 +898,13 @@ cbi-dropdown,
   }
 
   // Position open dropdowns (both native and custom select) using anchor positioning when supported
-  &[open] > ul.dropdown {
+  &[open] > ul.dropdown:not(.preview) {
     @supports (anchor-name: --a) {
       position: fixed !important;
       position-anchor: --fluent-cbi-dropdown-active !important;
+      position-try-fallbacks: flip-block !important;
       min-width: anchor-size(width) !important;
-      // width: max-content !important;
-      // max-width: calc(100vw - 16px) !important;
+      max-height: min(var(--fluent-dropdown-max-height-limit), var(--fluent-dropdown-max-height), 45vh) !important;
       margin: 0 !important;
       margin-top: var(--fluent-space-xxs) !important;
       left: anchor(left) !important;
@@ -884,22 +919,33 @@ cbi-dropdown,
       top: anchor(bottom) !important;
       bottom: auto !important;
 
-      // When opening upwards (detected via inline style bottom set by ui.js)
+      // When opening upwards (detected via inline style bottom set by ui.js or JS data-open-direction="up")
       &[style*="bottom"] {
         top: auto !important;
         bottom: anchor(top) !important;
         margin-top: 0 !important;
         margin-bottom: var(--fluent-space-xxs) !important;
+        max-height: min(var(--fluent-dropdown-max-height-limit), var(--fluent-dropdown-max-height), 45vh) !important;
+        transform-origin: bottom !important;
+        animation: fluent-dropdown-slide-in-up 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
       }
     }
   }
 
-  &[data-open-direction="up"][open] > ul.dropdown {
+  &[data-open-direction="up"][open] > ul.dropdown:not(.preview) {
+    top: auto !important;
+    bottom: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: var(--fluent-space-xxs) !important;
+    transform-origin: bottom !important;
+    animation: fluent-dropdown-slide-in-up 0.2s cubic-bezier(0.4, 0, 0.23, 1) forwards !important;
+
     @supports (anchor-name: --a) {
       top: auto !important;
       bottom: anchor(top) !important;
       margin-top: 0 !important;
       margin-bottom: var(--fluent-space-xxs) !important;
+      max-height: min(var(--fluent-dropdown-max-height-limit), var(--fluent-dropdown-max-height), 45vh) !important;
     }
   }
 }
@@ -912,3 +958,12 @@ cbi-dropdown,
   position: relative;
   z-index: 2000 !important;
 }
+
+// Hide placeholder in dropdown when something is selected, but only if the dropdown is NOT optional
+cbi-dropdown:not([optional]),
+.cbi-dropdown:not([optional]) {
+  > ul.dropdown > li[placeholder]:not(:only-child) {
+    display: none;
+  }
+}
+

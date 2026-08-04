@@ -77,6 +77,7 @@ td > .ifacebadge,
   background: var(--fluent-card-bg);
   box-shadow: var(--fluent-card-shadow);
   justify-content: center;
+  color: #111;
 }
 
 .zonebadge .ifacebadge {
@@ -93,7 +94,7 @@ td > .ifacebadge,
 
 .zonebadge > em,
 .zonebadge > strong {
-  // color: var(--fluent-text);
+  color: #111;
   font-style: normal;
   line-height: var(--fluent-line-height-normal);
 }

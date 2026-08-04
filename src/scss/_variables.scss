@@ -133,6 +133,10 @@
   // Toast
   --fluent-toast-radius: var(--fluent-radius-lg);
 
+  // Dropdown
+  --fluent-dropdown-max-height-limit: 350px;
+  --fluent-dropdown-max-height: var(--fluent-dropdown-max-height-limit);
+
   // Dynamic 16-Stop Brand Ramp (computed at runtime from primary accent color)
   --fluent-brand-10: color-mix(in srgb, var(--fluent-primary) 10%, #000000);
   --fluent-brand-20: color-mix(in srgb, var(--fluent-primary) 20%, #000000);

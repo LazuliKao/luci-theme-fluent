@@ -7,14 +7,36 @@ import { getEffectiveDocumentDirection, getRectInlineStart, getViewportInlineSiz
 let selectDropdownListenersRegistered = false;
 
 function updateOpenDropdownPositions() {
-  document.querySelectorAll(".fluent-custom-select[open]").forEach((dropdown) => {
+  document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((dropdown) => {
     if (!(dropdown instanceof HTMLElement)) return;
 
-    const selectEl = dropdown.previousElementSibling;
-    if (selectEl instanceof HTMLSelectElement) {
-      updateDropdownPosition(dropdown, selectEl);
+    if (dropdown.classList.contains("fluent-custom-select")) {
+      const selectEl = dropdown.previousElementSibling;
+      if (selectEl instanceof HTMLSelectElement) {
+        updateDropdownPosition(dropdown, selectEl);
+      }
+    } else {
+      updateNativeDropdownPosition(dropdown);
     }
   });
+}
+
+function updateNativeDropdownPosition(dropdown: HTMLElement) {
+  const rect = dropdown.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const spaceBelow = viewportHeight - rect.bottom;
+  const spaceAbove = rect.top;
+
+  const listbox = dropdown.querySelector("ul.dropdown, ul:not(.preview)") as HTMLElement;
+  const itemCount = listbox ? listbox.querySelectorAll("li").length : 8;
+  const scrollHeight = listbox ? listbox.scrollHeight : 0;
+  const listHeight = Math.min(scrollHeight > 0 ? scrollHeight : itemCount * 36 + 10, DROPDOWN_MAX_HEIGHT_LIMIT);
+
+  const openUp = spaceBelow < listHeight && spaceAbove > spaceBelow;
+  const maxListHeight = openUp ? Math.max(64, spaceAbove - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP) : Math.max(64, spaceBelow - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP);
+
+  dropdown.setAttribute("data-open-direction", openUp ? "up" : "down");
+  dropdown.style.setProperty("--fluent-dropdown-max-height", `${Math.min(DROPDOWN_MAX_HEIGHT_LIMIT, listHeight, maxListHeight)}px`);
 }
 
 function registerSelectDropdownListeners() {
@@ -23,12 +45,36 @@ function registerSelectDropdownListeners() {
   selectDropdownListenersRegistered = true;
   window.addEventListener("scroll", updateOpenDropdownPositions, true);
   window.addEventListener("resize", updateOpenDropdownPositions);
+
+  const dropdownObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "attributes" && mutation.attributeName === "open") {
+        const target = mutation.target as HTMLElement;
+        if (target.hasAttribute("open")) {
+          if (target.classList.contains("fluent-custom-select")) {
+            const selectEl = target.previousElementSibling;
+            if (selectEl instanceof HTMLSelectElement) {
+              updateDropdownPosition(target, selectEl);
+            }
+          } else if (target.tagName === "CBI-DROPDOWN" || target.classList.contains("cbi-dropdown")) {
+            updateNativeDropdownPosition(target);
+          }
+        }
+      }
+    });
+  });
+
+  dropdownObserver.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["open"],
+    subtree: true,
+  });
 }
 
 export function setupFluentSelects() {
+  registerSelectDropdownListeners();
   const isEnabled = document.body.getAttribute("data-theme-custom-select") !== "0";
   if (!isEnabled) return;
-  registerSelectDropdownListeners();
 
   // 1. Transform existing selects & upgrade native dropdown chevrons
   transformAllSelects();
@@ -93,6 +139,10 @@ function upgradeDropdownChevron(dropdown: HTMLElement) {
 
 function upgradeNativeDropdown(dropdown: HTMLElement) {
   upgradeDropdownChevron(dropdown);
+  const listbox = dropdown.querySelector("ul:not(.preview)") as HTMLElement;
+  if (listbox && !listbox.classList.contains("dropdown")) {
+    listbox.classList.add("dropdown");
+  }
 }
 
 function isSelectElementHidden(selectEl: HTMLSelectElement): boolean {
@@ -150,6 +200,7 @@ function isSelectElementHidden(selectEl: HTMLSelectElement): boolean {
   return false;
 }
 
+const DROPDOWN_MAX_HEIGHT_LIMIT = 350;
 const DROPDOWN_VIEWPORT_MARGIN = 8;
 const DROPDOWN_GAP = 2;
 
@@ -173,7 +224,7 @@ function updateDropdownPosition(customDropdown: HTMLElement, selectEl: HTMLSelec
   const viewportHeight = window.innerHeight;
   const spaceBelow = viewportHeight - rect.bottom;
   const spaceAbove = rect.top;
-  const listHeight = Math.min(selectEl.options.length * 32 + 10, 320);
+  const listHeight = Math.min(selectEl.options.length * 32 + 10, DROPDOWN_MAX_HEIGHT_LIMIT);
 
   if (spaceBelow < listHeight && spaceAbove > spaceBelow) {
     customDropdown.setAttribute("data-open-direction", "up");
@@ -187,7 +238,7 @@ function updateDropdownPosition(customDropdown: HTMLElement, selectEl: HTMLSelec
     return;
   }
 
-  const maxListHeight = Math.min(selectEl.options.length * 32 + 10, 320, viewportHeight * 0.45);
+  const maxListHeight = Math.min(selectEl.options.length * 32 + 10, DROPDOWN_MAX_HEIGHT_LIMIT, viewportHeight * 0.45);
   const openUp = spaceBelow < maxListHeight && spaceAbove > spaceBelow;
   const availableHeight = Math.max(64, openUp ? spaceAbove - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP : spaceBelow - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP);
   const dropdownHeight = Math.min(maxListHeight, availableHeight);
