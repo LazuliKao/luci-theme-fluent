@@ -871,6 +871,7 @@ cbi-dropdown,
       // width: max-content !important;
       // max-width: calc(100vw - 16px) !important;
       margin: 0 !important;
+      margin-top: var(--fluent-space-xxs) !important;
       left: anchor(left) !important;
       right: auto !important;
 
@@ -887,6 +888,8 @@ cbi-dropdown,
       &[style*="bottom"] {
         top: auto !important;
         bottom: anchor(top) !important;
+        margin-top: 0 !important;
+        margin-bottom: var(--fluent-space-xxs) !important;
       }
     }
   }
@@ -895,6 +898,8 @@ cbi-dropdown,
     @supports (anchor-name: --a) {
       top: auto !important;
       bottom: anchor(top) !important;
+      margin-top: 0 !important;
+      margin-bottom: var(--fluent-space-xxs) !important;
     }
   }
 }

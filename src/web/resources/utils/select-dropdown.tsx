@@ -151,7 +151,7 @@ function isSelectElementHidden(selectEl: HTMLSelectElement): boolean {
 }
 
 const DROPDOWN_VIEWPORT_MARGIN = 8;
-const DROPDOWN_GAP = 4;
+const DROPDOWN_GAP = 2;
 
 function scrollOptionIntoDropdown(listbox: HTMLElement, item: HTMLElement) {
   const itemTop = item.offsetTop;

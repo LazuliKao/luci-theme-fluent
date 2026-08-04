@@ -991,7 +991,7 @@ function select_dropdown_d(e, t) {
 function select_dropdown_c(e, t) {
     let r = e.getBoundingClientRect(), s = getEffectiveDocumentDirection(), a = getViewportInlineSize(), d = window.innerHeight, c = d - r.bottom, u = r.top;
     if (c < Math.min(32 * t.options.length + 10, 320) && u > c ? e.setAttribute("data-open-direction", "up") : e.setAttribute("data-open-direction", "down"), !e.closest("#modal_overlay .modal, .fluent-mac-overlay-card, [class*='overlay']")) return void e.removeAttribute("data-fluent-floating");
-    let b = Math.min(32 * t.options.length + 10, 320, 0.45 * d), p = c < b && u > c, f = Math.min(b, Math.max(64, p ? u - 8 - 4 : c - 8 - 4)), m = Math.min(r.width, a - 16), v = Math.min(Math.max(8, getRectInlineStart(r, s, a)), a - m - 8), h = p ? Math.max(8, r.top - f - 4) : Math.min(d - 8 - f, r.bottom + 4);
+    let b = Math.min(32 * t.options.length + 10, 320, 0.45 * d), p = c < b && u > c, f = Math.min(b, Math.max(64, p ? u - 8 - 2 : c - 8 - 2)), m = Math.min(r.width, a - 16), v = Math.min(Math.max(8, getRectInlineStart(r, s, a)), a - m - 8), h = p ? Math.max(8, r.top - f - 2) : Math.min(d - 8 - f, r.bottom + 2);
     e.setAttribute("data-open-direction", p ? "up" : "down"), e.setAttribute("data-fluent-floating", "modal"), setInlineCssCustomProperties(e.style, {
         inlineStart: v,
         inlineSize: m
