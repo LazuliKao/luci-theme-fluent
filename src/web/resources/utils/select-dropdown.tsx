@@ -30,7 +30,7 @@ function updateNativeDropdownPosition(dropdown: HTMLElement) {
   const listbox = dropdown.querySelector("ul.dropdown, ul:not(.preview)") as HTMLElement;
   const itemCount = listbox ? listbox.querySelectorAll("li").length : 8;
   const scrollHeight = listbox ? listbox.scrollHeight : 0;
-  const listHeight = Math.min(scrollHeight > 0 ? scrollHeight : itemCount * 36 + 10, DROPDOWN_MAX_HEIGHT_LIMIT);
+  const listHeight = Math.min(scrollHeight > 0 ? scrollHeight + 8 : itemCount * 36 + 10, DROPDOWN_MAX_HEIGHT_LIMIT);
 
   const openUp = spaceBelow < listHeight && spaceAbove > spaceBelow;
   const maxListHeight = openUp ? Math.max(64, spaceAbove - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP) : Math.max(64, spaceBelow - DROPDOWN_VIEWPORT_MARGIN - DROPDOWN_GAP);

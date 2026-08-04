@@ -962,7 +962,7 @@ function select_dropdown_s() {
     });
 }
 function select_dropdown_a(e) {
-    let t = e.getBoundingClientRect(), n = window.innerHeight - t.bottom, o = t.top, l = e.querySelector("ul.dropdown, ul:not(.preview)"), i = l ? l.querySelectorAll("li").length : 8, r = l ? l.scrollHeight : 0, s = Math.min(r > 0 ? r : 36 * i + 10, select_dropdown_c), a = n < s && o > n, d = a ? Math.max(64, o - select_dropdown_u - select_dropdown_p) : Math.max(64, n - select_dropdown_u - select_dropdown_p);
+    let t = e.getBoundingClientRect(), n = window.innerHeight - t.bottom, o = t.top, l = e.querySelector("ul.dropdown, ul:not(.preview)"), i = l ? l.querySelectorAll("li").length : 8, r = l ? l.scrollHeight : 0, s = Math.min(r > 0 ? r + 8 : 36 * i + 10, select_dropdown_c), a = n < s && o > n, d = a ? Math.max(64, o - select_dropdown_u - select_dropdown_p) : Math.max(64, n - select_dropdown_u - select_dropdown_p);
     e.setAttribute("data-open-direction", a ? "up" : "down"), e.style.setProperty("--fluent-dropdown-max-height", `${Math.min(select_dropdown_c, s, d)}px`);
 }
 function setupFluentSelects() {
