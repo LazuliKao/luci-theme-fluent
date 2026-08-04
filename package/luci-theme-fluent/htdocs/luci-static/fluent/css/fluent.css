@@ -1759,6 +1759,7 @@ div.td, div.th {
 }
 
 .modal .modal-content-wrap, .modal > .cbi-map {
+  padding-bottom: var(--fluent-space-xs);
   flex: auto;
   min-height: 20px;
   overflow-y: auto;

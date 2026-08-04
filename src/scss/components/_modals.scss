@@ -105,6 +105,7 @@
   // Generic modals use the JS wrapper; CBI maps stay direct children to preserve LuCI's DOM API.
   .modal-content-wrap,
   > .cbi-map {
+    padding-bottom: var(--fluent-space-xs);
     flex: 1 1 auto;
     overflow-y: auto;
     min-height: 20px; // Essential for nested flexbox scrolling
