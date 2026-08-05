@@ -6452,6 +6452,10 @@ cbi-dropdown:not([optional]) > ul.dropdown > li[placeholder]:not(:only-child), .
 }
 
 .cbi-dropdown.cbi-button, .cbi-dropdown.btn {
+  --menu-btn-bg-default: var(--fluent-btn-secondary-bg);
+  --menu-btn-bg-hover: var(--fluent-btn-secondary-bg-hover);
+  --menu-btn-bg-active: var(--fluent-btn-secondary-bg-active);
+  background: var(--menu-btn-bg-default);
   box-sizing: border-box;
   vertical-align: middle;
   cursor: pointer;
@@ -6466,13 +6470,10 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 }
 
 .cbi-dropdown.cbi-button, .cbi-dropdown.btn {
-  gap: var(--fluent-space-xs);
   min-width: unset;
   width: auto;
-  padding-block: 0 !important;
-  padding-inline: var(--fluent-space-md) !important;
-  border-inline-end: 0 !important;
-  padding-inline-end: 0 !important;
+  gap: 0 !important;
+  padding: 0 !important;
 }
 
 .cbi-dropdown.cbi-button:after, .cbi-dropdown.btn:after {
@@ -6481,7 +6482,12 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 }
 
 .cbi-dropdown.cbi-button:hover:not([disabled]), .cbi-dropdown.btn:hover:not([disabled]) {
+  background: var(--menu-btn-bg-default);
   border-bottom-color: var(--fluent-btn-secondary-border-hover);
+}
+
+.cbi-dropdown.cbi-button:active, .cbi-dropdown.cbi-button:active:not([disabled]), .cbi-dropdown.btn:active, .cbi-dropdown.btn:active:not([disabled]) {
+  background: var(--menu-btn-bg-default);
 }
 
 .cbi-dropdown.cbi-button:focus, .cbi-dropdown.cbi-button.focus, .cbi-dropdown.cbi-button[open], .cbi-dropdown.btn:focus, .cbi-dropdown.btn.focus, .cbi-dropdown.btn[open] {
@@ -6489,8 +6495,20 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   outline: none;
 }
 
+.cbi-dropdown.cbi-button.cbi-button-apply, .cbi-dropdown.cbi-button.cbi-button-save, .cbi-dropdown.cbi-button.cbi-button-positive, .cbi-dropdown.cbi-button.important, .cbi-dropdown.btn.cbi-button-apply, .cbi-dropdown.btn.cbi-button-save, .cbi-dropdown.btn.cbi-button-positive, .cbi-dropdown.btn.important {
+  --menu-btn-bg-default: var(--fluent-btn-primary-bg);
+  --menu-btn-bg-hover: var(--fluent-btn-primary-bg-hover);
+  --menu-btn-bg-active: var(--fluent-btn-primary-bg-active);
+  background: var(--menu-btn-bg-default);
+}
+
 .cbi-dropdown.cbi-button.cbi-button-apply:hover:not([disabled]), .cbi-dropdown.cbi-button.cbi-button-save:hover:not([disabled]), .cbi-dropdown.cbi-button.cbi-button-positive:hover:not([disabled]), .cbi-dropdown.cbi-button.important:hover:not([disabled]), .cbi-dropdown.btn.cbi-button-apply:hover:not([disabled]), .cbi-dropdown.btn.cbi-button-save:hover:not([disabled]), .cbi-dropdown.btn.cbi-button-positive:hover:not([disabled]), .cbi-dropdown.btn.important:hover:not([disabled]) {
+  background: var(--menu-btn-bg-default);
   border-bottom-color: var(--fluent-btn-primary-bg-hover);
+}
+
+.cbi-dropdown.cbi-button.cbi-button-apply:active, .cbi-dropdown.cbi-button.cbi-button-apply:active:not([disabled]), .cbi-dropdown.cbi-button.cbi-button-save:active, .cbi-dropdown.cbi-button.cbi-button-save:active:not([disabled]), .cbi-dropdown.cbi-button.cbi-button-positive:active, .cbi-dropdown.cbi-button.cbi-button-positive:active:not([disabled]), .cbi-dropdown.cbi-button.important:active, .cbi-dropdown.cbi-button.important:active:not([disabled]), .cbi-dropdown.btn.cbi-button-apply:active, .cbi-dropdown.btn.cbi-button-apply:active:not([disabled]), .cbi-dropdown.btn.cbi-button-save:active, .cbi-dropdown.btn.cbi-button-save:active:not([disabled]), .cbi-dropdown.btn.cbi-button-positive:active, .cbi-dropdown.btn.cbi-button-positive:active:not([disabled]), .cbi-dropdown.btn.important:active, .cbi-dropdown.btn.important:active:not([disabled]) {
+  background: var(--menu-btn-bg-default);
 }
 
 .cbi-dropdown.cbi-button.cbi-button-apply:focus, .cbi-dropdown.cbi-button.cbi-button-apply.focus, .cbi-dropdown.cbi-button.cbi-button-apply[open], .cbi-dropdown.cbi-button.cbi-button-save:focus, .cbi-dropdown.cbi-button.cbi-button-save.focus, .cbi-dropdown.cbi-button.cbi-button-save[open], .cbi-dropdown.cbi-button.cbi-button-positive:focus, .cbi-dropdown.cbi-button.cbi-button-positive.focus, .cbi-dropdown.cbi-button.cbi-button-positive[open], .cbi-dropdown.cbi-button.important:focus, .cbi-dropdown.cbi-button.important.focus, .cbi-dropdown.cbi-button.important[open], .cbi-dropdown.btn.cbi-button-apply:focus, .cbi-dropdown.btn.cbi-button-apply.focus, .cbi-dropdown.btn.cbi-button-apply[open], .cbi-dropdown.btn.cbi-button-save:focus, .cbi-dropdown.btn.cbi-button-save.focus, .cbi-dropdown.btn.cbi-button-save[open], .cbi-dropdown.btn.cbi-button-positive:focus, .cbi-dropdown.btn.cbi-button-positive.focus, .cbi-dropdown.btn.cbi-button-positive[open], .cbi-dropdown.btn.important:focus, .cbi-dropdown.btn.important.focus, .cbi-dropdown.btn.important[open] {
@@ -6538,19 +6556,22 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 }
 
 .cbi-dropdown.cbi-button.cbi-button-remove, .cbi-dropdown.cbi-button.cbi-button-negative, .cbi-dropdown.btn.cbi-button-remove, .cbi-dropdown.btn.cbi-button-negative {
-  background: var(--fluent-error);
+  --menu-btn-bg-default: var(--fluent-error);
+  --menu-btn-bg-hover: var(--fluent-error-hover);
+  --menu-btn-bg-active: var(--fluent-error-active);
+  background: var(--menu-btn-bg-default);
   color: var(--fluent-text-on-primary);
   border-color: var(--fluent-error);
 }
 
 .cbi-dropdown.cbi-button.cbi-button-remove:hover, .cbi-dropdown.cbi-button.cbi-button-negative:hover, .cbi-dropdown.btn.cbi-button-remove:hover, .cbi-dropdown.btn.cbi-button-negative:hover {
-  background: var(--fluent-error-hover);
+  background: var(--menu-btn-bg-default);
   border-color: var(--fluent-error-hover);
   border-bottom-color: var(--fluent-error-hover);
 }
 
-.cbi-dropdown.cbi-button.cbi-button-remove:active, .cbi-dropdown.cbi-button.cbi-button-negative:active, .cbi-dropdown.btn.cbi-button-remove:active, .cbi-dropdown.btn.cbi-button-negative:active {
-  background: var(--fluent-error-active);
+.cbi-dropdown.cbi-button.cbi-button-remove:active, .cbi-dropdown.cbi-button.cbi-button-remove:active:not([disabled]), .cbi-dropdown.cbi-button.cbi-button-negative:active, .cbi-dropdown.cbi-button.cbi-button-negative:active:not([disabled]), .cbi-dropdown.btn.cbi-button-remove:active, .cbi-dropdown.btn.cbi-button-remove:active:not([disabled]), .cbi-dropdown.btn.cbi-button-negative:active, .cbi-dropdown.btn.cbi-button-negative:active:not([disabled]) {
+  background: var(--menu-btn-bg-default);
   border-color: var(--fluent-error-active);
   border-bottom-color: var(--fluent-error-active);
 }
@@ -6580,55 +6601,91 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 }
 
 .cbi-dropdown.cbi-button > ul.preview, .cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.cbi-button > span.more, .cbi-dropdown.btn > ul.preview, .cbi-dropdown.btn > ul:not(.dropdown), .cbi-dropdown.btn > span.more {
-  padding-inline-start: 0 !important;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
+  border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
+  align-self: stretch;
+  pointer-events: auto !important;
+  flex: 1 !important;
+  padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
 }
 
 .cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  padding-inline-start: 0 !important;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
+  border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
+  align-self: stretch;
+  pointer-events: auto !important;
+  flex: 1 !important;
+  padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
 }
 
 .cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  padding-inline-start: 0 !important;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
+  border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
+  align-self: stretch;
+  pointer-events: auto !important;
+  flex: 1 !important;
+  padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
+}
+
+.cbi-dropdown.cbi-button > ul.preview:hover:not([disabled]), .cbi-dropdown.cbi-button > ul:not(.dropdown):hover:not([disabled]), .cbi-dropdown.cbi-button > span.more:hover:not([disabled]), .cbi-dropdown.btn > ul.preview:hover:not([disabled]), .cbi-dropdown.btn > ul:not(.dropdown):hover:not([disabled]), .cbi-dropdown.btn > span.more:hover:not([disabled]) {
+  background: var(--menu-btn-bg-hover);
+}
+
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown:hover:not([disabled]) {
+  background: var(--menu-btn-bg-hover);
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown:hover:not([disabled]) {
+  background: var(--menu-btn-bg-hover);
+}
+
+.cbi-dropdown.cbi-button > ul.preview:active:not([disabled]), .cbi-dropdown.cbi-button > ul:not(.dropdown):active:not([disabled]), .cbi-dropdown.cbi-button > span.more:active:not([disabled]), .cbi-dropdown.btn > ul.preview:active:not([disabled]), .cbi-dropdown.btn > ul:not(.dropdown):active:not([disabled]), .cbi-dropdown.btn > span.more:active:not([disabled]) {
+  background: var(--menu-btn-bg-active);
+}
+
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown:active:not([disabled]) {
+  background: var(--menu-btn-bg-active);
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown:active:not([disabled]) {
+  background: var(--menu-btn-bg-active);
 }
 
 .cbi-dropdown.cbi-button > ul.preview, .cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.btn > ul.preview, .cbi-dropdown.btn > ul:not(.dropdown) {
-  pointer-events: none;
   height: 100%;
   min-height: unset;
   align-items: center;
   margin: 0;
   padding-block: 0;
   display: flex;
-  flex: none !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
 
 .cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  pointer-events: none;
   height: 100%;
   min-height: unset;
   align-items: center;
   margin: 0;
   padding-block: 0;
   display: flex;
-  flex: none !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
 
 .cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  pointer-events: none;
   height: 100%;
   min-height: unset;
   align-items: center;
   margin: 0;
   padding-block: 0;
   display: flex;
-  flex: none !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
@@ -6683,12 +6740,15 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   width: 30px;
   height: 100%;
   color: inherit;
-  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard),background var(--fluent-duration-fast) var(--fluent-easing-standard);
+  border-start-end-radius: calc(var(--fluent-radius-md) - 1px);
+  border-end-end-radius: calc(var(--fluent-radius-md) - 1px);
   justify-content: center;
   align-items: center;
   margin-inline-end: 0;
   font-size: 0;
   display: inline-flex;
+  pointer-events: auto !important;
   margin-inline-start: 0 !important;
 }
 
@@ -6725,6 +6785,14 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 
 .cbi-dropdown.btn > span.open:has(svg):before {
   display: none !important;
+}
+
+.cbi-dropdown.cbi-button > span.open:hover:not([disabled]), .cbi-dropdown.btn > span.open:hover:not([disabled]) {
+  background: var(--menu-btn-bg-hover);
+}
+
+.cbi-dropdown.cbi-button > span.open:active:not([disabled]), .cbi-dropdown.btn > span.open:active:not([disabled]), .cbi-dropdown.cbi-button[open] > span.open, .cbi-dropdown.btn[open] > span.open {
+  background: var(--menu-btn-bg-active);
 }
 
 .cbi-dropdown.cbi-button[open] > span.open:before, .cbi-dropdown.btn[open] > span.open:before {

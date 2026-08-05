@@ -10,6 +10,14 @@
   // 1. Reset dropdown (input-base) properties to button styles
   @include button-secondary;
 
+  // Define default, hover and active background variables
+  --menu-btn-bg-default: var(--fluent-btn-secondary-bg);
+  --menu-btn-bg-hover: var(--fluent-btn-secondary-bg-hover);
+  --menu-btn-bg-active: var(--fluent-btn-secondary-bg-active);
+
+  // Set default background
+  background: var(--menu-btn-bg-default);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,11 +31,8 @@
   }
 
   // Layout & size overrides
-  padding-block: 0 !important;
-  padding-inline: var(--fluent-space-md) !important; // Balanced padding
-  padding-inline-end: 0 !important; // Remove inline-end padding to accommodate chevron
-  border-inline-end: 0 !important; // Remove inline-end border to accommodate chevron
-  gap: var(--fluent-space-xs); // Gap between text and chevron
+  padding: 0 !important;
+  gap: 0 !important;
   min-width: unset; // Buttons shouldn't have the 120px min-width of select dropdowns
   width: auto;
 
@@ -39,7 +44,13 @@
 
   // 3. Hover, Active & Focus State overrides to match FluentUI Button behaviour
   &:hover:not([disabled]) {
+    background: var(--menu-btn-bg-default);
     border-bottom-color: var(--fluent-btn-secondary-border-hover);
+  }
+
+  &:active,
+  &:active:not([disabled]) {
+    background: var(--menu-btn-bg-default);
   }
 
   &:focus,
@@ -56,8 +67,20 @@
   &.important {
     @include button-primary;
 
+    --menu-btn-bg-default: var(--fluent-btn-primary-bg);
+    --menu-btn-bg-hover: var(--fluent-btn-primary-bg-hover);
+    --menu-btn-bg-active: var(--fluent-btn-primary-bg-active);
+
+    background: var(--menu-btn-bg-default);
+
     &:hover:not([disabled]) {
+      background: var(--menu-btn-bg-default);
       border-bottom-color: var(--fluent-btn-primary-bg-hover);
+    }
+
+    &:active,
+    &:active:not([disabled]) {
+      background: var(--menu-btn-bg-default);
     }
 
     &:focus,
@@ -82,18 +105,24 @@
   &.cbi-button-remove,
   &.cbi-button-negative {
     @include button-base;
-    background: var(--fluent-error);
+
+    --menu-btn-bg-default: var(--fluent-error);
+    --menu-btn-bg-hover: var(--fluent-error-hover);
+    --menu-btn-bg-active: var(--fluent-error-active);
+
+    background: var(--menu-btn-bg-default);
     color: var(--fluent-text-on-primary);
     border-color: var(--fluent-error);
 
     &:hover {
-      background: var(--fluent-error-hover);
+      background: var(--menu-btn-bg-default);
       border-color: var(--fluent-error-hover);
       border-bottom-color: var(--fluent-error-hover);
     }
 
-    &:active {
-      background: var(--fluent-error-active);
+    &:active,
+    &:active:not([disabled]) {
+      background: var(--menu-btn-bg-default);
       border-color: var(--fluent-error-active);
       border-bottom-color: var(--fluent-error-active);
     }
@@ -114,8 +143,24 @@
   > ul:not(.dropdown),
   > span.more,
   &:not([open]):not(:has(> ul:not(.dropdown))):not(:has(> ul.preview)) > ul.dropdown {
-    padding-inline-start: 0 !important;
+    padding-inline-start: var(--fluent-space-md) !important;
     padding-inline-end: var(--fluent-space-sm) !important;
+    pointer-events: auto !important;
+    flex: 1 !important;
+    align-self: stretch;
+    transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    // Logical border-radius matching the parent container's left corners
+    border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
+    border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
+
+    &:hover:not([disabled]) {
+      background: var(--menu-btn-bg-hover);
+    }
+
+    &:active:not([disabled]) {
+      background: var(--menu-btn-bg-active);
+    }
   }
 
   > ul.preview,
@@ -123,14 +168,11 @@
   &:not([open]):not(:has(> ul:not(.dropdown))):not(:has(> ul.preview)) > ul.dropdown {
     padding-block: 0;
     margin: 0;
-    flex: none !important;
-    pointer-events: none;
     display: flex;
     align-items: center;
     height: 100%;
     min-height: unset;
     mask-image: none !important;
-
 
     > li {
       font-family: var(--fluent-font-family);
@@ -158,7 +200,14 @@
     margin-inline-end: 0;
     font-size: 0;
     color: inherit;
-    transition: color var(--fluent-duration-fast) var(--fluent-easing-standard);
+    pointer-events: auto !important;
+    transition:
+      color var(--fluent-duration-fast) var(--fluent-easing-standard),
+      background var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    // Logical border-radius matching the parent container's right corners
+    border-start-end-radius: calc(var(--fluent-radius-md) - 1px);
+    border-end-end-radius: calc(var(--fluent-radius-md) - 1px);
 
     &::before {
       @include fluent-mask-icon-by-name("chevron-down-20-regular", 16px, currentColor);
@@ -177,11 +226,22 @@
     &:has(svg)::before {
       display: none !important;
     }
+
+    &:hover:not([disabled]) {
+      background: var(--menu-btn-bg-hover);
+    }
+
+    &:active:not([disabled]) {
+      background: var(--menu-btn-bg-active);
+    }
   }
 
-  // When dropdown list is open, rotate the chevron
-  &[open] > span.open::before {
-    transform: rotate(180deg);
+  // When dropdown list is open, rotate the chevron and highlight it as active
+  &[open] > span.open {
+    background: var(--menu-btn-bg-active);
+    &::before {
+      transform: rotate(180deg);
+    }
   }
 
   // 8. Focus visibility (matching Fluent button focus ring)
