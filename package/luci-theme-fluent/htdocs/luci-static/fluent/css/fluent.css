@@ -6497,7 +6497,39 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   border-bottom-color: var(--fluent-btn-primary-bg-active);
 }
 
-.cbi-dropdown.cbi-button.cbi-button-apply > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-save > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-positive > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.important > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-apply > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-save > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-positive > ul:not(.dropdown) > li, .cbi-dropdown.btn.important > ul:not(.dropdown) > li {
+.cbi-dropdown.cbi-button.cbi-button-apply > ul.preview > li, .cbi-dropdown.cbi-button.cbi-button-apply > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-save > ul.preview > li, .cbi-dropdown.cbi-button.cbi-button-save > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-positive > ul.preview > li, .cbi-dropdown.cbi-button.cbi-button-positive > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.important > ul.preview > li, .cbi-dropdown.cbi-button.important > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-apply > ul.preview > li, .cbi-dropdown.btn.cbi-button-apply > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-save > ul.preview > li, .cbi-dropdown.btn.cbi-button-save > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-positive > ul.preview > li, .cbi-dropdown.btn.cbi-button-positive > ul:not(.dropdown) > li, .cbi-dropdown.btn.important > ul.preview > li, .cbi-dropdown.btn.important > ul:not(.dropdown) > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.cbi-button-apply:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.cbi-button-save:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.cbi-button-positive:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.important:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.cbi-button-apply:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.cbi-button-save:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.cbi-button-positive:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.important:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
   color: var(--fluent-text-on-primary) !important;
 }
 
@@ -6523,7 +6555,23 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   border-bottom-color: var(--fluent-error-active);
 }
 
-.cbi-dropdown.cbi-button.cbi-button-remove > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-negative > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-remove > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-negative > ul:not(.dropdown) > li {
+.cbi-dropdown.cbi-button.cbi-button-remove > ul.preview > li, .cbi-dropdown.cbi-button.cbi-button-remove > ul:not(.dropdown) > li, .cbi-dropdown.cbi-button.cbi-button-negative > ul.preview > li, .cbi-dropdown.cbi-button.cbi-button-negative > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-remove > ul.preview > li, .cbi-dropdown.btn.cbi-button-remove > ul:not(.dropdown) > li, .cbi-dropdown.btn.cbi-button-negative > ul.preview > li, .cbi-dropdown.btn.cbi-button-negative > ul:not(.dropdown) > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.cbi-button-remove:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.cbi-button.cbi-button-negative:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.cbi-button-remove:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-on-primary) !important;
+}
+
+.cbi-dropdown.btn.cbi-button-negative:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
   color: var(--fluent-text-on-primary) !important;
 }
 
@@ -6531,25 +6579,102 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   border-color: var(--fluent-text-on-primary) !important;
 }
 
-.cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.btn > ul:not(.dropdown) {
+.cbi-dropdown.cbi-button > ul.preview, .cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.cbi-button > span.more, .cbi-dropdown.btn > ul.preview, .cbi-dropdown.btn > ul:not(.dropdown), .cbi-dropdown.btn > span.more {
+  padding-inline-start: 0 !important;
+  padding-inline-end: var(--fluent-space-sm) !important;
+}
+
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  padding-inline-start: 0 !important;
+  padding-inline-end: var(--fluent-space-sm) !important;
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  padding-inline-start: 0 !important;
+  padding-inline-end: var(--fluent-space-sm) !important;
+}
+
+.cbi-dropdown.cbi-button > ul.preview, .cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.btn > ul.preview, .cbi-dropdown.btn > ul:not(.dropdown) {
   pointer-events: none;
   height: 100%;
   min-height: unset;
   align-items: center;
   margin: 0;
-  padding: 0;
+  padding-block: 0;
   display: flex;
   flex: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
-.cbi-dropdown.cbi-button > ul:not(.dropdown) > li, .cbi-dropdown.btn > ul:not(.dropdown) > li {
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  pointer-events: none;
+  height: 100%;
+  min-height: unset;
+  align-items: center;
+  margin: 0;
+  padding-block: 0;
+  display: flex;
+  flex: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  pointer-events: none;
+  height: 100%;
+  min-height: unset;
+  align-items: center;
+  margin: 0;
+  padding-block: 0;
+  display: flex;
+  flex: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.cbi-dropdown.cbi-button > ul.preview > li, .cbi-dropdown.cbi-button > ul:not(.dropdown) > li, .cbi-dropdown.btn > ul.preview > li, .cbi-dropdown.btn > ul:not(.dropdown) > li {
   font-family: var(--fluent-font-family);
   font-size: var(--fluent-font-size-base);
   font-weight: var(--fluent-font-weight-regular);
   color: inherit;
 }
 
-.cbi-dropdown.cbi-button > ul:not(.dropdown) > li[selected], .cbi-dropdown.cbi-button > ul:not(.dropdown) > li[display], .cbi-dropdown.btn > ul:not(.dropdown) > li[selected], .cbi-dropdown.btn > ul:not(.dropdown) > li[display] {
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  color: inherit;
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-regular);
+  color: inherit;
+}
+
+.cbi-dropdown.cbi-button > ul.preview > li[selected], .cbi-dropdown.cbi-button > ul.preview > li[display], .cbi-dropdown.cbi-button > ul:not(.dropdown) > li[selected], .cbi-dropdown.cbi-button > ul:not(.dropdown) > li[display], .cbi-dropdown.btn > ul.preview > li[selected], .cbi-dropdown.btn > ul.preview > li[display], .cbi-dropdown.btn > ul:not(.dropdown) > li[selected], .cbi-dropdown.btn > ul:not(.dropdown) > li[display] {
+  align-items: center;
+  display: inline-flex;
+}
+
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[selected] {
+  align-items: center;
+  display: inline-flex;
+}
+
+.cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display] {
+  align-items: center;
+  display: inline-flex;
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[selected] {
+  align-items: center;
+  display: inline-flex;
+}
+
+.cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li[display] {
   align-items: center;
   display: inline-flex;
 }
@@ -6621,7 +6746,15 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   color: var(--fluent-text-disabled) !important;
 }
 
-.cbi-dropdown.cbi-button[disabled] > ul:not(.dropdown) > li, .cbi-dropdown.btn[disabled] > ul:not(.dropdown) > li {
+.cbi-dropdown.cbi-button[disabled] > ul.preview > li, .cbi-dropdown.cbi-button[disabled] > ul:not(.dropdown) > li, .cbi-dropdown.btn[disabled] > ul.preview > li, .cbi-dropdown.btn[disabled] > ul:not(.dropdown) > li {
+  color: var(--fluent-text-disabled) !important;
+}
+
+.cbi-dropdown.cbi-button[disabled]:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
+  color: var(--fluent-text-disabled) !important;
+}
+
+.cbi-dropdown.btn[disabled]:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown > li {
   color: var(--fluent-text-disabled) !important;
 }
 
