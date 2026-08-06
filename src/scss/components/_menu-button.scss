@@ -30,6 +30,11 @@
     direction: rtl;
   }
 
+  // Completely disable background/background-color transitions to prevent transparency flashing when open/close toggles
+  transition:
+    border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+    color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
   // Layout & size overrides
   padding: 0 !important;
   gap: 0 !important;
@@ -148,7 +153,7 @@
     pointer-events: auto !important;
     flex: 1 !important;
     align-self: stretch;
-    transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
+    transition: none !important;
 
     // Logical border-radius matching the parent container's left corners
     border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
@@ -202,8 +207,7 @@
     color: inherit;
     pointer-events: auto !important;
     transition:
-      color var(--fluent-duration-fast) var(--fluent-easing-standard),
-      background var(--fluent-duration-fast) var(--fluent-easing-standard);
+      color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
 
     // Logical border-radius matching the parent container's right corners
     border-start-end-radius: calc(var(--fluent-radius-md) - 1px);
@@ -213,8 +217,7 @@
       @include fluent-mask-icon-by-name("chevron-down-20-regular", 16px, currentColor);
       content: "";
       transition:
-        background-color var(--fluent-duration-fast) var(--fluent-easing-standard),
-        transform 0.2s cubic-bezier(0.4, 0, 0.23, 1);
+        transform 0.2s cubic-bezier(0.4, 0, 0.23, 1) !important;
     }
 
     svg {

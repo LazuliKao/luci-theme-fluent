@@ -6472,6 +6472,7 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 .cbi-dropdown.cbi-button, .cbi-dropdown.btn {
   min-width: unset;
   width: auto;
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard),color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
   gap: 0 !important;
   padding: 0 !important;
 }
@@ -6601,7 +6602,6 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 }
 
 .cbi-dropdown.cbi-button > ul.preview, .cbi-dropdown.cbi-button > ul:not(.dropdown), .cbi-dropdown.cbi-button > span.more, .cbi-dropdown.btn > ul.preview, .cbi-dropdown.btn > ul:not(.dropdown), .cbi-dropdown.btn > span.more {
-  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
   border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
   border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
   align-self: stretch;
@@ -6609,10 +6609,10 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   flex: 1 !important;
   padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
+  transition: none !important;
 }
 
 .cbi-dropdown.cbi-button:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
   border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
   border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
   align-self: stretch;
@@ -6620,10 +6620,10 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   flex: 1 !important;
   padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
+  transition: none !important;
 }
 
 .cbi-dropdown.btn:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
-  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard);
   border-start-start-radius: calc(var(--fluent-radius-md) - 1px);
   border-end-start-radius: calc(var(--fluent-radius-md) - 1px);
   align-self: stretch;
@@ -6631,6 +6631,7 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   flex: 1 !important;
   padding-inline-start: var(--fluent-space-md) !important;
   padding-inline-end: var(--fluent-space-sm) !important;
+  transition: none !important;
 }
 
 .cbi-dropdown.cbi-button > ul.preview:hover:not([disabled]), .cbi-dropdown.cbi-button > ul:not(.dropdown):hover:not([disabled]), .cbi-dropdown.cbi-button > span.more:hover:not([disabled]), .cbi-dropdown.btn > ul.preview:hover:not([disabled]), .cbi-dropdown.btn > ul:not(.dropdown):hover:not([disabled]), .cbi-dropdown.btn > span.more:hover:not([disabled]) {
@@ -6740,7 +6741,6 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   width: 30px;
   height: 100%;
   color: inherit;
-  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard),background var(--fluent-duration-fast) var(--fluent-easing-standard);
   border-start-end-radius: calc(var(--fluent-radius-md) - 1px);
   border-end-end-radius: calc(var(--fluent-radius-md) - 1px);
   justify-content: center;
@@ -6749,6 +6749,7 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   font-size: 0;
   display: inline-flex;
   pointer-events: auto !important;
+  transition: color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
   margin-inline-start: 0 !important;
 }
 
@@ -6762,7 +6763,6 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   -webkit-user-select: none;
   user-select: none;
   content: "";
-  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard),transform .2s cubic-bezier(.4, 0, .23, 1);
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -6771,6 +6771,7 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   background: currentColor !important;
+  transition: transform .2s cubic-bezier(.4, 0, .23, 1) !important;
 }
 
 .cbi-dropdown.cbi-button > span.open svg, .cbi-dropdown.btn > span.open svg {
