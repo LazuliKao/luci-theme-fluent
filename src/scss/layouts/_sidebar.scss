@@ -102,7 +102,7 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
   top: var(--fluent-header-height, 48px);
   inset-inline-start: 0;
   width: var(--fluent-sidebar-width, 260px);
-  height: calc(100vh - var(--fluent-header-height, 48px));
+  height: calc(100dvh - var(--fluent-header-height, 48px));
   background: var(--fluent-sidebar-bg);
   border-inline-end: 1px solid var(--fluent-border);
   z-index: var(--fluent-zindex-menu);
@@ -124,7 +124,7 @@ $default-fill-encoded: str-replace(str-replace($default-fill, "<", "%3C"), ">", 
 
 .main-right {
   margin-inline-start: var(--fluent-sidebar-width, 260px);
-  height: 100vh;
+  height: 100dvh;
   padding-top: var(--fluent-header-height, 48px);
   display: flex;
   flex-direction: column;
@@ -1083,7 +1083,7 @@ body[data-sidebar-state="collapsed"] {
         top: auto;
         inset-inline-start: calc(var(--fluent-sidebar-collapsed-width, 48px) + var(--fluent-space-sm));
         min-width: 220px;
-        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
         margin: 0;
         padding: var(--fluent-space-xs);
         overflow-y: auto;
@@ -1160,7 +1160,7 @@ body[data-sidebar-state="collapsed"] {
   .main-left {
     z-index: calc(var(--fluent-zindex-modal) + 150);
     top: 0;
-    height: 100vh;
+    height: 100dvh;
 
     .sidebar__search-slot {
       display: block;

@@ -93,7 +93,7 @@
   div.modal {
     > .modal-content-wrap {
       > ul:first-child {
-        max-height: calc(85vh - 300px);
+        max-height: calc(85dvh - 300px);
         overflow-y: auto;
       }
       > ul.errors {

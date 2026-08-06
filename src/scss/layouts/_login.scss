@@ -36,8 +36,8 @@ body.login-page {
   width: 100vw !important;
   min-width: 100vw !important;
   max-width: 100vw !important;
-  min-height: 100vh !important;
-  height: 100vh !important;
+  min-height: 100dvh !important;
+  height: 100dvh !important;
   position: relative !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
@@ -732,7 +732,7 @@ body.login-page {
 
     .login-container {
       max-width: 100% !important;
-      min-height: 100vh !important;
+      min-height: 100dvh !important;
       justify-content: flex-start !important;
       align-items: stretch !important;
       padding: 0 0 112px !important;

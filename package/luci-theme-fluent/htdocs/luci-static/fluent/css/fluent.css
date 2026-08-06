@@ -1436,7 +1436,7 @@ div.td, div.th {
   width: 90%;
   min-width: 280px;
   max-width: 800px;
-  max-height: 85vh;
+  max-height: 85dvh;
   animation: slideInUp var(--fluent-duration-normal) var(--fluent-easing-decelerate);
   flex-direction: column;
   display: flex;
@@ -5500,7 +5500,7 @@ cbi-dropdown[open] > ul.dropdown:not(.preview), .cbi-dropdown[open] > ul.dropdow
   position: absolute;
   overflow-y: auto;
   max-width: 80vw !important;
-  max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45vh) !important;
+  max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45dvh) !important;
 }
 
 cbi-dropdown[open] > ul.dropdown:not(.preview)::-webkit-scrollbar {
@@ -6379,7 +6379,7 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
     position-anchor: --fluent-cbi-dropdown-active !important;
     position-try-fallbacks: flip-block !important;
     min-width: anchor-size(width) !important;
-    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45vh) !important;
+    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45dvh) !important;
     margin: 0 !important;
     margin-top: var(--fluent-space-xxs) !important;
     left: anchor(left) !important;
@@ -6402,7 +6402,7 @@ cbi-dropdown.fluent-custom-select[data-fluent-floating="modal"][open] > ul.dropd
     bottom: anchor(top) !important;
     margin-top: 0 !important;
     margin-bottom: var(--fluent-space-xxs) !important;
-    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45vh) !important;
+    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45dvh) !important;
     transform-origin: bottom !important;
     animation: .2s cubic-bezier(.4, 0, .23, 1) forwards fluent-dropdown-slide-in-up !important;
   }
@@ -6423,7 +6423,7 @@ cbi-dropdown[data-open-direction="up"][open] > ul.dropdown:not(.preview), .cbi-d
     bottom: anchor(top) !important;
     margin-top: 0 !important;
     margin-bottom: var(--fluent-space-xxs) !important;
-    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45vh) !important;
+    max-height: min(var(--fluent-dropdown-max-height-limit),var(--fluent-dropdown-max-height),45dvh) !important;
   }
 }
 
@@ -9433,7 +9433,7 @@ body[data-page="admin-system-package-manager"] > .main > .main-right > #maincont
 }
 
 body[data-page="admin-system-package-manager"] > #modal_overlay div.modal > .modal-content-wrap > ul:first-child {
-  max-height: calc(85vh - 300px);
+  max-height: calc(85dvh - 300px);
   overflow-y: auto;
 }
 
@@ -9941,7 +9941,7 @@ body[data-page^="admin-status-logs-syslog"] .fluent-log-viewer--fullscreen, body
   z-index: 999999 !important;
   background-color: var(--fluent-card-bg) !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: 100dvh !important;
   box-shadow: none !important;
   border: none !important;
   border-radius: 0 !important;
@@ -9976,8 +9976,8 @@ body.login-page {
   width: 100vw !important;
   min-width: 100vw !important;
   max-width: 100vw !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
   display: flex !important;
   position: relative !important;
   overflow: hidden !important;
@@ -10576,7 +10576,7 @@ html[dir="rtl"] .login-page .login-container .login-form .form-login, body[data-
     justify-content: flex-start !important;
     align-items: stretch !important;
     max-width: 100% !important;
-    min-height: 100vh !important;
+    min-height: 100dvh !important;
     padding: 0 0 112px !important;
   }
 
@@ -10796,7 +10796,7 @@ html[dir="rtl"] .login-page .login-container .login-form .form-login, body[data-
 .main-left {
   top: var(--fluent-header-height, 48px);
   width: var(--fluent-sidebar-width, 260px);
-  height: calc(100vh - var(--fluent-header-height, 48px));
+  height: calc(100dvh - var(--fluent-header-height, 48px));
   background: var(--fluent-sidebar-bg);
   border-inline-end: 1px solid var(--fluent-border);
   z-index: var(--fluent-zindex-menu);
@@ -10854,7 +10854,7 @@ html[dir="rtl"] .login-page .login-container .login-form .form-login, body[data-
 }
 
 .main-right {
-  height: 100vh;
+  height: 100dvh;
   padding-top: var(--fluent-header-height, 48px);
   transition: margin-inline-start var(--fluent-duration-normal) var(--fluent-easing-standard);
   flex-direction: column;
@@ -11937,7 +11937,7 @@ body[data-sidebar-state="collapsed"] .main-left .nav > li > a:first-child .menu-
 body[data-sidebar-state="collapsed"] .main-left .nav > li > .slide-menu {
   top: auto;
   min-width: 220px;
-  max-height: calc(100vh - 16px);
+  max-height: calc(100dvh - 16px);
   padding: var(--fluent-space-xs);
   background: var(--fluent-bg-card, var(--fluent-sidebar-bg));
   border: 1px solid var(--fluent-border);
@@ -12007,7 +12007,7 @@ body[data-sidebar-state="collapsed"] .main-left .nav > li > a.menu.popup-open .m
 
   .main-left {
     z-index: calc(var(--fluent-zindex-modal) + 150);
-    height: 100vh;
+    height: 100dvh;
     top: 0;
   }
 
