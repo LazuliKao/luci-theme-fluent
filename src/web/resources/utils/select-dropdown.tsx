@@ -7,7 +7,7 @@ import { getEffectiveDocumentDirection, getRectInlineStart, getViewportInlineSiz
 let selectDropdownListenersRegistered = false;
 
 function updateOpenDropdownPositions() {
-  document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((dropdown) => {
+  document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((dropdown) => {
     if (!(dropdown instanceof HTMLElement)) return;
 
     if (dropdown.classList.contains("fluent-custom-select")) {
@@ -305,7 +305,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
   const openSpan = (<span class="open"></span>) as HTMLElement;
 
   const customDropdown = (
-    <div class="cbi-dropdown fluent-custom-select">
+    <div class="fluent-custom-select">
       <ul>{previewLi}</ul>
       {openSpan}
       {listbox}
@@ -387,7 +387,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
       closeCustomDropdown(customDropdown);
     } else {
       // Close all other open dropdowns first (including native cbi-dropdown elements and our custom ones)
-      document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((el) => {
+      document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((el) => {
         if (el instanceof HTMLElement && el.classList.contains("fluent-custom-select")) {
           closeCustomDropdown(el);
         } else {

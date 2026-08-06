@@ -954,7 +954,7 @@ function setupSelectionPause() {
 
 let select_dropdown_r = !1;
 function select_dropdown_s() {
-    document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((e)=>{
+    document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((e)=>{
         if (e instanceof HTMLElement) if (e.classList.contains("fluent-custom-select")) {
             let t = e.previousElementSibling;
             t instanceof HTMLSelectElement && select_dropdown_f(e, t);
@@ -1064,7 +1064,7 @@ function select_dropdown_h(n) {
     }), r = jsx("span", {
         class: "open"
     }), s = jsxs("div", {
-        class: "cbi-dropdown fluent-custom-select",
+        class: "fluent-custom-select",
         children: [
             jsx("ul", {
                 children: l
@@ -1108,7 +1108,7 @@ function select_dropdown_h(n) {
         }
         if (s.hasAttribute("open")) select_dropdown_m(s);
         else {
-            document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open]").forEach((e)=>{
+            document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((e)=>{
                 e instanceof HTMLElement && e.classList.contains("fluent-custom-select") ? select_dropdown_m(e) : (e.removeAttribute("open"), e.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open"));
             }), select_dropdown_f(s, n), s.setAttribute("open", ""), s.closest(".cbi-value-field, .cbi-value")?.classList.add("cbi-dropdown-open");
             let e = i.querySelector("li[selected]");

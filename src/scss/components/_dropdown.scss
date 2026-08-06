@@ -35,7 +35,8 @@
 // DROPDOWN CONTAINER
 // ============================================================
 cbi-dropdown,
-.cbi-dropdown {
+.cbi-dropdown,
+.fluent-custom-select {
   @include input-base;
 
   // Layout: inline-flex for proper alignment with other form elements
@@ -961,7 +962,8 @@ cbi-dropdown,
 
 // Hide placeholder in dropdown when something is selected, but only if the dropdown is NOT optional
 cbi-dropdown:not([optional]),
-.cbi-dropdown:not([optional]) {
+.cbi-dropdown:not([optional]),
+.fluent-custom-select:not([optional]) {
   > ul.dropdown > li[placeholder]:not(:only-child) {
     display: none;
   }

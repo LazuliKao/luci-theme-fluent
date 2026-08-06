@@ -22,7 +22,8 @@ code {
 }
 
 // Dropdown specific scrollbar
-.cbi-dropdown ul.dropdown {
+.cbi-dropdown ul.dropdown,
+.fluent-custom-select ul.dropdown {
   @include custom-scrollbar;
 }
 
