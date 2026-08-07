@@ -124,26 +124,6 @@ body[data-page="admin-system-package-manager"] > .main > .main-right > #maincont
   background: var(--fluent-bg-active);
 }
 
-select, textarea, .cbi-input-textarea, .password-input input, .cbi-dynlist > .add-item > input, cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select, .zonebadge > input[type="text"], input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
-  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
-  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: 0 2px;
-  background-origin: border-box;
-}
-
-select:hover:not([disabled]):not(:focus), textarea:hover:not([disabled]):not(:focus), .cbi-input-textarea:hover:not([disabled]):not(:focus), .password-input input:hover:not([disabled]):not(:focus), .cbi-dynlist > .add-item > input:hover:not([disabled]):not(:focus), input[type="text"]:hover:not([disabled]):not(:focus), input[type="password"]:hover:not([disabled]):not(:focus), input[type="email"]:hover:not([disabled]):not(:focus), input[type="number"]:hover:not([disabled]):not(:focus), input[type="search"]:hover:not([disabled]):not(:focus), input[type="tel"]:hover:not([disabled]):not(:focus), input[type="url"]:hover:not([disabled]):not(:focus), input[type="date"]:hover:not([disabled]):not(:focus), input[type="time"]:hover:not([disabled]):not(:focus), input[type="datetime-local"]:hover:not([disabled]):not(:focus), input[type="month"]:hover:not([disabled]):not(:focus), input[type="week"]:hover:not([disabled]):not(:focus), .cbi-input-text:hover:not([disabled]):not(:focus), .cbi-input-password:hover:not([disabled]):not(:focus), .cbi-input-date:hover:not([disabled]):not(:focus), .cbi-input-time:hover:not([disabled]):not(:focus), .cbi-input-datetime:hover:not([disabled]):not(:focus) {
-  border-color: var(--fluent-input-border-hover);
-  border-bottom-color: var(--fluent-input-border-bottom-hover);
-}
-
-select:focus, textarea:focus, .cbi-input-textarea:focus, .password-input input:focus, .cbi-dynlist > .add-item > input:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="week"]:focus, .cbi-input-text:focus, .cbi-input-password:focus, .cbi-input-date:focus, .cbi-input-time:focus, .cbi-input-datetime:focus {
-  border-bottom-color: var(--fluent-input-border-bottom-focus);
-  background-size: 100% 2px;
-  outline: none;
-}
-
 select, select.cbi-input-select, textarea, .cbi-input-textarea, .password-input input, .cbi-dynlist > .add-item > input, cbi-dropdown, .cbi-dropdown, .fluent-custom-select, cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select, .fluent-custom-select > .cbi-input-select, .zonebadge > input[type="text"], input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
@@ -192,6 +172,26 @@ select::placeholder, select.cbi-input-select::placeholder, textarea::placeholder
 
 .control-group:has( > input.cbi-input-password):not(:has( > .cbi-button ~ .cbi-button))::placeholder {
   color: var(--fluent-text-disabled);
+}
+
+select, textarea, .cbi-input-textarea, .password-input input, .cbi-dynlist > .add-item > input, cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select, .zonebadge > input[type="text"], input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
+  background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
+  transition: background-size var(--fluent-duration-fast) var(--fluent-easing-standard),border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  background-origin: border-box;
+}
+
+select:hover:not([disabled]):not(:focus), textarea:hover:not([disabled]):not(:focus), .cbi-input-textarea:hover:not([disabled]):not(:focus), .password-input input:hover:not([disabled]):not(:focus), .cbi-dynlist > .add-item > input:hover:not([disabled]):not(:focus), input[type="text"]:hover:not([disabled]):not(:focus), input[type="password"]:hover:not([disabled]):not(:focus), input[type="email"]:hover:not([disabled]):not(:focus), input[type="number"]:hover:not([disabled]):not(:focus), input[type="search"]:hover:not([disabled]):not(:focus), input[type="tel"]:hover:not([disabled]):not(:focus), input[type="url"]:hover:not([disabled]):not(:focus), input[type="date"]:hover:not([disabled]):not(:focus), input[type="time"]:hover:not([disabled]):not(:focus), input[type="datetime-local"]:hover:not([disabled]):not(:focus), input[type="month"]:hover:not([disabled]):not(:focus), input[type="week"]:hover:not([disabled]):not(:focus), .cbi-input-text:hover:not([disabled]):not(:focus), .cbi-input-password:hover:not([disabled]):not(:focus), .cbi-input-date:hover:not([disabled]):not(:focus), .cbi-input-time:hover:not([disabled]):not(:focus), .cbi-input-datetime:hover:not([disabled]):not(:focus) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+select:focus, textarea:focus, .cbi-input-textarea:focus, .password-input input:focus, .cbi-dynlist > .add-item > input:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="date"]:focus, input[type="time"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="week"]:focus, .cbi-input-text:focus, .cbi-input-password:focus, .cbi-input-date:focus, .cbi-input-time:focus, .cbi-input-datetime:focus {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  background-size: 100% 2px;
+  outline: none;
 }
 
 :root {

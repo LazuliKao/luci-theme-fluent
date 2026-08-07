@@ -298,6 +298,39 @@ $breakpoint-xxl: 1400px;
     pointer-events: none;
   }
 }
+// ============================================================
+// INPUT BASE (FluentUI Input)
+// Height: 32px, Radius: 4px, Bottom-border indicator
+// ============================================================
+%input-base {
+  height: var(--fluent-input-height);
+  padding: 0 var(--fluent-space-sm);
+  font-family: var(--fluent-font-family);
+  font-size: var(--fluent-font-size-base);
+  line-height: var(--fluent-line-height-normal);
+  color: var(--fluent-text);
+  background: var(--fluent-input-bg);
+  border: 1px solid var(--fluent-input-border);
+  border-bottom-width: 1px;
+  border-bottom-color: var(--fluent-input-border-bottom);
+  border-radius: var(--fluent-radius-md);
+  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &:disabled {
+    background: var(--fluent-input-bg-disabled);
+    color: var(--fluent-text-disabled);
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: var(--fluent-text-disabled);
+  }
+}
+
+@mixin input-base {
+  @extend %input-base;
+}
+
 // for void elements like input
 %input-focus-ripple-v2-base {
   background-image: linear-gradient(var(--fluent-input-border-bottom-focus), var(--fluent-input-border-bottom-focus));
@@ -345,38 +378,6 @@ $breakpoint-xxl: 1400px;
   } @else {
     @extend %input-focus-ripple-v2-base;
   }
-}
-// ============================================================
-// INPUT BASE (FluentUI Input)
-// Height: 32px, Radius: 4px, Bottom-border indicator
-// ============================================================
-%input-base {
-  height: var(--fluent-input-height);
-  padding: 0 var(--fluent-space-sm);
-  font-family: var(--fluent-font-family);
-  font-size: var(--fluent-font-size-base);
-  line-height: var(--fluent-line-height-normal);
-  color: var(--fluent-text);
-  background: var(--fluent-input-bg);
-  border: 1px solid var(--fluent-input-border);
-  border-bottom-width: 1px;
-  border-bottom-color: var(--fluent-input-border-bottom);
-  border-radius: var(--fluent-radius-md);
-  transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
-
-  &:disabled {
-    background: var(--fluent-input-bg-disabled);
-    color: var(--fluent-text-disabled);
-    cursor: not-allowed;
-  }
-
-  &::placeholder {
-    color: var(--fluent-text-disabled);
-  }
-}
-
-@mixin input-base {
-  @extend %input-base;
 }
 
 // ============================================================
