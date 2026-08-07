@@ -3,281 +3,264 @@
 <head>
   <meta charset="UTF-8">
   <title>luci-theme-fluent Showcase</title>
-  <!-- Load Iconify SVG Framework to render FluentUI Icons -->
-  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <style>
     :root {
-      --primary: #0078d4;
-      --bg-gradient: linear-gradient(135deg, #0a0f1d 0%, #111827 50%, #1e1b4b 100%);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --canvas: #202020;
+      --surface: #2b2b2b;
+      --surface-subtle: #252525;
+      --stroke: rgba(255, 255, 255, 0.09);
+      --stroke-strong: rgba(255, 255, 255, 0.14);
+      --text-primary: #ffffff;
+      --text-secondary: #c7c7c7;
+      --text-tertiary: #9d9d9d;
+      --accent: #60cdff;
+      --accent-subtle: rgba(96, 205, 255, 0.12);
+      --shadow-window: 0 24px 64px rgba(0, 0, 0, 0.34), 0 3px 12px rgba(0, 0, 0, 0.2);
+      --shadow-device: 0 20px 48px rgba(0, 0, 0, 0.36);
     }
-    
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      margin: 0;
       width: 1920px;
       height: 1080px;
-      background: var(--bg-gradient);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Segoe UI Emoji", sans-serif;
-      color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      padding: 38px 52px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Decorative background glows */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
-      top: -100px;
-      right: -100px;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    body::after {
-      content: "";
-      position: absolute;
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(192, 132, 252, 0.1) 0%, rgba(192, 132, 252, 0) 70%);
-      bottom: -200px;
-      left: -200px;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Top title */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      z-index: 10;
-      margin-bottom: 10px;
-    }
-    
-    .title-area h1 {
-      font-size: 82px;
-      font-weight: 800;
-      margin: 0 0 8px 0;
-      background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -1.5px;
-    }
-    
-    .title-area p {
-      font-size: 31px;
-      color: var(--text-muted);
       margin: 0;
-      font-weight: 300;
-      max-width: 980px;
+      padding: 52px 64px 42px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 22px;
+      color: var(--text-primary);
+      background: var(--canvas);
+      font-family: "Segoe UI Variable", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      text-rendering: optimizeLegibility;
     }
 
-    /* Three-device stacked showcase */
+    header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--text-secondary);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-mark {
+      display: block;
+      flex: none;
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .title-area h1 {
+      max-width: 1080px;
+      margin: 0 0 10px;
+      color: var(--text-primary);
+      font-size: 68px;
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .title-area p {
+      max-width: 980px;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 27px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 8px;
+      padding-top: 4px;
+    }
+
+    .meta-tag,
+    .github-link {
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      color: var(--text-secondary);
+      background: var(--surface-subtle);
+    }
+
+    .meta-tag {
+      padding: 8px 14px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
     .device-showcase {
       position: relative;
-      flex-grow: 1;
-      height: 670px;
-      z-index: 5;
-      margin-top: -10px;
+      z-index: 2;
+      min-height: 0;
     }
 
-    /* Device shell base styles (CSS mockups) */
     .device {
       position: absolute;
-      box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
-      border-radius: 16px;
-      background: #1e293b;
-      border: 12px solid #0b0f19;
       overflow: hidden;
+      background: #111111;
+      border: 1px solid var(--stroke-strong);
+      box-shadow: var(--shadow-device);
     }
 
-    /* Desktop mockup - larger and lower to avoid covering text */
     .device-pc {
-      left: 35px;
-      top: 64px;
-      width: 1120px;
-      height: 630px;
-      z-index: 1;
-      position: relative;
-    }
-    
-    /* Desktop top control bar */
-    .device-pc::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 30px;
-      background: #1e293b;
-      border-bottom: 1px solid #334155;
-      z-index: 10;
-    }
-
-    /* Desktop traffic-light buttons */
-    .device-pc-dots {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      display: flex;
-      gap: 6px;
-      z-index: 11;
-    }
-    .device-pc-dots span {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .dot-r { background: #ef4444; }
-    .dot-y { background: #f59e0b; }
-    .dot-g { background: #10b981; }
-
-    /* Absolute positioning avoids the top control bar */
-    .device-pc img {
-      position: absolute;
+      left: 40px;
       top: 30px;
-      left: 0;
-      width: 100%;
-      height: calc(100% - 30px);
-      object-fit: cover;
-      display: block;
-    }
-    
-    /* Tablet mockup - larger and more tightly stacked */
-    .device-tablet {
-      left: 1030px;
-      bottom: 18px;
-      width: 590px;
-      height: 410px;
-      z-index: 2;
-      border-width: 14px;
-      border-radius: 20px;
-      transform: rotate(-4deg);
+      z-index: 1;
+      width: 1100px;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: var(--shadow-window);
     }
 
-    /* Mobile mockup - larger and more tightly stacked */
-    .device-phone {
-      right: 14px;
-      bottom: 26px;
-      width: 270px;
-      height: 584px;
-      z-index: 3;
-      border-radius: 36px;
-      border-width: 12px;
-      transform: rotate(6deg);
+
+    .device.device-pc img {
+      object-fit: contain;
     }
-    
-    /* Simulated phone notch / earpiece */
+
+    .device-tablet {
+      left: 1090px;
+      bottom: 10px;
+      z-index: 2;
+      width: 570px;
+      height: 408px;
+      border: 8px solid #111111;
+      border-radius: 14px;
+      transform: rotate(-2.5deg);
+    }
+
+    .device-phone {
+      right: 36px;
+      bottom: 18px;
+      z-index: 3;
+      width: 268px;
+      height: 570px;
+      border: 7px solid #111111;
+      border-radius: 28px;
+      transform: rotate(3deg);
+    }
+
     .device-phone::before {
       content: "";
       position: absolute;
-      top: 0;
+      top: 7px;
       left: 50%;
+      z-index: 4;
+      width: 62px;
+      height: 15px;
+      border-radius: 999px;
+      background: #111111;
       transform: translateX(-50%);
-      width: 100px;
-      height: 20px;
-      background: #0b0f19;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      z-index: 10;
     }
 
     .device img {
+      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    /* Bottom notes and features */
     footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 18px;
+      position: relative;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 102px;
+      padding-top: 20px;
+      border-top: 1px solid var(--stroke);
     }
-    
+
     .features {
       display: flex;
-      gap: 34px;
-    }
-    
-    .feature-item {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .feature-title {
-      font-weight: 700;
-      font-size: 26px;
-      color: #60a5fa;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 44px;
     }
 
-    /* Iconify Icon styling */
-    .feature-title .iconify {
-      font-size: 36px;
-      color: #60a5fa;
+    .feature-item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 12px;
+      width: 340px;
     }
-    
+
+    .feature-icon {
+      grid-row: 1 / span 2;
+      width: 38px;
+      height: 38px;
+      padding: 8px;
+      border-radius: 8px;
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    .feature-icon svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .feature-title {
+      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
     .feature-desc {
-      font-size: 18px;
-      color: var(--text-muted);
-      max-width: 360px;
-      line-height: 1.5;
+      margin-top: 4px;
+      color: var(--text-tertiary);
+      font-size: 15px;
+      line-height: 1.35;
     }
-    
+
     .github-link {
-      font-size: 18px;
+      flex: none;
+      padding: 10px 18px;
+      font-size: 15px;
       font-weight: 500;
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.03);
-      padding: 12px 22px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
   </style>
 </head>
 <body>
-
   <header>
     <div class="title-area">
+      <div class="brand">
+        <img class="brand-mark" src="../../../package/luci-theme-fluent/htdocs/luci-static/fluent/img/fluent.svg" alt="" aria-hidden="true">
+        <span>luci-theme-fluent</span>
+      </div>
       <h1>Fluent Theme for OpenWrt</h1>
       <p>An elegant, responsive Fluent-style theme for modern OpenWrt LuCI</p>
     </div>
+    <div class="header-meta" aria-label="Theme platform">
+      <span class="meta-tag">Fluent UI 2</span>
+      <span class="meta-tag">OpenWrt LuCI</span>
+    </div>
   </header>
 
-    <div class="device-showcase">
+  <div class="device-showcase">
     <div class="device device-pc">
-      <div class="device-pc-dots">
-        <span class="dot-r"></span>
-        <span class="dot-y"></span>
-        <span class="dot-g"></span>
-      </div>
       <img src="../../../screenshots/.cache/dark_overview.png" alt="Desktop Overview">
     </div>
-    <!-- Tablet -->
     <div class="device device-tablet">
       <img src="../../../screenshots/.cache/tablet_dark_overview.png" alt="Tablet Overview">
     </div>
-    <!-- Mobile -->
     <div class="device device-phone">
       <img src="../../../screenshots/.cache/mobile_dark_overview.png" alt="Mobile Overview">
     </div>
@@ -286,31 +269,28 @@
   <footer>
     <div class="features">
       <div class="feature-item">
-        <span class="feature-title">
-          <span class="iconify" data-icon="fluent:window-multiple-24-regular"></span>
-          Multi-device
+        <span class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="13" height="10" rx="1.8"/><path d="M7 18h4M9 14v4"/><rect x="17" y="8" width="4.5" height="10" rx="1.2"/></svg>
         </span>
+        <span class="feature-title">Multi-device</span>
         <span class="feature-desc">Fully responsive design for desktop, tablet, and mobile interactions</span>
       </div>
       <div class="feature-item">
-        <span class="feature-title">
-          <span class="iconify" data-icon="fluent:weather-moon-24-regular"></span>
-          Dark Mode
+        <span class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"/></svg>
         </span>
+        <span class="feature-title">Dark Mode</span>
         <span class="feature-desc">Supports automatic and manual switching with high-contrast visuals</span>
       </div>
       <div class="feature-item">
-        <span class="feature-title">
-          <span class="iconify" data-icon="fluent:rocket-24-regular"></span>
-          Smooth Motion
+        <span class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15.5 9.5 11l3 3L19 7.5"/><path d="M14.5 7.5H19V12"/><path d="M4 19h16"/></svg>
         </span>
+        <span class="feature-title">Smooth Motion</span>
         <span class="feature-desc">View Transitions-based loading and navigation</span>
       </div>
     </div>
-    <div class="github-link">
-      <span>GitHub: LazuliKao/luci-theme-fluent</span>
-    </div>
+    <div class="github-link">GitHub: LazuliKao/luci-theme-fluent</div>
   </footer>
-
 </body>
 </html>

@@ -49,14 +49,15 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     'alt="Tablet Overview"': 'alt="平板端概览"',
     'alt="Mobile Overview"': 'alt="移动端概览"',
     "<title>luci-theme-fluent Mobile Showcase</title>": "<title>luci-theme-fluent 移动端效果图</title>",
-    "<h1>FluentUI Mobile Experience</h1>": "<h1>FluentUI 移动端体验</h1>",
+    "<h1>Fluent Theme Mobile Experience</h1>": "<h1>FluentUI 移动端体验</h1>",
     "<p>Optimized, responsive, and elegant mobile interface for OpenWrt LuCI</p>": "<p>专为 OpenWrt LuCI 优化的响应式、优雅的移动端界面</p>",
     "Intuitive Navigation": "直观导航",
     "Slide-out sidebar drawer designed for quick and easy mobile access": "专为快速便捷的移动端访问设计的侧边栏抽屉",
     "Responsive Layout": "响应式布局",
     "Adaptive controls and tables optimized for single-handed touch interactions": "针对单手触摸交互优化的自适应控件和表格",
-    "Lightweight & Fast": "轻量且快速",
+    "Lightweight &amp; Fast": "轻量且快速",
     "Hardware-accelerated animations and minimal overhead for mobile browsers": "硬件加速动画和极低的移动端浏览器开销",
+    "Responsive by design · Desktop to mobile": "响应式设计 · 从桌面到移动端",
     'alt="Mobile Sidebar Open"': 'alt="移动端侧边栏展开"',
     'alt="Mobile System Settings"': 'alt="移动端系统设置"',
     'alt="Mobile Software Management"': 'alt="移动端软件管理"',
@@ -123,7 +124,7 @@ async function generateMobilePromo() {
   console.log("Generating mobile promo banner using Playwright...");
 
   // Verify that required screenshot files exist
-  const requiredFiles = ["mobile_sidebar_open.png", "mobile_system_settings.png", "mobile_software_management.png"];
+  const requiredFiles = ["mobile_dark_sidebar_open.png", "mobile_dark_system_settings.png", "mobile_dark_software_management.png"];
   for (const file of requiredFiles) {
     const filePath = path.join(screenshotsDir, file);
     if (!fs.existsSync(filePath)) {
