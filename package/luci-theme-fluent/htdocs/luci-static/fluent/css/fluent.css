@@ -808,6 +808,31 @@ div[id="view"] > :not(.spinning) {
   background: currentColor !important;
 }
 
+.cbi-button.spinning, .btn.spinning {
+  position: relative;
+  pointer-events: none !important;
+  padding-inline-start: 36px !important;
+}
+
+.cbi-button.spinning:before, .btn.spinning:before {
+  content: "";
+  inset-inline-start: 12px;
+  --size: 16px;
+  --indicator-size: 2px;
+  height: var(--size);
+  width: var(--size);
+  box-sizing: border-box;
+  border: var(--indicator-size) solid color-mix(in srgb, currentColor 20%, transparent);
+  background: none;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  animation: 1s infinite fluent-spin-swing;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .cbi-button svg, .cbi-button img {
   width: 16px;
   height: 16px;
@@ -7271,6 +7296,43 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 
 .cbi-dropdown.cbi-button[disabled] > span.open:before, .cbi-dropdown.btn[disabled] > span.open:before {
   border-color: var(--fluent-text-disabled) !important;
+}
+
+.cbi-dropdown.cbi-button.spinning, .cbi-dropdown.btn.spinning {
+  pointer-events: none !important;
+  padding-inline-start: 0 !important;
+}
+
+.cbi-dropdown.cbi-button.spinning:before, .cbi-dropdown.btn.spinning:before {
+  content: "";
+  inset-inline-start: 12px;
+  --size: 16px;
+  --indicator-size: 2px;
+  height: var(--size);
+  width: var(--size);
+  box-sizing: border-box;
+  border: var(--indicator-size) solid color-mix(in srgb, currentColor 20%, transparent);
+  z-index: 2;
+  background: none;
+  border-top-color: currentColor;
+  border-right-color: currentColor;
+  border-radius: 50%;
+  animation: 1s infinite fluent-spin-swing;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cbi-dropdown.cbi-button.spinning > ul.preview, .cbi-dropdown.cbi-button.spinning > ul:not(.dropdown), .cbi-dropdown.cbi-button.spinning > span.more, .cbi-dropdown.btn.spinning > ul.preview, .cbi-dropdown.btn.spinning > ul:not(.dropdown), .cbi-dropdown.btn.spinning > span.more {
+  padding-inline-start: 36px !important;
+}
+
+.cbi-dropdown.cbi-button.spinning:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  padding-inline-start: 36px !important;
+}
+
+.cbi-dropdown.btn.spinning:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  padding-inline-start: 36px !important;
 }
 
 .cbi-dynlist {

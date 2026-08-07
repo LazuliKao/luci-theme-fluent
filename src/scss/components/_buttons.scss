@@ -93,6 +93,31 @@
       @include fluent-mask-icon-by-name("arrow-right-20-regular", 16px, currentColor);
     }
   }
+
+  &.spinning {
+    position: relative;
+    padding-inline-start: 36px !important;
+    pointer-events: none !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      --size: 16px;
+      --indicator-size: 2px;
+      height: var(--size);
+      width: var(--size);
+      border-radius: 50%;
+      box-sizing: border-box;
+      background: none;
+      border: var(--indicator-size) solid color-mix(in srgb, currentColor 20%, transparent);
+      border-top-color: currentColor;
+      border-right-color: currentColor;
+      animation: fluent-spin-swing 1s infinite ease;
+    }
+  }
 }
 
 // Icon button spacing

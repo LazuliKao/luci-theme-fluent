@@ -273,4 +273,37 @@
       border-color: var(--fluent-text-disabled) !important;
     }
   }
+
+  // 10. Spinning loading state
+  &.spinning {
+    padding-inline-start: 0 !important;
+    pointer-events: none !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      --size: 16px;
+      --indicator-size: 2px;
+      height: var(--size);
+      width: var(--size);
+      border-radius: 50%;
+      box-sizing: border-box;
+      background: none;
+      border: var(--indicator-size) solid color-mix(in srgb, currentColor 20%, transparent);
+      border-top-color: currentColor;
+      border-right-color: currentColor;
+      animation: fluent-spin-swing 1s infinite ease;
+      z-index: 2; // Make sure the spinner is on top of any preview list backgrounds
+    }
+
+    > ul.preview,
+    > ul:not(.dropdown),
+    > span.more,
+    &:not([open]):not(:has(> ul:not(.dropdown))):not(:has(> ul.preview)) > ul.dropdown {
+      padding-inline-start: 36px !important;
+    }
+  }
 }
