@@ -1449,42 +1449,49 @@ function setupThemeFeatures() {
     }
     function g() {
         document.querySelectorAll("#modal_overlay .modal").forEach((e)=>{
-            let t = Array.from(e.children).find((e)=>e instanceof HTMLElement && e.classList.contains("modal-content-wrap"));
+            let t = Array.from(e.children).find((e)=>e instanceof HTMLElement && e.classList.contains("modal-content-wrap")), i = e.classList.contains("alert-message") && !e.querySelector(".button-row, button, .cbi-button"), n = e.classList.contains("spinning") && !e.querySelector(".cbi-map, form");
+            if (i || n) {
+                if (t) {
+                    for (let i of Array.from(t.children))e.insertBefore(i, t);
+                    t.remove();
+                }
+                return;
+            }
             if (t?.querySelector(":scope > .cbi-map")) {
                 for (let i of Array.from(t.children))e.insertBefore(i, t);
                 t.remove();
                 return;
             }
             if (Array.from(e.children).some((e)=>e.classList.contains("cbi-map"))) return;
-            let i = Array.from(e.children).filter((e)=>{
+            let r = Array.from(e.children).filter((e)=>{
                 if (e === t) return !1;
                 let i = e.classList.contains("close") || e.classList.contains("modal-close"), n = "SCRIPT" === e.tagName || "STYLE" === e.tagName;
                 return !i && !n;
             });
-            if (0 === i.length) return;
-            let n = [], r = 0;
-            for(; r < i.length;){
-                let e = i[r];
-                if ("H4" === e.tagName || e.classList.contains("modal-header") || e.classList.contains("cbi-tabmenu") || e.classList.contains("tabs")) n.push(e), r++;
+            if (0 === r.length) return;
+            let l = [], a = 0;
+            for(; a < r.length;){
+                let e = r[a];
+                if ("H4" === e.tagName || e.classList.contains("modal-header") || e.classList.contains("cbi-tabmenu") || e.classList.contains("tabs")) l.push(e), a++;
                 else break;
             }
-            let l = null;
-            if (r < i.length) {
-                let e = i[i.length - 1];
-                if (!n.includes(e)) {
-                    let t = e.classList.contains("button-row") || e.classList.contains("modal-footer") || e.classList.contains("right"), r = null !== e.querySelector('button, .btn, .cbi-button, input[type="button"], input[type="submit"]');
-                    if ((t || r) && (l = e, i.length >= 3)) {
-                        let e = i[i.length - 2];
-                        if (!n.includes(e) && !(e.classList.contains("cbi-map") || e.classList.contains("cbi-section") || "UL" === e.tagName || "TABLE" === e.tagName || e.id.startsWith("cbi-"))) {
+            let s = null;
+            if (a < r.length) {
+                let e = r[r.length - 1];
+                if (!l.includes(e)) {
+                    let t = e.classList.contains("button-row") || e.classList.contains("modal-footer") || e.classList.contains("right"), i = null !== e.querySelector('button, .btn, .cbi-button, input[type="button"], input[type="submit"]');
+                    if ((t || i) && (s = e, r.length >= 3)) {
+                        let e = r[r.length - 2];
+                        if (!l.includes(e) && !(e.classList.contains("cbi-map") || e.classList.contains("cbi-section") || "UL" === e.tagName || "TABLE" === e.tagName || e.id.startsWith("cbi-"))) {
                             let t = null !== e.querySelector('input[type="checkbox"], .cbi-checkbox'), i = null !== e.querySelector('input[type="text"], input[type="number"], input[type="password"], textarea, select');
-                            t && !i && (l = e);
+                            t && !i && (s = e);
                         }
                     }
                 }
             }
-            let a = [], s = l ? i.indexOf(l) : i.length;
-            for(let e = r; e < s; e++)a.push(i[e]);
-            if (a.length > 0) for (let i of (t || ((t = document.createElement("div")).className = "modal-content-wrap", l ? e.insertBefore(t, l) : e.appendChild(t)), a))t.appendChild(i);
+            let o = [], d = s ? r.indexOf(s) : r.length;
+            for(let e = a; e < d; e++)o.push(r[e]);
+            if (o.length > 0) for (let i of (t || ((t = document.createElement("div")).className = "modal-content-wrap", s ? e.insertBefore(t, s) : e.appendChild(t)), o))t.appendChild(i);
         });
     }
     if (window._fluent_last_tab_pos = window._fluent_last_tab_pos || {}, p(), g(), new MutationObserver(()=>{

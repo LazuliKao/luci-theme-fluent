@@ -353,6 +353,19 @@ export function setupThemeFeatures() {
 
       let wrap = Array.from(modal.children).find((child): child is HTMLElement => child instanceof HTMLElement && child.classList.contains("modal-content-wrap"));
 
+      const isSimpleNotice = modal.classList.contains("alert-message") && !modal.querySelector(".button-row, button, .cbi-button");
+      const isSimpleSpinning = modal.classList.contains("spinning") && !modal.querySelector(".cbi-map, form");
+
+      if (isSimpleNotice || isSimpleSpinning) {
+        if (wrap) {
+          for (const child of Array.from(wrap.children)) {
+            modal.insertBefore(child, wrap);
+          }
+          wrap.remove();
+        }
+        return;
+      }
+
       // LuCI expects an active CBI map to remain a direct child of the modal and
       // plugins may traverse from it to the adjacent button row. Restore maps
       // wrapped by an earlier pass, then leave CBI modal structure untouched.
