@@ -9,6 +9,7 @@
 .cbi-dropdown.btn {
   // 1. Reset dropdown (input-base) properties to button styles
   @include button-secondary;
+  border-bottom-color: var(--fluent-btn-secondary-border);
 
   // Define default, hover and active background variables
   --menu-btn-bg-default: var(--fluent-btn-secondary-bg);
@@ -48,29 +49,36 @@
   }
 
   // 3. Hover, Active & Focus State overrides to match FluentUI Button behaviour
+  // Use !important to override high-specificity focus-ripple states from _dropdown.scss / cascade.css
   &:hover:not([disabled]) {
     background: var(--menu-btn-bg-default);
-    border-bottom-color: var(--fluent-btn-secondary-border-hover);
+    border-color: var(--fluent-btn-secondary-border-hover) !important;
+    border-bottom-color: var(--fluent-btn-secondary-border-hover) !important;
   }
 
   &:active,
   &:active:not([disabled]) {
     background: var(--menu-btn-bg-default);
+    border-color: var(--fluent-btn-secondary-border-active) !important;
+    border-bottom-color: var(--fluent-btn-secondary-border-active) !important;
   }
 
   &:focus,
   &.focus,
   &[open] {
-    border-bottom-color: var(--fluent-btn-secondary-border-active);
+    border-color: var(--fluent-btn-secondary-border-active) !important;
+    border-bottom-color: var(--fluent-btn-secondary-border-active) !important;
     outline: none;
   }
 
   // 4. Handle primary button variants (cbi-button-apply, cbi-button-save, cbi-button-positive, important)
-  &.cbi-button-apply,
-  &.cbi-button-save,
-  &.cbi-button-positive,
-  &.important {
+  // Exclude negative classes to prevent styling conflicts on destructive action buttons
+  &.cbi-button-apply:not(.cbi-button-remove):not(.cbi-button-negative),
+  &.cbi-button-save:not(.cbi-button-remove):not(.cbi-button-negative),
+  &.cbi-button-positive:not(.cbi-button-remove):not(.cbi-button-negative),
+  &.important:not(.cbi-button-remove):not(.cbi-button-negative) {
     @include button-primary;
+    border: 0 !important;
 
     --menu-btn-bg-default: var(--fluent-btn-primary-bg);
     --menu-btn-bg-hover: var(--fluent-btn-primary-bg-hover);
@@ -78,20 +86,22 @@
 
     background: var(--menu-btn-bg-default);
 
+    // Use !important to override high-specificity focus-ripple states from _dropdown.scss / cascade.css
     &:hover:not([disabled]) {
       background: var(--menu-btn-bg-default);
-      border-bottom-color: var(--fluent-btn-primary-bg-hover);
+      border: 0 !important;
     }
 
     &:active,
     &:active:not([disabled]) {
       background: var(--menu-btn-bg-default);
+      border: 0 !important;
     }
 
     &:focus,
     &.focus,
     &[open] {
-      border-bottom-color: var(--fluent-btn-primary-bg-active);
+      border: 0 !important;
     }
 
     // Override the text color of the preview area to be white on primary buttons
@@ -110,6 +120,7 @@
   &.cbi-button-remove,
   &.cbi-button-negative {
     @include button-base;
+    border: 0 !important;
 
     --menu-btn-bg-default: var(--fluent-error);
     --menu-btn-bg-hover: var(--fluent-error-hover);
@@ -117,19 +128,23 @@
 
     background: var(--menu-btn-bg-default);
     color: var(--fluent-text-on-primary);
-    border-color: var(--fluent-error);
 
-    &:hover {
+    // Use !important to override high-specificity focus-ripple states from _dropdown.scss / cascade.css
+    &:hover:not([disabled]) {
       background: var(--menu-btn-bg-default);
-      border-color: var(--fluent-error-hover);
-      border-bottom-color: var(--fluent-error-hover);
+      border: 0 !important;
     }
 
     &:active,
     &:active:not([disabled]) {
       background: var(--menu-btn-bg-default);
-      border-color: var(--fluent-error-active);
-      border-bottom-color: var(--fluent-error-active);
+      border: 0 !important;
+    }
+
+    &:focus,
+    &.focus,
+    &[open] {
+      border: 0 !important;
     }
 
     > ul.preview > li,
