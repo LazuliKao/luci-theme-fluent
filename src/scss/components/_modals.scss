@@ -260,6 +260,22 @@ body.modal-overlay-active {
       pointer-events: none !important;
       cursor: not-allowed !important;
       filter: grayscale(0.5) opacity(0.6) !important;
+
+      * {
+        pointer-events: none !important;
+      }
+    }
+  }
+
+  // 2.5 Temporarily disable header status indicators during save/notice flow
+  &:has(#modal_overlay .modal.notice) #indicators,
+  &:has(#modal_overlay .modal.spinning) #indicators {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    filter: grayscale(0.5) opacity(0.6) !important;
+
+    * {
+      pointer-events: none !important;
     }
   }
 

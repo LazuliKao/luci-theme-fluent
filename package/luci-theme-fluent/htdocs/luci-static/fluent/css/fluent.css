@@ -1855,6 +1855,104 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   filter: grayscale(.5) opacity(.6) !important;
 }
 
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent button * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent input * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent select * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent textarea * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent label * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .cbi-button * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .cbi-dropdown * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .fluent-custom-select * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .cbi-checkbox * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .drag-handle * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent a.btn * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent button * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent input * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent select * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent textarea * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent label * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .cbi-button * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .cbi-dropdown * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .fluent-custom-select * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .cbi-checkbox * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .drag-handle * {
+  pointer-events: none !important;
+}
+
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn * {
+  pointer-events: none !important;
+}
+
+:is(body.modal-overlay-active:has(#modal_overlay .modal.notice) #indicators, body.modal-overlay-active:has(#modal_overlay .modal.spinning) #indicators) {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  filter: grayscale(.5) opacity(.6) !important;
+}
+
+:is(body.modal-overlay-active:has(#modal_overlay .modal.notice) #indicators *, body.modal-overlay-active:has(#modal_overlay .modal.spinning) #indicators *) {
+  pointer-events: none !important;
+}
+
 :is(body.modal-overlay-active #modal_overlay:has(.modal.notice), body.modal-overlay-active #modal_overlay:has(.modal.spinning)) {
   pointer-events: none !important;
   padding-top: var(--fluent-space-xl) !important;
@@ -7274,15 +7372,11 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
 .cbi-dropdown.cbi-button[disabled], .cbi-dropdown.btn[disabled] {
   opacity: 1;
   cursor: not-allowed;
+  pointer-events: none;
   background: var(--fluent-bg-active) !important;
   border-color: var(--fluent-bg-active) !important;
   border-bottom-color: var(--fluent-bg-active) !important;
   color: var(--fluent-text-disabled) !important;
-  pointer-events: none !important;
-}
-
-.cbi-dropdown.cbi-button[disabled] *, .cbi-dropdown.btn[disabled] * {
-  pointer-events: none !important;
 }
 
 .cbi-dropdown.cbi-button[disabled] > ul.preview > li, .cbi-dropdown.cbi-button[disabled] > ul:not(.dropdown) > li, .cbi-dropdown.btn[disabled] > ul.preview > li, .cbi-dropdown.btn[disabled] > ul:not(.dropdown) > li {
