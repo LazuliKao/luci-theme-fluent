@@ -1,12 +1,13 @@
 import { defineConfig, rspack } from "@rsbuild/core";
 import { pluginSass } from "@rsbuild/plugin-sass";
-import { SwcJsMinimizerRspackPlugin, type Compiler } from "@rspack/core";
-
-import { generateThemeDefaults } from "./script/generate-theme-defaults";
+import { type Compiler, SwcJsMinimizerRspackPlugin } from "@rspack/core";
 import { generateIcons } from "./script/generate-fluent-icons";
+import { generateThemeDefaults } from "./script/generate-theme-defaults";
+
 const luciRequires = `"use strict";
 "require baseclass";
 "require ui";
+"require dom";
 `;
 const minify = process.env.RSBUILD_MINIFY === "true" || process.env.RSBUILD_MINIFY === "1";
 export default defineConfig({
@@ -102,6 +103,8 @@ export default defineConfig({
                         map: () => null,
                         sourceAndMap: () => ({ source: sourceEdit, map: null }),
                         updateHash: (hash: { update(s: string): void }) => hash.update(sourceEdit),
+                        buffers: () => [Buffer.from(sourceEdit)],
+                        clearCache: () => undefined,
                       };
                     }
                   }

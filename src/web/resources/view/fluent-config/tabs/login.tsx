@@ -8,7 +8,6 @@ declare global {
 
 const form = L.form;
 const rpc = L.rpc;
-const dom = L.dom;
 const fs = L.fs;
 const ui = L.ui;
 
@@ -63,14 +62,14 @@ const createBackgroundPreview = (filename: string): HTMLElement => {
   const url = `${BACKGROUND_URL}${encodeURIComponent(filename)}`;
 
   if (extension === "mp4" || extension === "webm") {
-    return (<video class="fluent-bg-preview fluent-bg-preview-video" muted playsInline preload="metadata" src={url} />) as HTMLElement;
+    return <video class="fluent-bg-preview fluent-bg-preview-video" muted playsInline preload="metadata" src={url} />;
   }
 
-  return (<div class="fluent-bg-preview" style={`background-image:url('${url.replace(/'/g, "%27")}')`} />) as HTMLElement;
+  return <div class="fluent-bg-preview" style={`background-image:url('${url.replace(/'/g, "%27")}')`} />;
 };
 
 const renderNodeContent = (node: HTMLElement, children: Node | HTMLElement | DocumentFragment | (Node | HTMLElement | DocumentFragment)[]): void => {
-  (dom as unknown as typeof LuCI.dom).content(node, children);
+  dom.content(node, children);
 };
 
 const CBIWallpaperManager = (form.DummyValue as unknown as typeof LuCI.baseclass).extend({

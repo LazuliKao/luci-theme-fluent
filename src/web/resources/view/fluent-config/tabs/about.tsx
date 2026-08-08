@@ -1,14 +1,4 @@
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      img: JSXElement<HTMLImageElement>;
-      hr: JSXElement<HTMLHRElement>;
-    }
-  }
-}
-
 const form = L.form;
-const dom = L.dom as unknown as typeof LuCI.dom;
 const ghmirror = "https://ghfast.top/"; // Use GHProxy to bypass GitHub API rate limits
 
 import { callCheckDownload, callDoInstall, callGetVersion, callStartDownload, fetchLatestRelease, GitHubAPIError } from "../../../utils/update";
@@ -257,34 +247,35 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
 
             const confirmInstallation = () => {
               return new Promise<boolean>((resolve) => {
-                const cancelBtn = (
-                  <button type="button" class="btn cbi-button cbi-button-action">
-                    {_("Cancel")}
-                  </button>
-                ) as HTMLButtonElement;
-                cancelBtn.addEventListener("click", () => {
-                  L.ui.hideModal();
-                  resolve(false);
-                });
-                const confirmBtn = (
-                  <button type="button" class="btn cbi-button cbi-button-save">
-                    {_("Continue")}
-                  </button>
-                ) as HTMLButtonElement;
-                confirmBtn.addEventListener("click", () => {
-                  L.ui.hideModal();
-                  resolve(true);
-                });
-
                 L.ui.showModal(
                   _("Confirm Installation"),
-                  <div>
-                    <p>{_("The theme package is ready. Are you sure you want to proceed with the installation?")}</p>
-                    <div class="right" style="margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end;">
-                      {cancelBtn}
-                      {confirmBtn}
+                  <>
+                    <div>
+                      <p>{_("The theme package is ready. Are you sure you want to proceed with the installation?")}</p>
                     </div>
-                  </div>,
+                    <div class="right">
+                      <button
+                        type="button"
+                        class="btn"
+                        onclick={() => {
+                          L.ui.hideModal();
+                          resolve(false);
+                        }}
+                      >
+                        {_("Cancel")}
+                      </button>
+                      <button
+                        type="button"
+                        class="btn cbi-button-action"
+                        onclick={() => {
+                          L.ui.hideModal();
+                          resolve(true);
+                        }}
+                      >
+                        {_("Continue")}
+                      </button>
+                    </div>
+                  </>,
                 );
               });
             };
@@ -375,16 +366,6 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             setStatus(_("Theme successfully updated! Reloading RPC service, please refresh the page in 5 seconds."), "success");
             updateProgress("done", 100, _("Finished"));
 
-            // Show refresh button
-            const refreshBtn = (
-              <button class="btn cbi-button cbi-button-action" type="button" style="margin-top: 15px">
-                {_("Reload Web Interface")}
-              </button>
-            ) as HTMLButtonElement;
-            refreshBtn.addEventListener("click", () => {
-              window.location.reload();
-            });
-
             dom.content(updateCardEl, [
               <div class="fluent-update-success">
                 <h3 style="color: var(--fluent-success); text-align: center;">{_("Upgrade Successful!")}</h3>
@@ -392,7 +373,18 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
                   {_("The theme is being installed on your router. The logs are displayed below. Reloading the web interface will apply the changes once RPCD restarts.")}
                 </p>
                 {logPre}
-                <div style="display: flex; justify-content: center; margin-top: 20px;">{refreshBtn}</div>
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                  <button
+                    class="btn cbi-button-action"
+                    type="button"
+                    style="margin-top: 15px"
+                    onclick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    {_("Reload Web Interface")}
+                  </button>
+                </div>
               </div>,
             ]);
           };
@@ -438,28 +430,6 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
             </pre>
           );
 
-          const cancelBtn = (
-            <button type="button" class="btn cbi-button cbi-button-action">
-              {_("Cancel")}
-            </button>
-          ) as HTMLButtonElement;
-          cancelBtn.addEventListener("click", () => L.ui.hideModal());
-
-          const submitBtn = (
-            <button type="button" class="btn cbi-button cbi-button-save">
-              {_("Submit")}
-            </button>
-          ) as HTMLButtonElement;
-          submitBtn.addEventListener("click", () => {
-            const newToken = inputEl.value.trim();
-            L.ui.hideModal();
-            if (newToken) {
-              setStatus(_("Retrying with token..."), "info");
-              checkBtn.disabled = true;
-              doCheckUpdate(newToken);
-            }
-          });
-
           L.ui.showModal(
             _("GitHub Token Required"),
             <>
@@ -467,9 +437,25 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
               {createTokenPromptEl}
               {rawErrorEl}
               {inputEl}
-              <div class="right" style="margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end;">
-                {cancelBtn}
-                {submitBtn}
+              <div class="right">
+                <button type="button" class="btn" onclick={() => L.ui.hideModal()}>
+                  {_("Cancel")}
+                </button>
+                <button
+                  type="button"
+                  class="btn cbi-button-save"
+                  onclick={() => {
+                    const newToken = inputEl.value.trim();
+                    L.ui.hideModal();
+                    if (newToken) {
+                      setStatus(_("Retrying with token..."), "info");
+                      checkBtn.disabled = true;
+                      doCheckUpdate(newToken);
+                    }
+                  }}
+                >
+                  {_("Submit")}
+                </button>
               </div>
             </>,
           );
