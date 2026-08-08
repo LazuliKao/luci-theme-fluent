@@ -23,19 +23,19 @@ A FluentUI-inspired OpenWrt LuCI theme built with Rsbuild using pure TypeScript/
 ## Showcase
 
 <p align="center">
-  <img src="./screenshots/overview_theme_comparison.png" alt="Theme comparison overview" width="100%" />
-</p>
-
-<p align="center">
-  <img src="./screenshots/login_theme_comparison.png" alt="Login theme comparison" width="100%" />
-</p>
-
-<p align="center">
   <img src="./screenshots/showcase_banner.png" alt="Showcase banner" width="100%" />
 </p>
 
 <p align="center">
   <img src="./screenshots/showcase_mobile_promo.png" alt="Showcase banner" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/overview_theme_comparison.png" alt="Theme comparison overview" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/login_theme_comparison.png" alt="Login theme comparison" width="100%" />
 </p>
 
 ## Key Features
@@ -68,8 +68,8 @@ After installation, navigate to `System -> Fluent Theme` in the LuCI web interfa
 ### Manual Installation
 
 1. Open the release page and download the package file matching your system:
-   - Stable releases: https://github.com/LazuliKao/luci-theme-fluent/releases
-   - Nightly release: https://github.com/LazuliKao/luci-theme-fluent/releases/tag/nightly
+   - Stable releases: <https://github.com/LazuliKao/luci-theme-fluent/releases>
+   - Nightly release: <https://github.com/LazuliKao/luci-theme-fluent/releases/tag/nightly>
 2. Upload the downloaded file to your router, for example into `/tmp/`.
 3. Install it with the matching package manager:
 
@@ -86,6 +86,7 @@ apk add --allow-untrusted /tmp/luci-theme-fluent-*.apk
 You can add this package to your OpenWrt build system in one of two ways:
 
 #### Option 1: Clone the repository and copy the package directory
+
 ```bash
 cd openwrt
 git clone --depth=1 https://github.com/LazuliKao/luci-theme-fluent.git /tmp/luci-theme-fluent
@@ -94,17 +95,22 @@ cp -a /tmp/luci-theme-fluent/package/luci-theme-fluent package/
 ```
 
 #### Option 2: Add to feeds
+
 Add the following line to your `feeds.conf.default`:
+
 ```text
 src-git fluent https://github.com/LazuliKao/luci-theme-fluent.git
 ```
+
 Then update and install the feed:
+
 ```bash
 ./scripts/feeds update fluent
 ./scripts/feeds install -a -p fluent
 ```
 
 After adding the package, configure and select it in `menuconfig`:
+
 ```bash
 make menuconfig
 ```

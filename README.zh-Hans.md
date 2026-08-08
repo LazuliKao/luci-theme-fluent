@@ -23,19 +23,19 @@
 ## 界面预览
 
 <p align="center">
-  <img src="./screenshots/zh-Hans/overview_theme_comparison.png" alt="主题对比总览" width="100%" />
-</p>
-
-<p align="center">
-  <img src="./screenshots/zh-Hans/login_theme_comparison.png" alt="登录页主题对比" width="100%" />
-</p>
-
-<p align="center">
   <img src="./screenshots/zh-Hans/showcase_banner.png" alt="展示横幅" width="100%" />
 </p>
 
 <p align="center">
   <img src="./screenshots/zh-Hans/showcase_mobile_promo.png" alt="移动端展示" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/zh-Hans/overview_theme_comparison.png" alt="主题对比总览" width="100%" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/zh-Hans/login_theme_comparison.png" alt="登录页主题对比" width="100%" />
 </p>
 
 ## 功能特性
@@ -68,8 +68,8 @@ wget -qO- https://raw.githubusercontent.com/LazuliKao/luci-theme-fluent/main/ins
 ### 手动安装
 
 1. 打开发布页面,下载与你的系统匹配的软件包:
-   - 正式版:https://github.com/LazuliKao/luci-theme-fluent/releases
-   - 每日构建版:https://github.com/LazuliKao/luci-theme-fluent/releases/tag/nightly
+   - 正式版:<https://github.com/LazuliKao/luci-theme-fluent/releases>
+   - 每日构建版:<https://github.com/LazuliKao/luci-theme-fluent/releases/tag/nightly>
 2. 将下载的文件上传到路由器,例如 `/tmp/` 目录。
 3. 使用对应的包管理器进行安装:
 
@@ -86,6 +86,7 @@ apk add --allow-untrusted /tmp/luci-theme-fluent-*.apk
 你可以通过以下两种方式之一将本软件包添加到 OpenWrt 编译系统中：
 
 #### 方法一：克隆仓库并复制软件包目录
+
 ```bash
 cd openwrt
 git clone --depth=1 https://github.com/LazuliKao/luci-theme-fluent.git /tmp/luci-theme-fluent
@@ -94,17 +95,22 @@ cp -a /tmp/luci-theme-fluent/package/luci-theme-fluent package/
 ```
 
 #### 方法二：添加到 feeds
+
 在 `feeds.conf.default` 中添加以下行：
+
 ```text
 src-git fluent https://github.com/LazuliKao/luci-theme-fluent.git
 ```
+
 然后更新并安装 feed：
+
 ```bash
 ./scripts/feeds update fluent
 ./scripts/feeds install -a -p fluent
 ```
 
 添加软件包后，在 `menuconfig` 中进行配置和选择：
+
 ```bash
 make menuconfig
 ```
