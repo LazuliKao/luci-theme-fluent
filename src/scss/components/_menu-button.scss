@@ -276,7 +276,11 @@
     border-color: var(--fluent-bg-active) !important;
     border-bottom-color: var(--fluent-bg-active) !important;
     color: var(--fluent-text-disabled) !important;
-    pointer-events: none;
+    pointer-events: none !important;
+
+    * {
+      pointer-events: none !important;
+    }
 
     > ul.preview > li,
     > ul:not(.dropdown) > li,
@@ -293,6 +297,10 @@
   &.spinning {
     padding-inline-start: 0 !important;
     pointer-events: none !important;
+
+    * {
+      pointer-events: none !important;
+    }
 
     &::before {
       content: "";

@@ -39,7 +39,7 @@
     "@dotenvx/dotenvx": "^2.19.1",
     "@iconify-json/fluent": "^1.2.51",
     "@iconify-json/fluent-mdl2": "^1.2.1",
-    "@lazulikao/luci-types": "github:LazuliKao/luci-types#527e34f4e0373edd47682822060bf99c308979ef",
+    "@lazulikao/luci-types": "github:LazuliKao/luci-types#6511175eddeb9dcdee0046f3399b604ce74bd99c",
     "@types/node": "^22.19.21",
     "husky": "^9.1.7",
     "lint-staged": "^17.2.0",

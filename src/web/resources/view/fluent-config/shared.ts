@@ -131,8 +131,8 @@ export const configureHexColorValue = (option: LuCI.form.Value, selectorSuffix: 
     return true;
   };
 
-  option.render = ((sectionId: string, optionIndex: number, cfgvalue: unknown) => {
-    const el = (form.Value.prototype.render as unknown as (...args: unknown[]) => Node).call(option, sectionId, optionIndex, cfgvalue);
+  option.render = (optionIndex: number, sectionId: string, inTable: boolean) => {
+    const el = form.Value.prototype.render.call(option, optionIndex, sectionId, inTable);
 
     const bindPicker = () => {
       const textInput = document.querySelector<HTMLInputElement>(`[id^="widget.cbid.fluent."][id$=".${selectorSuffix}"]`);
@@ -148,7 +148,7 @@ export const configureHexColorValue = (option: LuCI.form.Value, selectorSuffix: 
     }
 
     return el;
-  }) as unknown as () => Node | Promise<Node>;
+  };
 };
 
 export const createModeSubtabs = (section: LuCI.form.TypedSection, parentTab: string, optionName: string): LuCI.form.TypedSection => {

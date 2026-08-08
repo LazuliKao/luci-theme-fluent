@@ -44,11 +44,11 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_e052c92c891a14afb85664d04813abc9/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
-    let { children: n, ...r } = t || {}, o = function e(t, n = []) {
-        for (let r of t)null != r && "boolean" != typeof r && (Array.isArray(r) ? e(r, n) : n.push(r));
+    let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
+        for (let r of t)null != r && "boolean" != typeof r && (Array.isArray(r) ? e(r, n) : n.push(r instanceof Node ? r : String(r)));
         return n;
     }(null == n ? [] : Array.isArray(n) ? n : [
         n
@@ -57,20 +57,27 @@ function jsx_factory_e(e, t) {
         let e = document.createDocumentFragment();
         return e.append(...o), e;
     }
-    if ("function" == typeof e) return e({
-        ...r,
-        children: o
-    });
-    let l = {}, f = {
+    if ("function" == typeof e) {
+        let t = Reflect.apply(e, void 0, [
+            {
+                ...r,
+                children: o
+            }
+        ]);
+        if (!(t instanceof Node)) throw TypeError("JSX components must return a DOM Node");
+        return t;
+    }
+    if ("string" != typeof e) throw TypeError("JSX element types must be tag names or component functions");
+    let f = {}, l = {
         ...r
     };
-    for (let [e, t] of Object.entries(f))e.startsWith("on") && "function" == typeof t ? (l[e] = t, delete f[e]) : "boolean" == typeof t && (t ? f[e] = e : delete f[e]);
-    let u = Object.keys(f).length > 0 ? o.length > 1 ? E(e, f, o) : E(e, f, o[0]) : o.length > 1 ? E(e, {}, o) : E(e, {}, o[0]);
-    for (let [e, t] of Object.entries(l)){
+    for (let [e, t] of Object.entries(l))e.startsWith("on") && "function" == typeof t ? (f[e] = t, delete l[e]) : "boolean" == typeof t && (t ? l[e] = e : delete l[e]);
+    let s = Object.keys(l).length > 0 ? o.length > 1 ? E(e, l, o) : E(e, l, o[0]) : o.length > 1 ? E(e, {}, o) : E(e, {}, o[0]);
+    for (let [e, t] of Object.entries(f)){
         let n = e.slice(2).toLowerCase();
-        u.addEventListener(n, t);
+        s.addEventListener(n, t);
     }
-    return u;
+    return s;
 }
 function jsx(t, n) {
     return jsx_factory_e(t, n);
@@ -82,7 +89,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_e052c92c891a14afb85664d04813abc9/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/utils/update.ts
@@ -899,7 +906,7 @@ let login_g = new Set([
 }, login_h = (e, t)=>{
     dom.content(e, t);
 }, login_v = login_a.DummyValue.extend({
-    renderWidget: function(a, n, c) {
+    renderWidget: (a, n, c)=>{
         let s = jsx("div", {
             class: "cbi-value-description fluent-bg-status",
             children: "Ready to upload or remove custom backgrounds."
@@ -926,7 +933,7 @@ let login_g = new Set([
                         class: "btn cbi-button cbi-button-remove",
                         type: "button",
                         children: "Delete"
-                    }), s = login_i.createHandlerFn(this, ()=>(k(`Deleting ${d}...`), login_o(d).then((e)=>(login_f(e, `Deleting ${d}`), $().then(()=>{
+                    }), s = login_i.createHandlerFn(undefined, ()=>(k(`Deleting ${d}...`), login_o(d).then((e)=>(login_f(e, `Deleting ${d}`), $().then(()=>{
                                 k(`Deleted ${d}.`);
                             }))).catch((e)=>{
                             k(`Failed to delete ${d}: ${e instanceof Error ? e.message : String(e)}`);

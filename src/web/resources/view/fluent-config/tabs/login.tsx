@@ -1,11 +1,3 @@
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      video: JSXElement<HTMLVideoElement>;
-    }
-  }
-}
-
 const form = L.form;
 const rpc = L.rpc;
 const fs = L.fs;
@@ -72,8 +64,8 @@ const renderNodeContent = (node: HTMLElement, children: Node | HTMLElement | Doc
   dom.content(node, children);
 };
 
-const CBIWallpaperManager = (form.DummyValue as unknown as typeof LuCI.baseclass).extend({
-  renderWidget: function (_section_id: string, _option_index: number, _cfgvalue: string) {
+const CBIWallpaperManager = form.DummyValue.extend({
+  renderWidget: (_section_id: string, _option_index: number, _cfgvalue: string) => {
     const statusEl = (<div class="cbi-value-description fluent-bg-status">Ready to upload or remove custom backgrounds.</div>) as HTMLElement;
     const hintEl = (<div class="fluent-bg-hint">Supported formats: JPG, PNG, GIF, WEBP, MP4, WEBM.</div>) as HTMLElement;
     const uploadButton = (
@@ -206,7 +198,7 @@ const CBIWallpaperManager = (form.DummyValue as unknown as typeof LuCI.baseclass
 
     return <div class="fluent-bg-manager">{[statusEl, hintEl, actionsEl, listEl]}</div>;
   },
-}) as unknown as typeof LuCI.form.DummyValue;
+});
 
 export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
   section.tab("login", _("Login page"), _("Customize the login page background, card opacity, and blur radius for light and dark modes."));

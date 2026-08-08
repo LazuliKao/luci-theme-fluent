@@ -3,7 +3,7 @@ const ghmirror = "https://ghfast.top/"; // Use GHProxy to bypass GitHub API rate
 
 import { callCheckDownload, callDoInstall, callGetVersion, callStartDownload, fetchLatestRelease, GitHubAPIError } from "../../../utils/update";
 
-const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).extend({
+const CBIAboutManager = form.DummyValue.extend({
   renderWidget: (_section_id: string, _option_index: number, _cfgvalue: string) => {
     // Current details from RPCD
     let currentVersion = "1.0.1";
@@ -476,7 +476,7 @@ const CBIAboutManager = (form.DummyValue as unknown as typeof LuCI.baseclass).ex
 
     return managerContainer;
   },
-}) as unknown as typeof LuCI.form.DummyValue;
+});
 
 export const registerAboutTab = (section: LuCI.form.TypedSection): void => {
   section.tab("about", _("About"));

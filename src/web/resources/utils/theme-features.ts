@@ -19,10 +19,13 @@ export function setupThemeFeatures() {
   // ============================================================
   // PATCH: PREVENT EXTREMELY SHORT DROPDOWNS IN NESTED SCROLL PARENTS (E.G. TABS IN MODALS)
   // ============================================================
-  // biome-ignore lint/suspicious/noExplicitAny: override core prototype without strict types
-  const uiClass = (ui as any)?.Dropdown;
-  if (uiClass?.prototype) {
-    uiClass.prototype.getScrollParent = (element: HTMLElement) => {
+  // This LuCI compatibility hook is private, so keep its extra member local.
+  type DropdownConstructorWithScrollParent = typeof LuCI.ui.Dropdown & {
+    prototype: LuCI.ui.Dropdown & { getScrollParent: (element: HTMLElement) => Element };
+  };
+  const DropdownClass = ui.Dropdown as DropdownConstructorWithScrollParent | undefined;
+  if (DropdownClass) {
+    DropdownClass.prototype.getScrollParent = (element: HTMLElement) => {
       let parent: HTMLElement | null = element.parentElement;
       while (parent) {
         // Skip tab containers, sections, or elements with too small height that are not the actual scrollable modal body

@@ -2,15 +2,31 @@
  * Native JavaScript slide animation utilities
  * Replaces jQuery slideUp/slideDown functionality with better performance
  */
+const ANIMATION_DURATIONS = {
+  fast: 200,
+  normal: 400,
+  slow: 600,
+} as const;
+
+const resolveAnimationDuration = (duration?: string | number): number => {
+  if (typeof duration === "number") {
+    return duration || ANIMATION_DURATIONS.normal;
+  }
+
+  switch (duration) {
+    case "fast":
+    case "slow":
+      return ANIMATION_DURATIONS[duration];
+    default:
+      return ANIMATION_DURATIONS.normal;
+  }
+};
+
 export const SlideAnimations = {
   /**
    * Animation durations in milliseconds
    */
-  durations: {
-    fast: 200,
-    normal: 400,
-    slow: 600,
-  } as Record<string, number>,
+  durations: ANIMATION_DURATIONS,
 
   /**
    * Map to track running animations and their cleanup functions
@@ -33,7 +49,7 @@ export const SlideAnimations = {
     this.stop(element);
 
     // Convert duration string to milliseconds
-    const animDuration = typeof duration === "string" ? this.durations[duration] || this.durations.normal : duration || this.durations.normal;
+    const animDuration = resolveAnimationDuration(duration);
 
     // Store original styles
     const originalStyles = {
@@ -97,7 +113,7 @@ export const SlideAnimations = {
     this.stop(element);
 
     // Convert duration string to milliseconds
-    const animDuration = typeof duration === "string" ? this.durations[duration] || this.durations.normal : duration || this.durations.normal;
+    const animDuration = resolveAnimationDuration(duration);
 
     // Store original styles
     const originalStyles = {

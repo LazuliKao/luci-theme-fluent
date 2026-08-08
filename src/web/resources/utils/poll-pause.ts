@@ -4,58 +4,28 @@
  */
 export function setupSelectionPause() {
   let pollPausedBySelection = false;
-
-  const isPollActive = () => {
-    if (typeof L?.poll?.active === "function") {
-      return L.poll.active();
-    }
-
-    if (typeof XHR?.running === "function") {
-      return XHR.running();
-    }
-    return false;
-  };
-
-  const stopPoll = () => {
-    if (typeof L?.poll?.stop === "function") {
-      L.poll.stop();
-    } else if (typeof XHR?.halt === "function") {
-      XHR.halt();
-    }
-  };
-
-  const startPoll = () => {
-    if (typeof L?.poll?.start === "function") {
-      L.poll.start();
-    } else if (typeof XHR?.run === "function") {
-      XHR.run();
-    }
-  };
+  const poll = L.poll;
 
   document.addEventListener("selectionchange", () => {
     const selection = document.getSelection();
-    let hasSelection = selection && selection.toString().trim() !== "";
+    let hasSelection = (selection?.toString().trim().length ?? 0) > 0;
 
-    // Fallback: check if selection is inside an input or textarea
+    // Input and textarea selections are not represented by document.getSelection().
     if (!hasSelection) {
-      const activeEl = document.activeElement as HTMLInputElement | HTMLTextAreaElement | null;
-      if (activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA")) {
-        if (typeof activeEl.selectionStart === "number" && typeof activeEl.selectionEnd === "number") {
-          hasSelection = activeEl.selectionStart !== activeEl.selectionEnd;
-        }
+      const activeElement = document.activeElement;
+      if (activeElement instanceof HTMLInputElement || activeElement instanceof HTMLTextAreaElement) {
+        hasSelection = activeElement.selectionStart !== activeElement.selectionEnd;
       }
     }
 
     if (hasSelection) {
-      if (!pollPausedBySelection && isPollActive()) {
-        stopPoll();
+      if (!pollPausedBySelection && poll.active()) {
+        poll.stop();
         pollPausedBySelection = true;
       }
-    } else {
-      if (pollPausedBySelection) {
-        startPoll();
-        pollPausedBySelection = false;
-      }
+    } else if (pollPausedBySelection) {
+      poll.start();
+      pollPausedBySelection = false;
     }
   });
 }

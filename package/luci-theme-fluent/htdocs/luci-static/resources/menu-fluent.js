@@ -44,11 +44,11 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_e052c92c891a14afb85664d04813abc9/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
-    let { children: n, ...r } = t || {}, o = function e(t, n = []) {
-        for (let r of t)null != r && "boolean" != typeof r && (Array.isArray(r) ? e(r, n) : n.push(r));
+    let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
+        for (let r of t)null != r && "boolean" != typeof r && (Array.isArray(r) ? e(r, n) : n.push(r instanceof Node ? r : String(r)));
         return n;
     }(null == n ? [] : Array.isArray(n) ? n : [
         n
@@ -57,20 +57,27 @@ function jsx_factory_e(e, t) {
         let e = document.createDocumentFragment();
         return e.append(...o), e;
     }
-    if ("function" == typeof e) return e({
-        ...r,
-        children: o
-    });
-    let l = {}, f = {
+    if ("function" == typeof e) {
+        let t = Reflect.apply(e, void 0, [
+            {
+                ...r,
+                children: o
+            }
+        ]);
+        if (!(t instanceof Node)) throw TypeError("JSX components must return a DOM Node");
+        return t;
+    }
+    if ("string" != typeof e) throw TypeError("JSX element types must be tag names or component functions");
+    let f = {}, l = {
         ...r
     };
-    for (let [e, t] of Object.entries(f))e.startsWith("on") && "function" == typeof t ? (l[e] = t, delete f[e]) : "boolean" == typeof t && (t ? f[e] = e : delete f[e]);
-    let u = Object.keys(f).length > 0 ? o.length > 1 ? E(e, f, o) : E(e, f, o[0]) : o.length > 1 ? E(e, {}, o) : E(e, {}, o[0]);
-    for (let [e, t] of Object.entries(l)){
+    for (let [e, t] of Object.entries(l))e.startsWith("on") && "function" == typeof t ? (f[e] = t, delete l[e]) : "boolean" == typeof t && (t ? l[e] = e : delete l[e]);
+    let s = Object.keys(l).length > 0 ? o.length > 1 ? E(e, l, o) : E(e, l, o[0]) : o.length > 1 ? E(e, {}, o) : E(e, {}, o[0]);
+    for (let [e, t] of Object.entries(f)){
         let n = e.slice(2).toLowerCase();
-        u.addEventListener(n, t);
+        s.addEventListener(n, t);
     }
-    return u;
+    return s;
 }
 function jsx(t, n) {
     return jsx_factory_e(t, n);
@@ -82,7 +89,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_e052c92c891a14afb85664d04813abc9/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/utils/error-tooltips.tsx
@@ -939,14 +946,14 @@ function setupMenuSearch(t) {
 
 ;// CONCATENATED MODULE: ./web/resources/utils/poll-pause.ts
 function setupSelectionPause() {
-    let t = !1;
+    let e = !1, t = L.poll;
     document.addEventListener("selectionchange", ()=>{
-        let e = document.getSelection(), n = e && "" !== e.toString().trim();
-        if (!n) {
-            let t = document.activeElement;
-            t && ("INPUT" === t.tagName || "TEXTAREA" === t.tagName) && "number" == typeof t.selectionStart && "number" == typeof t.selectionEnd && (n = t.selectionStart !== t.selectionEnd);
+        let n = document.getSelection(), o = (n?.toString().trim().length ?? 0) > 0;
+        if (!o) {
+            let e = document.activeElement;
+            (e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement) && (o = e.selectionStart !== e.selectionEnd);
         }
-        n ? !t && ("function" == typeof L?.poll?.active ? L.poll.active() : "function" == typeof XHR?.running && XHR.running()) && ("function" == typeof L?.poll?.stop ? L.poll.stop() : "function" == typeof XHR?.halt && XHR.halt(), t = !0) : t && ("function" == typeof L?.poll?.start ? L.poll.start() : "function" == typeof XHR?.run && XHR.run(), t = !1);
+        o ? !e && t.active() && (t.stop(), e = !0) : e && (t.start(), e = !1);
     });
 }
 
@@ -1209,63 +1216,73 @@ function select_dropdown_h(n) {
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/slide-animations.ts
+let slide_animations_t = {
+    fast: 200,
+    normal: 400,
+    slow: 600
+}, slide_animations_e = (e)=>{
+    if ("number" == typeof e) return e || slide_animations_t.normal;
+    switch(e){
+        case "fast":
+        case "slow":
+            return slide_animations_t[e];
+        default:
+            return slide_animations_t.normal;
+    }
+};
 const SlideAnimations = {
-    durations: {
-        fast: 200,
-        normal: 400,
-        slow: 600
-    },
+    durations: slide_animations_t,
     runningAnimations: new WeakMap(),
-    slideDown (t, i, e) {
+    slideDown (t, i, n) {
         if (!t) return void console.warn("SlideAnimations.slideDown: No element provided");
         this.stop(t);
-        let n = "string" == typeof i ? this.durations[i] || this.durations.normal : i || this.durations.normal, s = {
+        let s = slide_animations_e(i), o = {
             display: t.style.display,
             overflow: t.style.overflow,
             height: t.style.height,
             transition: t.style.transition
         };
-        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${n}ms ease-out`, t.offsetHeight;
-        let o = t.scrollHeight;
-        t.style.height = `${o}px`;
-        let l = ()=>{
-            if (t.style.height = s.height || "", t.style.overflow = s.overflow || "", t.style.transition = s.transition || "", this.runningAnimations.delete(t), e && "function" == typeof e) try {
-                e.call(t);
+        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${s}ms ease-out`, t.offsetHeight;
+        let l = t.scrollHeight;
+        t.style.height = `${l}px`;
+        let r = ()=>{
+            if (t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
             } catch (t) {
                 console.error("SlideAnimations callback error:", t);
             }
-        }, r = setTimeout(l, n);
+        }, a = setTimeout(r, s);
         this.runningAnimations.set(t, {
-            timeoutId: r,
-            cleanup: l
+            timeoutId: a,
+            cleanup: r
         });
     },
-    slideUp (t, i, e) {
+    slideUp (t, i, n) {
         if (!t) return void console.warn("SlideAnimations.slideUp: No element provided");
         this.stop(t);
-        let n = "string" == typeof i ? this.durations[i] || this.durations.normal : i || this.durations.normal, s = {
+        let s = slide_animations_e(i), o = {
             display: t.style.display,
             overflow: t.style.overflow,
             height: t.style.height,
             transition: t.style.transition
-        }, o = t.scrollHeight;
-        t.style.overflow = "hidden", t.style.height = `${o}px`, t.style.transition = `height ${n}ms ease-out`, t.offsetHeight, t.style.height = "0px";
-        let l = ()=>{
-            if (t.style.display = "none", t.style.height = s.height || "", t.style.overflow = s.overflow || "", t.style.transition = s.transition || "", this.runningAnimations.delete(t), e && "function" == typeof e) try {
-                e.call(t);
+        }, l = t.scrollHeight;
+        t.style.overflow = "hidden", t.style.height = `${l}px`, t.style.transition = `height ${s}ms ease-out`, t.offsetHeight, t.style.height = "0px";
+        let r = ()=>{
+            if (t.style.display = "none", t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
             } catch (t) {
                 console.error("SlideAnimations callback error:", t);
             }
-        }, r = setTimeout(l, n);
+        }, a = setTimeout(r, s);
         this.runningAnimations.set(t, {
-            timeoutId: r,
-            cleanup: l
+            timeoutId: a,
+            cleanup: r
         });
     },
     stop (t) {
         if (!t) return;
-        let i = this.runningAnimations.get(t);
-        i && (clearTimeout(i.timeoutId), i.cleanup()), t.style.transition = "", t.offsetHeight;
+        let e = this.runningAnimations.get(t);
+        e && (clearTimeout(e.timeoutId), e.cleanup()), t.style.transition = "", t.offsetHeight;
     },
     isAnimating (t) {
         return this.runningAnimations.has(t);
@@ -1303,8 +1320,8 @@ function setupTableWrappers() {
 function setupThemeFeatures() {
     let l = document.body;
     if (!l) return;
-    let a = L.ui, s = a?.Dropdown;
-    s?.prototype && (s.prototype.getScrollParent = (e)=>{
+    let a = L.ui, s = a.Dropdown;
+    s && (s.prototype.getScrollParent = (e)=>{
         let t = e.parentElement;
         for(; t;){
             if (t.classList.contains("cbi-tabcontainer") || t.id?.startsWith("container.") || t.classList.contains("cbi-section") || t.clientHeight < 250 && !t.classList.contains("modal")) {
