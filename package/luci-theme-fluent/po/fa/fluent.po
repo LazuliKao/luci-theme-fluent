@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -258,6 +258,9 @@ msgstr "برای تغییر ترتیب، منوی اصلی را بکشید"
 
 msgid "Drop second-level menus here"
 msgstr "منوهای سطح دوم را در اینجا رها کنید"
+
+msgid "Edit"
+msgstr "ویرایش"
 
 msgid "Enable page transition animation"
 msgstr "فعال‌سازی انیمیشن گذار صفحه"
@@ -524,6 +527,9 @@ msgstr "تلاش دوباره با توکن..."
 
 msgid "Rounded (6px)"
 msgstr "گرد (6px)"
+
+msgid "Save"
+msgstr "ذخیره"
 
 msgid "Scroll to bottom"
 msgstr "رفتن به پایین"

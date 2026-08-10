@@ -8,11 +8,13 @@ export type SavedMenuCategoryRef = string | number;
 export type SavedMenuCategoryMove = [source: SavedMenuCategoryRef, before: SavedMenuCategoryRef | null];
 export type SavedMenuItemMove = [path: string, target: SavedMenuCategoryRef, before: string | null];
 export type SavedMenuTitle = [primaryPath: string, title: string];
+export type SavedMenuItemTitle = [path: string, title: string];
 
 export interface SavedMenuLayout {
   version: 1;
   custom: string[];
   titles: SavedMenuTitle[];
+  itemTitles: SavedMenuItemTitle[];
   categoryMoves: SavedMenuCategoryMove[];
   itemMoves: SavedMenuItemMove[];
   hiddenCategories: SavedMenuCategoryRef[];
@@ -21,6 +23,7 @@ export interface SavedMenuLayout {
 
 export interface PendingMenuLayout {
   titles: Array<[categoryId: string, title: string]>;
+  itemTitles: Array<[path: string, title: string]>;
   categoryMoves: Array<[sourceId: string, beforeId: string | null]>;
   itemMoves: Array<[path: string, targetId: string, before: string | null]>;
 }
@@ -29,6 +32,7 @@ export interface ResolvedMenuLayout {
   categories: SavedMenuCategory[];
   hiddenCategoryIds: Set<string>;
   hiddenItemPaths: Set<string>;
+  itemTitles: Map<string, string>;
   pending: PendingMenuLayout;
   configured: boolean;
 }
@@ -72,7 +76,7 @@ interface DiscoveredMenu {
 
 const PRIMARY_CATEGORY_PREFIX = "primary:";
 const CUSTOM_CATEGORY_PREFIX = "custom:";
-const SAVED_LAYOUT_KEYS = new Set(["version", "custom", "titles", "categoryMoves", "itemMoves", "hiddenCategories", "hiddenItems"]);
+const SAVED_LAYOUT_KEYS = new Set(["version", "custom", "titles", "itemTitles", "categoryMoves", "itemMoves", "hiddenCategories", "hiddenItems"]);
 
 function translatedTitle(title: string): string {
   return typeof _ === "function" ? _(title) : title;
@@ -273,11 +277,12 @@ export function parseMenuLayout(value: string | string[] | null): SavedMenuLayou
 
   const customValues = optionalArray(record, "custom");
   const titleValues = optionalArray(record, "titles");
+  const itemTitleValues = optionalArray(record, "itemTitles");
   const categoryMoveValues = optionalArray(record, "categoryMoves");
   const itemMoveValues = optionalArray(record, "itemMoves");
   const hiddenCategoryValues = optionalArray(record, "hiddenCategories");
   const hiddenItemValues = optionalArray(record, "hiddenItems");
-  if (!customValues || !titleValues || !categoryMoveValues || !itemMoveValues || !hiddenCategoryValues || !hiddenItemValues) return null;
+  if (!customValues || !titleValues || !itemTitleValues || !categoryMoveValues || !itemMoveValues || !hiddenCategoryValues || !hiddenItemValues) return null;
 
   const custom: string[] = [];
   const customTitles = new Set<string>();
@@ -298,6 +303,16 @@ export function parseMenuLayout(value: string | string[] | null): SavedMenuLayou
     if (!title || titledPrimaries.has(value[0])) return null;
     titledPrimaries.add(value[0]);
     titles.push([value[0], title]);
+  }
+
+  const itemTitles: SavedMenuItemTitle[] = [];
+  const titledItemPaths = new Set<string>();
+  for (const value of itemTitleValues) {
+    if (!Array.isArray(value) || value.length !== 2 || !isPath(value[0], 3) || typeof value[1] !== "string") return null;
+    const title = value[1].trim();
+    if (!title || titledItemPaths.has(value[0])) return null;
+    titledItemPaths.add(value[0]);
+    itemTitles.push([value[0], title]);
   }
 
   const categoryMoves: SavedMenuCategoryMove[] = [];
@@ -341,11 +356,11 @@ export function parseMenuLayout(value: string | string[] | null): SavedMenuLayou
     hiddenItems.push(value);
   }
 
-  return { version: 1, custom, titles, categoryMoves, itemMoves, hiddenCategories, hiddenItems };
+  return { version: 1, custom, titles, itemTitles, categoryMoves, itemMoves, hiddenCategories, hiddenItems };
 }
 
 function emptyPendingLayout(): PendingMenuLayout {
-  return { titles: [], categoryMoves: [], itemMoves: [] };
+  return { titles: [], itemTitles: [], categoryMoves: [], itemMoves: [] };
 }
 
 function customCategoryId(index: number): string {
@@ -362,7 +377,7 @@ export function resolveMenuLayout(root: LuCI.ui.menu.MenuNode, layout: SavedMenu
   const hiddenCategoryIds = new Set<string>();
   const hiddenItemPaths = new Set<string>();
   const pending = emptyPendingLayout();
-  if (!layout) return { categories, hiddenCategoryIds, hiddenItemPaths, pending, configured: false };
+  if (!layout) return { categories, hiddenCategoryIds, hiddenItemPaths, itemTitles: new Map(), pending, configured: false };
 
   const customIds = layout.custom.map((title, index) => {
     const id = customCategoryId(index);
@@ -380,6 +395,16 @@ export function resolveMenuLayout(root: LuCI.ui.menu.MenuNode, layout: SavedMenu
       configured = true;
     } else {
       pending.titles.push([id, title]);
+    }
+  }
+
+  const itemTitles = new Map<string, string>();
+  for (const [path, title] of layout.itemTitles) {
+    if (knownItemPaths.has(path)) {
+      itemTitles.set(path, title);
+      configured = true;
+    } else {
+      pending.itemTitles.push([path, title]);
     }
   }
 
@@ -419,7 +444,7 @@ export function resolveMenuLayout(root: LuCI.ui.menu.MenuNode, layout: SavedMenu
     if (knownItemPaths.has(path)) configured = true;
   }
 
-  return { categories, hiddenCategoryIds, hiddenItemPaths, pending, configured };
+  return { categories, hiddenCategoryIds, hiddenItemPaths, itemTitles, pending, configured };
 }
 
 function stableSubsequence(base: readonly string[], target: readonly string[]): Set<string> {
@@ -478,6 +503,7 @@ export function serializeMenuLayout(
   hiddenCategoryIds: ReadonlySet<string>,
   hiddenItemPaths: ReadonlySet<string>,
   pending: PendingMenuLayout = emptyPendingLayout(),
+  itemTitles: ReadonlyMap<string, string> = new Map(),
 ): string {
   const menu = discoverMenu(root);
   const defaults = defaultCategories(menu);
@@ -501,6 +527,20 @@ export function serializeMenuLayout(
     if (titledIds.has(id)) continue;
     const path = primaryPathFromId(id);
     if (path) titles.push([path, title]);
+  }
+
+  const originalItemTitles = new Map(menu.items.map((item) => [item.path, item.title]));
+  const serializedItemTitles: SavedMenuItemTitle[] = [];
+  const titledItemPaths = new Set<string>();
+  for (const [path, title] of itemTitles) {
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle || trimmedTitle === originalItemTitles.get(path)) continue;
+    serializedItemTitles.push([path, trimmedTitle]);
+    titledItemPaths.add(path);
+  }
+  for (const [path, title] of pending.itemTitles) {
+    if (titledItemPaths.has(path)) continue;
+    serializedItemTitles.push([path, title]);
   }
 
   const baseCategoryIds = [...defaults.map((category) => category.id), ...customCategories.map((category) => category.id)];
@@ -554,6 +594,7 @@ export function serializeMenuLayout(
   const output: Record<string, unknown> = { version: 1 };
   if (custom.length > 0) output.custom = custom;
   if (titles.length > 0) output.titles = titles;
+  if (serializedItemTitles.length > 0) output.itemTitles = serializedItemTitles;
   if (categoryMoves.length > 0) output.categoryMoves = categoryMoves;
   if (itemMoves.length > 0) output.itemMoves = itemMoves;
   if (hiddenCategories.length > 0) output.hiddenCategories = hiddenCategories;
@@ -578,6 +619,10 @@ export function buildMenuPresentation(root: LuCI.ui.menu.MenuNode, value: string
   const parsed = parseMenuLayout(value);
   const resolved = resolveMenuLayout(root, parsed);
   const itemsByPath = new Map(menu.items.map((item) => [item.path, item]));
+  for (const [path, title] of resolved.itemTitles) {
+    const item = itemsByPath.get(path);
+    if (item) itemsByPath.set(path, { ...item, title });
+  }
   const primariesByCategoryId = new Map(menu.primaries.map((primary) => [primaryCategoryId(primary.path), primary]));
   const hiddenPaths = new Set(resolved.hiddenItemPaths);
   for (const id of resolved.hiddenCategoryIds) {

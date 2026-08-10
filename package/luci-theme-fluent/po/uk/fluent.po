@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -260,6 +260,9 @@ msgstr "Перетягніть для зміни порядку головних
 
 msgid "Drop second-level menus here"
 msgstr "Тут можна розмістити другорядні меню"
+
+msgid "Edit"
+msgstr "Редагувати"
 
 msgid "Enable page transition animation"
 msgstr "Увімкнути анімацію переходу між сторінками"
@@ -534,6 +537,9 @@ msgstr "Повторний запуск з токеном..."
 
 msgid "Rounded (6px)"
 msgstr "З округленням (6px)"
+
+msgid "Save"
+msgstr "Зберегти"
 
 msgid "Scroll to bottom"
 msgstr "Прокрутити до низу"

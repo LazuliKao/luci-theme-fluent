@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -259,6 +259,9 @@ msgstr "Kéo để thay đổi thứ tự mục chính"
 
 msgid "Drop second-level menus here"
 msgstr "Thả các mục phụ vào đây"
+
+msgid "Edit"
+msgstr "Chỉnh sửa"
 
 msgid "Enable page transition animation"
 msgstr "Bật hiệu ứng hoạt ảnh khi chuyển trang"
@@ -533,6 +536,9 @@ msgstr "Đang thử lại với token..."
 
 msgid "Rounded (6px)"
 msgstr "Bo tròn (6px)"
+
+msgid "Save"
+msgstr "Lưu"
 
 msgid "Scroll to bottom"
 msgstr "Cuộn đến cuối"

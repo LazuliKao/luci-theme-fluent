@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -238,6 +238,9 @@ msgstr "기본 메뉴 순서를 변경하려면 드래그"
 
 msgid "Drop second-level menus here"
 msgstr "여기에 하위 메뉴를 추가합니다."
+
+msgid "Edit"
+msgstr "편집"
 
 msgid "Enable page transition animation"
 msgstr "페이지 전환 애니메이션 활성화"
@@ -493,6 +496,9 @@ msgstr "토큰을 사용하여 다시 시도 중..."
 
 msgid "Rounded (6px)"
 msgstr "둥글게 (6px)"
+
+msgid "Save"
+msgstr "저장"
 
 msgid "Scroll to bottom"
 msgstr "맨 아래로 스크롤"

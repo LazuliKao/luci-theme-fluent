@@ -124,7 +124,7 @@ body[data-page="admin-system-package-manager"] > .main > .main-right > #maincont
   background: var(--fluent-bg-active);
 }
 
-select, select.cbi-input-select, textarea, .cbi-input-textarea, .password-input input, .cbi-dynlist > .add-item > input, cbi-dropdown, .cbi-dropdown, .fluent-custom-select, cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select, .fluent-custom-select > .cbi-input-select, .zonebadge > input[type="text"], input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control, select, select.cbi-input-select, textarea, .cbi-input-textarea, .password-input input, .cbi-dynlist > .add-item > input, cbi-dropdown, .cbi-dropdown, .fluent-custom-select, cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select, cbi-dropdown > .cbi-input-select, .cbi-dropdown > .cbi-input-select, .fluent-custom-select > .cbi-input-select, .zonebadge > input[type="text"], input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="url"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], .cbi-input-text, .cbi-input-password, .cbi-input-date, .cbi-input-time, .cbi-input-datetime {
   height: var(--fluent-input-height);
   padding: 0 var(--fluent-space-sm);
   font-family: var(--fluent-font-family);
@@ -154,7 +154,7 @@ select, select.cbi-input-select, textarea, .cbi-input-textarea, .password-input 
   transition: border-color var(--fluent-duration-fast) var(--fluent-easing-standard);
 }
 
-select:disabled, textarea:disabled, .cbi-input-textarea:disabled, .password-input input:disabled, .cbi-dynlist > .add-item > input:disabled, cbi-dropdown:disabled, .cbi-dropdown:disabled, .fluent-custom-select:disabled, cbi-dropdown > .cbi-input-select:disabled, .cbi-dropdown > .cbi-input-select:disabled, .fluent-custom-select > .cbi-input-select:disabled, input[type="text"]:disabled, input[type="password"]:disabled, input[type="email"]:disabled, input[type="number"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="url"]:disabled, input[type="date"]:disabled, input[type="time"]:disabled, input[type="datetime-local"]:disabled, input[type="month"]:disabled, input[type="week"]:disabled, .cbi-input-text:disabled, .cbi-input-password:disabled, .cbi-input-date:disabled, .cbi-input-time:disabled, .cbi-input-datetime:disabled {
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:disabled, select:disabled, textarea:disabled, .cbi-input-textarea:disabled, .password-input input:disabled, .cbi-dynlist > .add-item > input:disabled, cbi-dropdown:disabled, .cbi-dropdown:disabled, .fluent-custom-select:disabled, cbi-dropdown > .cbi-input-select:disabled, .cbi-dropdown > .cbi-input-select:disabled, .fluent-custom-select > .cbi-input-select:disabled, input[type="text"]:disabled, input[type="password"]:disabled, input[type="email"]:disabled, input[type="number"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="url"]:disabled, input[type="date"]:disabled, input[type="time"]:disabled, input[type="datetime-local"]:disabled, input[type="month"]:disabled, input[type="week"]:disabled, .cbi-input-text:disabled, .cbi-input-password:disabled, .cbi-input-date:disabled, .cbi-input-time:disabled, .cbi-input-datetime:disabled {
   background: var(--fluent-input-bg-disabled);
   color: var(--fluent-text-disabled);
   cursor: not-allowed;
@@ -166,7 +166,7 @@ select:disabled, textarea:disabled, .cbi-input-textarea:disabled, .password-inpu
   cursor: not-allowed;
 }
 
-select::placeholder, select.cbi-input-select::placeholder, textarea::placeholder, .cbi-input-textarea::placeholder, .password-input input::placeholder, .cbi-dynlist > .add-item > input::placeholder, cbi-dropdown::placeholder, .cbi-dropdown::placeholder, .fluent-custom-select::placeholder, .cbi-dropdown > select::placeholder, .fluent-custom-select > select::placeholder, cbi-dropdown > .cbi-input-select::placeholder, .cbi-dropdown > .cbi-input-select::placeholder, .fluent-custom-select > .cbi-input-select::placeholder, .zonebadge > input[type="text"]::placeholder, input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, input[type="number"]::placeholder, input[type="search"]::placeholder, input[type="tel"]::placeholder, input[type="url"]::placeholder, input[type="date"]::placeholder, input[type="time"]::placeholder, input[type="datetime-local"]::placeholder, input[type="month"]::placeholder, input[type="week"]::placeholder, .cbi-input-text::placeholder, .cbi-input-password::placeholder, .cbi-input-date::placeholder, .cbi-input-time::placeholder, .cbi-input-datetime::placeholder {
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control::placeholder, select::placeholder, select.cbi-input-select::placeholder, textarea::placeholder, .cbi-input-textarea::placeholder, .password-input input::placeholder, .cbi-dynlist > .add-item > input::placeholder, cbi-dropdown::placeholder, .cbi-dropdown::placeholder, .fluent-custom-select::placeholder, .cbi-dropdown > select::placeholder, .fluent-custom-select > select::placeholder, cbi-dropdown > .cbi-input-select::placeholder, .cbi-dropdown > .cbi-input-select::placeholder, .fluent-custom-select > .cbi-input-select::placeholder, .zonebadge > input[type="text"]::placeholder, input[type="text"]::placeholder, input[type="password"]::placeholder, input[type="email"]::placeholder, input[type="number"]::placeholder, input[type="search"]::placeholder, input[type="tel"]::placeholder, input[type="url"]::placeholder, input[type="date"]::placeholder, input[type="time"]::placeholder, input[type="datetime-local"]::placeholder, input[type="month"]::placeholder, input[type="week"]::placeholder, .cbi-input-text::placeholder, .cbi-input-password::placeholder, .cbi-input-date::placeholder, .cbi-input-time::placeholder, .cbi-input-datetime::placeholder {
   color: var(--fluent-text-disabled);
 }
 
@@ -8963,6 +8963,98 @@ label[data-tooltip] {
   font-style: italic;
 }
 
+.modal:has(.fluent-menu-editor__rename-dialog) {
+  max-width: 480px;
+}
+
+.fluent-menu-editor__rename-dialog {
+  gap: var(--fluent-space-sm);
+  flex-direction: column;
+  display: flex;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control {
+  position: relative;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:hover:not([disabled]):not(:focus):not(:focus-within):not(.focus):not([open]) {
+  border-color: var(--fluent-input-border-hover);
+  border-bottom-color: var(--fluent-input-border-bottom-hover);
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:focus, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:focus-within, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control.focus, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control[open] {
+  border-bottom-color: var(--fluent-input-border-bottom-focus);
+  outline: none;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:focus:after, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:focus-within:after, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control.focus:after, .fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control[open]:after {
+  transform: scaleX(1);
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control:after {
+  box-sizing: border-box;
+  content: "";
+  inset-inline-start: 1px;
+  bottom: -1px;
+  background: var(--fluent-input-border-bottom-focus);
+  height: 2px;
+  transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  pointer-events: none;
+  border-end-end-radius: var(--fluent-radius-sm);
+  border-end-start-radius: var(--fluent-radius-sm);
+  position: absolute;
+  inset-inline-end: 1px;
+  transform: scaleX(0);
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control {
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control > .cbi-input-text {
+  min-width: 0;
+  height: 100%;
+  padding: 0 var(--fluent-space-sm);
+  color: var(--fluent-text);
+  box-shadow: none;
+  background: none;
+  border: 0;
+  outline: none;
+  flex: auto;
+  margin: 0;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control > .fluent-menu-editor__item-reset {
+  flex: 0 0 var(--fluent-input-height);
+  width: var(--fluent-input-height);
+  height: 100%;
+  box-shadow: none;
+  background: none;
+  border: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  margin: 0;
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control > .fluent-menu-editor__item-reset:hover {
+  background: var(--fluent-bg-hover);
+}
+
+.fluent-menu-editor__rename-dialog > .fluent-menu-editor__rename-control > .fluent-menu-editor__item-reset:active {
+  background: var(--fluent-bg-active);
+}
+
+.fluent-menu-editor__rename-dialog > .right {
+  justify-content: flex-end;
+  gap: var(--fluent-space-sm);
+  margin-top: var(--fluent-space-xs);
+  display: flex;
+}
+
 .fluent-menu-editor {
   gap: var(--fluent-space-md);
   flex-direction: column;
@@ -9032,7 +9124,7 @@ label[data-tooltip] {
   display: none;
 }
 
-.fluent-menu-editor__category-header:before {
+.fluent-menu-editor__category-header:after {
   content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
   --fluent-mask-chevron-right-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M7.646 4.147a.5.5 0 0 1 .707-.001l5.484 5.465a.55.55 0 0 1 0 .779l-5.484 5.465a.5.5 0 0 1-.706-.708L12.812 10L7.647 4.854a.5.5 0 0 1-.001-.707%22/></svg>");
   width: 16px;
@@ -9042,6 +9134,7 @@ label[data-tooltip] {
   -webkit-user-select: none;
   user-select: none;
   transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+  margin-inline-start: auto;
   display: inline-block;
   -webkit-mask-position: center;
   mask-position: center;
@@ -9052,15 +9145,20 @@ label[data-tooltip] {
   background: currentColor !important;
 }
 
-.fluent-menu-editor__category[open] .fluent-menu-editor__category-header:before {
+html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir="rtl"] .fluent-menu-editor__category-header:after {
+  transform: rotate(180deg);
+}
+
+.fluent-menu-editor__category[open] .fluent-menu-editor__category-header:after {
   transform: rotate(90deg);
 }
 
-.fluent-menu-editor__category-title {
-  min-width: 0;
-  height: var(--fluent-space-xxl);
-  padding-inline: var(--fluent-space-sm);
+.fluent-menu-editor__category-name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .fluent-menu-editor__category-count {
@@ -9076,7 +9174,7 @@ label[data-tooltip] {
   display: inline-flex;
 }
 
-.fluent-menu-editor__category-delete, .fluent-menu-editor__category-reset, .fluent-menu-editor__item-reset {
+.fluent-menu-editor__category-delete, .fluent-menu-editor__category-edit, .fluent-menu-editor__item-reset {
   flex: 0 0 var(--fluent-space-xxl);
   width: var(--fluent-space-xxl);
   height: var(--fluent-space-xxl);
@@ -9091,7 +9189,7 @@ label[data-tooltip] {
   display: inline-flex;
 }
 
-.fluent-menu-editor__category-delete:hover, .fluent-menu-editor__category-reset:hover, .fluent-menu-editor__item-reset:hover {
+.fluent-menu-editor__category-delete:hover, .fluent-menu-editor__category-edit:hover, .fluent-menu-editor__item-reset:hover {
   color: var(--fluent-text);
   background: var(--fluent-bg-hover);
 }
@@ -9156,13 +9254,46 @@ label[data-tooltip] {
   cursor: grab;
   -webkit-user-select: none;
   user-select: none;
+  touch-action: none;
   justify-content: center;
   align-items: center;
   display: inline-flex;
 }
 
+.fluent-menu-editor__drag-handle:before {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-fluent-re-order-dots-vertical-20-filled: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M6.5 6a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3m0 5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3M8 14.5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0M13.5 6a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3M15 9.5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0M13.5 16a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3%22/></svg>");
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: var(--fluent-mask-fluent-re-order-dots-vertical-20-filled);
+  mask-image: var(--fluent-mask-fluent-re-order-dots-vertical-20-filled);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
 .fluent-menu-editor__drag-handle:active {
   cursor: grabbing;
+}
+
+.fluent-menu-editor__drag-preview {
+  z-index: var(--fluent-zindex-tooltip);
+  pointer-events: none;
+  opacity: .9;
+  box-shadow: var(--fluent-shadow-medium);
+  will-change: left,top;
+  position: fixed;
+}
+
+.fluent-menu-editor__item.fluent-menu-editor__drag-preview {
+  position: fixed;
 }
 
 .fluent-menu-editor__items {
@@ -9186,6 +9317,7 @@ label[data-tooltip] {
 
 .fluent-menu-editor__item {
   --fluent-menu-drop-offset: calc(var(--fluent-space-xs) * -1);
+  grid-template-columns: auto auto minmax(0, 1fr) var(--fluent-space-xxl) auto;
   align-items: center;
   gap: var(--fluent-space-sm);
   min-width: 0;
@@ -9194,9 +9326,16 @@ label[data-tooltip] {
   border: 1px solid var(--fluent-border);
   border-radius: var(--fluent-radius-md);
   transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
-  grid-template-columns: auto auto minmax(0, 1fr) auto;
   display: grid;
   position: relative;
+}
+
+.fluent-menu-editor__item > .fluent-menu-editor__item-reset {
+  grid-column: 4;
+}
+
+.fluent-menu-editor__item > input[type="checkbox"] {
+  grid-column: 5;
 }
 
 .fluent-menu-editor__item.is-hidden {
@@ -9207,7 +9346,26 @@ label[data-tooltip] {
   opacity: .35;
 }
 
-.fluent-menu-editor__category-reset:before, .fluent-menu-editor__item-reset:before {
+.fluent-menu-editor__category-edit:before {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-edit-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M17.181 2.927a2.975 2.975 0 0 0-4.259-.054l-9.375 9.375a2.44 2.44 0 0 0-.656 1.194l-.877 3.95a.5.5 0 0 0 .596.597l3.927-.873a2.5 2.5 0 0 0 1.234-.678l9.358-9.358a2.975 2.975 0 0 0 .052-4.153m-3.552.653a1.975 1.975 0 1 1 2.793 2.793l-.671.671l-2.793-2.792zm-1.378 1.38l2.793 2.792l-7.98 7.98a1.5 1.5 0 0 1-.744.409l-3.16.702l.708-3.183c.059-.267.193-.511.386-.704z%22/></svg>");
+  width: 16px;
+  height: 16px;
+  -webkit-mask-image: var(--fluent-mask-edit-20-regular);
+  mask-image: var(--fluent-mask-edit-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+.fluent-menu-editor__item-reset:before {
   content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
   --fluent-mask-arrow-clockwise-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22M4 10a6 6 0 0 1 10.472-4H12.5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-1 0v1.601a7 7 0 1 0 1.98 4.361a.5.5 0 1 0-.998.076Q16 9.766 16 10a6 6 0 0 1-12 0%22/></svg>");
   width: 16px;

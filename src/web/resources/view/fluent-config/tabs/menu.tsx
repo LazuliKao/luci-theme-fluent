@@ -20,13 +20,32 @@ interface EditorState {
   categories: SavedMenuCategory[];
   hiddenCategoryIds: Set<string>;
   hiddenItemPaths: Set<string>;
+  itemTitles: Map<string, string>;
   pending: PendingMenuLayout;
+}
+
+type TouchDragSource = { kind: "category"; categoryId: string } | { kind: "item"; path: string };
+
+type TouchDropTarget =
+  | { kind: "category"; categoryId: string; element: HTMLElement; position: MenuDropPosition }
+  | { kind: "item"; categoryId: string; element: HTMLElement; path: string; position: MenuDropPosition }
+  | { kind: "item-category"; categoryId: string; element: HTMLElement; position: MenuDropPosition }
+  | { kind: "item-list"; categoryId: string; element: HTMLElement };
+
+interface ActiveTouchDrag {
+  handle: HTMLElement;
+  offsetX: number;
+  offsetY: number;
+  pointerId: number;
+  preview: HTMLElement;
+  source: TouchDragSource;
+  sourceElement: HTMLElement;
 }
 
 const CATEGORY_DRAG_TYPE = "application/x-fluent-menu-category";
 const ITEM_DRAG_TYPE = "application/x-fluent-menu-item";
 
-function dropPosition(event: DragEvent, target: HTMLElement): MenuDropPosition {
+function dropPosition(event: Pick<MouseEvent, "clientY">, target: HTMLElement): MenuDropPosition {
   const bounds = target.getBoundingClientRect();
   return event.clientY < bounds.top + bounds.height / 2 ? "before" : "after";
 }
@@ -84,7 +103,8 @@ function buildEditorState(tree: LuCI.ui.menu.MenuNode, savedValue: string | stri
       categories: buildDefaultMenuCategories(tree),
       hiddenCategoryIds: new Set<string>(),
       hiddenItemPaths: new Set<string>(),
-      pending: { titles: [], categoryMoves: [], itemMoves: [] },
+      itemTitles: new Map(),
+      pending: { titles: [], itemTitles: [], categoryMoves: [], itemMoves: [] },
     };
   }
 
@@ -93,6 +113,7 @@ function buildEditorState(tree: LuCI.ui.menu.MenuNode, savedValue: string | stri
     categories: resolved.categories,
     hiddenCategoryIds: resolved.hiddenCategoryIds,
     hiddenItemPaths: resolved.hiddenItemPaths,
+    itemTitles: new Map(resolved.itemTitles),
     pending: resolved.pending,
   };
 }
@@ -117,6 +138,9 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
       const categoryElements = new Map<string, { card: HTMLElement; error?: HTMLElement }>();
       let activeDropTarget: HTMLElement | null = null;
       let activeDropPosition: MenuDropPosition = "before";
+      let activeTouchDrag: ActiveTouchDrag | null = null;
+      let activeTouchDropList: HTMLElement | null = null;
+      let activeTouchDropTarget: TouchDropTarget | null = null;
       const validationSummary = (<div class="fluent-menu-editor__validation" role="alert" />) as HTMLElement;
       const storedValueNotice = (
         <div class="fluent-menu-editor__notice" hidden={!invalidStoredValue}>
@@ -135,7 +159,7 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         validationSummary.textContent = errors.size > 0 ? _("Fix primary menu title errors before saving.") : "";
       };
 
-      const syncValue = (value = serializeMenuLayout(tree, state.categories, state.hiddenCategoryIds, state.hiddenItemPaths, state.pending)): void => {
+      const syncValue = (value = serializeMenuLayout(tree, state.categories, state.hiddenCategoryIds, state.hiddenItemPaths, state.pending, state.itemTitles)): void => {
         hiddenInput.value = value;
         storedValueNotice.hidden = true;
         updateValidation();
@@ -164,6 +188,178 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         syncValue();
         renderCategories();
       };
+      const clearTouchDropTarget = (): void => {
+        clearDropIndicator();
+        activeTouchDropList?.classList.remove("is-drag-over");
+        activeTouchDropList = null;
+        activeTouchDropTarget = null;
+      };
+
+      const clearTouchDrag = (): void => {
+        const drag = activeTouchDrag;
+        if (!drag) return;
+
+        activeTouchDrag = null;
+        drag.sourceElement.classList.remove("is-dragging");
+        drag.preview.remove();
+        clearTouchDropTarget();
+        if (drag.handle.hasPointerCapture(drag.pointerId)) drag.handle.releasePointerCapture(drag.pointerId);
+      };
+
+      const setTouchDropTarget = (target: TouchDropTarget): void => {
+        clearTouchDropTarget();
+        activeTouchDropTarget = target;
+        if (target.kind === "item-list") {
+          activeTouchDropList = target.element;
+          target.element.classList.add("is-drag-over");
+          return;
+        }
+
+        showDropIndicator(target.element, target.position);
+      };
+
+      const updateTouchDropTarget = (source: TouchDragSource, event: PointerEvent): void => {
+        const element = document.elementFromPoint(event.clientX, event.clientY);
+        if (!element) {
+          clearTouchDropTarget();
+          return;
+        }
+
+        if (source.kind === "category") {
+          const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+          const categoryId = category?.dataset.categoryId;
+          if (!category || !categoryId || categoryId === source.categoryId) {
+            clearTouchDropTarget();
+            return;
+          }
+
+          setTouchDropTarget({ kind: "category", categoryId, element: category, position: dropPosition(event, category) });
+          return;
+        }
+
+        const item = element.closest<HTMLElement>(".fluent-menu-editor__item");
+        const path = item?.dataset.itemPath;
+        const itemList = item?.closest<HTMLElement>(".fluent-menu-editor__items");
+        const itemCategoryId = itemList?.dataset.categoryId;
+        if (item && path && itemList && itemCategoryId) {
+          if (path === source.path) {
+            clearTouchDropTarget();
+            return;
+          }
+
+          setTouchDropTarget({ kind: "item", categoryId: itemCategoryId, element: item, path, position: dropPosition(event, item) });
+          return;
+        }
+
+        const list = element.closest<HTMLElement>(".fluent-menu-editor__items");
+        const categoryId = list?.dataset.categoryId;
+        if (list && categoryId) {
+          setTouchDropTarget({ kind: "item-list", categoryId, element: list });
+          return;
+        }
+
+        const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+        const targetCategoryId = category?.dataset.categoryId;
+        if (category && targetCategoryId) {
+          setTouchDropTarget({ kind: "item-category", categoryId: targetCategoryId, element: category, position: "after" });
+        } else {
+          clearTouchDropTarget();
+        }
+      };
+
+      const completeTouchDrag = (): void => {
+        const drag = activeTouchDrag;
+        const target = activeTouchDropTarget;
+        clearTouchDrag();
+        if (!drag || !target) return;
+        const source = drag.source;
+
+        if (source.kind === "item") {
+          if (target.kind === "item") {
+            const category = state.categories.find((candidate) => candidate.id === target.categoryId);
+            if (!category) return;
+
+            const targetIndex = category.items.indexOf(target.path);
+            if (targetIndex < 0) return;
+            const beforePath = target.position === "before" ? target.path : category.items[targetIndex + 1];
+            moveItem(source.path, target.categoryId, beforePath);
+          } else if (target.kind === "item-category" || target.kind === "item-list") {
+            moveItem(source.path, target.categoryId);
+          }
+          return;
+        }
+
+        if (source.kind !== "category" || target.kind !== "category") return;
+        state.pending.categoryMoves = state.pending.categoryMoves.filter(([sourceId]) => sourceId !== source.categoryId);
+        state.categories = moveMenuCategory(state.categories, source.categoryId, target.categoryId, target.position);
+        syncValue();
+        renderCategories();
+      };
+
+      const beginTouchDrag = (event: PointerEvent, source: TouchDragSource, sourceElement: HTMLElement, handle: HTMLElement): void => {
+        if (event.pointerType !== "touch" || activeTouchDrag) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        const bounds = sourceElement.getBoundingClientRect();
+        const preview = sourceElement.cloneNode(true) as HTMLElement;
+        preview.classList.add("fluent-menu-editor__drag-preview");
+        preview.setAttribute("aria-hidden", "true");
+        if (source.kind === "category") {
+          preview.querySelector(".fluent-menu-editor__category-error")?.remove();
+          preview.querySelector(".fluent-menu-editor__items")?.remove();
+        }
+        preview.style.width = `${bounds.width}px`;
+        document.body.append(preview);
+
+        const drag: ActiveTouchDrag = {
+          handle,
+          offsetX: event.clientX - bounds.left,
+          offsetY: event.clientY - bounds.top,
+          pointerId: event.pointerId,
+          preview,
+          source,
+          sourceElement,
+        };
+        activeTouchDrag = drag;
+        sourceElement.classList.add("is-dragging");
+        preview.style.left = `${event.clientX - drag.offsetX}px`;
+        preview.style.top = `${event.clientY - drag.offsetY}px`;
+        handle.setPointerCapture(event.pointerId);
+      };
+
+      const moveTouchDrag = (event: PointerEvent): void => {
+        const drag = activeTouchDrag;
+        if (!drag || drag.pointerId !== event.pointerId) return;
+
+        event.preventDefault();
+        drag.preview.style.left = `${event.clientX - drag.offsetX}px`;
+        drag.preview.style.top = `${event.clientY - drag.offsetY}px`;
+        updateTouchDropTarget(drag.source, event);
+      };
+
+      const endTouchDrag = (event: PointerEvent, shouldCommit: boolean): void => {
+        const drag = activeTouchDrag;
+        if (!drag || drag.pointerId !== event.pointerId) return;
+
+        event.preventDefault();
+        if (shouldCommit) {
+          updateTouchDropTarget(drag.source, event);
+          completeTouchDrag();
+        } else {
+          clearTouchDrag();
+        }
+      };
+
+      const bindTouchDrag = (handle: HTMLElement, source: TouchDragSource, sourceElement: HTMLElement): void => {
+        handle.addEventListener("pointerdown", (event) => beginTouchDrag(event, source, sourceElement, handle));
+        handle.addEventListener("pointermove", moveTouchDrag);
+        handle.addEventListener("pointerup", (event) => endTouchDrag(event, true));
+        handle.addEventListener("pointercancel", (event) => endTouchDrag(event, false));
+        handle.addEventListener("lostpointercapture", () => {
+          if (activeTouchDrag?.handle === handle) clearTouchDrag();
+        });
+      };
 
       const restoreItem = (path: string): void => {
         const item = itemsByPath.get(path);
@@ -180,23 +376,24 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         if (!item || !category) return null;
 
         const row = (<div class={`fluent-menu-editor__item${state.hiddenItemPaths.has(path) ? " is-hidden" : ""}`} data-item-path={path} />) as HTMLElement;
-        const dragHandle = (
-          <span class="fluent-menu-editor__drag-handle" title={_("Drag to move second-level menu")}>
-            ⋮⋮
-          </span>
-        ) as HTMLElement;
+        const dragHandle = (<span class="fluent-menu-editor__drag-handle" title={_("Drag to move second-level menu")} />) as HTMLElement;
         const visibility = (<input type="checkbox" checked={!state.hiddenItemPaths.has(path)} aria-label={_("Show %s in the menu").format(item.title)} />) as HTMLInputElement;
         dragHandle.draggable = true;
 
         dragHandle.addEventListener("dragstart", (event) => {
           event.dataTransfer?.setData(ITEM_DRAG_TYPE, path);
-          if (event.dataTransfer) event.dataTransfer.effectAllowed = "move";
+          if (event.dataTransfer) {
+            event.dataTransfer.effectAllowed = "move";
+            const rect = row.getBoundingClientRect();
+            event.dataTransfer.setDragImage(row, event.clientX - rect.left, event.clientY - rect.top);
+          }
           row.classList.add("is-dragging");
         });
         dragHandle.addEventListener("dragend", () => {
           row.classList.remove("is-dragging");
           clearDropIndicator();
         });
+        bindTouchDrag(dragHandle, { kind: "item", path }, row);
         visibility.addEventListener("change", () => {
           if (visibility.checked) state.hiddenItemPaths.delete(path);
           else state.hiddenItemPaths.add(path);
@@ -225,19 +422,99 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           moveItem(pathToMove, categoryId, beforePath);
         });
 
+        const displayTitle = state.itemTitles.get(path) ?? item.title;
+        const editItemTitleLabel = _("Edit");
+        const editItemTitleButton = (<button class="fluent-menu-editor__category-edit" type="button" aria-label={editItemTitleLabel} title={editItemTitleLabel} />) as HTMLButtonElement;
+
+        editItemTitleButton.addEventListener("click", () => {
+          const currentTitle = state.itemTitles.get(path) ?? item.title;
+          const titleInputId = `${this.cbid(sectionId)}-item-${path.replace(/\//g, "-")}-title`;
+          const titleInput = (<input id={titleInputId} class="cbi-input-text" type="text" value={currentTitle} aria-label={_("Second-level menu title")} />) as HTMLInputElement;
+          const validation = (<p class="cbi-value-description" role="alert" hidden />) as HTMLParagraphElement;
+          let saveButton: HTMLButtonElement | null = null;
+
+          const validateTitle = (): boolean => {
+            const title = titleInput.value.trim();
+            const message = title ? "" : _("Menu title cannot be empty.");
+            validation.textContent = message;
+            validation.hidden = !message;
+            titleInput.classList.toggle("cbi-input-invalid", Boolean(message));
+            if (saveButton) saveButton.disabled = Boolean(message);
+            return !message;
+          };
+
+          titleInput.addEventListener("input", validateTitle);
+          saveButton = (
+            <button
+              type="button"
+              class="btn cbi-button-save"
+              onclick={() => {
+                if (!validateTitle()) return;
+                const newTitle = titleInput.value.trim();
+                if (newTitle === item.title) state.itemTitles.delete(path);
+                else state.itemTitles.set(path, newTitle);
+                syncValue();
+                renderCategories();
+                L.ui.hideModal();
+              }}
+            >
+              {_("Save")}
+            </button>
+          ) as HTMLButtonElement;
+
+          const restoreOriginalLabel = _("Restore to original title");
+          const restoreOriginalButton = (
+            <button
+              class="fluent-menu-editor__item-reset"
+              type="button"
+              aria-label={restoreOriginalLabel}
+              title={restoreOriginalLabel}
+              onclick={() => {
+                titleInput.value = item.title;
+                validateTitle();
+                titleInput.focus();
+              }}
+            />
+          );
+
+          L.ui.showModal(
+            _("Second-level menu title"),
+            <div class="fluent-menu-editor__rename-dialog">
+              <label htmlFor={titleInputId}>{_("Second-level menu title")}</label>
+              <div class="fluent-menu-editor__rename-control">
+                {titleInput}
+                {restoreOriginalButton}
+              </div>
+              {validation}
+              <div class="right">
+                <button type="button" class="btn" onclick={() => L.ui.hideModal()}>
+                  {_("Cancel")}
+                </button>
+                {saveButton}
+              </div>
+            </div>,
+          );
+          validateTitle();
+          requestAnimationFrame(() => {
+            titleInput.focus();
+            titleInput.select();
+          });
+        });
+
         const label = (
           <span class="fluent-menu-editor__item-label">
-            <strong>{item.title}</strong>
+            <strong>{displayTitle}</strong>
             <small>{item.path}</small>
           </span>
         );
-        row.append(dragHandle, visibility, label);
+        row.append(dragHandle, editItemTitleButton, label);
         if (canRestoreMenuItem(state.categories, items, path)) {
           const restoreLabel = _("Restore %s to its original menu position").format(item.title);
           const restoreButton = (<button class="fluent-menu-editor__item-reset" type="button" aria-label={restoreLabel} title={restoreLabel} />) as HTMLButtonElement;
           restoreButton.addEventListener("click", () => restoreItem(path));
           row.append(restoreButton);
         }
+        row.append(visibility);
         return row;
       };
 
@@ -298,7 +575,86 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         const canReorderCategories = state.categories.length > 1;
         const originalCategory = defaultCategoriesById.get(category.id);
         const visibility = (<input type="checkbox" checked={!state.hiddenCategoryIds.has(category.id)} aria-label={_("Show %s in the menu").format(category.title)} />) as HTMLInputElement;
-        const titleInput = (<input class="fluent-menu-editor__category-title" type="text" value={category.title} aria-label={_("Primary menu title")} />) as HTMLInputElement;
+        const categoryTitle = (<span class="fluent-menu-editor__category-name">{category.title}</span>) as HTMLElement;
+        const editTitleLabel = _("Edit");
+        const editTitleButton = (<button class="fluent-menu-editor__category-edit" type="button" aria-label={editTitleLabel} title={editTitleLabel} />) as HTMLButtonElement;
+
+        const openRenameDialog = (): void => {
+          const titleInputId = `${this.cbid(sectionId)}-${category.id}-title`;
+          const titleInput = (<input id={titleInputId} class="cbi-input-text" type="text" value={category.title} aria-label={_("Primary menu title")} />) as HTMLInputElement;
+          const validation = (<p class="cbi-value-description" role="alert" hidden />) as HTMLParagraphElement;
+          let saveButton: HTMLButtonElement | null = null;
+
+          const validateTitle = (): boolean => {
+            const title = titleInput.value.trim();
+            const categories = state.categories.map((candidate) => (candidate.id === category.id ? { ...candidate, title } : candidate));
+            const message = titleErrors(categories).get(category.id) ?? "";
+            validation.textContent = message;
+            validation.hidden = !message;
+            titleInput.classList.toggle("cbi-input-invalid", Boolean(message));
+            if (saveButton) saveButton.disabled = Boolean(message);
+            return !message;
+          };
+
+          titleInput.addEventListener("input", validateTitle);
+          saveButton = (
+            <button
+              type="button"
+              class="btn cbi-button-save"
+              onclick={() => {
+                if (!validateTitle()) return;
+                category.title = titleInput.value.trim();
+                syncValue();
+                renderCategories();
+                L.ui.hideModal();
+              }}
+            >
+              {_("Save")}
+            </button>
+          ) as HTMLButtonElement;
+
+          const restoreTitleLabel = originalCategory ? _("Restore %s to its original menu name").format(originalCategory.title) : "";
+          const restoreTitleButton = originalCategory ? (
+            <button
+              class="fluent-menu-editor__item-reset"
+              type="button"
+              aria-label={restoreTitleLabel}
+              title={restoreTitleLabel}
+              onclick={() => {
+                titleInput.value = originalCategory.title;
+                validateTitle();
+                titleInput.focus();
+              }}
+            />
+          ) : null;
+
+          L.ui.showModal(
+            _("Primary menu title"),
+            <>
+              <div class="fluent-menu-editor__rename-dialog">
+                <label htmlFor={titleInputId}>{_("Primary menu title")}</label>
+                <div class="fluent-menu-editor__rename-control">
+                  {titleInput}
+                  {restoreTitleButton}
+                </div>
+                {validation}
+              </div>
+              <div class="right">
+                <button type="button" class="btn" onclick={() => L.ui.hideModal()}>
+                  {_("Cancel")}
+                </button>
+                {saveButton}
+              </div>
+            </>,
+          );
+          validateTitle();
+          requestAnimationFrame(() => {
+            titleInput.focus();
+            titleInput.select();
+          });
+        };
+
+        editTitleButton.addEventListener("click", openRenameDialog);
 
         visibility.addEventListener("change", () => {
           if (visibility.checked) state.hiddenCategoryIds.delete(category.id);
@@ -307,53 +663,27 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           syncValue();
         });
 
-        let titleResetButton: HTMLButtonElement | null = null;
-        if (originalCategory) {
-          const restoreTitleLabel = _("Restore %s to its original menu name").format(originalCategory.title);
-          const button = (<button class="fluent-menu-editor__category-reset" type="button" aria-label={restoreTitleLabel} title={restoreTitleLabel} />) as HTMLButtonElement;
-          button.hidden = category.title.trim() === originalCategory.title;
-          button.addEventListener("click", () => {
-            category.title = originalCategory.title;
-            titleInput.value = originalCategory.title;
-            button.hidden = true;
-            syncValue();
-          });
-          titleResetButton = button;
-        }
-
-        titleInput.addEventListener("input", () => {
-          category.title = titleInput.value;
-          if (titleResetButton && originalCategory) titleResetButton.hidden = titleInput.value.trim() === originalCategory.title;
-          syncValue();
-        });
-        titleInput.addEventListener("blur", () => {
-          category.title = titleInput.value.trim();
-          titleInput.value = category.title;
-          if (titleResetButton && originalCategory) titleResetButton.hidden = category.title === originalCategory.title;
-          syncValue();
-        });
-
         if (canReorderCategories) {
-          const dragHandle = (
-            <span class="fluent-menu-editor__drag-handle" title={_("Drag to reorder primary menu")}>
-              ⋮⋮
-            </span>
-          ) as HTMLElement;
+          const dragHandle = (<span class="fluent-menu-editor__drag-handle" title={_("Drag to reorder primary menu")} />) as HTMLElement;
           dragHandle.draggable = true;
           dragHandle.addEventListener("dragstart", (event) => {
             event.dataTransfer?.setData(CATEGORY_DRAG_TYPE, category.id);
-            if (event.dataTransfer) event.dataTransfer.effectAllowed = "move";
+            if (event.dataTransfer) {
+              event.dataTransfer.effectAllowed = "move";
+              const rect = card.getBoundingClientRect();
+              event.dataTransfer.setDragImage(card, event.clientX - rect.left, event.clientY - rect.top);
+            }
             card.classList.add("is-dragging");
           });
           dragHandle.addEventListener("dragend", () => {
             card.classList.remove("is-dragging");
             clearDropIndicator();
           });
+          bindTouchDrag(dragHandle, { kind: "category", categoryId: category.id }, card);
           header.append(dragHandle);
         }
 
-        header.append(visibility, titleInput, itemCount);
-        if (titleResetButton) header.append(titleResetButton);
+        header.append(editTitleButton, categoryTitle, itemCount);
         if (!originalCategory) {
           const deleteButton = (<button class="fluent-menu-editor__category-delete" type="button" aria-label={_("Delete primary menu")} title={_("Delete primary menu")} />) as HTMLButtonElement;
           deleteButton.addEventListener("click", () => {
@@ -372,6 +702,7 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           });
           header.append(deleteButton);
         }
+        header.append(visibility);
 
         card.addEventListener("dragover", (event) => {
           const isItemDrag = event.dataTransfer?.types.includes(ITEM_DRAG_TYPE);
@@ -461,7 +792,8 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           categories: buildDefaultMenuCategories(tree),
           hiddenCategoryIds: new Set<string>(),
           hiddenItemPaths: new Set<string>(),
-          pending: { titles: [], categoryMoves: [], itemMoves: [] },
+          itemTitles: new Map(),
+          pending: { titles: [], itemTitles: [], categoryMoves: [], itemMoves: [] },
         };
         expandedCategoryIds.clear();
         syncValue("");

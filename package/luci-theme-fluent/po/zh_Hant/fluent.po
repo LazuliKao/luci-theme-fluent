@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -232,6 +232,9 @@ msgstr "拖曳以重新排序主選單"
 
 msgid "Drop second-level menus here"
 msgstr "在此處放置次選單"
+
+msgid "Edit"
+msgstr "編輯"
 
 msgid "Enable page transition animation"
 msgstr "啟用頁面轉場動畫"
@@ -485,6 +488,9 @@ msgstr "正在使用 Token 重新嘗試..."
 
 msgid "Rounded (6px)"
 msgstr "圓角 (6px)"
+
+msgid "Save"
+msgstr "儲存"
 
 msgid "Scroll to bottom"
 msgstr "滾動至底部"

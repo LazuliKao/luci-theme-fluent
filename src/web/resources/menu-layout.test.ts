@@ -53,7 +53,7 @@ function fixture(includePluginItem = false): MenuNode {
 }
 
 function emptyPending(): PendingMenuLayout {
-  return { titles: [], categoryMoves: [], itemMoves: [] };
+  return { titles: [], itemTitles: [], categoryMoves: [], itemMoves: [] };
 }
 
 function serializeState(
@@ -62,8 +62,9 @@ function serializeState(
   hiddenCategoryIds: ReadonlySet<string> = new Set(),
   hiddenItemPaths: ReadonlySet<string> = new Set(),
   pending: PendingMenuLayout = emptyPending(),
+  itemTitles: ReadonlyMap<string, string> = new Map(),
 ): string {
-  return serializeMenuLayout(tree, categories, hiddenCategoryIds, hiddenItemPaths, pending);
+  return serializeMenuLayout(tree, categories, hiddenCategoryIds, hiddenItemPaths, pending, itemTitles);
 }
 
 function parse(value: string) {
@@ -184,6 +185,83 @@ test("only changed built-in titles are stored and restoring the title clears the
   assert.equal(serializeState(tree, categories), '{"version":1,"titles":[["admin/status","Health"]]}');
   categories[0].title = "Status";
   assert.equal(serializeState(tree, categories), "");
+});
+
+test("item titles are stored only when changed and cleared when restored to original", () => {
+  const tree = fixture();
+  const categories = buildDefaultMenuCategories(tree);
+  const itemTitles = new Map<string, string>();
+
+  // No item title overrides produces empty
+  assert.equal(serializeState(tree, categories, new Set(), new Set(), emptyPending(), itemTitles), "");
+
+  // An override that matches the original translated title is not stored
+  itemTitles.set("admin/status/overview", "Overview");
+  assert.equal(serializeState(tree, categories, new Set(), new Set(), emptyPending(), itemTitles), "");
+
+  // A changed title is stored
+  itemTitles.set("admin/status/overview", "Dashboard");
+  assert.equal(serializeState(tree, categories, new Set(), new Set(), emptyPending(), itemTitles), '{"version":1,"itemTitles":[["admin/status/overview","Dashboard"]]}');
+
+  // Multiple item titles
+  itemTitles.set("admin/network/interfaces", "My Interfaces");
+  const serialized = serializeState(tree, categories, new Set(), new Set(), emptyPending(), itemTitles);
+  const parsed = parse(serialized);
+  assert.deepEqual(parsed.itemTitles, [
+    ["admin/status/overview", "Dashboard"],
+    ["admin/network/interfaces", "My Interfaces"],
+  ]);
+
+  // Round-trip: resolve and re-serialize preserves item titles
+  const resolved = resolveMenuLayout(tree, parsed);
+  assert.equal(resolved.itemTitles.get("admin/status/overview"), "Dashboard");
+  assert.equal(resolved.itemTitles.get("admin/network/interfaces"), "My Interfaces");
+  const reserialized = serializeState(tree, resolved.categories, resolved.hiddenCategoryIds, resolved.hiddenItemPaths, resolved.pending, resolved.itemTitles);
+  assert.equal(reserialized, serialized);
+
+  // Restoring item to original title removes it
+  itemTitles.set("admin/status/overview", "Overview");
+  assert.equal(serializeState(tree, categories, new Set(), new Set(), emptyPending(), itemTitles), '{"version":1,"itemTitles":[["admin/network/interfaces","My Interfaces"]]}');
+});
+
+test("item title overrides appear in presentation", () => {
+  const tree = fixture();
+  const value = '{"version":1,"itemTitles":[["admin/status/overview","Dashboard"]]}';
+  const presentation = buildMenuPresentation(tree, value);
+  const statusCategory = presentation.categories.find((c) => c.title === "Status");
+  assert.ok(statusCategory);
+  const overviewItem = statusCategory.items.find((i) => i.path === "admin/status/overview");
+  assert.ok(overviewItem);
+  assert.equal(overviewItem.title, "Dashboard");
+  assert.equal(overviewItem.rawTitle, "Overview");
+
+  // Non-overridden items keep their original title
+  const realtimeItem = statusCategory.items.find((i) => i.path === "admin/status/realtime");
+  assert.ok(realtimeItem);
+  assert.equal(realtimeItem.title, "Realtime graphs");
+});
+
+test("unresolved item title overrides survive saves and apply after reinstall", () => {
+  const tree = fixture();
+  const original = '{"version":1,"itemTitles":[["admin/status/history","My History"]]}';
+  const resolved = resolveMenuLayout(tree, parse(original));
+
+  // The item doesn't exist yet, so it's pending
+  assert.equal(resolved.itemTitles.size, 0);
+  assert.deepEqual(resolved.pending.itemTitles, [["admin/status/history", "My History"]]);
+
+  // Re-serializing preserves the pending title
+  const saved = serializeState(tree, resolved.categories, resolved.hiddenCategoryIds, resolved.hiddenItemPaths, resolved.pending, resolved.itemTitles);
+  assert.equal(saved, original);
+
+  // After the plugin is installed, the title applies
+  const treeWithPlugin = fixture(true);
+  const presentation = buildMenuPresentation(treeWithPlugin, saved);
+  const statusCategory = presentation.categories.find((c) => c.title === "Status");
+  assert.ok(statusCategory);
+  const historyItem = statusCategory.items.find((i) => i.path === "admin/status/history");
+  assert.ok(historyItem);
+  assert.equal(historyItem.title, "My History");
 });
 
 test("temporarily unresolved plugin rules survive saves and apply after reinstall", () => {

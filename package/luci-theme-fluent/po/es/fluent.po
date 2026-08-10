@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 10:50+0800\n"
+"POT-Creation-Date: 2026-08-10 11:19+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: castillofrancodamian\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -262,6 +262,9 @@ msgstr "Arrastrar para reordenar menú principal"
 
 msgid "Drop second-level menus here"
 msgstr "Soltar menús de segundo nivel aquí"
+
+msgid "Edit"
+msgstr "Editar"
 
 msgid "Enable page transition animation"
 msgstr "Activar la animación de transición de página"
@@ -537,6 +540,9 @@ msgstr "Reintentando con token..."
 
 msgid "Rounded (6px)"
 msgstr "Redondeado (6px)"
+
+msgid "Save"
+msgstr "Guardar"
 
 msgid "Scroll to bottom"
 msgstr "Desplazarse al final"
