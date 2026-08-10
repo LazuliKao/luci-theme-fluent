@@ -1777,7 +1777,7 @@ body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .cbi-ch
   filter: grayscale(.5) opacity(.6) !important;
 }
 
-body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .drag-handle {
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .fluent-menu-editor__drag-handle {
   pointer-events: none !important;
   cursor: not-allowed !important;
   filter: grayscale(.5) opacity(.6) !important;
@@ -1843,7 +1843,7 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .cbi-
   filter: grayscale(.5) opacity(.6) !important;
 }
 
-body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .drag-handle {
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .fluent-menu-editor__drag-handle {
   pointer-events: none !important;
   cursor: not-allowed !important;
   filter: grayscale(.5) opacity(.6) !important;
@@ -1891,7 +1891,7 @@ body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .cbi-ch
   pointer-events: none !important;
 }
 
-body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .drag-handle * {
+body.modal-overlay-active:has(#modal_overlay .modal.notice) #maincontent .fluent-menu-editor__drag-handle * {
   pointer-events: none !important;
 }
 
@@ -1935,7 +1935,7 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .cbi-
   pointer-events: none !important;
 }
 
-body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .drag-handle * {
+body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent .fluent-menu-editor__drag-handle * {
   pointer-events: none !important;
 }
 
