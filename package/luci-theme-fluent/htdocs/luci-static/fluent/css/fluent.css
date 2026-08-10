@@ -1967,8 +1967,7 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   pointer-events: auto !important;
   width: auto !important;
   max-width: 480px !important;
-  box-shadow: var(--fluent-shadow-lg) !important;
-  border: 1px solid var(--fluent-border) !important;
+  box-shadow: var(--fluent-shadow-md) !important;
   background: var(--fluent-bg-card) !important;
   flex-direction: row !important;
   margin: 0 auto !important;
@@ -1979,6 +1978,151 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   margin: 0 !important;
 }
 
+#modal_overlay:has(.fluent-apply-change-preview) {
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: var(--fluent-space-sm) !important;
+  padding-top: var(--fluent-space-sm) !important;
+  flex-direction: column !important;
+  display: flex !important;
+}
+
+.fluent-apply-change-preview {
+  gap: var(--fluent-space-sm) !important;
+  pointer-events: auto !important;
+  flex-direction: column !important;
+  order: 1 !important;
+  width: min(90%, 680px) !important;
+  max-height: 50dvh !important;
+  margin: 0 auto !important;
+  padding: 2px !important;
+  display: flex !important;
+  overflow-y: auto !important;
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar {
+  width: var(--fluent-scrollbar-width);
+  height: var(--fluent-scrollbar-width);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar:horizontal {
+  height: var(--fluent-scrollbar-horizontal-height, 5px);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-track {
+  background: var(--fluent-scrollbar-track-bg);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-thumb {
+  background: var(--fluent-scrollbar-thumb-bg);
+  border-radius: 3px;
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-thumb:hover {
+  background: var(--fluent-scrollbar-thumb-bg-hover);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-thumb:horizontal {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg);
+  border-radius: var(--fluent-radius-circular, 10000px);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-thumb:horizontal:hover {
+  background: var(--fluent-scrollbar-thumb-horizontal-bg-hover);
+}
+
+.fluent-apply-change-preview::-webkit-scrollbar-corner {
+  background: none;
+  display: none;
+}
+
+.fluent-apply-change-preview::-webkit-resizer {
+  background: none;
+}
+
+.fluent-apply-change-preview {
+  animation: slideInUp var(--fluent-duration-normal) var(--fluent-easing-decelerate);
+}
+
+.modal.alert-message.notice.spinning {
+  order: 2 !important;
+}
+
+.fluent-apply-change-preview-card {
+  background: var(--fluent-card-bg) !important;
+  border-radius: var(--fluent-card-radius) !important;
+  box-shadow: var(--fluent-shadow-md) !important;
+  margin: var(--fluent-space-md) !important;
+  padding: var(--fluent-card-padding) !important;
+  gap: var(--fluent-space-sm) !important;
+  flex-direction: column !important;
+  display: flex !important;
+}
+
+.fluent-apply-change-preview-card:not(:first-child) {
+  margin-top: var(--fluent-space-xs);
+}
+
+.fluent-apply-change-preview-card-header {
+  font-family: var(--fluent-font-family) !important;
+  font-size: var(--fluent-font-size-sm) !important;
+  font-weight: var(--fluent-font-weight-semibold) !important;
+  color: var(--fluent-brand-80) !important;
+  letter-spacing: .5px !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  display: flex !important;
+}
+
+.fluent-apply-change-preview-close {
+  border-radius: var(--fluent-radius-md) !important;
+  width: 24px !important;
+  height: 24px !important;
+  color: var(--fluent-text-secondary) !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: background var(--fluent-duration-fast) var(--fluent-easing-standard),color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+  background: none !important;
+  border: none !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  display: flex !important;
+}
+
+.fluent-apply-change-preview-close:before {
+  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+  --fluent-mask-dismiss-20-regular: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'><path fill='currentColor' d=%22m4.089 4.216l.057-.07a.5.5 0 0 1 .638-.057l.07.057L10 9.293l5.146-5.147a.5.5 0 0 1 .638-.057l.07.057a.5.5 0 0 1 .057.638l-.057.07L10.707 10l5.147 5.146a.5.5 0 0 1 .057.638l-.057.07a.5.5 0 0 1-.638.057l-.07-.057L10 10.707l-5.146 5.147a.5.5 0 0 1-.638.057l-.07-.057a.5.5 0 0 1-.057-.638l.057-.07L9.293 10L4.146 4.854a.5.5 0 0 1-.057-.638l.057-.07z%22/></svg>");
+  width: 14px;
+  height: 14px;
+  -webkit-mask-image: var(--fluent-mask-dismiss-20-regular);
+  mask-image: var(--fluent-mask-dismiss-20-regular);
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background: currentColor !important;
+}
+
+.fluent-apply-change-preview-close:hover {
+  background: var(--fluent-card-border) !important;
+  color: var(--fluent-text) !important;
+}
+
+.fluent-apply-change-preview-close:active {
+  background: color-mix(in srgb, var(--fluent-card-border) 80%, #000) !important;
+}
+
+.fluent-apply-change-preview-card-body.uci-change-list {
+  max-height: 280px !important;
+  margin: 0 !important;
+}
+
 :is(.modal.alert-message:has(.button-row), .modal.alert-message:has(button)) {
   background: var(--fluent-modal-bg) !important;
   border-radius: var(--fluent-modal-radius) !important;
@@ -1986,7 +2130,6 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   max-width: 600px !important;
   padding: var(--fluent-modal-padding) !important;
   box-shadow: var(--fluent-shadow-xl) !important;
-  border: 1px solid var(--fluent-border) !important;
   flex-direction: column !important;
   align-items: stretch !important;
   margin: 0 auto !important;

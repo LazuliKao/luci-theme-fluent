@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 16:39+0800\n"
+"POT-Creation-Date: 2026-08-10 17:36+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -554,8 +554,16 @@ msgstr ""
 msgid "Show %s in the menu"
 msgstr "%s를 메뉴에 표시합니다."
 
+msgid ""
+"Show pending UCI changes in the top apply-status message until the "
+"configuration apply completes."
+msgstr "구성 적용이 완료될 때까지 최상단 적용 상태 메시지에 대기 중인 UCI 변경 사항을 표시합니다."
+
 msgid "Show top loading bar"
 msgstr "상단 로딩 표시줄 표시"
+
+msgid "Show UCI changes while applying configuration"
+msgstr "구성을 적용하는 동안 UCI 변경 사항을 표시합니다."
 
 msgid "Sidebar background"
 msgstr "사이드바 배경"

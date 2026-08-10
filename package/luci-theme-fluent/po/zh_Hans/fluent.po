@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 16:39+0800\n"
+"POT-Creation-Date: 2026-08-10 17:35+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -544,8 +544,16 @@ msgstr "设置基础界面字体大小（像素）。大多数主题文本会根
 msgid "Show %s in the menu"
 msgstr "在菜单中显示 %s"
 
+msgid ""
+"Show pending UCI changes in the top apply-status message until the "
+"configuration apply completes."
+msgstr "在应用配置完成前，在顶部应用状态消息中显示待处理的 UCI 变更。"
+
 msgid "Show top loading bar"
 msgstr "显示顶部加载条"
+
+msgid "Show UCI changes while applying configuration"
+msgstr "在应用配置时显示 UCI 变更"
 
 msgid "Sidebar background"
 msgstr "侧边栏背景"

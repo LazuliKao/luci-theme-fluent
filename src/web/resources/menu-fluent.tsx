@@ -1,4 +1,5 @@
 import { buildMenuPresentation, type MenuPresentation } from "./menu-layout";
+import { setupApplyChangePreview } from "./utils/apply-change-preview";
 import { setupErrorTooltips } from "./utils/error-tooltips";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupLogViewer } from "./utils/log-viewer";
@@ -57,6 +58,7 @@ const module: Module = {
    * Load menu data and trigger rendering
    */
   async __init__(this: Module) {
+    setupApplyChangePreview();
     const [data] = await Promise.all([ui.menu.load(), L.uci.load("fluent")]);
     const configuredValue = L.uci.get_first("fluent", "global", "menu_layout");
     const layoutValue = typeof configuredValue === "string" || Array.isArray(configuredValue) ? configuredValue : null;

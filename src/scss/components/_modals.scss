@@ -303,8 +303,7 @@ body.modal-overlay-active {
   max-width: 480px !important;
   width: auto !important;
   margin: 0 auto !important;
-  box-shadow: var(--fluent-shadow-lg) !important;
-  border: 1px solid var(--fluent-border) !important;
+  box-shadow: var(--fluent-shadow-md) !important;
   background: var(--fluent-bg-card) !important;
 
   p {
@@ -312,6 +311,102 @@ body.modal-overlay-active {
   }
 }
 
+// Layout when the custom apply change preview is displayed inside #modal_overlay
+#modal_overlay:has(.fluent-apply-change-preview) {
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: var(--fluent-space-sm) !important;
+  padding-top: var(--fluent-space-sm) !important;
+  display: flex !important;
+}
+
+// Container for the changes preview (rendered on top of the toast)
+.fluent-apply-change-preview {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--fluent-space-sm) !important;
+  width: min(90%, 680px) !important;
+  max-height: 50dvh !important;
+  overflow-y: auto !important;
+  margin: 0 auto !important;
+  pointer-events: auto !important;
+  padding: 2px !important;
+  order: 1 !important; // Position on top visually
+  @include custom-scrollbar;
+  @include slide-in-up;
+}
+
+// Style the saving status toast to render below the changes preview
+.modal.alert-message.notice.spinning {
+  order: 2 !important; // Position below visually
+}
+
+// Individual config file card
+.fluent-apply-change-preview-card {
+  background: var(--fluent-card-bg) !important;
+  border-radius: var(--fluent-card-radius) !important;
+  box-shadow: var(--fluent-shadow-md) !important;
+  margin: var(--fluent-space-md) !important;
+  padding: var(--fluent-card-padding) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--fluent-space-sm) !important;
+
+  &:not(:first-child) {
+    margin-top: var(--fluent-space-xs);
+  }
+}
+
+// Card header displaying config file title
+.fluent-apply-change-preview-card-header {
+  font-family: var(--fluent-font-family) !important;
+  font-size: var(--fluent-font-size-sm) !important;
+  font-weight: var(--fluent-font-weight-semibold) !important;
+  color: var(--fluent-brand-80) !important;
+  letter-spacing: 0.5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+// Card close button
+.fluent-apply-change-preview-close {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: var(--fluent-radius-md) !important;
+  color: var(--fluent-text-secondary) !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition:
+    background var(--fluent-duration-fast) var(--fluent-easing-standard),
+    color var(--fluent-duration-fast) var(--fluent-easing-standard) !important;
+
+  &::before {
+    @include fluent-mask-icon-by-name("dismiss-20-regular", 14px, currentColor);
+  }
+
+  &:hover {
+    background: var(--fluent-card-border) !important;
+    color: var(--fluent-text) !important;
+  }
+
+  &:active {
+    background: color-mix(in srgb, var(--fluent-card-border) 80%, #000000) !important;
+  }
+}
+
+// Code box displaying the uci diffs inside the card
+.fluent-apply-change-preview-card-body.uci-change-list {
+  margin: 0 !important;
+  max-height: 280px !important;
+}
 // 5. Style interactive alert/notice modals that have buttons/button-row as proper modal dialogs
 .modal.alert-message:has(.button-row),
 .modal.alert-message:has(button) {
@@ -325,7 +420,6 @@ body.modal-overlay-active {
   border-radius: var(--fluent-modal-radius) !important;
   padding: var(--fluent-modal-padding) !important;
   box-shadow: var(--fluent-shadow-xl) !important;
-  border: 1px solid var(--fluent-border) !important;
   position: relative !important;
 
   // Position warning/danger/info icon next to the title

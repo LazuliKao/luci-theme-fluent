@@ -40,12 +40,23 @@ export const registerAnimationTab = (section: LuCI.form.TypedSection): void => {
     );
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? option.enabled : option.disabled;
     omitDefaultValue(option);
-    option.depends("tab_animation", "1");
   }
 
   {
     const option = section.taboption("animation", form.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.loading_bar) ? option.enabled : option.disabled;
+    omitDefaultValue(option);
+  }
+
+  {
+    const option = section.taboption(
+      "animation",
+      form.Flag,
+      "uci_changes_preview",
+      _("Show UCI changes while applying configuration"),
+      _("Show pending UCI changes in the top apply-status message until the configuration apply completes."),
+    );
+    option.default = fluentFlagDefault(FLUENT_DEFAULTS.uci_changes_preview) ? option.enabled : option.disabled;
     omitDefaultValue(option);
   }
 };

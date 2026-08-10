@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 16:39+0800\n"
+"POT-Creation-Date: 2026-08-10 17:36+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -598,8 +598,18 @@ msgstr ""
 msgid "Show %s in the menu"
 msgstr "Показати \"%s\" у меню"
 
+msgid ""
+"Show pending UCI changes in the top apply-status message until the "
+"configuration apply completes."
+msgstr ""
+"Показувати очікувані зміни конфігурації в повідомленні про стан застосування "
+"у верхній частині, доки не завершиться застосування."
+
 msgid "Show top loading bar"
 msgstr "Показати верхню смугу завантаження"
+
+msgid "Show UCI changes while applying configuration"
+msgstr "Показувати зміни конфігурації під час її застосування."
 
 msgid "Sidebar background"
 msgstr "Фон бічної панелі"

@@ -611,6 +611,7 @@ const FLUENT_DEFAULTS = {
     tab_animation: "1",
     prefers_reduced_motion: "1",
     loading_bar: "1",
+    uci_changes_preview: "1",
     direction_mode: "auto",
     progressbar_text_position: "top-start"
 };
@@ -782,11 +783,15 @@ const registerAnimationTab = (i)=>{
     }
     {
         let o = i.taboption("animation", animation_e.Flag, "prefers_reduced_motion", _("Respect reduced-motion preference"), _("When enabled, Fluent animations follow the browser or operating system reduced-motion preference."));
-        o.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? o.enabled : o.disabled, omitDefaultValue(o), o.depends("tab_animation", "1");
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? o.enabled : o.disabled, omitDefaultValue(o);
     }
     {
         let o = i.taboption("animation", animation_e.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
         o.default = fluentFlagDefault(FLUENT_DEFAULTS.loading_bar) ? o.enabled : o.disabled, omitDefaultValue(o);
+    }
+    {
+        let o = i.taboption("animation", animation_e.Flag, "uci_changes_preview", _("Show UCI changes while applying configuration"), _("Show pending UCI changes in the top apply-status message until the configuration apply completes."));
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.uci_changes_preview) ? o.enabled : o.disabled, omitDefaultValue(o);
     }
 };
 

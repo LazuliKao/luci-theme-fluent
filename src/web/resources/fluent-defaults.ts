@@ -29,6 +29,7 @@ export const FLUENT_DEFAULTS = {
   tab_animation: "1",
   prefers_reduced_motion: "1",
   loading_bar: "1",
+  uci_changes_preview: "1",
   direction_mode: "auto",
   progressbar_text_position: "top-start",
 } as const;
