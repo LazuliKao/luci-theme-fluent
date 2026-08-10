@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:47+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d Untermenüs"
 
 msgid "A new version is available!"
 msgstr "Eine neue Version ist verfügbar!"
@@ -25,6 +28,9 @@ msgstr "Über dem Balken, Anfang"
 
 msgid "Accent color"
 msgstr "Akzentfarbe"
+
+msgid "Add primary menu"
+msgstr "Hauptmenü hinzufügen"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -219,6 +225,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Dunkles Design"
 
+msgid "Delete primary menu"
+msgstr "Hauptmenü löschen"
+
 msgid "Disabled"
 msgstr "Deaktiviert"
 
@@ -243,6 +252,15 @@ msgstr "Heruntergeladen"
 
 msgid "Downloading on router"
 msgstr "Herunterladen auf dem Router"
+
+msgid "Drag to move second-level menu"
+msgstr "Verschieben, um das Untermenü zu ändern"
+
+msgid "Drag to reorder primary menu"
+msgstr "Verschieben, um die Reihenfolge des Hauptmenüs zu ändern"
+
+msgid "Drop second-level menus here"
+msgstr "Hier können Sie Untermenüs einfügen."
 
 msgid "Enable page transition animation"
 msgstr "Seitenübergangsanimation aktivieren"
@@ -270,6 +288,9 @@ msgstr "Schnell"
 
 msgid "Finished"
 msgstr "Fertig"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Fehler im Titel des Hauptmenüs beheben, bevor Sie speichern."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Fluent Design 2 Theme für LuCI"
@@ -389,8 +410,17 @@ msgstr "Mittel"
 msgid "Medium (4px)"
 msgstr "Mittel (4px)"
 
+msgid "Menu"
+msgstr "Menü"
+
 msgid "Navigation font weight"
 msgstr "Schriftstärke der Navigation"
+
+msgid "New primary menu"
+msgstr "Neues Hauptmenü"
+
+msgid "New primary menu %d"
+msgstr "Neues Hauptmenü %d"
 
 msgid "Next"
 msgstr "Weiter"
@@ -460,6 +490,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Vordefinierter Anbieter / Generator"
 
+msgid "Primary menu title"
+msgstr "Titel des Hauptmenüs"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Die Titel im Hauptmenü dürfen nicht leer sein."
+
+msgid "Primary menu titles must be unique."
+msgstr "Die Titel im Hauptmenü müssen eindeutig sein."
+
 msgid "Progress bar text color"
 msgstr "Textfarbe der Fortschrittsanzeige"
 
@@ -482,6 +521,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Reduzierte Bewegungseffekte berücksichtigen"
+
+msgid "Restore %s to its original menu name"
+msgstr "%s auf den ursprünglichen Menünamen zurücksetzen"
+
+msgid "Restore %s to its original menu position"
+msgstr "%s auf die ursprüngliche Menüposition zurücksetzen"
+
+msgid "Restore defaults"
+msgstr "Standardwerte wiederherstellen"
 
 msgid "Retrying with token..."
 msgstr "Erneuter Versuch mit Token..."
@@ -517,6 +565,9 @@ msgstr ""
 "Legt die Basisschriftgröße der Benutzeroberfläche in Pixeln fest. Die "
 "meisten Texte des Themes werden über die Fluent CSS-Variablen von diesem "
 "Wert aus skaliert. Empfohlener Bereich: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "%s im Menü anzeigen"
 
 msgid "Show top loading bar"
 msgstr "Ladebalken oben anzeigen"
@@ -562,6 +613,20 @@ msgstr "Theme-Modus wechseln"
 
 msgid "Text direction"
 msgstr "Textrichtung"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"Das gespeicherte Menülayout ist ungültig. Wählen Sie „Standardwerte "
+"wiederherstellen“ oder nehmen Sie eine Änderung vor, bevor Sie speichern."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"Das gespeicherte Menülayout ist ungültig. Stellen Sie die Standardwerte "
+"wieder her oder bearbeiten Sie das Layout, bevor Sie speichern."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

@@ -7,14 +7,15 @@ import { registerAnimationTab } from "./fluent-config/tabs/animation";
 import { registerColorsTab } from "./fluent-config/tabs/colors";
 import { registerGeneralTab } from "./fluent-config/tabs/general";
 import { registerLoginTab } from "./fluent-config/tabs/login";
+import { registerMenuTab } from "./fluent-config/tabs/menu";
 
 class mainImpl extends L.view {
   load() {
-    return uci.load("fluent");
+    return Promise.all([uci.load("fluent"), L.ui.menu.load()]);
   }
 
-  render(data: unknown) {
-    void data;
+  render(data: [unknown, LuCI.ui.menu.MenuNode]) {
+    const [, menuTree] = data;
 
     const map = new form.Map(
       "fluent",
@@ -27,6 +28,7 @@ class mainImpl extends L.view {
     section.anonymous = true;
 
     registerGeneralTab(section);
+    registerMenuTab(section, menuTree);
     registerColorsTab(section);
     registerAnimationTab(section);
     registerLoginTab(section);

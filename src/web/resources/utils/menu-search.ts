@@ -1,55 +1,64 @@
 /**
- * menu-search.ts
  * Sidebar menu search — Ctrl+K / / to focus, type to filter, Enter/click to navigate.
- * Searches the FULL menu tree (all top-level branches), not just the active one.
+ * Searches the same Fluent presentation model rendered by the sidebar.
  */
 
-interface SearchResult {
+import type { MenuPresentation } from "../menu-layout";
+
+export interface SearchResult {
   node: LuCI.ui.menu.MenuNode;
   url: string;
-  /** Translated breadcrumb trail, e.g. ["Status", "Overview"] */
   breadcrumb: string[];
 }
 
-// ── Core search ──
-
-function normalize(s: string): string {
-  return s.toLowerCase().replace(/\s+/g, " ");
+function normalize(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, " ");
 }
 
-/**
- * Recursively walk the entire menu tree and collect matching nodes.
- * Matches on node.title (case-insensitive substring).
- */
-function searchMenu(root: LuCI.ui.menu.MenuNode, query: string): SearchResult[] {
-  const q = normalize(query);
-  if (!q) return [];
+function titleMatches(rawTitle: string, translatedTitle: string, query: string): boolean {
+  return normalize(translatedTitle).includes(query) || normalize(rawTitle).includes(query);
+}
+
+export function searchMenu(presentation: MenuPresentation, query: string): SearchResult[] {
+  const normalizedQuery = normalize(query);
+  if (!normalizedQuery) return [];
 
   const results: SearchResult[] = [];
 
-  function walk(node: LuCI.ui.menu.MenuNode, url: string, breadcrumb: string[]) {
-    const children = ui.menu.getChildren(node);
-    for (const child of children) {
-      const childUrl = url ? `${url}/${child.name}` : child.name;
-      const childBreadcrumb = [...breadcrumb];
+  const walk = (node: LuCI.ui.menu.MenuNode, url: string, breadcrumb: string[]): void => {
+    for (const child of ui.menu.getChildren(node)) {
+      if (!child.satisfied) continue;
 
-      // Check all ancestors' titles for the path display
-      const title = child.title || child.name || "";
-      const translatedTitle = title ? _(title) : "";
-      if (title) {
-        childBreadcrumb.push(translatedTitle);
-      }
+      const childUrl = `${url}/${child.name}`;
+      const rawTitle = child.title || child.name || "";
+      const translatedTitle = rawTitle ? _(rawTitle) : "";
+      const childBreadcrumb = rawTitle ? [...breadcrumb, translatedTitle] : breadcrumb;
 
-      // Match against translated title (what the user sees) or raw title (fallback)
-      if ((translatedTitle && normalize(translatedTitle).includes(q)) || (title && normalize(title).includes(q))) {
+      if (titleMatches(rawTitle, translatedTitle, normalizedQuery)) {
         results.push({ node: child, url: childUrl, breadcrumb: [...childBreadcrumb] });
       }
 
       walk(child, childUrl, childBreadcrumb);
     }
+  };
+
+  for (const category of presentation.categories) {
+    if (presentation.hiddenCategoryIds.has(category.id)) continue;
+    if (category.primary && titleMatches(category.primary.rawTitle, category.title, normalizedQuery)) {
+      results.push({ node: category.primary.node, url: category.primary.path, breadcrumb: [category.title] });
+    }
+
+    for (const item of category.items) {
+      if (presentation.hiddenPaths.has(item.path)) continue;
+
+      const breadcrumb = [category.title, item.title];
+      if (titleMatches(item.rawTitle, item.title, normalizedQuery)) {
+        results.push({ node: item.node, url: item.path, breadcrumb });
+      }
+      walk(item.node, item.path, breadcrumb);
+    }
   }
 
-  walk(root, "", []);
   return results;
 }
 
@@ -58,7 +67,7 @@ function searchMenu(root: LuCI.ui.menu.MenuNode, query: string): SearchResult[] 
 const SEARCH_BOX_CLASS = "fluent-menu-search";
 const OVERLAY_CLASS = "fluent-menu-search-overlay";
 
-function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivElement; input: HTMLInputElement; overlay: HTMLDivElement } {
+function createSearchInput(presentation: MenuPresentation): { container: HTMLDivElement; input: HTMLInputElement; overlay: HTMLDivElement } {
   // Container
   const container = document.createElement("div");
   container.className = SEARCH_BOX_CLASS;
@@ -196,7 +205,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivEle
       closeOverlay();
       return;
     }
-    const results = searchMenu(root, q);
+    const results = searchMenu(presentation, q);
     renderResults(results);
   });
 
@@ -252,7 +261,7 @@ function createSearchInput(root: LuCI.ui.menu.MenuNode): { container: HTMLDivEle
  * Initialize menu search: injects search UI into the sidebar
  * and registers keyboard shortcuts.
  */
-export function setupMenuSearch(root: LuCI.ui.menu.MenuNode): void {
+export function setupMenuSearch(presentation: MenuPresentation): void {
   const inputs: HTMLInputElement[] = [];
 
   const setupSlot = (selector: string) => {
@@ -260,7 +269,7 @@ export function setupMenuSearch(root: LuCI.ui.menu.MenuNode): void {
     if (!slot) return;
 
     slot.innerHTML = "";
-    const { container, input } = createSearchInput(root);
+    const { container, input } = createSearchInput(presentation);
     slot.appendChild(container);
     inputs.push(input);
   };

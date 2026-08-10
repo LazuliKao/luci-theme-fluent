@@ -1,0 +1,262 @@
+@use "../mixins" as *;
+@use "../icons" as *;
+
+.fluent-menu-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fluent-space-md);
+  width: 100%;
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--fluent-space-sm);
+  }
+
+  &__notice,
+  &__validation {
+    padding: var(--fluent-space-sm) var(--fluent-space-md);
+    color: var(--fluent-error);
+    background: var(--fluent-error-light);
+    border: 1px solid var(--fluent-error);
+    border-radius: var(--fluent-radius-md);
+  }
+
+  &__validation:empty {
+    display: none;
+  }
+
+  &__categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    align-items: start;
+    gap: var(--fluent-space-md);
+  }
+
+  &__category {
+    min-width: 0;
+    position: relative;
+    --fluent-menu-drop-offset: calc(var(--fluent-space-sm) * -1);
+    padding: var(--fluent-space-sm);
+    background: var(--fluent-bg-card);
+    border: 1px solid var(--fluent-border);
+    border-radius: var(--fluent-radius-lg);
+    transition:
+      border-color var(--fluent-duration-fast) var(--fluent-easing-standard),
+      opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    &.is-hidden {
+      opacity: 0.55;
+    }
+    &.is-invalid {
+      border-color: var(--fluent-error);
+    }
+
+
+    &.is-dragging {
+      opacity: 0.55;
+    }
+  }
+
+  &__category-header {
+    display: flex;
+    align-items: center;
+    gap: var(--fluent-space-xs);
+    min-width: 0;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      @include fluent-mask-icon-by-name("chevron-right-20-regular", 16px, currentColor);
+      transition: transform var(--fluent-duration-fast) var(--fluent-easing-standard);
+    }
+  }
+
+  &__category[open] &__category-header::before {
+    transform: rotate(90deg);
+  }
+
+  &__category-title {
+    flex: 1;
+    min-width: 0;
+    height: var(--fluent-space-xxl);
+    padding-inline: var(--fluent-space-sm);
+  }
+
+
+  &__category-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--fluent-space-xl);
+    height: var(--fluent-space-xl);
+    padding-inline: var(--fluent-space-xs);
+    color: var(--fluent-text-secondary);
+    font-size: var(--fluent-font-size-sm);
+    background: var(--fluent-bg-hover);
+    border-radius: var(--fluent-radius-circular);
+  }
+
+  &__category-delete,
+  &__category-reset,
+  &__item-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 var(--fluent-space-xxl);
+    width: var(--fluent-space-xxl);
+    height: var(--fluent-space-xxl);
+    padding: 0;
+    color: var(--fluent-text-secondary);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--fluent-radius-md);
+
+    &:hover {
+      color: var(--fluent-text);
+      background: var(--fluent-bg-hover);
+    }
+  }
+
+  &__category-delete {
+    &::before {
+      @include fluent-mask-icon-by-name("delete-20-regular", 16px, currentColor);
+    }
+
+    &:hover {
+      color: var(--fluent-error);
+      background: var(--fluent-error-light);
+    }
+  }
+
+  &__category-error {
+    margin-top: var(--fluent-space-xs);
+    color: var(--fluent-error);
+    font-size: var(--fluent-font-size-sm);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+
+  &__category.is-drop-before::after,
+  &__category.is-drop-after::after,
+  &__item.is-drop-before::after,
+  &__item.is-drop-after::after {
+    position: absolute;
+    z-index: 1;
+    inset-inline: var(--fluent-space-xs);
+    height: var(--fluent-space-xxs);
+    pointer-events: none;
+    content: "";
+    background: var(--fluent-primary);
+    border-radius: var(--fluent-radius-circular);
+  }
+
+  &__category.is-drop-before::after,
+  &__item.is-drop-before::after {
+    top: var(--fluent-menu-drop-offset);
+  }
+
+  &__category.is-drop-after::after,
+  &__item.is-drop-after::after {
+    bottom: var(--fluent-menu-drop-offset);
+  }
+  &__drag-handle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 32px;
+    color: var(--fluent-text-secondary);
+    cursor: grab;
+    user-select: none;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    align-items: start;
+    gap: var(--fluent-space-xs);
+    margin-top: var(--fluent-space-sm);
+    min-height: 44px;
+    max-height: 55vh;
+    padding: var(--fluent-space-xs);
+    overflow-y: auto;
+    border: 1px dashed transparent;
+    border-radius: var(--fluent-radius-md);
+
+    &.is-drag-over {
+      border-color: var(--fluent-primary);
+      background: var(--fluent-primary-lightest);
+    }
+  }
+
+  &__item {
+    position: relative;
+    --fluent-menu-drop-offset: calc(var(--fluent-space-xs) * -1);
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--fluent-space-sm);
+    min-width: 0;
+    padding: var(--fluent-space-xs) var(--fluent-space-sm);
+    background: var(--fluent-bg);
+    border: 1px solid var(--fluent-border);
+    border-radius: var(--fluent-radius-md);
+    transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+    &.is-hidden {
+      opacity: 0.55;
+    }
+
+    &.is-dragging {
+      opacity: 0.35;
+    }
+  }
+
+  &__category-reset::before,
+  &__item-reset::before {
+    @include fluent-mask-icon-by-name("arrow-clockwise-20-regular", 16px, currentColor);
+  }
+
+  &__item-label {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    color: var(--fluent-text);
+
+    strong,
+    small {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    small {
+      color: var(--fluent-text-secondary);
+    }
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    color: var(--fluent-text-secondary);
+    border: 1px dashed var(--fluent-border);
+    border-radius: var(--fluent-radius-md);
+  }
+}
+

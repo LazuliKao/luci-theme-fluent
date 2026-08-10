@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:48+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d 個のセカンドレベルメニュー"
 
 msgid "A new version is available!"
 msgstr "新しいバージョンが利用可能です！"
@@ -25,6 +28,9 @@ msgstr "バーの上、開始"
 
 msgid "Accent color"
 msgstr "アクセントカラー"
+
+msgid "Add primary menu"
+msgstr "プライマリメニューを追加"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -196,6 +202,9 @@ msgstr "ライトモードとダークモードのログインページ背景、
 msgid "Dark mode"
 msgstr "ダークモード"
 
+msgid "Delete primary menu"
+msgstr "プライマリメニューを削除"
+
 msgid "Disabled"
 msgstr "無効"
 
@@ -218,6 +227,15 @@ msgstr "ダウンロード完了"
 
 msgid "Downloading on router"
 msgstr "ルーターでのダウンロード中"
+
+msgid "Drag to move second-level menu"
+msgstr "セカンドレベルメニューをドラッグして移動"
+
+msgid "Drag to reorder primary menu"
+msgstr "プライマリメニューの順序を入れ替えるためにドラッグ"
+
+msgid "Drop second-level menus here"
+msgstr "ここにセカンドレベルメニューをドロップ"
 
 msgid "Enable page transition animation"
 msgstr "ページ遷移アニメーションを有効にする"
@@ -245,6 +263,9 @@ msgstr "高速"
 
 msgid "Finished"
 msgstr "完了"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "保存する前に、プライマリメニューのタイトルエラーを修正してください。"
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "LuCI用のFluent Design 2テーマ"
@@ -356,8 +377,17 @@ msgstr "中"
 msgid "Medium (4px)"
 msgstr "中 (4px)"
 
+msgid "Menu"
+msgstr "メニュー"
+
 msgid "Navigation font weight"
 msgstr "ナビゲーションフォントの太さ"
+
+msgid "New primary menu"
+msgstr "新しいプライマリメニュー"
+
+msgid "New primary menu %d"
+msgstr "新しいプライマリメニュー %d"
 
 msgid "Next"
 msgstr "次へ"
@@ -417,6 +447,15 @@ msgstr "プログレスバーのラベルの位置は、バーに対して相対
 msgid "Preset Vendor / Generator"
 msgstr "プリセットのベンダー/ジェネレーター"
 
+msgid "Primary menu title"
+msgstr "メインメニューのタイトル"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "メインメニューのタイトルは空にできません。"
+
+msgid "Primary menu titles must be unique."
+msgstr "メインメニューのタイトルは一意である必要があります。"
+
 msgid "Progress bar text color"
 msgstr "プログレスバーのテキストの色"
 
@@ -437,6 +476,15 @@ msgstr "ネイティブの選択要素を、テーマ独自のドロップダウ
 
 msgid "Respect reduced-motion preference"
 msgstr "アニメーションの抑制設定を尊重します"
+
+msgid "Restore %s to its original menu name"
+msgstr "%s を元のメニュー名に戻す"
+
+msgid "Restore %s to its original menu position"
+msgstr "%s を元の位置に戻す"
+
+msgid "Restore defaults"
+msgstr "デフォルトを復元"
 
 msgid "Retrying with token..."
 msgstr "トークンを使って再試行中..."
@@ -471,6 +519,9 @@ msgid ""
 msgstr ""
 "ベースとなるインターフェースのフォントサイズをピクセル単位で設定します。ほとんどのテーマテキストは、Fluent "
 "CSS変数を通じてこの値からスケールされます。推奨範囲: 12-18px。"
+
+msgid "Show %s in the menu"
+msgstr "%s をメニューに表示"
 
 msgid "Show top loading bar"
 msgstr "上部のローディングバーを表示"
@@ -516,6 +567,16 @@ msgstr "テーマモードを切り替える"
 
 msgid "Text direction"
 msgstr "テキスト方向"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr "保存されたメニューレイアウトが無効です。「デフォルトを復元」を選択するか、保存する前に編集してください。"
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr "保存されたメニューレイアウトが無効です。デフォルトを復元するか、保存する前にレイアウトを編集してください。"
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

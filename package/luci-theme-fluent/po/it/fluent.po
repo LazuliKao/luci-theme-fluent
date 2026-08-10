@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:48+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d sottomenu"
 
 msgid "A new version is available!"
 msgstr "È disponibile una nuova versione!"
@@ -25,6 +28,9 @@ msgstr "Inizio barra"
 
 msgid "Accent color"
 msgstr "Colore accento"
+
+msgid "Add primary menu"
+msgstr "Aggiungi menu principale"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -219,6 +225,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Modalità scura"
 
+msgid "Delete primary menu"
+msgstr "Elimina menu principale"
+
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -243,6 +252,15 @@ msgstr "Scaricato"
 
 msgid "Downloading on router"
 msgstr "Scaricamento in corso sul router"
+
+msgid "Drag to move second-level menu"
+msgstr "Trascina per spostare il sottomenu"
+
+msgid "Drag to reorder primary menu"
+msgstr "Trascina per riordinare i menu principali"
+
+msgid "Drop second-level menus here"
+msgstr "Rilascia i sottomenu qui"
 
 msgid "Enable page transition animation"
 msgstr "Abilita l'animazione di transizione della pagina"
@@ -270,6 +288,9 @@ msgstr "Veloce"
 
 msgid "Finished"
 msgstr "Completato"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Correggere gli errori nei titoli dei menu principali prima di salvare."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Tema Fluent Design 2 per LuCI"
@@ -401,8 +422,17 @@ msgstr "Media"
 msgid "Medium (4px)"
 msgstr "Media (4px)"
 
+msgid "Menu"
+msgstr "Menu"
+
 msgid "Navigation font weight"
 msgstr "Peso del carattere della navigazione"
+
+msgid "New primary menu"
+msgstr "Nuovo menu principale"
+
+msgid "New primary menu %d"
+msgstr "Nuovo menu principale %d"
 
 msgid "Next"
 msgstr "Avanti"
@@ -470,6 +500,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Produttore / Generatore predefinito"
 
+msgid "Primary menu title"
+msgstr "Titolo del menu principale"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "I titoli del menu principale non possono essere vuoti."
+
+msgid "Primary menu titles must be unique."
+msgstr "I titoli del menu principale devono essere univoci."
+
 msgid "Progress bar text color"
 msgstr "Colore del testo della barra di avanzamento"
 
@@ -492,6 +531,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Rispetta la preferenza per ridotta animazione."
+
+msgid "Restore %s to its original menu name"
+msgstr "Ripristina %s al nome del menu originale"
+
+msgid "Restore %s to its original menu position"
+msgstr "Ripristina %s alla posizione originale nel menu"
+
+msgid "Restore defaults"
+msgstr "Ripristina le impostazioni predefinite"
 
 msgid "Retrying with token..."
 msgstr "Riprovo con token..."
@@ -529,6 +577,9 @@ msgstr ""
 "Imposta la dimensione base del font dell'interfaccia in pixel. La maggior "
 "parte del testo del tema scala da questo valore tramite le variabili CSS di "
 "Fluent. Intervallo consigliato: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "Mostra %s nel menu"
 
 msgid "Show top loading bar"
 msgstr "Mostra la barra di caricamento superiore"
@@ -574,6 +625,20 @@ msgstr "Cambia modalità tema"
 
 msgid "Text direction"
 msgstr "Direzione testo"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"La disposizione del menu salvata non è valida. Scegli \"Ripristina le "
+"impostazioni predefinite\" o modifica prima di salvare."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"La disposizione del menu salvata non è valida. Ripristina le impostazioni "
+"predefinite o modifica la disposizione prima di salvare."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

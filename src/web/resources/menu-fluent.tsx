@@ -1,3 +1,4 @@
+import { buildMenuPresentation, type MenuPresentation } from "./menu-layout";
 import { setupErrorTooltips } from "./utils/error-tooltips";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupLogViewer } from "./utils/log-viewer";
@@ -11,10 +12,11 @@ import { setupThemeFeatures } from "./utils/theme-features";
 
 interface Module {
   __init__: () => void;
-  render: (tree: MenuNode) => void;
+  render: (tree: MenuNode, presentation: MenuPresentation) => void;
   handleMenuExpand: (ev: Event) => void;
   renderMainMenu: (tree: MenuNode, url: string, level?: number) => HTMLElement;
-  renderTabMenu: (tree: MenuNode, url: string, level?: number) => HTMLElement;
+  renderConfiguredMenu: (presentation: MenuPresentation) => HTMLElement;
+  renderTabMenu: (tree: MenuNode, url: string, level: number | undefined, hiddenPaths: ReadonlySet<string>) => HTMLElement;
   adjustBrandTextSize: () => void;
   handleSidebarToggle: (ev: Event) => void;
   handleDesktopSidebarToggle: (ev: Event) => void;
@@ -55,15 +57,18 @@ const module: Module = {
    * Load menu data and trigger rendering
    */
   async __init__(this: Module) {
-    const data = await ui.menu.load();
-    this.render(data);
+    const [data] = await Promise.all([ui.menu.load(), L.uci.load("fluent")]);
+    const configuredValue = L.uci.get_first("fluent", "global", "menu_layout");
+    const layoutValue = typeof configuredValue === "string" || Array.isArray(configuredValue) ? configuredValue : null;
+    const presentation = buildMenuPresentation(data, layoutValue);
+    this.render(data, presentation);
     setupTableWrappers();
     setupSelectionPause();
     setupErrorTooltips();
     setupFluentSelects();
     setupIfaceboxTooltips();
     setupThemeFeatures();
-    setupMenuSearch(data);
+    setupMenuSearch(presentation);
     setupMacSelector();
     setupLogViewer();
   },
@@ -72,34 +77,39 @@ const module: Module = {
    * Main render function for the menu system
    * @param {Object} tree - Menu tree structure from LuCI
    */
-  render(this: Module, tree: MenuNode) {
+  render(this: Module, tree: MenuNode, presentation: MenuPresentation) {
     let node: MenuNode | undefined = tree;
     let url = "";
-    const children = ui.menu.getChildren(tree);
 
-    // Find and render the active main menu item
-    for (let i = 0; i < children.length; i++) {
-      const isActive = L.env.requestpath.length ? children[i].name === L.env.requestpath[0] : i === 0;
+    if (presentation.configured) {
+      this.renderConfiguredMenu(presentation);
+    } else {
+      const children = ui.menu.getChildren(tree);
 
-      if (isActive) {
-        this.renderMainMenu(children[i], children[i].name);
+      // Preserve LuCI's active-root sidebar when no Fluent layout is configured.
+      for (let i = 0; i < children.length; i++) {
+        const isActive = L.env.requestpath.length ? children[i].name === L.env.requestpath[0] : i === 0;
+
+        if (isActive) {
+          this.renderMainMenu(children[i], children[i].name);
+        }
       }
     }
 
-    // Render tab menu if we're deep enough in the navigation hierarchy
+    // Render tab menu if we're deep enough in the navigation hierarchy.
     if (L.env.dispatchpath.length >= 3) {
       for (let i = 0; i < 3 && node; i++) {
         const path = L.env.dispatchpath[i];
         node = node.children?.[path];
-        url = url + (url ? "/" : "") + L.env.dispatchpath[i];
+        url = url + (url ? "/" : "") + path;
       }
 
       if (node) {
-        this.renderTabMenu(node, url);
+        this.renderTabMenu(node, url, undefined, presentation.hiddenPaths);
       }
     }
 
-    // Attach event listeners for sidebar toggle functionality
+    // Attach event listeners for sidebar toggle functionality.
     const sidebarToggles = document.querySelectorAll("a.showSide");
     const darkMask = document.querySelector(".darkMask");
     const desktopSidebarToggle = document.querySelector(".sidebar-collapse-toggle");
@@ -308,6 +318,64 @@ const module: Module = {
     return menuContainer;
   },
 
+  renderConfiguredMenu(this: Module, presentation: MenuPresentation): HTMLElement {
+    const menuContainer = (<ul class="nav"></ul>) as HTMLElement;
+
+    for (const category of presentation.categories) {
+      if (presentation.hiddenCategoryIds.has(category.id)) continue;
+      const visibleItems = category.items.filter((item) => !presentation.hiddenPaths.has(item.path));
+      if (!category.primary && visibleItems.length === 0) continue;
+
+      const submenu = (<ul class="slide-menu" data-parent={category.title.replace(/ /g, "_")} />) as HTMLElement;
+      let isActive = false;
+      for (const item of visibleItems) {
+        const itemIsActive = item.pathSegments.every((segment, index) => L.env.dispatchpath[index] === segment);
+        isActive ||= itemIsActive;
+        submenu.appendChild(
+          <li class={itemIsActive ? "active" : undefined}>
+            <a href={L.url(item.path)} class={`item${itemIsActive ? " active" : ""}`} data-title={item.rawTitle.replace(/ /g, "_")}>
+              <span class="menu-icon"></span>
+              <span class="menu-label">{item.title}</span>
+            </a>
+          </li>,
+        );
+      }
+      if (isActive) submenu.classList.add("active");
+
+      if (category.primary && L.env.dispatchpath.length <= 2) {
+        isActive ||= category.primary.pathSegments.every((segment, index) => L.env.dispatchpath[index] === segment);
+      }
+
+      const hasChildren = visibleItems.length > 0;
+      const href = category.primary?.path ?? visibleItems[0]?.path ?? "#";
+      const rawTitle = category.primary?.rawTitle ?? category.title;
+      const itemClass = `${hasChildren ? "slide" : ""}${isActive ? " active" : ""}`.trim() || undefined;
+      menuContainer.appendChild(
+        <li class={itemClass}>
+          <a
+            href={href === "#" ? href : L.url(href)}
+            onclick={hasChildren ? ui.createHandlerFn(this, "handleMenuExpand") : null}
+            class={`${hasChildren ? "menu" : "item"}${isActive ? " active" : ""}`}
+            data-title={rawTitle.replace(/ /g, "_")}
+          >
+            <span class="menu-icon"></span>
+            <span class="menu-label">{category.title}</span>
+          </a>
+          {hasChildren ? submenu : null}
+        </li>,
+      );
+    }
+
+    const mainMenuElement = document.querySelector("#mainmenu") as HTMLElement | null;
+    if (mainMenuElement) {
+      mainMenuElement.appendChild(menuContainer);
+      mainMenuElement.style.display = "";
+      this.adjustBrandTextSize();
+    }
+
+    return menuContainer;
+  },
+
   /**
    * Render tab navigation menu
    * Creates horizontal tab menu for deeper navigation levels
@@ -316,7 +384,13 @@ const module: Module = {
    * @param {number} level - Current nesting level (0-based)
    * @returns {Element} - Generated tab menu element
    */
-  renderTabMenu(this: Module, tree: MenuNode, url: string, level?: number): HTMLElement {
+  renderTabMenu(this: Module, tree: MenuNode, url: string, level: number | undefined, hiddenPaths: ReadonlySet<string>): HTMLElement {
+    const primaryPath = L.env.dispatchpath.slice(0, 2).join("/");
+    const itemPath = L.env.dispatchpath.slice(0, 3).join("/");
+    if (hiddenPaths.has(primaryPath) || hiddenPaths.has(itemPath)) {
+      // biome-ignore lint/complexity/noUselessFragments: LuCI TSX requires DocumentFragment for empty returns
+      return <></>;
+    }
     const container = document.querySelector("#tabmenu") as HTMLElement | null;
     const currentLevel = (level || 0) + 1;
     const tabContainer = <ul class="tabs"></ul>;
@@ -357,7 +431,7 @@ const module: Module = {
 
       // Recursively render nested tab menus if there's an active node
       if (activeNode) {
-        const nestedTabs = this.renderTabMenu(activeNode, `${url}/${activeNode.name}`, currentLevel);
+        const nestedTabs = this.renderTabMenu(activeNode, `${url}/${activeNode.name}`, currentLevel, hiddenPaths);
         if (nestedTabs.children.length > 0) {
           container.appendChild(nestedTabs);
         }

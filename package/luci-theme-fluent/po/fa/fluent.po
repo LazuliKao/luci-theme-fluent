@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:47+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d منوی سطح دوم"
 
 msgid "A new version is available!"
 msgstr "نسخه جدیدی در دسترس است!"
@@ -25,6 +28,9 @@ msgstr "بالای نوار، شروع"
 
 msgid "Accent color"
 msgstr "رنگ تأکیدی"
+
+msgid "Add primary menu"
+msgstr "افزودن منوی اصلی"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -216,6 +222,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "حالت تیره"
 
+msgid "Delete primary menu"
+msgstr "حذف منوی اصلی"
+
 msgid "Disabled"
 msgstr "غیرفعال"
 
@@ -240,6 +249,15 @@ msgstr "دانلود شد"
 
 msgid "Downloading on router"
 msgstr "در حال دانلود روی روتر"
+
+msgid "Drag to move second-level menu"
+msgstr "برای جابجایی، منوی سطح دوم را بکشید"
+
+msgid "Drag to reorder primary menu"
+msgstr "برای تغییر ترتیب، منوی اصلی را بکشید"
+
+msgid "Drop second-level menus here"
+msgstr "منوهای سطح دوم را در اینجا رها کنید"
 
 msgid "Enable page transition animation"
 msgstr "فعال‌سازی انیمیشن گذار صفحه"
@@ -267,6 +285,9 @@ msgstr "سریع"
 
 msgid "Finished"
 msgstr "تکمیل شد"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "قبل از ذخیره، خطاهای عنوان منوی اصلی را برطرف کنید."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "پوسته Fluent Design 2 برای LuCI"
@@ -386,8 +407,17 @@ msgstr "متوسط"
 msgid "Medium (4px)"
 msgstr "متوسط (4px)"
 
+msgid "Menu"
+msgstr "منو"
+
 msgid "Navigation font weight"
 msgstr "ضخامت فونت ناوبری"
+
+msgid "New primary menu"
+msgstr "منوی اصلی جدید"
+
+msgid "New primary menu %d"
+msgstr "منوی اصلی جدید %d"
 
 msgid "Next"
 msgstr "بعدی"
@@ -450,6 +480,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "تنظیمات پیش‌فرض فروشنده / تولیدکننده"
 
+msgid "Primary menu title"
+msgstr "عنوان منوی اصلی"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "عنوان‌های منوی اصلی نمی‌توانند خالی باشند."
+
+msgid "Primary menu titles must be unique."
+msgstr "عنوان‌های منوی اصلی باید منحصر به فرد باشند."
+
 msgid "Progress bar text color"
 msgstr "رنگ متن نوار پیشرفت"
 
@@ -470,6 +509,15 @@ msgstr "عناصر انتخاب بومی را با ابزارک فهرست کش�
 
 msgid "Respect reduced-motion preference"
 msgstr "رعایت ترجیح کاهش حرکت"
+
+msgid "Restore %s to its original menu name"
+msgstr "بازگرداندن %s به نام منوی پیش‌فرض"
+
+msgid "Restore %s to its original menu position"
+msgstr "بازگرداندن %s به موقعیت منوی پیش‌فرض"
+
+msgid "Restore defaults"
+msgstr "بازیابی تنظیمات پیش‌فرض"
 
 msgid "Retrying with token..."
 msgstr "تلاش دوباره با توکن..."
@@ -505,6 +553,9 @@ msgstr ""
 "اندازه پایه فونت رابط را بر حسب پیکسل تنظیم می‌کند. بیشتر متن‌های پوسته از "
 "این مقدار از طریق متغیرهای CSS مربوط به Fluent مقیاس می‌گیرند. بازه "
 "پیشنهادی: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "نمایش %s در منو"
 
 msgid "Show top loading bar"
 msgstr "نمایش نوار بارگذاری بالا"
@@ -550,6 +601,20 @@ msgstr "تغییر حالت پوسته"
 
 msgid "Text direction"
 msgstr "جهت متن"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"چیدمان منوی ذخیره شده نامعتبر است. از «بازیابی تنظیمات پیش‌فرض» استفاده کنید "
+"یا قبل از ذخیره، ویرایشی انجام دهید."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"چیدمان منوی ذخیره شده نامعتبر است. تنظیمات پیش‌فرض را بازیابی کنید یا قبل از "
+"ذخیره، چیدمان را ویرایش کنید."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

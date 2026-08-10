@@ -16,6 +16,7 @@
     "i18n:extract": "pnpm run i18n:extract-ucode -- --generate && luci-types i18n --no-translate",
     "i18n:build": "pnpm run i18n:extract-ucode -- --generate && dotenvx run -- luci-types i18n",
     "test": "echo \"No tests yet\" && exit 0",
+    "test:menu-layout": "tsx --test src/web/resources/menu-layout.test.ts",
     "dev:remote": "luci-types dev",
     "icons:generate": "tsx src/script/generate-icons.ts",
     "screenshot": "pnpm run screenshot:run && pnpm run screenshot:showcase && pnpm run screenshot:run:zh-Hans && pnpm run screenshot:showcase:zh-Hans",

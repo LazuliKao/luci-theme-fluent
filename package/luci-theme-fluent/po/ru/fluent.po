@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:47+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d меню второго уровня"
 
 msgid "A new version is available!"
 msgstr "Доступна новая версия!"
@@ -25,6 +28,9 @@ msgstr "Над полосой, начало"
 
 msgid "Accent color"
 msgstr "Акцентный цвет"
+
+msgid "Add primary menu"
+msgstr "Добавить главное меню"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -219,6 +225,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Тёмный режим"
 
+msgid "Delete primary menu"
+msgstr "Удалить главное меню"
+
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -243,6 +252,15 @@ msgstr "Загружено"
 
 msgid "Downloading on router"
 msgstr "Загрузка на роутере"
+
+msgid "Drag to move second-level menu"
+msgstr "Перетащите для перемещения меню второго уровня"
+
+msgid "Drag to reorder primary menu"
+msgstr "Перетащите для изменения порядка главного меню"
+
+msgid "Drop second-level menus here"
+msgstr "Перетащите сюда меню второго уровня"
 
 msgid "Enable page transition animation"
 msgstr "Включить анимацию переходов между страницами"
@@ -270,6 +288,9 @@ msgstr "Быстро"
 
 msgid "Finished"
 msgstr "Завершено"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Исправьте ошибки в заголовках главных меню перед сохранением."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Тема Fluent Design 2 для LuCI"
@@ -381,8 +402,17 @@ msgstr "Средний"
 msgid "Medium (4px)"
 msgstr "Средний (4px)"
 
+msgid "Menu"
+msgstr "Меню"
+
 msgid "Navigation font weight"
 msgstr "Насыщенность шрифта навигации"
+
+msgid "New primary menu"
+msgstr "Новое главное меню"
+
+msgid "New primary menu %d"
+msgstr "Новое главное меню %d"
 
 msgid "Next"
 msgstr "Далее"
@@ -449,6 +479,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Предустановленный производитель / генератор"
 
+msgid "Primary menu title"
+msgstr "Заголовок основного меню"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Заголовки основного меню не могут быть пустыми."
+
+msgid "Primary menu titles must be unique."
+msgstr "Заголовки основного меню должны быть уникальными."
+
 msgid "Progress bar text color"
 msgstr "Цвет текста индикатора прогресса"
 
@@ -471,6 +510,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Учитывать настройку уменьшения анимации"
+
+msgid "Restore %s to its original menu name"
+msgstr "Восстановить исходное имя меню для %s"
+
+msgid "Restore %s to its original menu position"
+msgstr "Восстановить исходное положение меню для %s"
+
+msgid "Restore defaults"
+msgstr "Восстановить настройки по умолчанию"
 
 msgid "Retrying with token..."
 msgstr "Повторная попытка с токеном..."
@@ -506,6 +554,9 @@ msgstr ""
 "Задаёт базовый размер шрифта интерфейса в пикселях. Большинство текстовых "
 "элементов темы масштабируются от этого значения через CSS-переменные Fluent. "
 "Рекомендуемый диапазон: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "Показать %s в меню"
 
 msgid "Show top loading bar"
 msgstr "Показывать верхнюю полосу загрузки"
@@ -551,6 +602,20 @@ msgstr "Переключить режим темы"
 
 msgid "Text direction"
 msgstr "Направление текста"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"Сохраненная структура меню недействительна. Выберите \"Восстановить настройки "
+"по умолчанию\" или внесите изменения перед сохранением."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"Сохраненная структура меню недействительна. Восстановите настройки по "
+"умолчанию или отредактируйте структуру перед сохранением."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

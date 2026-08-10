@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:46+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d 个二级菜单"
 
 msgid "A new version is available!"
 msgstr "发现有新版本！"
@@ -25,6 +28,9 @@ msgstr "上方起始位置"
 
 msgid "Accent color"
 msgstr "强调色"
+
+msgid "Add primary menu"
+msgstr "添加主菜单"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -192,6 +198,9 @@ msgstr "自定义亮色模式和深色模式下登录页面的背景、卡片不
 msgid "Dark mode"
 msgstr "深色模式"
 
+msgid "Delete primary menu"
+msgstr "删除主菜单"
+
 msgid "Disabled"
 msgstr "禁用"
 
@@ -214,6 +223,15 @@ msgstr "已下载"
 
 msgid "Downloading on router"
 msgstr "正在路由器上下载..."
+
+msgid "Drag to move second-level menu"
+msgstr "拖动以移动二级菜单"
+
+msgid "Drag to reorder primary menu"
+msgstr "拖动以重新排序主菜单"
+
+msgid "Drop second-level menus here"
+msgstr "将二级菜单拖放到此处"
 
 msgid "Enable page transition animation"
 msgstr "启用页面过渡动画"
@@ -241,6 +259,9 @@ msgstr "快速"
 
 msgid "Finished"
 msgstr "完成"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "保存前，请修复主菜单标题中的错误。"
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "适用于 LuCI 的 Fluent Design 2 主题"
@@ -352,8 +373,17 @@ msgstr "中号"
 msgid "Medium (4px)"
 msgstr "中号 (4px)"
 
+msgid "Menu"
+msgstr "菜单"
+
 msgid "Navigation font weight"
 msgstr "导航字体粗细"
+
+msgid "New primary menu"
+msgstr "新建主菜单"
+
+msgid "New primary menu %d"
+msgstr "新建主菜单 %d"
 
 msgid "Next"
 msgstr "下一步"
@@ -411,6 +441,15 @@ msgstr "进度条标签相对于进度条的位置。起始/末尾对齐方式�
 msgid "Preset Vendor / Generator"
 msgstr "预设厂商 / 生成器"
 
+msgid "Primary menu title"
+msgstr "主菜单标题"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "主菜单标题不能为空。"
+
+msgid "Primary menu titles must be unique."
+msgstr "主菜单标题必须唯一。"
+
 msgid "Progress bar text color"
 msgstr "进度条文本颜色"
 
@@ -431,6 +470,15 @@ msgstr "使用主题的自定义下拉组件替换原生的选择元素。"
 
 msgid "Respect reduced-motion preference"
 msgstr "遵循减少动态效果偏好设置"
+
+msgid "Restore %s to its original menu name"
+msgstr "恢复 %s 为其原始菜单名称"
+
+msgid "Restore %s to its original menu position"
+msgstr "恢复 %s 为其原始菜单位置"
+
+msgid "Restore defaults"
+msgstr "恢复默认设置"
 
 msgid "Retrying with token..."
 msgstr "正在使用令牌重试..."
@@ -463,6 +511,9 @@ msgid ""
 "Sets the base interface font size in pixels. Most theme text scales from "
 "this value through the Fluent CSS variables. Recommended range: 12-18px."
 msgstr "设置基础界面字体大小（像素）。大多数主题文本会根据 Fluent CSS 变量从该值进行缩放。建议范围：12-18px。"
+
+msgid "Show %s in the menu"
+msgstr "在菜单中显示 %s"
 
 msgid "Show top loading bar"
 msgstr "显示顶部加载条"
@@ -508,6 +559,16 @@ msgstr "切换主题模式"
 
 msgid "Text direction"
 msgstr "文本方向"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr "已存储的菜单布局无效。请选择“恢复默认设置”或编辑后再保存。"
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr "已存储的菜单布局无效。恢复默认设置或编辑布局后再保存。"
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

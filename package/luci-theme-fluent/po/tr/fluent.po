@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:48+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d alt seviye menü"
 
 msgid "A new version is available!"
 msgstr "Yeni bir sürüm mevcut!"
@@ -25,6 +28,9 @@ msgstr "Çubuk üzerindeki başlangıç kısmı"
 
 msgid "Accent color"
 msgstr "Vurgu rengi"
+
+msgid "Add primary menu"
+msgstr "Birincil menü ekle"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -219,6 +225,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Karanlık mod"
 
+msgid "Delete primary menu"
+msgstr "Birincil menüyü sil"
+
 msgid "Disabled"
 msgstr "Devre Dışı"
 
@@ -243,6 +252,15 @@ msgstr "İndirildi"
 
 msgid "Downloading on router"
 msgstr "Router'da indirme yapılıyor"
+
+msgid "Drag to move second-level menu"
+msgstr "Alt seviye menüyü taşımak için sürükleyin"
+
+msgid "Drag to reorder primary menu"
+msgstr "Birincil menüyü yeniden sıralamak için sürükleyin"
+
+msgid "Drop second-level menus here"
+msgstr "Alt seviye menüleri buraya bırakın"
 
 msgid "Enable page transition animation"
 msgstr "Sayfa geçiş animasyonunu etkinleştir"
@@ -270,6 +288,9 @@ msgstr "Hızlı"
 
 msgid "Finished"
 msgstr "Tamamlandı"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Kaydetmeden önce birincil menü başlığındaki hataları düzeltin."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "LuCI için Fluent Design 2 teması"
@@ -389,8 +410,17 @@ msgstr "Orta"
 msgid "Medium (4px)"
 msgstr "Orta (4px)"
 
+msgid "Menu"
+msgstr "Menü"
+
 msgid "Navigation font weight"
 msgstr "Navigasyon yazı tipi kalınlığı"
+
+msgid "New primary menu"
+msgstr "Yeni birincil menü"
+
+msgid "New primary menu %d"
+msgstr "Yeni birincil menü %d"
 
 msgid "Next"
 msgstr "İleri"
@@ -457,6 +487,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Önceden Ayarlanmış Satıcı / Oluşturucu"
 
+msgid "Primary menu title"
+msgstr "Ana menü başlığı"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Ana menü başlıkları boş olamaz."
+
+msgid "Primary menu titles must be unique."
+msgstr "Ana menü başlıkları benzersiz olmalıdır."
+
 msgid "Progress bar text color"
 msgstr "İlerleme çubuğu metin rengi"
 
@@ -477,6 +516,15 @@ msgstr "Yerleşik seçim öğelerini, temanın özel açılır menü bileşeniyl
 
 msgid "Respect reduced-motion preference"
 msgstr "Azaltılmış hareket tercihine saygı göster"
+
+msgid "Restore %s to its original menu name"
+msgstr "%s'i orijinal menü adına geri yükle"
+
+msgid "Restore %s to its original menu position"
+msgstr "%s'i orijinal menü konumuna geri yükle"
+
+msgid "Restore defaults"
+msgstr "Varsayılanlara geri yükle"
 
 msgid "Retrying with token..."
 msgstr "Token ile yeniden deniyor..."
@@ -512,6 +560,9 @@ msgstr ""
 "Arayüzün temel yazı tipi boyutunu piksel cinsinden ayarlar. Çoğu tema metni, "
 "Fluent CSS değişkenleri aracılığıyla bu değerden ölçeklenir. Önerilen "
 "aralık: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "%s'i menüde göster"
 
 msgid "Show top loading bar"
 msgstr "Üst yükleme çubuğunu göster"
@@ -557,6 +608,20 @@ msgstr "Tema modunu değiştir"
 
 msgid "Text direction"
 msgstr "Metin yönü"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"Kaydedilen menü düzeni geçersiz. \"Varsayılanlara geri yükle\" seçeneğini "
+"kullanın veya kaydetmeden önce bir düzenleme yapın."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"Kaydedilen menü düzeni geçersiz. Varsayılanlara geri yükleyin veya "
+"kaydetmeden önce düzeni düzenleyin."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

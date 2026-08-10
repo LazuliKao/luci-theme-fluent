@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-07-31 10:43+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: castillofrancodamian\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -11,14 +11,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "%d second-level menus"
+msgstr "%d menús de segundo nivel"
+
 msgid "A new version is available!"
 msgstr "¡Ya está disponible una nueva versión!"
 
 msgid "About"
 msgstr "Acerca de"
 
+msgid "Above bar, end"
+msgstr "Arriba de la barra, fin"
+
+msgid "Above bar, start"
+msgstr "Arriba de la barra, inicio"
+
 msgid "Accent color"
 msgstr "Color de acento"
+
+msgid "Add primary menu"
+msgstr "Añadir menú principal"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -83,6 +95,12 @@ msgstr "Backend (GitHub oficial)"
 
 msgid "Base font size"
 msgstr "Tamaño de fuente base"
+
+msgid "Below bar, end"
+msgstr "Abajo de la barra, fin"
+
+msgid "Below bar, start"
+msgstr "Abajo de la barra, inicio"
 
 msgid ""
 "Blur radius in pixels behind the login card in dark mode. Use 0 to disable "
@@ -208,6 +226,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Modo oscuro"
 
+msgid "Delete primary menu"
+msgstr "Eliminar menú principal"
+
 msgid "Disabled"
 msgstr "Desactivado"
 
@@ -232,6 +253,15 @@ msgstr "Descargado"
 
 msgid "Downloading on router"
 msgstr "Descargando en el enrutador"
+
+msgid "Drag to move second-level menu"
+msgstr "Arrastrar para mover menú de segundo nivel"
+
+msgid "Drag to reorder primary menu"
+msgstr "Arrastrar para reordenar menú principal"
+
+msgid "Drop second-level menus here"
+msgstr "Soltar menús de segundo nivel aquí"
 
 msgid "Enable page transition animation"
 msgstr "Activar la animación de transición de página"
@@ -259,6 +289,9 @@ msgstr "Rápido"
 
 msgid "Finished"
 msgstr "Finalizado"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Corregir errores en el título del menú principal antes de guardar."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Tema Fluent Design 2 para LuCI"
@@ -378,8 +411,17 @@ msgstr "Mediano"
 msgid "Medium (4px)"
 msgstr "Mediano (4px)"
 
+msgid "Menu"
+msgstr "Menú"
+
 msgid "Navigation font weight"
 msgstr "Peso de la fuente de navegación"
+
+msgid "New primary menu"
+msgstr "Nuevo menú principal"
+
+msgid "New primary menu %d"
+msgstr "Nuevo menú principal %d"
 
 msgid "Next"
 msgstr "Siguiente"
@@ -439,11 +481,30 @@ msgstr "Por favor, ingrese su contraseña."
 msgid "Please enter your username."
 msgstr "Por favor, ingrese su nombre de usuario."
 
+msgid ""
+"Position of progress-bar labels relative to the bar. Start/end alignment "
+"follows the text direction (LTR or RTL)."
+msgstr ""
+"Posición de las etiquetas de la barra de progreso en relación con la barra. "
+"La alineación de inicio/fin sigue la dirección del texto (LTR o RTL)."
+
 msgid "Preset Vendor / Generator"
 msgstr "Generador/preajuste de fabricante"
 
+msgid "Primary menu title"
+msgstr "Título del menú principal"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Los títulos del menú principal no pueden estar vacíos."
+
+msgid "Primary menu titles must be unique."
+msgstr "Los títulos del menú principal deben ser únicos."
+
 msgid "Progress bar text color"
 msgstr "Color del texto de la barra de progreso"
+
+msgid "Progress bar text position"
+msgstr "Posición del texto de la barra de progreso"
 
 msgid "Random Local MAC"
 msgstr "MAC local aleatorio"
@@ -461,6 +522,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Respetar la preferencia por movimientos reducidos"
+
+msgid "Restore %s to its original menu name"
+msgstr "Restaurar %s a su nombre de menú original"
+
+msgid "Restore %s to its original menu position"
+msgstr "Restaurar %s a su posición original en el menú"
+
+msgid "Restore defaults"
+msgstr "Restablecer valores predeterminados"
 
 msgid "Retrying with token..."
 msgstr "Reintentando con token..."
@@ -498,6 +568,9 @@ msgstr ""
 "Establezca el tamaño de fuente base de la interfaz en píxeles. La mayoría "
 "del texto del tema se ajusta a partir de este valor mediante las variables "
 "CSS de Fluent. Rango recomendado: 12-18 píxeles."
+
+msgid "Show %s in the menu"
+msgstr "Mostrar %s en el menú"
 
 msgid "Show top loading bar"
 msgstr "Mostrar barra de carga superior"
@@ -543,6 +616,20 @@ msgstr "Cambiar modo del tema"
 
 msgid "Text direction"
 msgstr "Dirección del texto"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"La disposición del menú almacenada no es válida. Elija \"Restablecer valores "
+"predeterminados\" o realice una edición antes de guardar."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"La disposición del menú almacenada no es válida. Restablezca los valores "
+"predeterminados o edite la disposición antes de guardar."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:48+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d другорядні меню"
 
 msgid "A new version is available!"
 msgstr "Доступна нова версія!"
@@ -25,6 +28,9 @@ msgstr "Початок над смужкою"
 
 msgid "Accent color"
 msgstr "Акцентний колір"
+
+msgid "Add primary menu"
+msgstr "Додати головне меню"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -218,6 +224,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Темний режим"
 
+msgid "Delete primary menu"
+msgstr "Видалити головне меню"
+
 msgid "Disabled"
 msgstr "Вимкнено"
 
@@ -242,6 +251,15 @@ msgstr "Завантажено"
 
 msgid "Downloading on router"
 msgstr "Завантаження на роутері"
+
+msgid "Drag to move second-level menu"
+msgstr "Перетягніть для переміщення другорядного меню"
+
+msgid "Drag to reorder primary menu"
+msgstr "Перетягніть для зміни порядку головних меню"
+
+msgid "Drop second-level menus here"
+msgstr "Тут можна розмістити другорядні меню"
 
 msgid "Enable page transition animation"
 msgstr "Увімкнути анімацію переходу між сторінками"
@@ -269,6 +287,9 @@ msgstr "Швидко"
 
 msgid "Finished"
 msgstr "Завершено"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Виправте помилки заголовків головних меню перед збереженням."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Тема Fluent Design 2 для LuCI"
@@ -390,8 +411,17 @@ msgstr "Середній"
 msgid "Medium (4px)"
 msgstr "Середній (4px)"
 
+msgid "Menu"
+msgstr "Меню"
+
 msgid "Navigation font weight"
 msgstr "Товщина шрифту навігації"
+
+msgid "New primary menu"
+msgstr "Нове головне меню"
+
+msgid "New primary menu %d"
+msgstr "Нове головне меню %d"
 
 msgid "Next"
 msgstr "Далі"
@@ -460,6 +490,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Попередньо заданий виробник / генератор"
 
+msgid "Primary menu title"
+msgstr "Заголовок основного меню"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Заголовки основного меню не можуть бути порожніми."
+
+msgid "Primary menu titles must be unique."
+msgstr "Заголовки основного меню повинні бути унікальними."
+
 msgid "Progress bar text color"
 msgstr "Колір тексту індикатора прогресу"
 
@@ -480,6 +519,15 @@ msgstr "Замінити стандартні елементи вибору на
 
 msgid "Respect reduced-motion preference"
 msgstr "Враховувати налаштування зменшення анімації."
+
+msgid "Restore %s to its original menu name"
+msgstr "Відновити назву меню \"%s\" до початкової"
+
+msgid "Restore %s to its original menu position"
+msgstr "Відновити позицію меню \"%s\" до початкової"
+
+msgid "Restore defaults"
+msgstr "Відновити налаштування за замовчуванням"
 
 msgid "Retrying with token..."
 msgstr "Повторний запуск з токеном..."
@@ -515,6 +563,9 @@ msgstr ""
 "Встановлює базовий розмір шрифту інтерфейсу в пікселях. Більшість тексту "
 "теми масштабується від цього значення за допомогою CSS-змінних Fluent. "
 "Рекомендований діапазон: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "Показати \"%s\" у меню"
 
 msgid "Show top loading bar"
 msgstr "Показати верхню смугу завантаження"
@@ -560,6 +611,20 @@ msgstr "Змінити тему"
 
 msgid "Text direction"
 msgstr "Напрямок тексту"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"Збережене розташування меню недійсне. Оберіть \"Відновити налаштування за "
+"замовчуванням\" або внесіть зміни перед збереженням."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"Збережене розташування меню недійсне. Відновіть налаштування за "
+"замовчуванням або відредагуйте розташування перед збереженням."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

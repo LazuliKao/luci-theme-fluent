@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:46+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr ""
 
 msgid "A new version is available!"
 msgstr ""
@@ -24,6 +27,9 @@ msgid "Above bar, start"
 msgstr ""
 
 msgid "Accent color"
+msgstr ""
+
+msgid "Add primary menu"
 msgstr ""
 
 msgid ""
@@ -190,6 +196,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr ""
 
+msgid "Delete primary menu"
+msgstr ""
+
 msgid "Disabled"
 msgstr ""
 
@@ -211,6 +220,15 @@ msgid "Downloaded"
 msgstr ""
 
 msgid "Downloading on router"
+msgstr ""
+
+msgid "Drag to move second-level menu"
+msgstr ""
+
+msgid "Drag to reorder primary menu"
+msgstr ""
+
+msgid "Drop second-level menus here"
 msgstr ""
 
 msgid "Enable page transition animation"
@@ -238,6 +256,9 @@ msgid "Fast"
 msgstr ""
 
 msgid "Finished"
+msgstr ""
+
+msgid "Fix primary menu title errors before saving."
 msgstr ""
 
 msgid "Fluent Design 2 theme for LuCI"
@@ -350,7 +371,16 @@ msgstr ""
 msgid "Medium (4px)"
 msgstr ""
 
+msgid "Menu"
+msgstr ""
+
 msgid "Navigation font weight"
+msgstr ""
+
+msgid "New primary menu"
+msgstr ""
+
+msgid "New primary menu %d"
 msgstr ""
 
 msgid "Next"
@@ -409,6 +439,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr ""
 
+msgid "Primary menu title"
+msgstr ""
+
+msgid "Primary menu titles cannot be empty."
+msgstr ""
+
+msgid "Primary menu titles must be unique."
+msgstr ""
+
 msgid "Progress bar text color"
 msgstr ""
 
@@ -428,6 +467,15 @@ msgid "Replace native select elements with the theme's custom dropdown widget."
 msgstr ""
 
 msgid "Respect reduced-motion preference"
+msgstr ""
+
+msgid "Restore %s to its original menu name"
+msgstr ""
+
+msgid "Restore %s to its original menu position"
+msgstr ""
+
+msgid "Restore defaults"
 msgstr ""
 
 msgid "Retrying with token..."
@@ -460,6 +508,9 @@ msgstr ""
 msgid ""
 "Sets the base interface font size in pixels. Most theme text scales from "
 "this value through the Fluent CSS variables. Recommended range: 12-18px."
+msgstr ""
+
+msgid "Show %s in the menu"
 msgstr ""
 
 msgid "Show top loading bar"
@@ -505,6 +556,16 @@ msgid "Switch theme mode"
 msgstr ""
 
 msgid "Text direction"
+msgstr ""
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
 msgstr ""
 
 msgid ""

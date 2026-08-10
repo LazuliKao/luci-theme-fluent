@@ -1040,6 +1040,770 @@ const registerLoginTab = (e)=>{
     }
 };
 
+;// CONCATENATED MODULE: ./web/resources/menu-layout.ts
+let menu_layout_e = "primary:", menu_layout_t = new Set([
+    "version",
+    "custom",
+    "titles",
+    "categoryMoves",
+    "itemMoves",
+    "hiddenCategories",
+    "hiddenItems"
+]);
+function menu_layout_n(e) {
+    return "function" == typeof _ ? _(e) : e;
+}
+function primaryCategoryId(t) {
+    return `${menu_layout_e}${t}`;
+}
+function menu_layout_r(t) {
+    return t.startsWith(menu_layout_e) ? t.slice(menu_layout_e.length) : null;
+}
+function menu_layout_i(e) {
+    let t = [], r = [];
+    for (let i of ui.menu.getChildren(e))if (i.satisfied) for (let e of ui.menu.getChildren(i)){
+        let l = e.title?.trim();
+        if (!e.satisfied || !l) continue;
+        let o = `${i.name}/${e.name}`, u = menu_layout_n(l);
+        for (let a of (t.push({
+            path: o,
+            pathSegments: [
+                i.name,
+                e.name
+            ],
+            node: e,
+            title: u,
+            rawTitle: l
+        }), ui.menu.getChildren(e))){
+            let t = a.title?.trim();
+            a.satisfied && t && r.push({
+                path: `${o}/${a.name}`,
+                pathSegments: [
+                    i.name,
+                    e.name,
+                    a.name
+                ],
+                node: a,
+                title: menu_layout_n(t),
+                rawTitle: t,
+                originalPrimaryPath: o,
+                originalPrimaryTitle: u
+            });
+        }
+    }
+    return {
+        primaries: t,
+        items: r
+    };
+}
+function discoverMenuItems(e) {
+    return menu_layout_i(e).items;
+}
+function menu_layout_l(e) {
+    let t = e.primaries.map((e)=>({
+            id: primaryCategoryId(e.path),
+            title: e.title,
+            items: []
+        })), n = new Map(t.map((e)=>[
+            e.id,
+            e
+        ]));
+    for (let t of e.items)n.get(primaryCategoryId(t.originalPrimaryPath))?.items.push(t.path);
+    return t;
+}
+function buildDefaultMenuCategories(e) {
+    return menu_layout_l(menu_layout_i(e));
+}
+function menu_layout_o(e) {
+    return e.map((e)=>({
+            ...e,
+            items: [
+                ...e.items
+            ]
+        }));
+}
+function moveMenuItem(e, t, n, r) {
+    let i = menu_layout_o(e), l = i.find((e)=>e.id === n);
+    if (!l || r === t) return i;
+    for (let e of i)e.items = e.items.filter((e)=>e !== t);
+    let u = r ? l.items.indexOf(r) : -1;
+    return u >= 0 ? l.items.splice(u, 0, t) : l.items.push(t), i;
+}
+function moveMenuCategory(e, t, n, r = "before") {
+    let i = menu_layout_o(e), l = i.findIndex((e)=>e.id === t);
+    if (l < 0 || t === n || !i.some((e)=>e.id === n)) return i;
+    let [u] = i.splice(l, 1), a = i.findIndex((e)=>e.id === n);
+    return i.splice("after" === r ? a + 1 : a, 0, u), i;
+}
+function menu_layout_u(e, t) {
+    let n = e[t];
+    return new Set(e.slice(t + 1).filter((e)=>e.originalPrimaryPath === n.originalPrimaryPath).map((e)=>e.path));
+}
+function canRestoreMenuItem(e, t, n) {
+    let r = t.findIndex((e)=>e.path === n);
+    if (r < 0) return !1;
+    let i = primaryCategoryId(t[r].originalPrimaryPath), l = e.find((e)=>e.id === i);
+    if (!l) return !0;
+    let o = 0, a = -1;
+    for (let t of e)for(let e = 0; e < t.items.length; e += 1)t.items[e] === n && (o += 1, t.id === i && (a = e));
+    if (1 !== o || a < 0) return !0;
+    let s = menu_layout_u(t, r), f = l.items.findIndex((e)=>s.has(e));
+    return (f < 0 ? l.items.length - 1 : f > a ? f - 1 : f) !== a;
+}
+function restoreMenuItemToOriginalPosition(e, t, n) {
+    let r = t.findIndex((e)=>e.path === n);
+    if (r < 0) return menu_layout_o(e);
+    let i = t[r], l = primaryCategoryId(i.originalPrimaryPath), a = e.some((e)=>e.id === l) ? e : [
+        ...e,
+        {
+            id: l,
+            title: i.originalPrimaryTitle,
+            items: []
+        }
+    ], s = menu_layout_u(t, r), f = a.find((e)=>e.id === l);
+    return moveMenuItem(a, n, l, f?.items.find((e)=>s.has(e)));
+}
+function menu_layout_a(e, t) {
+    if ("string" != typeof e || e !== e.trim()) return !1;
+    let n = e.split("/");
+    return n.length === t && n.every(Boolean);
+}
+function menu_layout_s(e) {
+    return "number" == typeof e ? `custom:${e}` : `primary:${e}`;
+}
+function menu_layout_f(e, t) {
+    return Number.isInteger(e) && e >= 0 && e < t || menu_layout_a(e, 2) ? e : null;
+}
+function menu_layout_d(e, t) {
+    let n = e[t];
+    return void 0 === n ? [] : Array.isArray(n) ? n : null;
+}
+function parseMenuLayout(e) {
+    let n;
+    if ("string" != typeof e || "" === e.trim()) return null;
+    try {
+        n = JSON.parse(e);
+    } catch  {
+        return null;
+    }
+    if (!n || "object" != typeof n || Array.isArray(n)) return null;
+    let r = n;
+    if (1 !== r.version || Object.keys(r).some((e)=>!menu_layout_t.has(e))) return null;
+    let i = menu_layout_d(r, "custom"), l = menu_layout_d(r, "titles"), o = menu_layout_d(r, "categoryMoves"), u = menu_layout_d(r, "itemMoves"), m = menu_layout_d(r, "hiddenCategories"), p = menu_layout_d(r, "hiddenItems");
+    if (!i || !l || !o || !u || !m || !p) return null;
+    let h = [], g = new Set();
+    for (let e of i){
+        if ("string" != typeof e) return null;
+        let t = e.trim(), n = t.toLocaleLowerCase();
+        if (!t || g.has(n)) return null;
+        g.add(n), h.push(t);
+    }
+    let c = [], y = new Set();
+    for (let e of l){
+        if (!Array.isArray(e) || 2 !== e.length || !menu_layout_a(e[0], 2) || "string" != typeof e[1]) return null;
+        let t = e[1].trim();
+        if (!t || y.has(e[0])) return null;
+        y.add(e[0]), c.push([
+            e[0],
+            t
+        ]);
+    }
+    let M = [], v = new Set();
+    for (let e of o){
+        if (!Array.isArray(e) || 2 !== e.length) return null;
+        let t = menu_layout_f(e[0], h.length), n = null === e[1] ? null : menu_layout_f(e[1], h.length);
+        if (null === t || null !== e[1] && null === n) return null;
+        let r = menu_layout_s(t);
+        if (v.has(r) || null !== n && r === menu_layout_s(n)) return null;
+        v.add(r), M.push([
+            t,
+            n
+        ]);
+    }
+    let I = [], w = new Set();
+    for (let e of u){
+        if (!Array.isArray(e) || 3 !== e.length || !menu_layout_a(e[0], 3)) return null;
+        let t = menu_layout_f(e[1], h.length), n = null === e[2] ? null : menu_layout_a(e[2], 3) ? e[2] : null;
+        if (null === t || null !== e[2] && null === n || w.has(e[0]) || n === e[0]) return null;
+        w.add(e[0]), I.push([
+            e[0],
+            t,
+            n
+        ]);
+    }
+    let C = [], x = new Set();
+    for (let e of m){
+        let t = menu_layout_f(e, h.length);
+        if (null === t || x.has(menu_layout_s(t))) return null;
+        x.add(menu_layout_s(t)), C.push(t);
+    }
+    let S = [], P = new Set();
+    for (let e of p){
+        if (!menu_layout_a(e, 3) || P.has(e)) return null;
+        P.add(e), S.push(e);
+    }
+    return {
+        version: 1,
+        custom: h,
+        titles: c,
+        categoryMoves: M,
+        itemMoves: I,
+        hiddenCategories: C,
+        hiddenItems: S
+    };
+}
+function menu_layout_m() {
+    return {
+        titles: [],
+        categoryMoves: [],
+        itemMoves: []
+    };
+}
+function menu_layout_p(e, t) {
+    return "number" == typeof e ? t[e] ?? null : primaryCategoryId(e);
+}
+function resolveMenuLayout(e, t) {
+    let n = menu_layout_i(e), r = menu_layout_l(n), u = new Set(), a = new Set(), s = menu_layout_m();
+    if (!t) return {
+        categories: r,
+        hiddenCategoryIds: u,
+        hiddenItemPaths: a,
+        pending: s,
+        configured: !1
+    };
+    let f = t.custom.map((e, t)=>{
+        let n = `custom:${t}`;
+        return r.push({
+            id: n,
+            title: e,
+            items: []
+        }), n;
+    }), d = new Set(n.items.map((e)=>e.path)), h = f.length > 0;
+    for (let [e, n] of t.titles){
+        let t = primaryCategoryId(e), i = r.find((e)=>e.id === t);
+        i ? (i.title = n, h = !0) : s.titles.push([
+            t,
+            n
+        ]);
+    }
+    for (let [e, n] of t.categoryMoves){
+        let t = menu_layout_p(e, f), i = null === n ? null : menu_layout_p(n, f), l = null !== t && r.some((e)=>e.id === t), u = null === i || r.some((e)=>e.id === i);
+        t && l && u ? (r = function(e, t, n) {
+            if (n) return moveMenuCategory(e, t, n);
+            let r = menu_layout_o(e), i = r.findIndex((e)=>e.id === t);
+            if (i < 0) return r;
+            let [l] = r.splice(i, 1);
+            return r.push(l), r;
+        }(r, t, i), h = !0) : t && s.categoryMoves.push([
+            t,
+            i
+        ]);
+    }
+    for (let [e, n, i] of t.itemMoves){
+        let t = menu_layout_p(n, f), l = t ? r.find((e)=>e.id === t) : void 0, o = null === i || !!l?.items.includes(i);
+        d.has(e) && t && l && o ? (r = moveMenuItem(r, e, t, i ?? void 0), h = !0) : t && s.itemMoves.push([
+            e,
+            t,
+            i
+        ]);
+    }
+    for (let e of t.hiddenCategories){
+        let t = menu_layout_p(e, f);
+        t && (u.add(t), r.some((e)=>e.id === t) && (h = !0));
+    }
+    for (let e of t.hiddenItems)a.add(e), d.has(e) && (h = !0);
+    return {
+        categories: r,
+        hiddenCategoryIds: u,
+        hiddenItemPaths: a,
+        pending: s,
+        configured: h
+    };
+}
+function menu_layout_h(e, t) {
+    let n = new Map(t.map((e, t)=>[
+            e,
+            t
+        ])), r = e.flatMap((e)=>{
+        let t = n.get(e);
+        return void 0 === t ? [] : [
+            {
+                value: e,
+                index: t
+            }
+        ];
+    }), i = [], l = Array(r.length).fill(-1);
+    for(let e = 0; e < r.length; e += 1){
+        let t = 0, n = i.length;
+        for(; t < n;){
+            let l = t + n >> 1;
+            r[i[l]].index < r[e].index ? t = l + 1 : n = l;
+        }
+        t > 0 && (l[e] = i[t - 1]), i[t] = e;
+    }
+    let o = new Set();
+    for(let e = i.at(-1) ?? -1; e >= 0; e = l[e])o.add(r[e].value);
+    return o;
+}
+function menu_layout_g(e, t) {
+    let n = menu_layout_r(e);
+    return n || (t.get(e) ?? null);
+}
+function menu_layout_c(e, t, n) {
+    let r = n.get(e), i = n.get(t);
+    return void 0 !== r && void 0 !== i ? r - i : void 0 !== r ? -1 : void 0 !== i ? 1 : e.localeCompare(t);
+}
+function serializeMenuLayout(e, t, n, o, u = menu_layout_m()) {
+    let a = menu_layout_i(e), s = menu_layout_l(a), f = new Map(s.map((e)=>[
+            e.id,
+            e
+        ])), d = t.filter((e)=>!f.has(e.id)), p = new Map(d.map((e, t)=>[
+            e.id,
+            t
+        ])), y = d.map((e)=>e.title.trim()), M = [], v = new Set();
+    for (let e of t){
+        let t = f.get(e.id), n = e.title.trim();
+        if (!t || n === t.title) continue;
+        let i = menu_layout_r(e.id);
+        i && (M.push([
+            i,
+            n
+        ]), v.add(e.id));
+    }
+    for (let [e, t] of u.titles){
+        if (v.has(e)) continue;
+        let n = menu_layout_r(e);
+        n && M.push([
+            n,
+            t
+        ]);
+    }
+    let I = [
+        ...s.map((e)=>e.id),
+        ...d.map((e)=>e.id)
+    ], w = t.map((e)=>e.id), C = [], x = new Set();
+    for (let [e, t] of function(e, t) {
+        let n = menu_layout_h(e, t), r = [];
+        for(let e = t.length - 1; e >= 0; e -= 1)n.has(t[e]) || r.push([
+            t[e],
+            t[e + 1] ?? null
+        ]);
+        return r;
+    }(I, w)){
+        let n = menu_layout_g(e, p), r = null === t ? null : menu_layout_g(t, p);
+        null !== n && (null === t || null !== r) && (C.push([
+            n,
+            r
+        ]), x.add(e));
+    }
+    for (let [e, t] of u.categoryMoves){
+        if (x.has(e)) continue;
+        let n = menu_layout_g(e, p), r = null === t ? null : menu_layout_g(t, p);
+        null !== n && (null === t || null !== r) && C.push([
+            n,
+            r
+        ]);
+    }
+    let S = [], P = new Set();
+    for (let e of t){
+        let t = menu_layout_g(e.id, p);
+        if (null === t) continue;
+        let n = menu_layout_h(f.get(e.id)?.items ?? [], e.items);
+        for(let r = e.items.length - 1; r >= 0; r -= 1){
+            let i = e.items[r];
+            n.has(i) || (S.push([
+                i,
+                t,
+                e.items[r + 1] ?? null
+            ]), P.add(i));
+        }
+    }
+    for (let [e, t, n] of u.itemMoves){
+        if (P.has(e)) continue;
+        let r = menu_layout_g(t, p);
+        null !== r && S.push([
+            e,
+            r,
+            n
+        ]);
+    }
+    let A = new Map(t.map((e, t)=>[
+            e.id,
+            t
+        ])), b = [
+        ...n
+    ].sort((e, t)=>menu_layout_c(e, t, A)).flatMap((e)=>{
+        let t = menu_layout_g(e, p);
+        return null === t ? [] : [
+            t
+        ];
+    }), $ = new Map(a.items.map((e, t)=>[
+            e.path,
+            t
+        ])), L = [
+        ...o
+    ].sort((e, t)=>menu_layout_c(e, t, $)), O = {
+        version: 1
+    };
+    return y.length > 0 && (O.custom = y), M.length > 0 && (O.titles = M), C.length > 0 && (O.categoryMoves = C), S.length > 0 && (O.itemMoves = S), b.length > 0 && (O.hiddenCategories = b), L.length > 0 && (O.hiddenItems = L), 1 === Object.keys(O).length ? "" : JSON.stringify(O);
+}
+function buildMenuPresentation(e, t) {
+    let n = menu_layout_i(e), l = resolveMenuLayout(e, parseMenuLayout(t)), o = new Map(n.items.map((e)=>[
+            e.path,
+            e
+        ])), u = new Map(n.primaries.map((e)=>[
+            primaryCategoryId(e.path),
+            e
+        ])), a = new Set(l.hiddenItemPaths);
+    for (let e of l.hiddenCategoryIds){
+        let t = menu_layout_r(e);
+        t && a.add(t);
+        let n = l.categories.find((t)=>t.id === e);
+        if (n) for (let e of n.items)a.add(e);
+    }
+    return {
+        categories: l.categories.map((e)=>({
+                id: e.id,
+                title: e.title,
+                primary: u.get(e.id) ?? null,
+                items: e.items.flatMap((e)=>{
+                    let t = o.get(e);
+                    return t ? [
+                        t
+                    ] : [];
+                })
+            })),
+        hiddenCategoryIds: l.hiddenCategoryIds,
+        hiddenPaths: a,
+        configured: l.configured
+    };
+}
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/menu.tsx
+
+let menu_a = L.form;
+
+let menu_m = "application/x-fluent-menu-category", menu_p = "application/x-fluent-menu-item";
+function menu_f(e, t) {
+    let a = t.getBoundingClientRect();
+    return e.clientY < a.top + a.height / 2 ? "before" : "after";
+}
+let menu_v = 0;
+function menu_h(e) {
+    return e.trim().toLocaleLowerCase();
+}
+function menu_y(e) {
+    let t = new Map(), a = new Map();
+    for (let i of e){
+        let e = i.title.trim(), n = menu_h(e);
+        if (!e) {
+            t.set(i.id, _("Primary menu titles cannot be empty."));
+            continue;
+        }
+        let r = a.get(n);
+        r ? (t.set(r, _("Primary menu titles must be unique.")), t.set(i.id, _("Primary menu titles must be unique."))) : a.set(n, i.id);
+    }
+    return t;
+}
+function registerMenuTab(b, E) {
+    var M;
+    let D, I, w, T;
+    b.tab("menu", _("Menu"));
+    let P = b.taboption("menu", (M = E, I = new Map((D = discoverMenuItems(M)).map((e)=>[
+            e.path,
+            e
+        ])), w = new Map(buildDefaultMenuCategories(M).map((e)=>[
+            e.id,
+            e
+        ])), T = new Map(), menu_a.Value.extend({
+        renderWidget (a, r, b) {
+            let E = "string" == typeof b || Array.isArray(b) ? b : null, P = "string" == typeof b ? b : "", C = function(e, t) {
+                let a = parseMenuLayout(t);
+                if (!a) return {
+                    categories: buildDefaultMenuCategories(e),
+                    hiddenCategoryIds: new Set(),
+                    hiddenItemPaths: new Set(),
+                    pending: {
+                        titles: [],
+                        categoryMoves: [],
+                        itemMoves: []
+                    }
+                };
+                let n = resolveMenuLayout(e, a);
+                return {
+                    categories: n.categories,
+                    hiddenCategoryIds: n.hiddenCategoryIds,
+                    hiddenItemPaths: n.hiddenItemPaths,
+                    pending: n.pending
+                };
+            }(M, E), k = new Set(), x = "" === P ? null : parseMenuLayout(P), S = "" !== P && !x, R = jsx("input", {
+                type: "hidden",
+                id: this.cbid(a),
+                value: P
+            }), A = jsx("div", {
+                class: "fluent-menu-editor__categories"
+            }), N = new Map(), U = null, $ = "before", j = jsx("div", {
+                class: "fluent-menu-editor__validation",
+                role: "alert"
+            }), q = jsx("div", {
+                class: "fluent-menu-editor__notice",
+                hidden: !S,
+                children: _('The stored menu layout is invalid. Choose "Restore defaults" or make an edit before saving.')
+            });
+            T.set(a, R);
+            let z = ()=>{
+                let e = menu_y(C.categories);
+                for (let [t, a] of N){
+                    let i = e.get(t) ?? "";
+                    a.card.classList.toggle("is-invalid", !!i), a.error && (a.error.textContent = i);
+                }
+                j.textContent = e.size > 0 ? _("Fix primary menu title errors before saving.") : "";
+            }, B = (e = serializeMenuLayout(M, C.categories, C.hiddenCategoryIds, C.hiddenItemPaths, C.pending))=>{
+                R.value = e, q.hidden = !0, z(), R.dispatchEvent(new Event("change", {
+                    bubbles: !0
+                }));
+            }, F = ()=>{
+                U?.classList.remove("is-drop-before", "is-drop-after"), U = null;
+            }, O = (e, t)=>{
+                (U !== e || $ !== t) && F(), U = e, $ = t, e.classList.toggle("is-drop-before", "before" === t), e.classList.toggle("is-drop-after", "after" === t);
+            }, V = (e, t, a)=>{
+                I.has(e) && C.categories.some((e)=>e.id === t) && (C.pending.itemMoves = C.pending.itemMoves.filter(([t])=>t !== e), C.categories = moveMenuItem(C.categories, e, t, a), k.add(t), B(), W());
+            };
+            function W() {
+                N.clear(), dom.content(A, C.categories.map((a)=>((a)=>{
+                        let i = document.createElement("details");
+                        i.className = `fluent-menu-editor__category${C.hiddenCategoryIds.has(a.id) ? " is-hidden" : ""}`, i.dataset.categoryId = a.id, i.open = k.has(a.id);
+                        let r = document.createElement("summary");
+                        r.className = "fluent-menu-editor__category-header";
+                        let s = jsx("div", {
+                            class: "fluent-menu-editor__items",
+                            "data-category-id": a.id
+                        }), l = jsx("span", {
+                            class: "fluent-menu-editor__category-count",
+                            title: _("%d second-level menus").format(a.items.length),
+                            children: a.items.length
+                        }), u = jsx("div", {
+                            class: "fluent-menu-editor__category-error",
+                            role: "alert"
+                        }), g = !1, v = ()=>{
+                            if (g) return;
+                            let i = a.items.flatMap((i)=>{
+                                let r = ((a, i)=>{
+                                    let r = I.get(a), d = C.categories.find((e)=>e.id === i);
+                                    if (!r || !d) return null;
+                                    let s = jsx("div", {
+                                        class: `fluent-menu-editor__item${C.hiddenItemPaths.has(a) ? " is-hidden" : ""}`,
+                                        "data-item-path": a
+                                    }), l = jsx("span", {
+                                        class: "fluent-menu-editor__drag-handle",
+                                        title: _("Drag to move second-level menu"),
+                                        children: "\u22EE\u22EE"
+                                    }), u = jsx("input", {
+                                        type: "checkbox",
+                                        checked: !C.hiddenItemPaths.has(a),
+                                        "aria-label": _("Show %s in the menu").format(r.title)
+                                    });
+                                    l.draggable = !0, l.addEventListener("dragstart", (e)=>{
+                                        e.dataTransfer?.setData(menu_p, a), e.dataTransfer && (e.dataTransfer.effectAllowed = "move"), s.classList.add("is-dragging");
+                                    }), l.addEventListener("dragend", ()=>{
+                                        s.classList.remove("is-dragging"), F();
+                                    }), u.addEventListener("change", ()=>{
+                                        u.checked ? C.hiddenItemPaths.delete(a) : C.hiddenItemPaths.add(a), s.classList.toggle("is-hidden", !u.checked), B();
+                                    }), s.addEventListener("dragover", (e)=>{
+                                        e.dataTransfer?.types.includes(menu_p) && (e.preventDefault(), e.stopPropagation(), O(s, menu_f(e, s)));
+                                    }), s.addEventListener("dragleave", (e)=>{
+                                        s.contains(e.relatedTarget) || U !== s || F();
+                                    }), s.addEventListener("drop", (e)=>{
+                                        let t = e.dataTransfer?.getData(menu_p);
+                                        if (!t) return;
+                                        e.preventDefault(), e.stopPropagation();
+                                        let n = U === s ? $ : menu_f(e, s), r = d.items.indexOf(a), l = "before" === n ? a : d.items[r + 1];
+                                        F(), V(t, i, l);
+                                    });
+                                    let g = jsxs("span", {
+                                        class: "fluent-menu-editor__item-label",
+                                        children: [
+                                            jsx("strong", {
+                                                children: r.title
+                                            }),
+                                            jsx("small", {
+                                                children: r.path
+                                            })
+                                        ]
+                                    });
+                                    if (s.append(l, u, g), canRestoreMenuItem(C.categories, D, a)) {
+                                        let t = _("Restore %s to its original menu position").format(r.title), i = jsx("button", {
+                                            class: "fluent-menu-editor__item-reset",
+                                            type: "button",
+                                            "aria-label": t,
+                                            title: t
+                                        });
+                                        i.addEventListener("click", ()=>{
+                                            let e;
+                                            (e = I.get(a)) && k.add(primaryCategoryId(e.originalPrimaryPath)), C.pending.itemMoves = C.pending.itemMoves.filter(([e])=>e !== a), C.categories = restoreMenuItemToOriginalPosition(C.categories, D, a), B(), W();
+                                        }), s.append(i);
+                                    }
+                                    return s;
+                                })(i, a.id);
+                                return r ? [
+                                    r
+                                ] : [];
+                            });
+                            i.length > 0 ? s.append(...i) : s.appendChild(jsx("div", {
+                                class: "fluent-menu-editor__empty",
+                                children: _("Drop second-level menus here")
+                            })), g = !0;
+                        };
+                        i.addEventListener("toggle", ()=>{
+                            i.open ? (k.add(a.id), v()) : k.delete(a.id);
+                        }), s.addEventListener("dragover", (e)=>{
+                            e.dataTransfer?.types.includes(menu_p) && (e.preventDefault(), s.classList.add("is-drag-over"));
+                        }), s.addEventListener("dragleave", (e)=>{
+                            s.contains(e.relatedTarget) || s.classList.remove("is-drag-over");
+                        }), s.addEventListener("drop", (e)=>{
+                            let t = e.dataTransfer?.getData(menu_p);
+                            t && (e.preventDefault(), e.stopPropagation(), s.classList.remove("is-drag-over"), V(t, a.id));
+                        }), i.open && v();
+                        let h = C.categories.length > 1, y = w.get(a.id), b = jsx("input", {
+                            type: "checkbox",
+                            checked: !C.hiddenCategoryIds.has(a.id),
+                            "aria-label": _("Show %s in the menu").format(a.title)
+                        }), E = jsx("input", {
+                            class: "fluent-menu-editor__category-title",
+                            type: "text",
+                            value: a.title,
+                            "aria-label": _("Primary menu title")
+                        });
+                        b.addEventListener("change", ()=>{
+                            b.checked ? C.hiddenCategoryIds.delete(a.id) : C.hiddenCategoryIds.add(a.id), i.classList.toggle("is-hidden", !b.checked), B();
+                        });
+                        let M = null;
+                        if (y) {
+                            let t = _("Restore %s to its original menu name").format(y.title), i = jsx("button", {
+                                class: "fluent-menu-editor__category-reset",
+                                type: "button",
+                                "aria-label": t,
+                                title: t
+                            });
+                            i.hidden = a.title.trim() === y.title, i.addEventListener("click", ()=>{
+                                a.title = y.title, E.value = y.title, i.hidden = !0, B();
+                            }), M = i;
+                        }
+                        if (E.addEventListener("input", ()=>{
+                            a.title = E.value, M && y && (M.hidden = E.value.trim() === y.title), B();
+                        }), E.addEventListener("blur", ()=>{
+                            a.title = E.value.trim(), E.value = a.title, M && y && (M.hidden = a.title === y.title), B();
+                        }), h) {
+                            let t = jsx("span", {
+                                class: "fluent-menu-editor__drag-handle",
+                                title: _("Drag to reorder primary menu"),
+                                children: "\u22EE\u22EE"
+                            });
+                            t.draggable = !0, t.addEventListener("dragstart", (e)=>{
+                                e.dataTransfer?.setData(menu_m, a.id), e.dataTransfer && (e.dataTransfer.effectAllowed = "move"), i.classList.add("is-dragging");
+                            }), t.addEventListener("dragend", ()=>{
+                                i.classList.remove("is-dragging"), F();
+                            }), r.append(t);
+                        }
+                        if (r.append(b, E, l), M && r.append(M), !y) {
+                            let t = jsx("button", {
+                                class: "fluent-menu-editor__category-delete",
+                                type: "button",
+                                "aria-label": _("Delete primary menu"),
+                                title: _("Delete primary menu")
+                            });
+                            t.addEventListener("click", ()=>{
+                                let e = [
+                                    ...a.items
+                                ];
+                                for (let t of (C.categories = C.categories.filter((e)=>e.id !== a.id), C.hiddenCategoryIds.delete(a.id), C.pending.categoryMoves = C.pending.categoryMoves.filter(([e, t])=>e !== a.id && t !== a.id), C.pending.itemMoves = C.pending.itemMoves.filter(([, e])=>e !== a.id), k.delete(a.id), e))C.pending.itemMoves = C.pending.itemMoves.filter(([e])=>e !== t), C.categories = restoreMenuItemToOriginalPosition(C.categories, D, t);
+                                B(), W();
+                            }), r.append(t);
+                        }
+                        i.addEventListener("dragover", (e)=>{
+                            let t = e.dataTransfer?.types.includes(menu_p);
+                            if (h && e.dataTransfer?.types.includes(menu_m)) {
+                                e.preventDefault(), O(i, menu_f(e, i));
+                                return;
+                            }
+                            !t || s.contains(e.target) || (e.preventDefault(), O(i, "after"));
+                        }), i.addEventListener("dragleave", (e)=>{
+                            i.contains(e.relatedTarget) || U === i && F();
+                        }), i.addEventListener("drop", (e)=>{
+                            let t = e.dataTransfer?.getData(menu_p);
+                            if (t) {
+                                e.preventDefault(), F(), V(t, a.id);
+                                return;
+                            }
+                            let n = e.dataTransfer?.getData(menu_m);
+                            if (!h || !n || n === a.id) return;
+                            e.preventDefault();
+                            let r = U === i ? $ : menu_f(e, i);
+                            F(), C.pending.categoryMoves = C.pending.categoryMoves.filter(([e])=>e !== n), C.categories = moveMenuCategory(C.categories, n, a.id, r), B(), W();
+                        }), i.append(r), u && i.append(u), i.append(s);
+                        let T = {
+                            card: i
+                        };
+                        return u && (T.error = u), N.set(a.id, T), i;
+                    })(a))), z();
+            }
+            let Y = jsx("button", {
+                class: "btn cbi-button cbi-button-add",
+                type: "button",
+                children: _("Add primary menu")
+            }), G = jsx("button", {
+                class: "btn cbi-button cbi-button-reset",
+                type: "button",
+                children: _("Restore defaults")
+            });
+            return Y.addEventListener("click", ()=>{
+                let e = _("New primary menu"), t = new Set(C.categories.map((e)=>menu_h(e.title))), a = e, i = 2;
+                for(; t.has(menu_h(a));)a = _("New primary menu %d").format(i), i += 1;
+                let n = "u" > typeof crypto && "function" == typeof crypto.randomUUID ? crypto.randomUUID() : (menu_v += 1, `category-${Date.now()}-${menu_v}`);
+                C.categories.push({
+                    id: n,
+                    title: a,
+                    items: []
+                }), k.add(n), B(), W();
+            }), G.addEventListener("click", ()=>{
+                C = {
+                    categories: buildDefaultMenuCategories(M),
+                    hiddenCategoryIds: new Set(),
+                    hiddenItemPaths: new Set(),
+                    pending: {
+                        titles: [],
+                        categoryMoves: [],
+                        itemMoves: []
+                    }
+                }, k.clear(), B(""), W();
+            }), W(), jsxs("div", {
+                class: "fluent-menu-editor",
+                children: [
+                    R,
+                    q,
+                    jsx("div", {
+                        class: "fluent-menu-editor__actions",
+                        children: [
+                            Y,
+                            G
+                        ]
+                    }),
+                    j,
+                    A
+                ]
+            });
+        },
+        formvalue: (e)=>T.get(e)?.value ?? "",
+        validate: (e, t)=>(function(e, t) {
+                if ("" === t || null == t) return !0;
+                if ("string" != typeof t) return _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
+                let a = parseMenuLayout(t);
+                return a ? menu_y(resolveMenuLayout(e, a).categories).values().next().value ?? !0 : _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
+            })(M, t)
+    })), "menu_layout");
+    P.optional = !0, P.rmempty = !0;
+}
+
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config.tsx
 let fluent_config_e = L.form, fluent_config_o = L.uci;
 
@@ -1048,16 +1812,20 @@ let fluent_config_e = L.form, fluent_config_o = L.uci;
 
 
 
-class fluent_config_f extends L.view {
+
+class fluent_config_m extends L.view {
     load() {
-        return fluent_config_o.load("fluent");
+        return Promise.all([
+            fluent_config_o.load("fluent"),
+            L.ui.menu.load()
+        ]);
     }
     render(o) {
-        let f = new fluent_config_e.Map("fluent", _("Fluent theme settings"), _("Configure color mode, accent colors, layout sizing, animation behavior, login-page appearance, and advanced CSS overrides for luci-theme-fluent.")), m = f.section(fluent_config_e.TypedSection, "global", _("Theme settings"));
-        return m.addremove = !1, m.anonymous = !0, registerGeneralTab(m), registerColorsTab(m), registerAnimationTab(m), registerLoginTab(m), registerAdvancedTab(m), registerAboutTab(m), f.render();
+        let [, m] = o, s = new fluent_config_e.Map("fluent", _("Fluent theme settings"), _("Configure color mode, accent colors, layout sizing, animation behavior, login-page appearance, and advanced CSS overrides for luci-theme-fluent.")), u = s.section(fluent_config_e.TypedSection, "global", _("Theme settings"));
+        return u.addremove = !1, u.anonymous = !0, registerGeneralTab(u), registerMenuTab(u, m), registerColorsTab(u), registerAnimationTab(u), registerLoginTab(u), registerAdvancedTab(u), registerAboutTab(u), s.render();
     }
 }
-const main = fluent_config_f;
+const main = fluent_config_m;
 
 
 return main;

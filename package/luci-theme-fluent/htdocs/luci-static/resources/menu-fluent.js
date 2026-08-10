@@ -92,6 +92,445 @@ function jsxDEV(t, n) {
 ;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
+;// CONCATENATED MODULE: ./web/resources/menu-layout.ts
+let menu_layout_e = "primary:", menu_layout_t = new Set([
+    "version",
+    "custom",
+    "titles",
+    "categoryMoves",
+    "itemMoves",
+    "hiddenCategories",
+    "hiddenItems"
+]);
+function menu_layout_n(e) {
+    return "function" == typeof _ ? _(e) : e;
+}
+function primaryCategoryId(t) {
+    return `${menu_layout_e}${t}`;
+}
+function menu_layout_r(t) {
+    return t.startsWith(menu_layout_e) ? t.slice(menu_layout_e.length) : null;
+}
+function menu_layout_i(e) {
+    let t = [], r = [];
+    for (let i of ui.menu.getChildren(e))if (i.satisfied) for (let e of ui.menu.getChildren(i)){
+        let l = e.title?.trim();
+        if (!e.satisfied || !l) continue;
+        let o = `${i.name}/${e.name}`, u = menu_layout_n(l);
+        for (let a of (t.push({
+            path: o,
+            pathSegments: [
+                i.name,
+                e.name
+            ],
+            node: e,
+            title: u,
+            rawTitle: l
+        }), ui.menu.getChildren(e))){
+            let t = a.title?.trim();
+            a.satisfied && t && r.push({
+                path: `${o}/${a.name}`,
+                pathSegments: [
+                    i.name,
+                    e.name,
+                    a.name
+                ],
+                node: a,
+                title: menu_layout_n(t),
+                rawTitle: t,
+                originalPrimaryPath: o,
+                originalPrimaryTitle: u
+            });
+        }
+    }
+    return {
+        primaries: t,
+        items: r
+    };
+}
+function discoverMenuItems(e) {
+    return menu_layout_i(e).items;
+}
+function menu_layout_l(e) {
+    let t = e.primaries.map((e)=>({
+            id: primaryCategoryId(e.path),
+            title: e.title,
+            items: []
+        })), n = new Map(t.map((e)=>[
+            e.id,
+            e
+        ]));
+    for (let t of e.items)n.get(primaryCategoryId(t.originalPrimaryPath))?.items.push(t.path);
+    return t;
+}
+function buildDefaultMenuCategories(e) {
+    return menu_layout_l(menu_layout_i(e));
+}
+function menu_layout_o(e) {
+    return e.map((e)=>({
+            ...e,
+            items: [
+                ...e.items
+            ]
+        }));
+}
+function moveMenuItem(e, t, n, r) {
+    let i = menu_layout_o(e), l = i.find((e)=>e.id === n);
+    if (!l || r === t) return i;
+    for (let e of i)e.items = e.items.filter((e)=>e !== t);
+    let u = r ? l.items.indexOf(r) : -1;
+    return u >= 0 ? l.items.splice(u, 0, t) : l.items.push(t), i;
+}
+function moveMenuCategory(e, t, n, r = "before") {
+    let i = menu_layout_o(e), l = i.findIndex((e)=>e.id === t);
+    if (l < 0 || t === n || !i.some((e)=>e.id === n)) return i;
+    let [u] = i.splice(l, 1), a = i.findIndex((e)=>e.id === n);
+    return i.splice("after" === r ? a + 1 : a, 0, u), i;
+}
+function menu_layout_u(e, t) {
+    let n = e[t];
+    return new Set(e.slice(t + 1).filter((e)=>e.originalPrimaryPath === n.originalPrimaryPath).map((e)=>e.path));
+}
+function canRestoreMenuItem(e, t, n) {
+    let r = t.findIndex((e)=>e.path === n);
+    if (r < 0) return !1;
+    let i = primaryCategoryId(t[r].originalPrimaryPath), l = e.find((e)=>e.id === i);
+    if (!l) return !0;
+    let o = 0, a = -1;
+    for (let t of e)for(let e = 0; e < t.items.length; e += 1)t.items[e] === n && (o += 1, t.id === i && (a = e));
+    if (1 !== o || a < 0) return !0;
+    let s = menu_layout_u(t, r), f = l.items.findIndex((e)=>s.has(e));
+    return (f < 0 ? l.items.length - 1 : f > a ? f - 1 : f) !== a;
+}
+function restoreMenuItemToOriginalPosition(e, t, n) {
+    let r = t.findIndex((e)=>e.path === n);
+    if (r < 0) return menu_layout_o(e);
+    let i = t[r], l = primaryCategoryId(i.originalPrimaryPath), a = e.some((e)=>e.id === l) ? e : [
+        ...e,
+        {
+            id: l,
+            title: i.originalPrimaryTitle,
+            items: []
+        }
+    ], s = menu_layout_u(t, r), f = a.find((e)=>e.id === l);
+    return moveMenuItem(a, n, l, f?.items.find((e)=>s.has(e)));
+}
+function menu_layout_a(e, t) {
+    if ("string" != typeof e || e !== e.trim()) return !1;
+    let n = e.split("/");
+    return n.length === t && n.every(Boolean);
+}
+function menu_layout_s(e) {
+    return "number" == typeof e ? `custom:${e}` : `primary:${e}`;
+}
+function menu_layout_f(e, t) {
+    return Number.isInteger(e) && e >= 0 && e < t || menu_layout_a(e, 2) ? e : null;
+}
+function menu_layout_d(e, t) {
+    let n = e[t];
+    return void 0 === n ? [] : Array.isArray(n) ? n : null;
+}
+function parseMenuLayout(e) {
+    let n;
+    if ("string" != typeof e || "" === e.trim()) return null;
+    try {
+        n = JSON.parse(e);
+    } catch  {
+        return null;
+    }
+    if (!n || "object" != typeof n || Array.isArray(n)) return null;
+    let r = n;
+    if (1 !== r.version || Object.keys(r).some((e)=>!menu_layout_t.has(e))) return null;
+    let i = menu_layout_d(r, "custom"), l = menu_layout_d(r, "titles"), o = menu_layout_d(r, "categoryMoves"), u = menu_layout_d(r, "itemMoves"), m = menu_layout_d(r, "hiddenCategories"), p = menu_layout_d(r, "hiddenItems");
+    if (!i || !l || !o || !u || !m || !p) return null;
+    let h = [], g = new Set();
+    for (let e of i){
+        if ("string" != typeof e) return null;
+        let t = e.trim(), n = t.toLocaleLowerCase();
+        if (!t || g.has(n)) return null;
+        g.add(n), h.push(t);
+    }
+    let c = [], y = new Set();
+    for (let e of l){
+        if (!Array.isArray(e) || 2 !== e.length || !menu_layout_a(e[0], 2) || "string" != typeof e[1]) return null;
+        let t = e[1].trim();
+        if (!t || y.has(e[0])) return null;
+        y.add(e[0]), c.push([
+            e[0],
+            t
+        ]);
+    }
+    let M = [], v = new Set();
+    for (let e of o){
+        if (!Array.isArray(e) || 2 !== e.length) return null;
+        let t = menu_layout_f(e[0], h.length), n = null === e[1] ? null : menu_layout_f(e[1], h.length);
+        if (null === t || null !== e[1] && null === n) return null;
+        let r = menu_layout_s(t);
+        if (v.has(r) || null !== n && r === menu_layout_s(n)) return null;
+        v.add(r), M.push([
+            t,
+            n
+        ]);
+    }
+    let I = [], w = new Set();
+    for (let e of u){
+        if (!Array.isArray(e) || 3 !== e.length || !menu_layout_a(e[0], 3)) return null;
+        let t = menu_layout_f(e[1], h.length), n = null === e[2] ? null : menu_layout_a(e[2], 3) ? e[2] : null;
+        if (null === t || null !== e[2] && null === n || w.has(e[0]) || n === e[0]) return null;
+        w.add(e[0]), I.push([
+            e[0],
+            t,
+            n
+        ]);
+    }
+    let C = [], x = new Set();
+    for (let e of m){
+        let t = menu_layout_f(e, h.length);
+        if (null === t || x.has(menu_layout_s(t))) return null;
+        x.add(menu_layout_s(t)), C.push(t);
+    }
+    let S = [], P = new Set();
+    for (let e of p){
+        if (!menu_layout_a(e, 3) || P.has(e)) return null;
+        P.add(e), S.push(e);
+    }
+    return {
+        version: 1,
+        custom: h,
+        titles: c,
+        categoryMoves: M,
+        itemMoves: I,
+        hiddenCategories: C,
+        hiddenItems: S
+    };
+}
+function menu_layout_m() {
+    return {
+        titles: [],
+        categoryMoves: [],
+        itemMoves: []
+    };
+}
+function menu_layout_p(e, t) {
+    return "number" == typeof e ? t[e] ?? null : primaryCategoryId(e);
+}
+function resolveMenuLayout(e, t) {
+    let n = menu_layout_i(e), r = menu_layout_l(n), u = new Set(), a = new Set(), s = menu_layout_m();
+    if (!t) return {
+        categories: r,
+        hiddenCategoryIds: u,
+        hiddenItemPaths: a,
+        pending: s,
+        configured: !1
+    };
+    let f = t.custom.map((e, t)=>{
+        let n = `custom:${t}`;
+        return r.push({
+            id: n,
+            title: e,
+            items: []
+        }), n;
+    }), d = new Set(n.items.map((e)=>e.path)), h = f.length > 0;
+    for (let [e, n] of t.titles){
+        let t = primaryCategoryId(e), i = r.find((e)=>e.id === t);
+        i ? (i.title = n, h = !0) : s.titles.push([
+            t,
+            n
+        ]);
+    }
+    for (let [e, n] of t.categoryMoves){
+        let t = menu_layout_p(e, f), i = null === n ? null : menu_layout_p(n, f), l = null !== t && r.some((e)=>e.id === t), u = null === i || r.some((e)=>e.id === i);
+        t && l && u ? (r = function(e, t, n) {
+            if (n) return moveMenuCategory(e, t, n);
+            let r = menu_layout_o(e), i = r.findIndex((e)=>e.id === t);
+            if (i < 0) return r;
+            let [l] = r.splice(i, 1);
+            return r.push(l), r;
+        }(r, t, i), h = !0) : t && s.categoryMoves.push([
+            t,
+            i
+        ]);
+    }
+    for (let [e, n, i] of t.itemMoves){
+        let t = menu_layout_p(n, f), l = t ? r.find((e)=>e.id === t) : void 0, o = null === i || !!l?.items.includes(i);
+        d.has(e) && t && l && o ? (r = moveMenuItem(r, e, t, i ?? void 0), h = !0) : t && s.itemMoves.push([
+            e,
+            t,
+            i
+        ]);
+    }
+    for (let e of t.hiddenCategories){
+        let t = menu_layout_p(e, f);
+        t && (u.add(t), r.some((e)=>e.id === t) && (h = !0));
+    }
+    for (let e of t.hiddenItems)a.add(e), d.has(e) && (h = !0);
+    return {
+        categories: r,
+        hiddenCategoryIds: u,
+        hiddenItemPaths: a,
+        pending: s,
+        configured: h
+    };
+}
+function menu_layout_h(e, t) {
+    let n = new Map(t.map((e, t)=>[
+            e,
+            t
+        ])), r = e.flatMap((e)=>{
+        let t = n.get(e);
+        return void 0 === t ? [] : [
+            {
+                value: e,
+                index: t
+            }
+        ];
+    }), i = [], l = Array(r.length).fill(-1);
+    for(let e = 0; e < r.length; e += 1){
+        let t = 0, n = i.length;
+        for(; t < n;){
+            let l = t + n >> 1;
+            r[i[l]].index < r[e].index ? t = l + 1 : n = l;
+        }
+        t > 0 && (l[e] = i[t - 1]), i[t] = e;
+    }
+    let o = new Set();
+    for(let e = i.at(-1) ?? -1; e >= 0; e = l[e])o.add(r[e].value);
+    return o;
+}
+function menu_layout_g(e, t) {
+    let n = menu_layout_r(e);
+    return n || (t.get(e) ?? null);
+}
+function menu_layout_c(e, t, n) {
+    let r = n.get(e), i = n.get(t);
+    return void 0 !== r && void 0 !== i ? r - i : void 0 !== r ? -1 : void 0 !== i ? 1 : e.localeCompare(t);
+}
+function serializeMenuLayout(e, t, n, o, u = menu_layout_m()) {
+    let a = menu_layout_i(e), s = menu_layout_l(a), f = new Map(s.map((e)=>[
+            e.id,
+            e
+        ])), d = t.filter((e)=>!f.has(e.id)), p = new Map(d.map((e, t)=>[
+            e.id,
+            t
+        ])), y = d.map((e)=>e.title.trim()), M = [], v = new Set();
+    for (let e of t){
+        let t = f.get(e.id), n = e.title.trim();
+        if (!t || n === t.title) continue;
+        let i = menu_layout_r(e.id);
+        i && (M.push([
+            i,
+            n
+        ]), v.add(e.id));
+    }
+    for (let [e, t] of u.titles){
+        if (v.has(e)) continue;
+        let n = menu_layout_r(e);
+        n && M.push([
+            n,
+            t
+        ]);
+    }
+    let I = [
+        ...s.map((e)=>e.id),
+        ...d.map((e)=>e.id)
+    ], w = t.map((e)=>e.id), C = [], x = new Set();
+    for (let [e, t] of function(e, t) {
+        let n = menu_layout_h(e, t), r = [];
+        for(let e = t.length - 1; e >= 0; e -= 1)n.has(t[e]) || r.push([
+            t[e],
+            t[e + 1] ?? null
+        ]);
+        return r;
+    }(I, w)){
+        let n = menu_layout_g(e, p), r = null === t ? null : menu_layout_g(t, p);
+        null !== n && (null === t || null !== r) && (C.push([
+            n,
+            r
+        ]), x.add(e));
+    }
+    for (let [e, t] of u.categoryMoves){
+        if (x.has(e)) continue;
+        let n = menu_layout_g(e, p), r = null === t ? null : menu_layout_g(t, p);
+        null !== n && (null === t || null !== r) && C.push([
+            n,
+            r
+        ]);
+    }
+    let S = [], P = new Set();
+    for (let e of t){
+        let t = menu_layout_g(e.id, p);
+        if (null === t) continue;
+        let n = menu_layout_h(f.get(e.id)?.items ?? [], e.items);
+        for(let r = e.items.length - 1; r >= 0; r -= 1){
+            let i = e.items[r];
+            n.has(i) || (S.push([
+                i,
+                t,
+                e.items[r + 1] ?? null
+            ]), P.add(i));
+        }
+    }
+    for (let [e, t, n] of u.itemMoves){
+        if (P.has(e)) continue;
+        let r = menu_layout_g(t, p);
+        null !== r && S.push([
+            e,
+            r,
+            n
+        ]);
+    }
+    let A = new Map(t.map((e, t)=>[
+            e.id,
+            t
+        ])), b = [
+        ...n
+    ].sort((e, t)=>menu_layout_c(e, t, A)).flatMap((e)=>{
+        let t = menu_layout_g(e, p);
+        return null === t ? [] : [
+            t
+        ];
+    }), $ = new Map(a.items.map((e, t)=>[
+            e.path,
+            t
+        ])), L = [
+        ...o
+    ].sort((e, t)=>menu_layout_c(e, t, $)), O = {
+        version: 1
+    };
+    return y.length > 0 && (O.custom = y), M.length > 0 && (O.titles = M), C.length > 0 && (O.categoryMoves = C), S.length > 0 && (O.itemMoves = S), b.length > 0 && (O.hiddenCategories = b), L.length > 0 && (O.hiddenItems = L), 1 === Object.keys(O).length ? "" : JSON.stringify(O);
+}
+function buildMenuPresentation(e, t) {
+    let n = menu_layout_i(e), l = resolveMenuLayout(e, parseMenuLayout(t)), o = new Map(n.items.map((e)=>[
+            e.path,
+            e
+        ])), u = new Map(n.primaries.map((e)=>[
+            primaryCategoryId(e.path),
+            e
+        ])), a = new Set(l.hiddenItemPaths);
+    for (let e of l.hiddenCategoryIds){
+        let t = menu_layout_r(e);
+        t && a.add(t);
+        let n = l.categories.find((t)=>t.id === e);
+        if (n) for (let e of n.items)a.add(e);
+    }
+    return {
+        categories: l.categories.map((e)=>({
+                id: e.id,
+                title: e.title,
+                primary: u.get(e.id) ?? null,
+                items: e.items.flatMap((e)=>{
+                    let t = o.get(e);
+                    return t ? [
+                        t
+                    ] : [];
+                })
+            })),
+        hiddenCategoryIds: l.hiddenCategoryIds,
+        hiddenPaths: a,
+        configured: l.configured
+    };
+}
+
 ;// CONCATENATED MODULE: ./web/resources/utils/error-tooltips.tsx
 
 function setupErrorTooltips() {
@@ -823,124 +1262,148 @@ function setupMacSelector() {
 function menu_search_e(e) {
     return e.toLowerCase().replace(/\s+/g, " ");
 }
-function setupMenuSearch(t) {
-    let n = [], l = (l)=>{
-        let r = document.querySelector(l);
-        if (!r) return;
-        r.innerHTML = "";
-        let { container: a, input: u } = function(t) {
-            let n = document.createElement("div");
-            n.className = "fluent-menu-search";
-            let l = document.createElement("input");
-            l.type = "search", l.className = "fluent-menu-search-input", l.placeholder = _("Search menu..."), l.autocomplete = "off", l.spellcheck = !1, l.setAttribute("aria-label", _("Search menu items"));
-            let r = document.createElement("span");
-            r.className = "fluent-menu-search-hotkey", r.textContent = "Ctrl+K";
-            let a = document.createElement("div");
-            a.className = "fluent-menu-search-overlay", a.style.display = "none", n.appendChild(l), n.appendChild(r), n.appendChild(a);
-            let u = -1, c = [];
-            function i() {
-                a.style.display = "none", a.innerHTML = "", u = -1, c = [];
+function menu_search_t(t, n, l) {
+    return menu_search_e(n).includes(l) || menu_search_e(t).includes(l);
+}
+function searchMenu(n, l) {
+    let r = menu_search_e(l);
+    if (!r) return [];
+    let a = [], i = (e, n, l)=>{
+        for (let u of ui.menu.getChildren(e)){
+            if (!u.satisfied) continue;
+            let e = `${n}/${u.name}`, c = u.title || u.name || "", s = c ? _(c) : "", o = c ? [
+                ...l,
+                s
+            ] : l;
+            menu_search_t(c, s, r) && a.push({
+                node: u,
+                url: e,
+                breadcrumb: [
+                    ...o
+                ]
+            }), i(u, e, o);
+        }
+    };
+    for (let e of n.categories)if (!n.hiddenCategoryIds.has(e.id)) for (let l of (e.primary && menu_search_t(e.primary.rawTitle, e.title, r) && a.push({
+        node: e.primary.node,
+        url: e.primary.path,
+        breadcrumb: [
+            e.title
+        ]
+    }), e.items)){
+        if (n.hiddenPaths.has(l.path)) continue;
+        let u = [
+            e.title,
+            l.title
+        ];
+        menu_search_t(l.rawTitle, l.title, r) && a.push({
+            node: l.node,
+            url: l.path,
+            breadcrumb: u
+        }), i(l.node, l.path, u);
+    }
+    return a;
+}
+function setupMenuSearch(e) {
+    let t = [], n = (n)=>{
+        let l = document.querySelector(n);
+        if (!l) return;
+        l.innerHTML = "";
+        let { container: r, input: a } = function(e) {
+            let t = document.createElement("div");
+            t.className = "fluent-menu-search";
+            let n = document.createElement("input");
+            n.type = "search", n.className = "fluent-menu-search-input", n.placeholder = _("Search menu..."), n.autocomplete = "off", n.spellcheck = !1, n.setAttribute("aria-label", _("Search menu items"));
+            let l = document.createElement("span");
+            l.className = "fluent-menu-search-hotkey", l.textContent = "Ctrl+K";
+            let r = document.createElement("div");
+            r.className = "fluent-menu-search-overlay", r.style.display = "none", t.appendChild(n), t.appendChild(l), t.appendChild(r);
+            let a = -1, i = [];
+            function u() {
+                r.style.display = "none", r.innerHTML = "", a = -1, i = [];
+            }
+            function c(e) {
+                u(), n.blur(), window.location.href = L.url(e.url);
             }
             function s(e) {
-                i(), l.blur(), window.location.href = L.url(e.url);
-            }
-            function o(e) {
-                let t = a.querySelectorAll(".fluent-menu-search-item");
-                0 !== t.length && (u >= 0 && t[u] && (t[u].classList.remove("selected"), t[u].removeAttribute("aria-selected")), (u += e) < 0 && (u = t.length - 1), u >= t.length && (u = 0), t[u].classList.add("selected"), t[u].setAttribute("aria-selected", "true"), t[u].scrollIntoView({
+                let t = r.querySelectorAll(".fluent-menu-search-item");
+                0 !== t.length && (a >= 0 && t[a] && (t[a].classList.remove("selected"), t[a].removeAttribute("aria-selected")), (a += e) < 0 && (a = t.length - 1), a >= t.length && (a = 0), t[a].classList.add("selected"), t[a].setAttribute("aria-selected", "true"), t[a].scrollIntoView({
                     block: "nearest"
                 }));
             }
-            return l.addEventListener("input", ()=>{
-                let n = l.value.trim();
-                n ? function(e) {
-                    if (c = e, a.innerHTML = "", u = -1, 0 === e.length) {
-                        a.style.display = "none";
+            return n.addEventListener("input", ()=>{
+                let t = n.value.trim();
+                t ? function(e) {
+                    if (i = e, r.innerHTML = "", a = -1, 0 === e.length) {
+                        r.style.display = "none";
                         return;
                     }
                     let t = document.createElement("ul");
                     t.className = "fluent-menu-search-list", t.setAttribute("role", "listbox");
-                    let n = Math.min(e.length, 20);
-                    for(let l = 0; l < n; l++){
-                        let n = e[l], r = document.createElement("li");
-                        r.className = "fluent-menu-search-item", r.setAttribute("role", "option"), r.setAttribute("data-index", String(l));
+                    let l = Math.min(e.length, 20);
+                    for(let n = 0; n < l; n++){
+                        let l = e[n], r = document.createElement("li");
+                        r.className = "fluent-menu-search-item", r.setAttribute("role", "option"), r.setAttribute("data-index", String(n));
                         let a = document.createElement("span");
-                        if (a.className = "fluent-menu-search-label", a.textContent = _(n.node.title || n.node.name || ""), n.breadcrumb.length > 1) {
+                        if (a.className = "fluent-menu-search-label", a.textContent = _(l.node.title || l.node.name || ""), l.breadcrumb.length > 1) {
                             let e = document.createElement("span");
-                            e.className = "fluent-menu-search-path", e.textContent = n.breadcrumb.slice(0, -1).join(" \u2192 "), r.appendChild(e);
+                            e.className = "fluent-menu-search-path", e.textContent = l.breadcrumb.slice(0, -1).join(" \u2192 "), r.appendChild(e);
                         }
                         r.appendChild(a), r.addEventListener("mousedown", (e)=>{
-                            e.preventDefault(), s(n);
-                        }), r.addEventListener("click", ()=>s(n)), t.appendChild(r);
+                            e.preventDefault(), c(l);
+                        }), r.addEventListener("click", ()=>c(l)), t.appendChild(r);
                     }
                     if (e.length > 20) {
                         let n = document.createElement("li");
                         n.className = "fluent-menu-search-more", n.textContent = _("and %d more...").format(e.length - 20), t.appendChild(n);
                     }
-                    a.appendChild(t), a.style.display = "";
-                    let r = l.getBoundingClientRect();
-                    a.style.left = "0", a.style.top = `${r.height}px`;
-                }(function(t, n) {
-                    let l = menu_search_e(n);
-                    if (!l) return [];
-                    let r = [];
-                    return !function t(n, a, u) {
-                        for (let c of ui.menu.getChildren(n)){
-                            let n = a ? `${a}/${c.name}` : c.name, i = [
-                                ...u
-                            ], s = c.title || c.name || "", o = s ? _(s) : "";
-                            s && i.push(o), (o && menu_search_e(o).includes(l) || s && menu_search_e(s).includes(l)) && r.push({
-                                node: c,
-                                url: n,
-                                breadcrumb: [
-                                    ...i
-                                ]
-                            }), t(c, n, i);
-                        }
-                    }(t, "", []), r;
-                }(t, n)) : i();
-            }), l.addEventListener("keydown", (e)=>{
+                    r.appendChild(t), r.style.display = "";
+                    let u = n.getBoundingClientRect();
+                    r.style.left = "0", r.style.top = `${u.height}px`;
+                }(searchMenu(e, t)) : u();
+            }), n.addEventListener("keydown", (e)=>{
                 if ("Escape" === e.key) {
-                    i(), l.blur();
+                    u(), n.blur();
                     return;
                 }
                 if ("ArrowDown" === e.key) {
-                    e.preventDefault(), o(1);
+                    e.preventDefault(), s(1);
                     return;
                 }
                 if ("ArrowUp" === e.key) {
-                    e.preventDefault(), o(-1);
+                    e.preventDefault(), s(-1);
                     return;
                 }
                 if ("Enter" === e.key) {
                     e.preventDefault();
-                    let t = a.querySelectorAll(".fluent-menu-search-item");
-                    u >= 0 && t[u] ? t[u].click() : c.length > 0 && s(c[0]);
+                    let t = r.querySelectorAll(".fluent-menu-search-item");
+                    a >= 0 && t[a] ? t[a].click() : i.length > 0 && c(i[0]);
                     return;
                 }
-            }), l.addEventListener("blur", ()=>{
+            }), n.addEventListener("blur", ()=>{
                 setTimeout(()=>{
-                    a.contains(document.activeElement) || i();
+                    r.contains(document.activeElement) || u();
                 }, 150);
-            }), a.addEventListener("mousedown", (e)=>e.preventDefault()), {
-                container: n,
-                input: l,
-                overlay: a
+            }), r.addEventListener("mousedown", (e)=>e.preventDefault()), {
+                container: t,
+                input: n,
+                overlay: r
             };
-        }(t);
-        r.appendChild(a), n.push(u);
+        }(e);
+        l.appendChild(r), t.push(a);
     };
-    l(".header__search-slot"), l(".sidebar__search-slot"), 0 !== n.length && document.addEventListener("keydown", (e)=>{
+    n(".header__search-slot"), n(".sidebar__search-slot"), 0 !== t.length && document.addEventListener("keydown", (e)=>{
         if ((e.ctrlKey || e.metaKey) && "k" === e.key || "/" === e.key && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA" && !document.activeElement?.getAttribute("contenteditable")) {
             e.preventDefault(), (()=>{
-                for (let e of n)if (null !== e.offsetParent) {
+                for (let e of t)if (null !== e.offsetParent) {
                     e.focus(), e.select();
                     return;
                 }
             })();
             return;
         }
-        let t = n.find((e)=>document.activeElement === e);
-        "Escape" === e.key && t && t.blur();
+        let n = t.find((e)=>document.activeElement === e);
+        "Escape" === e.key && n && n.blur();
     });
 }
 
@@ -1664,14 +2127,15 @@ function setupThemeFeatures() {
 
 
 
-function menu_fluent_m(e) {
+
+function menu_fluent_h(e) {
     document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
 }
-function menu_fluent_h() {
+function menu_fluent_f() {
     let e = localStorage.getItem("fluent-sidebar-state");
     return "collapsed" === e || "expanded" === e ? e : "expanded";
 }
-function menu_fluent_f() {
+function menu_fluent_v() {
     document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
         e.classList.remove("popup-open");
     }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
@@ -1680,52 +2144,59 @@ function menu_fluent_f() {
 }
 const main = baseclass.extend({
     async __init__ () {
-        let e = await ui.menu.load();
-        this.render(e), setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer();
+        let [e] = await Promise.all([
+            ui.menu.load(),
+            L.uci.load("fluent")
+        ]), t = L.uci.get_first("fluent", "global", "menu_layout"), a = buildMenuPresentation(e, "string" == typeof t || Array.isArray(t) ? t : null);
+        this.render(e, a), setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(a), setupMacSelector(), setupLogViewer();
     },
-    render (e) {
-        let t = e, n = "", a = ui.menu.getChildren(e);
-        for(let e = 0; e < a.length; e++)(L.env.requestpath.length ? a[e].name === L.env.requestpath[0] : 0 === e) && this.renderMainMenu(a[e], a[e].name);
-        if (L.env.dispatchpath.length >= 3) {
-            for(let e = 0; e < 3 && t; e++){
-                let a = L.env.dispatchpath[e];
-                t = t.children?.[a], n = n + (n ? "/" : "") + L.env.dispatchpath[e];
-            }
-            t && this.renderTabMenu(t, n);
+    render (e, t) {
+        let a = e, n = "";
+        if (t.configured) this.renderConfiguredMenu(t);
+        else {
+            let t = ui.menu.getChildren(e);
+            for(let e = 0; e < t.length; e++)(L.env.requestpath.length ? t[e].name === L.env.requestpath[0] : 0 === e) && this.renderMainMenu(t[e], t[e].name);
         }
-        let i = document.querySelectorAll("a.showSide"), l = document.querySelector(".darkMask"), s = document.querySelector(".sidebar-collapse-toggle"), r = ui.createHandlerFn(this, "handleSidebarToggle") ?? (()=>{
+        if (L.env.dispatchpath.length >= 3) {
+            for(let e = 0; e < 3 && a; e++){
+                let t = L.env.dispatchpath[e];
+                a = a.children?.[t], n = n + (n ? "/" : "") + t;
+            }
+            a && this.renderTabMenu(a, n, void 0, t.hiddenPaths);
+        }
+        let l = document.querySelectorAll("a.showSide"), i = document.querySelector(".darkMask"), s = document.querySelector(".sidebar-collapse-toggle"), r = ui.createHandlerFn(this, "handleSidebarToggle") ?? (()=>{
             console.warn("Fluent menu: missing sidebar toggle handler");
         }), d = ui.createHandlerFn(this, "handleDesktopSidebarToggle") ?? (()=>{
             console.warn("Fluent menu: missing desktop sidebar toggle handler");
         });
-        i.forEach((e)=>{
+        l.forEach((e)=>{
             e.addEventListener("click", r);
-        }), l && l.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_m(menu_fluent_h()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_m(menu_fluent_h()) : document.body.setAttribute("data-sidebar-state", "expanded");
+        }), i && i.addEventListener("click", r), s && s.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_h(menu_fluent_f()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_h(menu_fluent_f()) : document.body.setAttribute("data-sidebar-state", "expanded");
         }), document.addEventListener("click", (e)=>{
             if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
-            let t = e.target, n = document.querySelector("#mainmenu");
-            t && n?.contains(t) || menu_fluent_f();
+            let t = e.target, a = document.querySelector("#mainmenu");
+            t && a?.contains(t) || menu_fluent_v();
         });
     },
     handleMenuExpand (e) {
         let t = e.currentTarget;
         if (!t) return;
-        let n = t.parentNode, a = t.nextElementSibling, i = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), l = !1;
-        if (document.querySelectorAll(i ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
-            l || e !== a || (l = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), i ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
-        }), a) {
-            if (!l) {
-                let e = n?.querySelector(".slide-menu");
+        let a = t.parentNode, n = t.nextElementSibling, l = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), i = !1;
+        if (document.querySelectorAll(l ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
+            i || e !== n || (i = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), l ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
+        }), n) {
+            if (!i) {
+                let e = a?.querySelector(".slide-menu");
                 if (e) {
-                    if (a.classList.add(i ? "popup-open" : "active"), t.classList.add(i ? "popup-open" : "active"), i) {
+                    if (n.classList.add(l ? "popup-open" : "active"), t.classList.add(l ? "popup-open" : "active"), l) {
                         SlideAnimations.stop(e), e.style.display = "block";
-                        let n = t.getBoundingClientRect(), a = e.offsetHeight, i = Math.max(8, window.innerHeight - a - 8), l = n.top - 8;
-                        e.style.top = `${Math.min(i, Math.max(8, l))}px`;
+                        let a = t.getBoundingClientRect(), n = e.offsetHeight, l = Math.max(8, window.innerHeight - n - 8), i = a.top - 8;
+                        e.style.top = `${Math.min(l, Math.max(8, i))}px`;
                     } else e.style.top = "", SlideAnimations.slideDown(e, "fast");
                     e.querySelectorAll("li > a").forEach((e)=>{
                         e.addEventListener("click", ()=>{
-                            menu_fluent_f();
+                            menu_fluent_v();
                         }, {
                             once: !0
                         });
@@ -1736,34 +2207,34 @@ const main = baseclass.extend({
             document.dispatchEvent(new CustomEvent("fluent-menu-expand")), e.preventDefault(), e.stopPropagation();
         }
     },
-    renderMainMenu (a, i, l) {
-        let s = (l || 0) + 1, r = l && a.title ? a.title.replace(/ /g, "_") : void 0, d = jsx("ul", {
-            class: l ? "slide-menu" : "nav",
+    renderMainMenu (n, l, i) {
+        let s = (i || 0) + 1, r = i && n.title ? n.title.replace(/ /g, "_") : void 0, d = jsx("ul", {
+            class: i ? "slide-menu" : "nav",
             "data-parent": r || void 0
-        }), o = ui.menu.getChildren(a);
+        }), o = ui.menu.getChildren(n);
         if (0 === o.length || s > 2) return jsx(Fragment, {});
-        for(let n = 0; n < o.length; n++){
-            let l = o[n], r = L.env.dispatchpath[s] === l.name && L.env.dispatchpath[s - 1] === a.name, u = this.renderMainMenu(l, `${i}/${l.name}`, s), c = u.children.length > 0, p = c ? "slide" : null, m = c ? "menu" : "item";
+        for(let a = 0; a < o.length; a++){
+            let i = o[a], r = L.env.dispatchpath[s] === i.name && L.env.dispatchpath[s - 1] === n.name, c = this.renderMainMenu(i, `${l}/${i.name}`, s), u = c.children.length > 0, p = u ? "slide" : null, m = u ? "menu" : "item";
             r && (d.classList.add("active"), p = p ? `${p} active` : "null active");
             let h = r ? `${m} active` : m, f = jsxs("li", {
                 class: p ?? void 0,
                 children: [
                     jsxs("a", {
-                        href: L.url(i, l.name),
+                        href: L.url(l, i.name),
                         onclick: 1 === s ? ui.createHandlerFn(this, "handleMenuExpand") : null,
                         class: h,
-                        "data-title": (l.title || "").replace(/ /g, "_"),
+                        "data-title": (i.title || "").replace(/ /g, "_"),
                         children: [
                             1 === s || 2 === s ? jsx("span", {
                                 class: "menu-icon"
                             }) : null,
                             jsx("span", {
                                 class: "menu-label",
-                                children: _(l.title || "")
+                                children: _(i.title || "")
                             })
                         ]
                     }),
-                    u
+                    c
                 ]
             });
             d.appendChild(f);
@@ -1774,52 +2245,113 @@ const main = baseclass.extend({
         }
         return d;
     },
-    renderTabMenu (t, a, i) {
-        let l = document.querySelector("#tabmenu"), s = (i || 0) + 1, r = jsx("ul", {
+    renderConfiguredMenu (a) {
+        let n = jsx("ul", {
+            class: "nav"
+        });
+        for (let l of a.categories){
+            if (a.hiddenCategoryIds.has(l.id)) continue;
+            let i = l.items.filter((e)=>!a.hiddenPaths.has(e.path));
+            if (!l.primary && 0 === i.length) continue;
+            let s = jsx("ul", {
+                class: "slide-menu",
+                "data-parent": l.title.replace(/ /g, "_")
+            }), r = !1;
+            for (let a of i){
+                let n = a.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e);
+                r ||= n, s.appendChild(jsx("li", {
+                    class: n ? "active" : void 0,
+                    children: jsxs("a", {
+                        href: L.url(a.path),
+                        class: `item${n ? " active" : ""}`,
+                        "data-title": a.rawTitle.replace(/ /g, "_"),
+                        children: [
+                            jsx("span", {
+                                class: "menu-icon"
+                            }),
+                            jsx("span", {
+                                class: "menu-label",
+                                children: a.title
+                            })
+                        ]
+                    })
+                }));
+            }
+            r && s.classList.add("active"), l.primary && L.env.dispatchpath.length <= 2 && (r ||= l.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
+            let d = i.length > 0, o = l.primary?.path ?? i[0]?.path ?? "#", c = l.primary?.rawTitle ?? l.title, u = `${d ? "slide" : ""}${r ? " active" : ""}`.trim() || void 0;
+            n.appendChild(jsxs("li", {
+                class: u,
+                children: [
+                    jsxs("a", {
+                        href: "#" === o ? o : L.url(o),
+                        onclick: d ? ui.createHandlerFn(this, "handleMenuExpand") : null,
+                        class: `${d ? "menu" : "item"}${r ? " active" : ""}`,
+                        "data-title": c.replace(/ /g, "_"),
+                        children: [
+                            jsx("span", {
+                                class: "menu-icon"
+                            }),
+                            jsx("span", {
+                                class: "menu-label",
+                                children: l.title
+                            })
+                        ]
+                    }),
+                    d ? s : null
+                ]
+            }));
+        }
+        let l = document.querySelector("#mainmenu");
+        return l && (l.appendChild(n), l.style.display = "", this.adjustBrandTextSize()), n;
+    },
+    renderTabMenu (t, n, l, i) {
+        let s = L.env.dispatchpath.slice(0, 2).join("/"), r = L.env.dispatchpath.slice(0, 3).join("/");
+        if (i.has(s) || i.has(r)) return jsx(Fragment, {});
+        let d = document.querySelector("#tabmenu"), o = (l || 0) + 1, c = jsx("ul", {
             class: "tabs"
-        }), d = ui.menu.getChildren(t), o = null;
-        if (0 === d.length) return jsx(Fragment, {});
-        for(let t = 0; t < d.length; t++){
-            let n = d[t], i = L.env.dispatchpath[s + 2] === n.name, l = i ? " active" : "", u = jsx("li", {
-                class: `tabmenu-item-${n.name}${l}`,
+        }), u = ui.menu.getChildren(t), p = null;
+        if (0 === u.length) return jsx(Fragment, {});
+        for(let t = 0; t < u.length; t++){
+            let a = u[t], l = L.env.dispatchpath[o + 2] === a.name, i = l ? " active" : "", s = jsx("li", {
+                class: `tabmenu-item-${a.name}${i}`,
                 children: jsx("a", {
-                    href: L.url(a, n.name),
-                    children: _(n.title || "")
+                    href: L.url(n, a.name),
+                    children: _(a.title || "")
                 })
             });
-            r.appendChild(u), i && (o = n);
+            c.appendChild(s), l && (p = a);
         }
-        if (l && (l.appendChild(r), l.style.display = "", o)) {
-            let e = this.renderTabMenu(o, `${a}/${o.name}`, s);
-            e.children.length > 0 && l.appendChild(e);
+        if (d && (d.appendChild(c), d.style.display = "", p)) {
+            let e = this.renderTabMenu(p, `${n}/${p.name}`, o, i);
+            e.children.length > 0 && d.appendChild(e);
         }
-        return r;
+        return c;
     },
     adjustBrandTextSize () {
         let e = document.querySelector(".sidenav-header .brand-text");
         if (e) {
             let t = e.parentElement;
             if (t) {
-                let n = t.clientWidth - 32;
-                if (n > 0) {
+                let a = t.clientWidth - 32;
+                if (a > 0) {
                     let t = 16;
-                    for(e.style.fontSize = `${t}px`; e.scrollWidth > n && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
+                    for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
                 }
             }
         }
     },
     handleSidebarToggle (e) {
-        let t = document.querySelectorAll("a.showSide"), n = document.querySelector("#mainmenu"), a = document.querySelector(".darkMask"), i = document.querySelector(".main-right");
-        0 !== t.length && n && a && i ? Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
+        let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), n = document.querySelector(".darkMask"), l = document.querySelector(".main-right");
+        0 !== t.length && a && n && l ? Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
             e.classList.remove("active");
-        }), n.classList.remove("active"), i.classList.remove("active"), a.classList.remove("active")) : (t.forEach((e)=>{
+        }), a.classList.remove("active"), l.classList.remove("active"), n.classList.remove("active")) : (t.forEach((e)=>{
             e.classList.add("active");
-        }), n.classList.add("active"), i.classList.add("active"), a.classList.add("active"), this.adjustBrandTextSize()) : console.warn("Fluent menu: sidebar toggle elements are unavailable");
+        }), a.classList.add("active"), l.classList.add("active"), n.classList.add("active"), this.adjustBrandTextSize()) : console.warn("Fluent menu: sidebar toggle elements are unavailable");
     },
     handleDesktopSidebarToggle (e) {
         if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
         let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-        menu_fluent_f(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_m(t), "expanded" === t && this.adjustBrandTextSize();
+        menu_fluent_v(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_h(t), "expanded" === t && this.adjustBrandTextSize();
     }
 });
 

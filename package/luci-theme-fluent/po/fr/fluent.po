@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:47+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d menus de second niveau"
 
 msgid "A new version is available!"
 msgstr "Une nouvelle version est disponible !"
@@ -25,6 +28,9 @@ msgstr "Début de la barre, en haut"
 
 msgid "Accent color"
 msgstr "Couleur d'accentuation"
+
+msgid "Add primary menu"
+msgstr "Ajouter un menu principal"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -220,6 +226,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Mode sombre"
 
+msgid "Delete primary menu"
+msgstr "Supprimer le menu principal"
+
 msgid "Disabled"
 msgstr "Désactivé"
 
@@ -244,6 +253,15 @@ msgstr "Téléchargement terminé"
 
 msgid "Downloading on router"
 msgstr "Téléchargement sur le routeur"
+
+msgid "Drag to move second-level menu"
+msgstr "Faire glisser pour déplacer un menu de second niveau"
+
+msgid "Drag to reorder primary menu"
+msgstr "Faire glisser pour réorganiser les menus principaux"
+
+msgid "Drop second-level menus here"
+msgstr "Déposer les menus de second niveau ici"
 
 msgid "Enable page transition animation"
 msgstr "Activer l'animation de transition de page"
@@ -271,6 +289,9 @@ msgstr "Rapide"
 
 msgid "Finished"
 msgstr "Terminé"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Corriger les erreurs dans le titre du menu principal avant d'enregistrer."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Thème Fluent Design 2 pour LuCI"
@@ -390,8 +411,17 @@ msgstr "Moyen"
 msgid "Medium (4px)"
 msgstr "Moyen (4px)"
 
+msgid "Menu"
+msgstr "Menu"
+
 msgid "Navigation font weight"
 msgstr "Poids de la police de navigation"
+
+msgid "New primary menu"
+msgstr "Nouveau menu principal"
+
+msgid "New primary menu %d"
+msgstr "Nouveau menu principal %d"
 
 msgid "Next"
 msgstr "Suivant"
@@ -461,6 +491,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Fournisseur / Générateur par défaut"
 
+msgid "Primary menu title"
+msgstr "Titre du menu principal"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Les titres du menu principal ne peuvent pas être vides."
+
+msgid "Primary menu titles must be unique."
+msgstr "Les titres du menu principal doivent être uniques."
+
 msgid "Progress bar text color"
 msgstr "Couleur du texte de la barre de progression"
 
@@ -483,6 +522,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Respecter la préférence de réduction des animations."
+
+msgid "Restore %s to its original menu name"
+msgstr "Restaurer le nom original de %s"
+
+msgid "Restore %s to its original menu position"
+msgstr "Restaurer la position originale de %s"
+
+msgid "Restore defaults"
+msgstr "Restaurer les paramètres par défaut"
 
 msgid "Retrying with token..."
 msgstr "Tentative avec le token..."
@@ -520,6 +568,9 @@ msgstr ""
 "Définit la taille de base de la police de l'interface en pixels. La plupart "
 "des textes du thème sont mis à l'échelle à partir de cette valeur via les "
 "variables CSS Fluent. Plage recommandée : 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "Afficher %s dans le menu"
 
 msgid "Show top loading bar"
 msgstr "Afficher la barre de chargement supérieure"
@@ -565,6 +616,20 @@ msgstr "Changer le mode du thème"
 
 msgid "Text direction"
 msgstr "Direction du texte"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"La configuration du menu enregistée est invalide. Choisissez \"Restaurer les "
+"paramètres par défaut\" ou effectuez une modification avant d'enregistrer."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"La configuration du menu enregistée est invalide. Restaurez les paramètres "
+"par défaut ou modifiez la configuration avant d'enregistrer."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "

@@ -20,5 +20,5 @@
     "types": ["@lazulikao/luci-types"]
   },
   "include": ["web/**/*.ts", "web/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "web/**/*.test.ts"]
 }

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-02 22:48+0800\n"
+"POT-Creation-Date: 2026-08-10 10:50+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "%d second-level menus"
+msgstr "%d mục phụ"
 
 msgid "A new version is available!"
 msgstr "Một phiên bản mới đã có!"
@@ -25,6 +28,9 @@ msgstr "Đầu thanh."
 
 msgid "Accent color"
 msgstr "Màu điểm nhấn"
+
+msgid "Add primary menu"
+msgstr "Thêm mục chính"
 
 msgid ""
 "Adjust layout, typography, transition timing, shadows, and inject custom CSS "
@@ -217,6 +223,9 @@ msgstr ""
 msgid "Dark mode"
 msgstr "Chế độ tối"
 
+msgid "Delete primary menu"
+msgstr "Xóa mục chính"
+
 msgid "Disabled"
 msgstr "Đã vô hiệu hóa"
 
@@ -241,6 +250,15 @@ msgstr "Đã tải xuống"
 
 msgid "Downloading on router"
 msgstr "Đang tải trên router"
+
+msgid "Drag to move second-level menu"
+msgstr "Kéo để sắp xếp mục phụ"
+
+msgid "Drag to reorder primary menu"
+msgstr "Kéo để thay đổi thứ tự mục chính"
+
+msgid "Drop second-level menus here"
+msgstr "Thả các mục phụ vào đây"
 
 msgid "Enable page transition animation"
 msgstr "Bật hiệu ứng hoạt ảnh khi chuyển trang"
@@ -268,6 +286,9 @@ msgstr "Nhanh"
 
 msgid "Finished"
 msgstr "Hoàn tất"
+
+msgid "Fix primary menu title errors before saving."
+msgstr "Sửa lỗi tiêu đề mục chính trước khi lưu."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Chủ đề Fluent Design 2 cho LuCI"
@@ -387,8 +408,17 @@ msgstr "Trung bình"
 msgid "Medium (4px)"
 msgstr "Trung bình (4px)"
 
+msgid "Menu"
+msgstr "Menu"
+
 msgid "Navigation font weight"
 msgstr "Độ đậm của phông chữ điều hướng"
+
+msgid "New primary menu"
+msgstr "Mục chính mới"
+
+msgid "New primary menu %d"
+msgstr "Mục chính mới %d"
 
 msgid "Next"
 msgstr "Tiếp theo"
@@ -457,6 +487,15 @@ msgstr ""
 msgid "Preset Vendor / Generator"
 msgstr "Nhà cung cấp / Trình tạo mặc định"
 
+msgid "Primary menu title"
+msgstr "Tiêu đề menu chính"
+
+msgid "Primary menu titles cannot be empty."
+msgstr "Tiêu đề menu chính không được để trống."
+
+msgid "Primary menu titles must be unique."
+msgstr "Tiêu đề menu chính phải là duy nhất."
+
 msgid "Progress bar text color"
 msgstr "Màu chữ thanh tiến trình"
 
@@ -479,6 +518,15 @@ msgstr ""
 
 msgid "Respect reduced-motion preference"
 msgstr "Tuân thủ cài đặt giảm hiệu ứng chuyển động"
+
+msgid "Restore %s to its original menu name"
+msgstr "Khôi phục %s về tên menu ban đầu"
+
+msgid "Restore %s to its original menu position"
+msgstr "Khôi phục %s về vị trí menu ban đầu"
+
+msgid "Restore defaults"
+msgstr "Khôi phục cài đặt mặc định"
 
 msgid "Retrying with token..."
 msgstr "Đang thử lại với token..."
@@ -514,6 +562,9 @@ msgstr ""
 "Đặt kích thước phông chữ cơ sở của giao diện tính bằng pixel. Hầu hết văn "
 "bản của chủ đề được điều chỉnh dựa trên giá trị này thông qua các biến CSS "
 "Fluent. Phạm vi khuyến nghị: 12-18px."
+
+msgid "Show %s in the menu"
+msgstr "Hiển thị %s trong menu"
 
 msgid "Show top loading bar"
 msgstr "Hiển thị thanh tải ở trên"
@@ -559,6 +610,20 @@ msgstr "Chuyển đổi chế độ giao diện"
 
 msgid "Text direction"
 msgstr "Hướng văn bản"
+
+msgid ""
+"The stored menu layout is invalid. Choose \"Restore defaults\" or make an edit "
+"before saving."
+msgstr ""
+"Bố cục menu đã lưu không hợp lệ. Chọn \"Khôi phục cài đặt mặc định\" hoặc "
+"chỉnh sửa trước khi lưu."
+
+msgid ""
+"The stored menu layout is invalid. Restore defaults or edit the layout "
+"before saving."
+msgstr ""
+"Bố cục menu đã lưu không hợp lệ. Khôi phục cài đặt mặc định hoặc chỉnh sửa "
+"bố cục trước khi lưu."
 
 msgid ""
 "The theme is being installed on your router. The logs are displayed below. "
