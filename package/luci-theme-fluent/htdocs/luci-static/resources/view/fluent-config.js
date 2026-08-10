@@ -616,66 +616,12 @@ const FLUENT_DEFAULTS = {
 };
 const fluentFlagDefault = (r)=>"1" === r;
 
-;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/advanced.ts
-let advanced_e = L.form;
-
-const registerAdvancedTab = (t)=>{
-    t.tab("advanced", _("Advanced"), _("Adjust layout, typography, transition timing, shadows, and inject custom CSS variables or rules when the built-in controls are not enough."));
-    {
-        let d = t.taboption("advanced", advanced_e.Value, "font_size", _("Base font size"), _("Sets the base interface font size in pixels. Most theme text scales from this value through the Fluent CSS variables. Recommended range: 12-18px."));
-        d.datatype = "range(12,18)", d.default = FLUENT_DEFAULTS.font_size, d.rmempty = !1, d.placeholder = FLUENT_DEFAULTS.font_size;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.Value, "sidebar_width", _("Sidebar width"), _("Width of the main navigation sidebar in pixels."));
-        d.datatype = "range(200,420)", d.default = FLUENT_DEFAULTS.sidebar_width, d.rmempty = !1, d.placeholder = FLUENT_DEFAULTS.sidebar_width;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.Value, "header_height", _("Header height"), _("Height of the top header bar in pixels."));
-        d.datatype = "range(40,96)", d.default = FLUENT_DEFAULTS.header_height, d.rmempty = !1, d.placeholder = FLUENT_DEFAULTS.header_height;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.ListValue, "border_radius", _("Corner radius"), _("Controls the shared Fluent corner radius tokens used by cards, buttons, inputs, and related UI surfaces."));
-        d.value("0", _("Square (0px)")), d.value("2", _("Small (2px)")), d.value("4", _("Medium (4px)")), d.value("6", _("Rounded (6px)")), d.value("8", _("Large (8px)")), d.value("12", _("Extra large (12px)")), d.default = FLUENT_DEFAULTS.border_radius, d.rmempty = !1;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.ListValue, "card_shadow", _("Card shadow"), _("Select the shadow depth applied to themed cards and panels."));
-        d.value("none", _("None")), d.value("small", _("Small")), d.value("medium", _("Medium")), d.value("large", _("Large")), d.default = FLUENT_DEFAULTS.card_shadow, d.rmempty = !1;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.ListValue, "transition_speed", _("Theme transition speed"), _("Controls the shared Fluent transition timing used by menu, header, and other theme animations."));
-        d.value("fast", _("Fast")), d.value("normal", _("Normal")), d.value("slow", _("Slow")), d.value("none", _("Disabled")), d.default = FLUENT_DEFAULTS.transition_speed, d.rmempty = !1;
-    }
-    {
-        let d = t.taboption("advanced", advanced_e.TextValue, "custom_css", _("Custom CSS"), _("Optional raw CSS injected into the Fluent header template. Use this for extra --fluent-* variable overrides or page-specific tweaks that are not exposed as dedicated options."));
-        d.default = FLUENT_DEFAULTS.custom_css, d.rmempty = !0, d.rows = 12, d.wrap = "off", d.placeholder = ":root {\n  --fluent-sidebar-width: 280px;\n  --fluent-card-shadow: none;\n}";
-    }
-};
-
-;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/animation.ts
-let animation_e = L.form;
-
-const registerAnimationTab = (n)=>{
-    n.tab("animation", _("Animation"));
-    {
-        let i = n.taboption("animation", animation_e.Flag, "view_transition", _("Enable page transition animation"), _("Use the browser View Transition API to animate navigation between LuCI pages when supported."));
-        i.default = fluentFlagDefault(FLUENT_DEFAULTS.view_transition) ? i.enabled : i.disabled, i.rmempty = !1;
-    }
-    {
-        let i = n.taboption("animation", animation_e.Flag, "tab_animation", _("Enable tab underline animation"), _("Animate the active underline when switching between native LuCI tabs and themed tab menus."));
-        i.default = fluentFlagDefault(FLUENT_DEFAULTS.tab_animation) ? i.enabled : i.disabled, i.rmempty = !1;
-    }
-    {
-        let i = n.taboption("animation", animation_e.Flag, "prefers_reduced_motion", _("Respect reduced-motion preference"), _("When enabled, Fluent animations follow the browser or operating system reduced-motion preference."));
-        i.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? i.enabled : i.disabled, i.rmempty = !1, i.depends("tab_animation", "1");
-    }
-    {
-        let i = n.taboption("animation", animation_e.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
-        i.default = fluentFlagDefault(FLUENT_DEFAULTS.loading_bar) ? i.enabled : i.disabled, i.rmempty = !1;
-    }
-};
-
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config/shared.ts
 let shared_e = L.form;
+const omitDefaultValue = (e)=>{
+    let t = e.parse.bind(e);
+    e.parse = (r)=>e.isActive(r) && e.formvalue(r) === e.default ? e.isValid(r) ? (e.remove(r), Promise.resolve()) : t(r) : t(r);
+};
 const transparencySteps = [
     0,
     0.1,
@@ -732,8 +678,8 @@ let shared_t = "fluent-live-preview", shared_r = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3
     }
 }, shared_l = new globalThis.Map();
 const configureHexColorValue = (s, o, n = !1)=>{
-    s.rmempty = !1, s.validate = (e, t)=>!e || shared_r.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), s.render = (i, c, d)=>{
-        let u = shared_e.Value.prototype.render.call(s, i, c, d), p = ()=>{
+    s.validate = (e, t)=>!e || shared_r.test(String(t)) || _("Expecting: %s").format(_("valid HEX color value")), s.render = (i, c, u)=>{
+        let d = shared_e.Value.prototype.render.call(s, i, c, u), p = ()=>{
             let e = document.querySelector(`[id^="widget.cbid.fluent."][id$=".${o}"]`);
             e && ((e, t)=>{
                 if ("true" === e.dataset.fluentColorPicker) return;
@@ -776,7 +722,7 @@ const configureHexColorValue = (s, o, n = !1)=>{
                     })();
                 })(o, e));
         };
-        return n ? requestAnimationFrame(p) : setTimeout(p, 0), u;
+        return n ? requestAnimationFrame(p) : setTimeout(p, 0), d;
     };
 };
 const createModeSubtabs = (t, r, a)=>{
@@ -784,95 +730,156 @@ const createModeSubtabs = (t, r, a)=>{
     return l.anonymous = !0, l.addremove = !1, l.tab("light", _("Light mode")), l.tab("dark", _("Dark mode")), l;
 };
 
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/advanced.ts
+let advanced_e = L.form;
+
+
+const registerAdvancedTab = (d)=>{
+    d.tab("advanced", _("Advanced"), _("Adjust layout, typography, transition timing, shadows, and inject custom CSS variables or rules when the built-in controls are not enough."));
+    {
+        let o = d.taboption("advanced", advanced_e.Value, "font_size", _("Base font size"), _("Sets the base interface font size in pixels. Most theme text scales from this value through the Fluent CSS variables. Recommended range: 12-18px."));
+        o.datatype = "range(12,18)", o.default = FLUENT_DEFAULTS.font_size, omitDefaultValue(o), o.placeholder = FLUENT_DEFAULTS.font_size;
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.Value, "sidebar_width", _("Sidebar width"), _("Width of the main navigation sidebar in pixels."));
+        o.datatype = "range(200,420)", o.default = FLUENT_DEFAULTS.sidebar_width, omitDefaultValue(o), o.placeholder = FLUENT_DEFAULTS.sidebar_width;
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.Value, "header_height", _("Header height"), _("Height of the top header bar in pixels."));
+        o.datatype = "range(40,96)", o.default = FLUENT_DEFAULTS.header_height, omitDefaultValue(o), o.placeholder = FLUENT_DEFAULTS.header_height;
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.ListValue, "border_radius", _("Corner radius"), _("Controls the shared Fluent corner radius tokens used by cards, buttons, inputs, and related UI surfaces."));
+        o.value("0", _("Square (0px)")), o.value("2", _("Small (2px)")), o.value("4", _("Medium (4px)")), o.value("6", _("Rounded (6px)")), o.value("8", _("Large (8px)")), o.value("12", _("Extra large (12px)")), o.default = FLUENT_DEFAULTS.border_radius, omitDefaultValue(o);
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.ListValue, "card_shadow", _("Card shadow"), _("Select the shadow depth applied to themed cards and panels."));
+        o.value("none", _("None")), o.value("small", _("Small")), o.value("medium", _("Medium")), o.value("large", _("Large")), o.default = FLUENT_DEFAULTS.card_shadow, omitDefaultValue(o);
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.ListValue, "transition_speed", _("Theme transition speed"), _("Controls the shared Fluent transition timing used by menu, header, and other theme animations."));
+        o.value("fast", _("Fast")), o.value("normal", _("Normal")), o.value("slow", _("Slow")), o.value("none", _("Disabled")), o.default = FLUENT_DEFAULTS.transition_speed, omitDefaultValue(o);
+    }
+    {
+        let o = d.taboption("advanced", advanced_e.TextValue, "custom_css", _("Custom CSS"), _("Optional raw CSS injected into the Fluent header template. Use this for extra --fluent-* variable overrides or page-specific tweaks that are not exposed as dedicated options."));
+        o.default = FLUENT_DEFAULTS.custom_css, omitDefaultValue(o), o.rmempty = !0, o.rows = 12, o.wrap = "off", o.placeholder = ":root {\n  --fluent-sidebar-width: 280px;\n  --fluent-card-shadow: none;\n}";
+    }
+};
+
+;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/animation.ts
+let animation_e = L.form;
+
+
+const registerAnimationTab = (i)=>{
+    i.tab("animation", _("Animation"));
+    {
+        let o = i.taboption("animation", animation_e.Flag, "view_transition", _("Enable page transition animation"), _("Use the browser View Transition API to animate navigation between LuCI pages when supported."));
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.view_transition) ? o.enabled : o.disabled, omitDefaultValue(o);
+    }
+    {
+        let o = i.taboption("animation", animation_e.Flag, "tab_animation", _("Enable tab underline animation"), _("Animate the active underline when switching between native LuCI tabs and themed tab menus."));
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.tab_animation) ? o.enabled : o.disabled, omitDefaultValue(o);
+    }
+    {
+        let o = i.taboption("animation", animation_e.Flag, "prefers_reduced_motion", _("Respect reduced-motion preference"), _("When enabled, Fluent animations follow the browser or operating system reduced-motion preference."));
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? o.enabled : o.disabled, omitDefaultValue(o), o.depends("tab_animation", "1");
+    }
+    {
+        let o = i.taboption("animation", animation_e.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
+        o.default = fluentFlagDefault(FLUENT_DEFAULTS.loading_bar) ? o.enabled : o.disabled, omitDefaultValue(o);
+    }
+};
+
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/colors.ts
 let colors_r = L.form;
 
 
-const registerColorsTab = (t)=>{
-    t.tab("colors", _("Colors"));
-    let d = createModeSubtabs(t, "colors", "colors_mode_tabs");
+const registerColorsTab = (d)=>{
+    d.tab("colors", _("Colors"));
+    let l = createModeSubtabs(d, "colors", "colors_mode_tabs");
     {
-        let o = d.taboption("light", colors_r.Value, "primary", _("Accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in light mode."));
-        o.default = FLUENT_DEFAULTS.primary, configureHexColorValue(o, "primary");
+        let o = l.taboption("light", colors_r.Value, "primary", _("Accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in light mode."));
+        o.default = FLUENT_DEFAULTS.primary, omitDefaultValue(o), configureHexColorValue(o, "primary");
     }
     {
-        let o = d.taboption("light", colors_r.Value, "progressbar_font", _("Progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in light mode."));
-        o.default = FLUENT_DEFAULTS.progressbar_font, configureHexColorValue(o, "progressbar_font");
+        let o = l.taboption("light", colors_r.Value, "progressbar_font", _("Progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in light mode."));
+        o.default = FLUENT_DEFAULTS.progressbar_font, omitDefaultValue(o), configureHexColorValue(o, "progressbar_font");
     }
     {
-        let o = d.taboption("light", colors_r.Value, "page_bg", _("Page background"), _("HEX color used for the main page background in light mode."));
-        o.default = FLUENT_DEFAULTS.page_bg, configureHexColorValue(o, "page_bg");
+        let o = l.taboption("light", colors_r.Value, "page_bg", _("Page background"), _("HEX color used for the main page background in light mode."));
+        o.default = FLUENT_DEFAULTS.page_bg, omitDefaultValue(o), configureHexColorValue(o, "page_bg");
     }
     {
-        let o = d.taboption("light", colors_r.Value, "card_bg", _("Card background"), _("HEX color used for container/card elements in light mode."));
-        o.default = FLUENT_DEFAULTS.card_bg, configureHexColorValue(o, "card_bg");
+        let o = l.taboption("light", colors_r.Value, "card_bg", _("Card background"), _("HEX color used for container/card elements in light mode."));
+        o.default = FLUENT_DEFAULTS.card_bg, omitDefaultValue(o), configureHexColorValue(o, "card_bg");
     }
     {
-        let o = d.taboption("light", colors_r.Value, "sidebar_bg", _("Sidebar background"), _("HEX color used for the navigation sidebar in light mode."));
-        o.default = FLUENT_DEFAULTS.sidebar_bg, configureHexColorValue(o, "sidebar_bg");
+        let o = l.taboption("light", colors_r.Value, "sidebar_bg", _("Sidebar background"), _("HEX color used for the navigation sidebar in light mode."));
+        o.default = FLUENT_DEFAULTS.sidebar_bg, omitDefaultValue(o), configureHexColorValue(o, "sidebar_bg");
     }
     {
-        let o = d.taboption("dark", colors_r.Value, "dark_primary", _("Accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in dark mode."));
-        o.default = FLUENT_DEFAULTS.dark_primary, configureHexColorValue(o, "dark_primary", !0);
+        let o = l.taboption("dark", colors_r.Value, "dark_primary", _("Accent color"), _("HEX color used as the primary Fluent accent when the interface is rendered in dark mode."));
+        o.default = FLUENT_DEFAULTS.dark_primary, omitDefaultValue(o), configureHexColorValue(o, "dark_primary", !0);
     }
     {
-        let o = d.taboption("dark", colors_r.Value, "dark_progressbar_font", _("Progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in dark mode."));
-        o.default = FLUENT_DEFAULTS.dark_progressbar_font, configureHexColorValue(o, "dark_progressbar_font", !0);
+        let o = l.taboption("dark", colors_r.Value, "dark_progressbar_font", _("Progress bar text color"), _("HEX color used for progress-bar labels while the interface is rendered in dark mode."));
+        o.default = FLUENT_DEFAULTS.dark_progressbar_font, omitDefaultValue(o), configureHexColorValue(o, "dark_progressbar_font", !0);
     }
     {
-        let o = d.taboption("dark", colors_r.Value, "dark_page_bg", _("Page background"), _("HEX color used for the main page background in dark mode."));
-        o.default = FLUENT_DEFAULTS.dark_page_bg, configureHexColorValue(o, "dark_page_bg", !0);
+        let o = l.taboption("dark", colors_r.Value, "dark_page_bg", _("Page background"), _("HEX color used for the main page background in dark mode."));
+        o.default = FLUENT_DEFAULTS.dark_page_bg, omitDefaultValue(o), configureHexColorValue(o, "dark_page_bg", !0);
     }
     {
-        let o = d.taboption("dark", colors_r.Value, "dark_card_bg", _("Card background"), _("HEX color used for container/card elements in dark mode."));
-        o.default = FLUENT_DEFAULTS.dark_card_bg, configureHexColorValue(o, "dark_card_bg", !0);
+        let o = l.taboption("dark", colors_r.Value, "dark_card_bg", _("Card background"), _("HEX color used for container/card elements in dark mode."));
+        o.default = FLUENT_DEFAULTS.dark_card_bg, omitDefaultValue(o), configureHexColorValue(o, "dark_card_bg", !0);
     }
     {
-        let o = d.taboption("dark", colors_r.Value, "dark_sidebar_bg", _("Sidebar background"), _("HEX color used for the navigation sidebar in dark mode."));
-        o.default = FLUENT_DEFAULTS.dark_sidebar_bg, configureHexColorValue(o, "dark_sidebar_bg", !0);
+        let o = l.taboption("dark", colors_r.Value, "dark_sidebar_bg", _("Sidebar background"), _("HEX color used for the navigation sidebar in dark mode."));
+        o.default = FLUENT_DEFAULTS.dark_sidebar_bg, omitDefaultValue(o), configureHexColorValue(o, "dark_sidebar_bg", !0);
     }
 };
 
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/general.ts
 let general_e = L.form;
 
-const registerGeneralTab = (a)=>{
-    a.tab("general", _("General"));
+
+const registerGeneralTab = (l)=>{
+    l.tab("general", _("General"));
     {
-        let o = a.taboption("general", general_e.ListValue, "mode", _("Color mode"));
-        o.value("auto", _("Follow system")), o.value("light", _("Force light mode")), o.value("dark", _("Force dark mode")), o.default = FLUENT_DEFAULTS.mode, o.rmempty = !1, o.description = _("Use the system/browser preference, or always render the Fluent theme in a fixed light or dark palette.");
+        let o = l.taboption("general", general_e.ListValue, "mode", _("Color mode"));
+        o.value("auto", _("Follow system")), o.value("light", _("Force light mode")), o.value("dark", _("Force dark mode")), o.default = FLUENT_DEFAULTS.mode, omitDefaultValue(o), o.description = _("Use the system/browser preference, or always render the Fluent theme in a fixed light or dark palette.");
     }
     {
-        let o = a.taboption("general", general_e.ListValue, "direction_mode", _("Text direction"));
-        o.value("auto", _("Automatic (Arabic/Persian locales only)")), o.value("rtl", _("Force RTL")), o.value("ltr", _("Force LTR")), o.default = FLUENT_DEFAULTS.direction_mode, o.rmempty = !1, o.description = _("Choose the document direction for authenticated and login pages. Automatic mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-*) to RTL and falls back to LTR for missing or unrecognized locales.");
+        let o = l.taboption("general", general_e.ListValue, "direction_mode", _("Text direction"));
+        o.value("auto", _("Automatic (Arabic/Persian locales only)")), o.value("rtl", _("Force RTL")), o.value("ltr", _("Force LTR")), o.default = FLUENT_DEFAULTS.direction_mode, omitDefaultValue(o), o.description = _("Choose the document direction for authenticated and login pages. Automatic mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, fa-*) to RTL and falls back to LTR for missing or unrecognized locales.");
     }
     {
-        let o = a.taboption("general", general_e.ListValue, "font_weight", _("Navigation font weight"));
-        o.value("normal", _("Normal")), o.value("600", _("Semibold")), o.default = FLUENT_DEFAULTS.font_weight, o.rmempty = !1, o.description = _("Controls the font weight used by main navigation labels and related theme text accents.");
+        let o = l.taboption("general", general_e.ListValue, "font_weight", _("Navigation font weight"));
+        o.value("normal", _("Normal")), o.value("600", _("Semibold")), o.default = FLUENT_DEFAULTS.font_weight, omitDefaultValue(o), o.description = _("Controls the font weight used by main navigation labels and related theme text accents.");
     }
     {
-        let o = a.taboption("general", general_e.ListValue, "control_height", _("Control height"));
-        o.value("32", _("Compact (32px)")), o.value("42", _("Comfortable (42px)")), o.default = FLUENT_DEFAULTS.control_height, o.rmempty = !1, o.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
+        let o = l.taboption("general", general_e.ListValue, "control_height", _("Control height"));
+        o.value("32", _("Compact (32px)")), o.value("42", _("Comfortable (42px)")), o.default = FLUENT_DEFAULTS.control_height, omitDefaultValue(o), o.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
     }
     {
-        let r = a.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
-        r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, r.rmempty = !1;
+        let r = l.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
+        r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, omitDefaultValue(r);
     }
     {
-        let o = a.taboption("general", general_e.ListValue, "progressbar_text_position", _("Progress bar text position"));
-        o.value("top-start", _("Above bar, start")), o.value("bottom-start", _("Below bar, start")), o.value("top-end", _("Above bar, end")), o.value("bottom-end", _("Below bar, end")), o.default = FLUENT_DEFAULTS.progressbar_text_position, o.rmempty = !1, o.description = _("Position of progress-bar labels relative to the bar. Start/end alignment follows the text direction (LTR or RTL).");
+        let o = l.taboption("general", general_e.ListValue, "progressbar_text_position", _("Progress bar text position"));
+        o.value("top-start", _("Above bar, start")), o.value("bottom-start", _("Below bar, start")), o.value("top-end", _("Above bar, end")), o.value("bottom-end", _("Below bar, end")), o.default = FLUENT_DEFAULTS.progressbar_text_position, omitDefaultValue(o), o.description = _("Position of progress-bar labels relative to the bar. Start/end alignment follows the text direction (LTR or RTL).");
     }
 };
 
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config/tabs/login.tsx
 
-let login_a = L.form, login_n = L.rpc, login_l = L.fs, login_i = L.ui, login_r = login_n.declare({
+let login_a = L.form, login_n = L.rpc, login_l = L.fs, login_i = L.ui, login_o = login_n.declare({
     object: "luci.fluent",
     method: "avail",
     expect: {
         avail: 0
     }
-}), login_o = login_n.declare({
+}), login_r = login_n.declare({
     object: "luci.fluent",
     method: "remove",
     params: [
@@ -893,7 +900,7 @@ let login_a = L.form, login_n = L.rpc, login_l = L.fs, login_i = L.ui, login_r =
 });
 
 
-let login_g = new Set([
+let login_p = new Set([
     "jpg",
     "jpeg",
     "png",
@@ -901,11 +908,11 @@ let login_g = new Set([
     "webp",
     "mp4",
     "webm"
-]), login_p = (e)=>e.split(".").pop()?.toLowerCase() ?? "", login_m = (e)=>login_g.has(login_p(e)), login_b = (e)=>e >= 1048576 ? `${(e / 1024 / 1024).toFixed(1)} GiB` : e >= 1024 ? `${(e / 1024).toFixed(1)} MiB` : `${e} KiB`, login_f = (e, t)=>{
+]), login_b = (e)=>e.split(".").pop()?.toLowerCase() ?? "", login_m = (e)=>login_p.has(login_b(e)), login_f = (e)=>e >= 1048576 ? `${(e / 1024 / 1024).toFixed(1)} GiB` : e >= 1024 ? `${(e / 1024).toFixed(1)} MiB` : `${e} KiB`, login_h = (e, t)=>{
     if (0 !== e) throw Error(`${t} failed with code ${e}.`);
-}, login_h = (e, t)=>{
+}, login_v = (e, t)=>{
     dom.content(e, t);
-}, login_v = login_a.DummyValue.extend({
+}, login_k = login_a.DummyValue.extend({
     renderWidget: (a, n, c)=>{
         let s = jsx("div", {
             class: "cbi-value-description fluent-bg-status",
@@ -917,31 +924,31 @@ let login_g = new Set([
             class: "btn cbi-button cbi-button-action",
             type: "button",
             children: "Upload background"
-        }), v = jsx("div", {
+        }), p = jsx("div", {
             class: "fluent-bg-actions",
             children: g
-        }), y = jsx("div", {
+        }), k = jsx("div", {
             class: "fluent-bg-list"
-        }), k = (e)=>{
-            login_h(s, [
+        }), y = (e)=>{
+            login_v(s, [
                 document.createTextNode(e)
             ]);
         }, $ = ()=>login_l.list("/www/luci-static/fluent/background").catch(()=>[]).then((a)=>{
                 let n = a.filter((e)=>"file" === e.type && login_m(String(e.name ?? ""))).sort((e, t)=>String(e.name ?? "").localeCompare(String(t.name ?? "")));
-                n.length ? login_h(y, n.map((a)=>{
-                    let n, l, r, d = String(a.name ?? ""), c = jsx("button", {
+                n.length ? login_v(k, n.map((a)=>{
+                    let n, l, o, d = String(a.name ?? ""), c = jsx("button", {
                         class: "btn cbi-button cbi-button-remove",
                         type: "button",
                         children: "Delete"
-                    }), s = login_i.createHandlerFn(undefined, ()=>(k(`Deleting ${d}...`), login_o(d).then((e)=>(login_f(e, `Deleting ${d}`), $().then(()=>{
-                                k(`Deleted ${d}.`);
+                    }), s = login_i.createHandlerFn(undefined, ()=>(y(`Deleting ${d}...`), login_r(d).then((e)=>(login_h(e, `Deleting ${d}`), $().then(()=>{
+                                y(`Deleted ${d}.`);
                             }))).catch((e)=>{
-                            k(`Failed to delete ${d}: ${e instanceof Error ? e.message : String(e)}`);
+                            y(`Failed to delete ${d}: ${e instanceof Error ? e.message : String(e)}`);
                         })));
                     return s && c.addEventListener("click", s), jsxs("div", {
                         class: "fluent-bg-item",
                         children: [
-                            (n = login_p(d), l = `/luci-static/fluent/background/${encodeURIComponent(d)}`, "mp4" === n || "webm" === n ? jsx("video", {
+                            (n = login_b(d), l = `/luci-static/fluent/background/${encodeURIComponent(d)}`, "mp4" === n || "webm" === n ? jsx("video", {
                                 class: "fluent-bg-preview fluent-bg-preview-video",
                                 muted: !0,
                                 playsInline: !0,
@@ -961,7 +968,7 @@ let login_g = new Set([
                                     }),
                                     jsx("span", {
                                         class: "fluent-bg-size",
-                                        children: (r = Number(a.size ?? 0)) > 0 ? login_b(Math.max(1, Math.ceil(r / 1024))) : "Unknown size"
+                                        children: (o = Number(a.size ?? 0)) > 0 ? login_f(Math.max(1, Math.ceil(o / 1024))) : "Unknown size"
                                     })
                                 ]
                             }),
@@ -971,7 +978,7 @@ let login_g = new Set([
                             })
                         ]
                     });
-                })) : login_h(y, jsxs("div", {
+                })) : login_v(k, jsxs("div", {
                     class: "fluent-bg-empty",
                     children: [
                         jsx("strong", {
@@ -984,30 +991,30 @@ let login_g = new Set([
                 }));
             });
         return g.addEventListener("click", ()=>{
-            k("Selecting background file..."), login_i.uploadFile("/tmp/fluent_background.tmp").then((e)=>{
+            y("Selecting background file..."), login_i.uploadFile("/tmp/fluent_background.tmp").then((e)=>{
                 let t;
                 if (!e?.name) throw Error("Upload did not return a filename.");
                 let a = "" !== (t = e.name.replace(/^.*[\\/]/, "").replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "")) && "." !== t && ".." !== t && login_m(t) ? t : `background-${Date.now()}.jpg`;
-                return k(`Saving ${a}...`), login_d(a).then((e)=>(login_f(e, `Saving ${a}`), $().then(()=>{
-                        k(`Saved ${a}.`);
+                return y(`Saving ${a}...`), login_d(a).then((e)=>(login_h(e, `Saving ${a}`), $().then(()=>{
+                        y(`Saved ${a}.`);
                     }))).catch((e)=>{
-                    k(`Failed to save ${a}: ${e instanceof Error ? e.message : String(e)}`);
+                    y(`Failed to save ${a}: ${e instanceof Error ? e.message : String(e)}`);
                 });
             }).catch((e)=>{
                 let t = e instanceof Error ? e.message : String(e);
-                t && "false" !== t ? k(`Upload failed: ${t}`) : k("Upload canceled.");
+                t && "false" !== t ? y(`Upload failed: ${t}`) : y("Upload canceled.");
             });
-        }), login_r().then((e)=>{
-            k(`Ready to upload or remove custom backgrounds. Available space: ${login_b(e)}.`);
+        }), login_o().then((e)=>{
+            y(`Ready to upload or remove custom backgrounds. Available space: ${login_f(e)}.`);
         }).catch(()=>{
-            k("Ready to upload or remove custom backgrounds.");
+            y("Ready to upload or remove custom backgrounds.");
         }), $(), jsx("div", {
             class: "fluent-bg-manager",
             children: [
                 s,
                 u,
-                v,
-                y
+                p,
+                k
             ]
         });
     }
@@ -1016,27 +1023,27 @@ const registerLoginTab = (e)=>{
     e.tab("login", _("Login page"), _("Customize the login page background, card opacity, and blur radius for light and dark modes."));
     {
         let t = e.taboption("login", login_a.ListValue, "login_bg", "Background source", "Select the background image source for the login page.");
-        t.value("microsoft", "Microsoft dynamic canvas"), t.value("custom", "Custom background"), t.value("bing", "Bing daily wallpaper"), t.default = FLUENT_DEFAULTS.login_bg, t.rmempty = !1;
+        t.value("microsoft", "Microsoft dynamic canvas"), t.value("custom", "Custom background"), t.value("bing", "Bing daily wallpaper"), t.default = FLUENT_DEFAULTS.login_bg, omitDefaultValue(t);
     }
-    e.taboption("login", login_v, "_bg_mgr", "Custom backgrounds", "Upload and manage custom background images for the login page.").depends("login_bg", "custom");
+    e.taboption("login", login_k, "_bg_mgr", "Custom backgrounds", "Upload and manage custom background images for the login page.").depends("login_bg", "custom");
     let t = createModeSubtabs(e, "login", "login_mode_tabs");
     {
         let e = t.taboption("light", login_a.ListValue, "transparency", _("Login card opacity"), _("Opacity of the login card in light mode. 0 is fully transparent and 1 is fully opaque."));
         for (let t of transparencySteps)e.value(String(t));
-        e.default = FLUENT_DEFAULTS.transparency, e.rmempty = !1;
+        e.default = FLUENT_DEFAULTS.transparency, omitDefaultValue(e);
     }
     {
         let e = t.taboption("light", login_a.Value, "blur", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in light mode. Use 0 to disable blur."));
-        e.datatype = "ufloat", e.default = FLUENT_DEFAULTS.blur, e.rmempty = !1;
+        e.datatype = "ufloat", e.default = FLUENT_DEFAULTS.blur, omitDefaultValue(e);
     }
     {
         let e = t.taboption("dark", login_a.ListValue, "transparency_dark", _("Login card opacity"), _("Opacity of the login card in dark mode. 0 is fully transparent and 1 is fully opaque."));
         for (let t of transparencySteps)e.value(String(t));
-        e.default = FLUENT_DEFAULTS.transparency_dark, e.rmempty = !1;
+        e.default = FLUENT_DEFAULTS.transparency_dark, omitDefaultValue(e);
     }
     {
         let e = t.taboption("dark", login_a.Value, "blur_dark", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."));
-        e.datatype = "ufloat", e.default = FLUENT_DEFAULTS.blur_dark, e.rmempty = !1;
+        e.datatype = "ufloat", e.default = FLUENT_DEFAULTS.blur_dark, omitDefaultValue(e);
     }
 };
 

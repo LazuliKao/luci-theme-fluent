@@ -1,5 +1,20 @@
 const form = L.form;
 
+// LuCI 24.10/25.12 writes non-empty defaults when the UCI option is absent.
+// Remove them explicitly so defaults remain runtime fallbacks instead of stored values.
+export const omitDefaultValue = (option: LuCI.form.AbstractValue): void => {
+  const parse = option.parse.bind(option);
+  option.parse = (sectionId: string): Promise<void> => {
+    if (option.isActive(sectionId) && option.formvalue(sectionId) === option.default) {
+      if (!option.isValid(sectionId)) return parse(sectionId);
+      option.remove(sectionId);
+      return Promise.resolve();
+    }
+
+    return parse(sectionId);
+  };
+};
+
 export const transparencySteps: number[] = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 const PREVIEW_STYLE_ID = "fluent-live-preview";
 const HEX_RE = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
@@ -123,7 +138,6 @@ const publishPreview = (uciKey: string, value: string): void => {
 };
 
 export const configureHexColorValue = (option: LuCI.form.Value, selectorSuffix: string, useAnimationFrame = false): void => {
-  option.rmempty = false;
   option.validate = (sectionId: string, value: unknown) => {
     if (sectionId) {
       return HEX_RE.test(String(value)) || _("Expecting: %s").format(_("valid HEX color value"));

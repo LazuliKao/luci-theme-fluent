@@ -9,11 +9,6 @@ if ! uci -q get fluent.@global[0] >/dev/null 2>&1; then
 	uci commit fluent
 fi
 
-if ! uci -q get fluent.@global[0].direction_mode >/dev/null 2>&1; then
-	uci set fluent.@global[0].direction_mode='auto'
-	uci commit fluent
-fi
-
 mkdir -p /www/luci-static/fluent/background
 chmod 0755 /www/luci-static/fluent/background
 exit 0

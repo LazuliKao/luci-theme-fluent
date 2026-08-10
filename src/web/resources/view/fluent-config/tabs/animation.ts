@@ -1,6 +1,7 @@
 const form = L.form;
 
 import { FLUENT_DEFAULTS, fluentFlagDefault } from "../../../fluent-defaults";
+import { omitDefaultValue } from "../shared";
 
 export const registerAnimationTab = (section: LuCI.form.TypedSection): void => {
   section.tab("animation", _("Animation"));
@@ -14,7 +15,7 @@ export const registerAnimationTab = (section: LuCI.form.TypedSection): void => {
       _("Use the browser View Transition API to animate navigation between LuCI pages when supported."),
     );
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.view_transition) ? option.enabled : option.disabled;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -26,7 +27,7 @@ export const registerAnimationTab = (section: LuCI.form.TypedSection): void => {
       _("Animate the active underline when switching between native LuCI tabs and themed tab menus."),
     );
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.tab_animation) ? option.enabled : option.disabled;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -38,13 +39,13 @@ export const registerAnimationTab = (section: LuCI.form.TypedSection): void => {
       _("When enabled, Fluent animations follow the browser or operating system reduced-motion preference."),
     );
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.prefers_reduced_motion) ? option.enabled : option.disabled;
-    option.rmempty = false;
+    omitDefaultValue(option);
     option.depends("tab_animation", "1");
   }
 
   {
     const option = section.taboption("animation", form.Flag, "loading_bar", _("Show top loading bar"), _("Display the themed loading indicator at the top edge during page loads and transitions."));
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.loading_bar) ? option.enabled : option.disabled;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 };

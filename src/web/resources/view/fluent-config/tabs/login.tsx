@@ -8,7 +8,7 @@ const callFluentRemove = rpc.declare<number, [string]>({ object: "luci.fluent", 
 const callFluentRename = rpc.declare<number, [string]>({ object: "luci.fluent", method: "rename", params: ["newname"], expect: { result: 0 } });
 
 import { FLUENT_DEFAULTS } from "../../../fluent-defaults";
-import { createModeSubtabs, transparencySteps } from "../shared";
+import { createModeSubtabs, omitDefaultValue, transparencySteps } from "../shared";
 
 const BACKGROUND_PATH = "/www/luci-static/fluent/background";
 const BACKGROUND_URL = "/luci-static/fluent/background/";
@@ -209,7 +209,7 @@ export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
     option.value("custom", "Custom background");
     option.value("bing", "Bing daily wallpaper");
     option.default = FLUENT_DEFAULTS.login_bg;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -223,14 +223,14 @@ export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
     const option = modeSection.taboption("light", form.ListValue, "transparency", _("Login card opacity"), _("Opacity of the login card in light mode. 0 is fully transparent and 1 is fully opaque."));
     for (const step of transparencySteps) option.value(String(step));
     option.default = FLUENT_DEFAULTS.transparency;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
     const option = modeSection.taboption("light", form.Value, "blur", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in light mode. Use 0 to disable blur."));
     option.datatype = "ufloat";
     option.default = FLUENT_DEFAULTS.blur;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -243,13 +243,13 @@ export const registerLoginTab = (section: LuCI.form.TypedSection): void => {
     );
     for (const step of transparencySteps) option.value(String(step));
     option.default = FLUENT_DEFAULTS.transparency_dark;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
     const option = modeSection.taboption("dark", form.Value, "blur_dark", _("Backdrop blur radius"), _("Blur radius in pixels behind the login card in dark mode. Use 0 to disable blur."));
     option.datatype = "ufloat";
     option.default = FLUENT_DEFAULTS.blur_dark;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 };

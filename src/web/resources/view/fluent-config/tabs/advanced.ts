@@ -1,6 +1,7 @@
 const form = L.form;
 
 import { FLUENT_DEFAULTS } from "../../../fluent-defaults";
+import { omitDefaultValue } from "../shared";
 
 export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
   section.tab("advanced", _("Advanced"), _("Adjust layout, typography, transition timing, shadows, and inject custom CSS variables or rules when the built-in controls are not enough."));
@@ -15,7 +16,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     );
     option.datatype = "range(12,18)";
     option.default = FLUENT_DEFAULTS.font_size;
-    option.rmempty = false;
+    omitDefaultValue(option);
     option.placeholder = FLUENT_DEFAULTS.font_size;
   }
 
@@ -23,7 +24,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     const option = section.taboption("advanced", form.Value, "sidebar_width", _("Sidebar width"), _("Width of the main navigation sidebar in pixels."));
     option.datatype = "range(200,420)";
     option.default = FLUENT_DEFAULTS.sidebar_width;
-    option.rmempty = false;
+    omitDefaultValue(option);
     option.placeholder = FLUENT_DEFAULTS.sidebar_width;
   }
 
@@ -31,7 +32,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     const option = section.taboption("advanced", form.Value, "header_height", _("Header height"), _("Height of the top header bar in pixels."));
     option.datatype = "range(40,96)";
     option.default = FLUENT_DEFAULTS.header_height;
-    option.rmempty = false;
+    omitDefaultValue(option);
     option.placeholder = FLUENT_DEFAULTS.header_height;
   }
 
@@ -50,7 +51,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     option.value("8", _("Large (8px)"));
     option.value("12", _("Extra large (12px)"));
     option.default = FLUENT_DEFAULTS.border_radius;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -60,7 +61,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     option.value("medium", _("Medium"));
     option.value("large", _("Large"));
     option.default = FLUENT_DEFAULTS.card_shadow;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -76,7 +77,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
     option.value("slow", _("Slow"));
     option.value("none", _("Disabled"));
     option.default = FLUENT_DEFAULTS.transition_speed;
-    option.rmempty = false;
+    omitDefaultValue(option);
   }
 
   {
@@ -88,6 +89,7 @@ export const registerAdvancedTab = (section: LuCI.form.TypedSection): void => {
       _("Optional raw CSS injected into the Fluent header template. Use this for extra --fluent-* variable overrides or page-specific tweaks that are not exposed as dedicated options."),
     ) as LuCI.form.TextValue;
     option.default = FLUENT_DEFAULTS.custom_css;
+    omitDefaultValue(option);
     option.rmempty = true;
     option.rows = 12;
     option.wrap = "off";
