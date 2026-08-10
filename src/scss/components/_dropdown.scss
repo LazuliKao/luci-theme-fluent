@@ -119,6 +119,10 @@ cbi-dropdown,
     min-height: unset;
     mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent 100%);
 
+    @include rtl {
+      mask-image: linear-gradient(to left, #000 calc(100% - 24px), transparent 100%);
+    }
+
     > li {
       display: none;
       flex-shrink: 0; // Prevent selected items/tags from being squished

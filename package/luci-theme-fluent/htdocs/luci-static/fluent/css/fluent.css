@@ -5309,6 +5309,41 @@ cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)
   mask-image: linear-gradient(to right, #000 calc(100% - 24px), #0000 100%);
 }
 
+html[dir="rtl"] cbi-dropdown > ul.preview, body[data-fluent-dir="rtl"] cbi-dropdown > ul.preview, html[dir="rtl"] cbi-dropdown > ul:not(.dropdown), body[data-fluent-dir="rtl"] cbi-dropdown > ul:not(.dropdown), html[dir="rtl"] .cbi-dropdown > ul.preview, body[data-fluent-dir="rtl"] .cbi-dropdown > ul.preview, html[dir="rtl"] .cbi-dropdown > ul:not(.dropdown), body[data-fluent-dir="rtl"] .cbi-dropdown > ul:not(.dropdown), html[dir="rtl"] .fluent-custom-select > ul.preview, body[data-fluent-dir="rtl"] .fluent-custom-select > ul.preview, html[dir="rtl"] .fluent-custom-select > ul:not(.dropdown), body[data-fluent-dir="rtl"] .fluent-custom-select > ul:not(.dropdown) {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+html[dir="rtl"] cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+body[data-fluent-dir="rtl"] cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+html[dir="rtl"] .cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+body[data-fluent-dir="rtl"] .cbi-dropdown:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+html[dir="rtl"] .fluent-custom-select:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
+body[data-fluent-dir="rtl"] .fluent-custom-select:not([open]):not(:has( > ul:not(.dropdown))):not(:has( > ul.preview)) > ul.dropdown {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+  mask-image: linear-gradient(to left, #000 calc(100% - 24px), #0000 100%);
+}
+
 cbi-dropdown > ul.preview > li, cbi-dropdown > ul:not(.dropdown) > li, .cbi-dropdown > ul.preview > li, .cbi-dropdown > ul:not(.dropdown) > li, .fluent-custom-select > ul.preview > li, .fluent-custom-select > ul:not(.dropdown) > li {
   text-overflow: ellipsis;
   white-space: nowrap;
