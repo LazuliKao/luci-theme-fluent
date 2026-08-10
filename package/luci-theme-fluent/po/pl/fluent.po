@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:20+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -74,6 +74,13 @@ msgstr ""
 "Dotyczy standardowych przycisków, pól wprowadzania, list wyboru oraz "
 "podobnych elementów sterujących formularzami w całym motywie."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+"Czy na pewno chcesz usunąć %d nieprawidłowych/niezainstalowanych elementów "
+"menu lub reguł?"
+
 msgid "Author"
 msgstr "Autor"
 
@@ -142,6 +149,15 @@ msgstr ""
 "automatyczny rozpoznaje kody języków arabskiego i perskiego (ar, ar_*, ar-*, "
 "fa, fa_*, fa-*) i ustawia układ RTL, a w przypadku brakujących lub "
 "nieznanych lokalizacji przełącza się na LTR."
+
+msgid "Clean up"
+msgstr "Oczyść"
+
+msgid "Clean up invalid items"
+msgstr "Usuń nieprawidłowe elementy"
+
+msgid "Clean up invalid items (%d)"
+msgstr "Usuń nieprawidłowe elementy (%d)"
 
 msgid "Close"
 msgstr "Zamknij"
@@ -414,6 +430,9 @@ msgstr "Średni (4px)"
 msgid "Menu"
 msgstr "Menu"
 
+msgid "Menu title cannot be empty."
+msgstr "Tytuł menu nie może być pusty."
+
 msgid "Navigation font weight"
 msgstr "Waga czcionki nawigacji"
 
@@ -529,6 +548,9 @@ msgstr "Przywróć %s do oryginalnej pozycji w menu"
 msgid "Restore defaults"
 msgstr "Przywróć domyślne ustawienia"
 
+msgid "Restore to original title"
+msgstr "Przywróć oryginalny tytuł"
+
 msgid "Retrying with token..."
 msgstr "Ponawianie próby z tokenem..."
 
@@ -549,6 +571,9 @@ msgstr "Wyszukaj pozycje menu"
 
 msgid "Search menu..."
 msgstr "Wyszukuj w menu..."
+
+msgid "Second-level menu title"
+msgstr "Tytuł podmenu"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Wybierz głębokość cienia stosowaną do kart i paneli motywu."

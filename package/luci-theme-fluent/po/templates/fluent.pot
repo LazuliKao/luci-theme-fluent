@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:18+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -65,6 +65,11 @@ msgid ""
 "across the theme."
 msgstr ""
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+
 msgid "Author"
 msgstr ""
 
@@ -124,6 +129,15 @@ msgid ""
 "Choose the document direction for authenticated and login pages. Automatic "
 "mode resolves Arabic and Persian locale codes (ar, ar_*, ar-*, fa, fa_*, "
 "fa-*) to RTL and falls back to LTR for missing or unrecognized locales."
+msgstr ""
+
+msgid "Clean up"
+msgstr ""
+
+msgid "Clean up invalid items"
+msgstr ""
+
+msgid "Clean up invalid items (%d)"
 msgstr ""
 
 msgid "Close"
@@ -377,6 +391,9 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
+msgid "Menu title cannot be empty."
+msgstr ""
+
 msgid "Navigation font weight"
 msgstr ""
 
@@ -481,6 +498,9 @@ msgstr ""
 msgid "Restore defaults"
 msgstr ""
 
+msgid "Restore to original title"
+msgstr ""
+
 msgid "Retrying with token..."
 msgstr ""
 
@@ -500,6 +520,9 @@ msgid "Search menu items"
 msgstr ""
 
 msgid "Search menu..."
+msgstr ""
+
+msgid "Second-level menu title"
 msgstr ""
 
 msgid "Select the shadow depth applied to themed cards and panels."

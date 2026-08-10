@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -75,6 +75,13 @@ msgstr ""
 "Gilt für Standard-Buttons, Eingabefelder, Auswahlmenüs und ähnliche "
 "Formularsteuerelemente innerhalb des Themes."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+"Möchten Sie wirklich %d ungültige oder deinstallierte Menüpunkte oder Regeln "
+"entfernen?"
+
 msgid "Author"
 msgstr "Autor"
 
@@ -143,6 +150,15 @@ msgstr ""
 "Anmeldeseiten. Der automatische Modus löst arabische und persische "
 "Ländercodes (ar, ar_*, ar-*, fa, fa_*, fa-*) in RTL auf und verwendet "
 "standardmäßig LTR für fehlende oder nicht erkannte Ländercodes."
+
+msgid "Clean up"
+msgstr "Bereinigen"
+
+msgid "Clean up invalid items"
+msgstr "Ungültige Elemente bereinigen"
+
+msgid "Clean up invalid items (%d)"
+msgstr "Ungültige Elemente bereinigen (%d)"
 
 msgid "Close"
 msgstr "Schließen"
@@ -416,6 +432,9 @@ msgstr "Mittel (4px)"
 msgid "Menu"
 msgstr "Menü"
 
+msgid "Menu title cannot be empty."
+msgstr "Der Menütitel darf nicht leer sein."
+
 msgid "Navigation font weight"
 msgstr "Schriftstärke der Navigation"
 
@@ -534,6 +553,9 @@ msgstr "%s auf die ursprüngliche Menüposition zurücksetzen"
 msgid "Restore defaults"
 msgstr "Standardwerte wiederherstellen"
 
+msgid "Restore to original title"
+msgstr "Auf ursprünglichen Titel zurücksetzen"
+
 msgid "Retrying with token..."
 msgstr "Erneuter Versuch mit Token..."
 
@@ -554,6 +576,9 @@ msgstr "Menüpunkte suchen"
 
 msgid "Search menu..."
 msgstr "Menü suchen..."
+
+msgid "Second-level menu title"
+msgstr "Titel des Untermenüs"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Wählen Sie die Schattenintensität für thematisierte Karten und Panels."

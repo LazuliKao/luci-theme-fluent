@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -75,6 +75,13 @@ msgstr ""
 "Применяется к стандартным кнопкам, полям ввода, спискам выбора и похожим "
 "элементам формы во всей теме."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+"Вы уверены, что хотите удалить %d недействительных/неустановленных пунктов "
+"меню или правил?"
+
 msgid "Author"
 msgstr "Автор"
 
@@ -143,6 +150,15 @@ msgstr ""
 "автоматическом режиме коды локалей арабского и персидского языков (ar, ar_*, "
 "ar-*, fa, fa_*, fa-*) определяются как RTL, а для отсутствующих или "
 "нераспознанных локалей используется LTR."
+
+msgid "Clean up"
+msgstr "Очистить"
+
+msgid "Clean up invalid items"
+msgstr "Очистить недействительные элементы"
+
+msgid "Clean up invalid items (%d)"
+msgstr "Очистить недействительные элементы (%d)"
 
 msgid "Close"
 msgstr "Закрыть"
@@ -408,6 +424,9 @@ msgstr "Средний (4px)"
 msgid "Menu"
 msgstr "Меню"
 
+msgid "Menu title cannot be empty."
+msgstr "Название пункта меню не может быть пустым."
+
 msgid "Navigation font weight"
 msgstr "Насыщенность шрифта навигации"
 
@@ -523,6 +542,9 @@ msgstr "Восстановить исходное положение меню д
 msgid "Restore defaults"
 msgstr "Восстановить настройки по умолчанию"
 
+msgid "Restore to original title"
+msgstr "Восстановить исходное название"
+
 msgid "Retrying with token..."
 msgstr "Повторная попытка с токеном..."
 
@@ -543,6 +565,9 @@ msgstr "Поиск по пунктам меню"
 
 msgid "Search menu..."
 msgstr "Искать в меню..."
+
+msgid "Second-level menu title"
+msgstr "Название второго уровня меню"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Выберите глубину тени для тематических карточек и панелей."

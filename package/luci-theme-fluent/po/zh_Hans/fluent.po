@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:18+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: LazuliKao\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -65,6 +65,11 @@ msgid ""
 "across the theme."
 msgstr "适用于整个主题中的标准按钮、输入框、选择框及类似表单控件。"
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr "您确定要清除 %d 个无效/已卸载的菜单项或规则吗？"
+
 msgid "Author"
 msgstr "作者"
 
@@ -127,6 +132,15 @@ msgid ""
 msgstr ""
 "为已登录页面和登录页面选择文档方向。自动模式会将阿拉伯语和波斯语语言环境代码（ar、ar_*、ar-*、fa、fa_*、fa-*）解析为 "
 "RTL，对于缺失或无法识别的语言环境则回退为 LTR。"
+
+msgid "Clean up"
+msgstr "清除"
+
+msgid "Clean up invalid items"
+msgstr "清除无效项"
+
+msgid "Clean up invalid items (%d)"
+msgstr "清除无效项 (%d)"
 
 msgid "Close"
 msgstr "关闭"
@@ -379,6 +393,9 @@ msgstr "中号 (4px)"
 msgid "Menu"
 msgstr "菜单"
 
+msgid "Menu title cannot be empty."
+msgstr "菜单标题不能为空。"
+
 msgid "Navigation font weight"
 msgstr "导航字体粗细"
 
@@ -483,6 +500,9 @@ msgstr "恢复 %s 为其原始菜单位置"
 msgid "Restore defaults"
 msgstr "恢复默认设置"
 
+msgid "Restore to original title"
+msgstr "恢复为原始标题"
+
 msgid "Retrying with token..."
 msgstr "正在使用令牌重试..."
 
@@ -503,6 +523,9 @@ msgstr "搜索菜单项"
 
 msgid "Search menu..."
 msgstr "搜索菜单..."
+
+msgid "Second-level menu title"
+msgstr "二级菜单标题"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "选择应用于主题卡片和面板的阴影深度。"
@@ -655,15 +678,3 @@ msgstr "您可以在这里创建新的令牌："
 
 msgid "Your theme is up to date!"
 msgstr "您的主题已是最新版本！"
-
-msgid "Clean up invalid items"
-msgstr "清除无效项"
-
-msgid "Clean up invalid items (%d)"
-msgstr "清除无效项 (%d)"
-
-msgid "Are you sure you want to clean up %d invalid/uninstalled menu items or rules?"
-msgstr "您确定要清除 %d 个无效/已卸载的菜单项或规则吗？"
-
-msgid "Clean up"
-msgstr "清除"

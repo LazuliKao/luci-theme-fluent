@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -75,6 +75,13 @@ msgstr ""
 "Standart düğmeler, giriş alanları, seçim kutuları ve tema genelindeki benzer "
 "form kontrollerine uygulanır."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+"%d geçersiz/yüklü olmayan menü öğesini veya kuralı temizlemek istediğinizden "
+"emin misiniz?"
+
 msgid "Author"
 msgstr "Yazar"
 
@@ -143,6 +150,15 @@ msgstr ""
 "Arapça ve Farsça dil kodlarını (ar, ar_*, ar-*, fa, fa_*, fa-*) sağdan sola "
 "(RTL) olarak çözer ve eksik veya tanınmayan yerel ayarlar için soldan sağa "
 "(LTR) olarak geri döner."
+
+msgid "Clean up"
+msgstr "Temizle"
+
+msgid "Clean up invalid items"
+msgstr "Geçersiz öğeleri temizle"
+
+msgid "Clean up invalid items (%d)"
+msgstr "Geçersiz öğeleri temizle (%d)"
 
 msgid "Close"
 msgstr "Kapat"
@@ -416,6 +432,9 @@ msgstr "Orta (4px)"
 msgid "Menu"
 msgstr "Menü"
 
+msgid "Menu title cannot be empty."
+msgstr "Menü başlığı boş olamaz."
+
 msgid "Navigation font weight"
 msgstr "Navigasyon yazı tipi kalınlığı"
 
@@ -529,6 +548,9 @@ msgstr "%s'i orijinal menü konumuna geri yükle"
 msgid "Restore defaults"
 msgstr "Varsayılanlara geri yükle"
 
+msgid "Restore to original title"
+msgstr "Orijinal başlığa geri yükle"
+
 msgid "Retrying with token..."
 msgstr "Token ile yeniden deniyor..."
 
@@ -549,6 +571,9 @@ msgstr "Menü öğelerini ara"
 
 msgid "Search menu..."
 msgstr "Menüyü ara..."
+
+msgid "Second-level menu title"
+msgstr "İkinci seviye menü başlığı"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "Temalı kartlara ve panellere uygulanan gölge derinliğini seçin."

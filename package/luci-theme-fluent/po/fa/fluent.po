@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -73,6 +73,13 @@ msgstr ""
 "برای دکمه‌ها، ورودی‌ها، فهرست‌های انتخاب و کنترل‌های مشابه فرم در سراسر "
 "پوسته اعمال می‌شود."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr ""
+"آیا مطمئن هستید که می‌خواهید %d مورد نامعتبر یا غیرنصب‌شده از منوها یا "
+"قوانین را حذف کنید؟"
+
 msgid "Author"
 msgstr "نویسنده"
 
@@ -141,6 +148,15 @@ msgstr ""
 "عربی و پارسی (ar, ar_*, ar-*, fa, fa_*, fa-*) را شناسایی کرده و آن‌ها را به "
 "راست به چپ (RTL) تنظیم می‌کند و در صورت عدم وجود یا نامشخص بودن کد زبان، به "
 "چپ به راست (LTR) بازمی‌گردد."
+
+msgid "Clean up"
+msgstr "پاکسازی"
+
+msgid "Clean up invalid items"
+msgstr "پاکسازی موارد نامعتبر"
+
+msgid "Clean up invalid items (%d)"
+msgstr "پاکسازی موارد نامعتبر (%d)"
 
 msgid "Close"
 msgstr "بستن"
@@ -413,6 +429,9 @@ msgstr "متوسط (4px)"
 msgid "Menu"
 msgstr "منو"
 
+msgid "Menu title cannot be empty."
+msgstr "عنوان منو نمی‌تواند خالی باشد."
+
 msgid "Navigation font weight"
 msgstr "ضخامت فونت ناوبری"
 
@@ -522,6 +541,9 @@ msgstr "بازگرداندن %s به موقعیت منوی پیش‌فرض"
 msgid "Restore defaults"
 msgstr "بازیابی تنظیمات پیش‌فرض"
 
+msgid "Restore to original title"
+msgstr "بازگرداندن به عنوان اصلی"
+
 msgid "Retrying with token..."
 msgstr "تلاش دوباره با توکن..."
 
@@ -542,6 +564,9 @@ msgstr "جست‌وجوی موارد منو"
 
 msgid "Search menu..."
 msgstr "جست‌وجو در منو..."
+
+msgid "Second-level menu title"
+msgstr "عنوان منوی سطح دوم"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "عمق سایه اعمال‌شده به کارت‌ها و پنل‌های پوسته را انتخاب کنید."

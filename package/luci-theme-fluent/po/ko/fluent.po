@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -69,6 +69,11 @@ msgid ""
 "across the theme."
 msgstr "표준 버튼, 입력 필드, 선택 상자 및 유사한 폼 컨트롤에 적용됩니다."
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr "%d개의 잘못되었거나 설치되지 않은 메뉴 항목 또는 규칙을 정리하시겠습니까?"
+
 msgid "Author"
 msgstr "작성자"
 
@@ -131,6 +136,15 @@ msgid ""
 msgstr ""
 "인증 및 로그인 페이지의 문서 방향을 선택합니다. 자동 모드는 아랍어 및 페르시아어 로케일 코드(ar, ar_*, ar-*, fa, "
 "fa_*, fa-*)를 RTL로 처리하고, 누락되거나 인식되지 않는 로케일에 대해서는 LTR로 기본 설정됩니다."
+
+msgid "Clean up"
+msgstr "정리하기"
+
+msgid "Clean up invalid items"
+msgstr "잘못된 항목 정리"
+
+msgid "Clean up invalid items (%d)"
+msgstr "잘못된 항목 정리 (%d)"
 
 msgid "Close"
 msgstr "닫기"
@@ -385,6 +399,9 @@ msgstr "중간 크기 (4px)"
 msgid "Menu"
 msgstr "메뉴"
 
+msgid "Menu title cannot be empty."
+msgstr "메뉴 제목은 비워둘 수 없습니다."
+
 msgid "Navigation font weight"
 msgstr "탐색 글꼴 두께"
 
@@ -491,6 +508,9 @@ msgstr "%s를 원래 위치로 복원합니다."
 msgid "Restore defaults"
 msgstr "기본값 복원"
 
+msgid "Restore to original title"
+msgstr "원래 제목으로 복원"
+
 msgid "Retrying with token..."
 msgstr "토큰을 사용하여 다시 시도 중..."
 
@@ -511,6 +531,9 @@ msgstr "메뉴 항목 검색"
 
 msgid "Search menu..."
 msgstr "메뉴 검색..."
+
+msgid "Second-level menu title"
+msgstr "세부 메뉴 제목"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "테마 적용된 카드 및 패널에 적용되는 그림자 깊이를 선택합니다."

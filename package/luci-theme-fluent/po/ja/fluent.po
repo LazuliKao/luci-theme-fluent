@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -67,6 +67,11 @@ msgid ""
 "across the theme."
 msgstr "テーマ全体で、標準ボタン、入力フィールド、選択肢などのフォームコントロールに適用されます。"
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr "%d個の無効または未インストールのメニュー項目やルールを削除しますか？"
+
 msgid "Author"
 msgstr "作者"
 
@@ -129,6 +134,15 @@ msgid ""
 msgstr ""
 "認証ページとログインページのドキュメント方向を選択します。自動モードでは、アラビア語およびペルシャ語のロケールコード (ar, ar_*, ar-*, "
 "fa, fa_*, fa-*) が RTL に解決され、不明または認識されないロケールの場合は LTR にフォールバックされます。"
+
+msgid "Clean up"
+msgstr "クリーンアップ"
+
+msgid "Clean up invalid items"
+msgstr "無効な項目を削除"
+
+msgid "Clean up invalid items (%d)"
+msgstr "無効な項目を削除 (%d)"
 
 msgid "Close"
 msgstr "閉じる"
@@ -383,6 +397,9 @@ msgstr "中 (4px)"
 msgid "Menu"
 msgstr "メニュー"
 
+msgid "Menu title cannot be empty."
+msgstr "メニューのタイトルは空にできません。"
+
 msgid "Navigation font weight"
 msgstr "ナビゲーションフォントの太さ"
 
@@ -489,6 +506,9 @@ msgstr "%s を元の位置に戻す"
 msgid "Restore defaults"
 msgstr "デフォルトを復元"
 
+msgid "Restore to original title"
+msgstr "元のタイトルに戻す"
+
 msgid "Retrying with token..."
 msgstr "トークンを使って再試行中..."
 
@@ -509,6 +529,9 @@ msgstr "メニュー項目を検索"
 
 msgid "Search menu..."
 msgstr "メニューを検索..."
+
+msgid "Second-level menu title"
+msgstr "セカンドレベルメニューのタイトル"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "テーマ適用カードやパネルに適用する影の深さを選択します。"

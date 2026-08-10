@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 11:19+0800\n"
+"POT-Creation-Date: 2026-08-10 16:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -65,6 +65,11 @@ msgid ""
 "across the theme."
 msgstr "適用於標準按鈕、輸入框、選取元件以及主題中類似的表單控制項。"
 
+msgid ""
+"Are you sure you want to clean up %d invalid/uninstalled menu items or "
+"rules?"
+msgstr "您確定要清除 %d 個無效或未安裝的選單項目或規則嗎？"
+
 msgid "Author"
 msgstr "作者"
 
@@ -127,6 +132,15 @@ msgid ""
 msgstr ""
 "為驗證和登入頁面選擇文件方向。自動模式會將阿拉伯語和波斯語的地區代碼 (ar, ar_*, ar-*, fa, fa_*, fa-*) 解析為從右到左 "
 "(RTL)，如果缺少或無法識別，則回退為從左到右 (LTR)。"
+
+msgid "Clean up"
+msgstr "清理"
+
+msgid "Clean up invalid items"
+msgstr "清除無效項目"
+
+msgid "Clean up invalid items (%d)"
+msgstr "清除無效項目 (%d)"
 
 msgid "Close"
 msgstr "關閉"
@@ -379,6 +393,9 @@ msgstr "中等 (4px)"
 msgid "Menu"
 msgstr "選單"
 
+msgid "Menu title cannot be empty."
+msgstr "選單標題不能為空。"
+
 msgid "Navigation font weight"
 msgstr "導航字體粗細"
 
@@ -483,6 +500,9 @@ msgstr "將 %s 恢復為原始選單位置"
 msgid "Restore defaults"
 msgstr "還原預設值"
 
+msgid "Restore to original title"
+msgstr "還原為原始標題"
+
 msgid "Retrying with token..."
 msgstr "正在使用 Token 重新嘗試..."
 
@@ -503,6 +523,9 @@ msgstr "搜尋選單項目"
 
 msgid "Search menu..."
 msgstr "搜尋選單..."
+
+msgid "Second-level menu title"
+msgstr "第二層選單標題"
 
 msgid "Select the shadow depth applied to themed cards and panels."
 msgstr "選擇套用在主題卡片和面板上的陰影深度。"
