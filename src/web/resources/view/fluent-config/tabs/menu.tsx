@@ -849,6 +849,78 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         return card;
       };
 
+      const getInvalidItemsCount = (): number => {
+        let count = state.pending.titles.length + state.pending.itemTitles.length + state.pending.categoryMoves.length + state.pending.itemMoves.length;
+
+        for (const path of state.hiddenItemPaths) {
+          if (!itemsByPath.has(path)) count += 1;
+        }
+
+        const categoryIds = new Set(state.categories.map((c) => c.id));
+        for (const id of state.hiddenCategoryIds) {
+          if (!categoryIds.has(id)) count += 1;
+        }
+
+        return count;
+      };
+
+      const cleanButton = (<button class="btn cbi-button" type="button" />) as HTMLButtonElement;
+
+      const updateCleanButtonState = (): void => {
+        const count = getInvalidItemsCount();
+        cleanButton.disabled = count === 0;
+        if (count > 0) {
+          cleanButton.textContent = _("Clean up invalid items (%d)").format(count);
+        } else {
+          cleanButton.textContent = _("Clean up invalid items");
+        }
+      };
+
+      cleanButton.addEventListener("click", () => {
+        const count = getInvalidItemsCount();
+        if (count === 0) return;
+
+        L.ui.showModal(
+          _("Clean up invalid items"),
+          (
+            <div class="fluent-menu-editor__rename-dialog">
+              <p>{_("Are you sure you want to clean up %d invalid/uninstalled menu items or rules?").format(count)}</p>
+              <div class="right">
+                <button type="button" class="btn" onclick={() => L.ui.hideModal()}>
+                  {_("Cancel")}
+                </button>
+                <button
+                  type="button"
+                  class="btn cbi-button-save"
+                  onclick={() => {
+                    state.pending = { titles: [], itemTitles: [], categoryMoves: [], itemMoves: [] };
+
+                    const nextHiddenItemPaths = new Set<string>();
+                    for (const path of state.hiddenItemPaths) {
+                      if (itemsByPath.has(path)) nextHiddenItemPaths.add(path);
+                    }
+                    state.hiddenItemPaths = nextHiddenItemPaths;
+
+                    const nextHiddenCategoryIds = new Set<string>();
+                    const categoryIds = new Set(state.categories.map((c) => c.id));
+                    for (const id of state.hiddenCategoryIds) {
+                      if (categoryIds.has(id)) nextHiddenCategoryIds.add(id);
+                    }
+                    state.hiddenCategoryIds = nextHiddenCategoryIds;
+
+                    syncValue();
+                    renderCategories();
+                    L.ui.hideModal();
+                  }}
+                >
+                  {_("Clean up")}
+                </button>
+              </div>
+            </div>
+          ) as HTMLElement,
+        );
+      });
+
       function renderCategories(): void {
         const listScrollPositions = new Map<string, number>();
         for (const list of cards.querySelectorAll<HTMLElement>(".fluent-menu-editor__items")) {
@@ -864,6 +936,7 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           state.categories.map((category) => renderCategory(category)),
         );
         updateValidation();
+        updateCleanButtonState();
 
         requestAnimationFrame(() => {
           for (const list of cards.querySelectorAll<HTMLElement>(".fluent-menu-editor__items")) {
@@ -921,7 +994,7 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         <div class="fluent-menu-editor">
           {hiddenInput}
           {storedValueNotice}
-          <div class="fluent-menu-editor__actions">{[addButton, resetButton]}</div>
+          <div class="fluent-menu-editor__actions">{[cleanButton, addButton, resetButton]}</div>
           {validationSummary}
           {cards}
         </div>

@@ -655,3 +655,15 @@ msgstr "您可以在这里创建新的令牌："
 
 msgid "Your theme is up to date!"
 msgstr "您的主题已是最新版本！"
+
+msgid "Clean up invalid items"
+msgstr "清除无效项"
+
+msgid "Clean up invalid items (%d)"
+msgstr "清除无效项 (%d)"
+
+msgid "Are you sure you want to clean up %d invalid/uninstalled menu items or rules?"
+msgstr "您确定要清除 %d 个无效/已卸载的菜单项或规则吗？"
+
+msgid "Clean up"
+msgstr "清除"

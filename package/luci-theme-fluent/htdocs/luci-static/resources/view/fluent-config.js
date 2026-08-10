@@ -1555,13 +1555,13 @@ function menu_y(e) {
     return t;
 }
 function registerMenuTab(b, v) {
-    var k;
-    let I, M, w, C;
+    var I;
+    let k, M, w, C;
     b.tab("menu", _("Menu"));
-    let E = b.taboption("menu", (k = v, M = new Map((I = discoverMenuItems(k)).map((e)=>[
+    let E = b.taboption("menu", (I = v, M = new Map((k = discoverMenuItems(I)).map((e)=>[
             e.path,
             e
-        ])), w = new Map(buildDefaultMenuCategories(k).map((e)=>[
+        ])), w = new Map(buildDefaultMenuCategories(I).map((e)=>[
             e.id,
             e
         ])), C = new Map(), menu_n.Value.extend({
@@ -1588,7 +1588,7 @@ function registerMenuTab(b, v) {
                     itemTitles: new Map(n.itemTitles),
                     pending: n.pending
                 };
-            }(k, v), P = new Set(), S = "" === E ? null : parseMenuLayout(E), T = "" !== E && !S, A = jsx("input", {
+            }(I, v), P = new Set(), S = "" === E ? null : parseMenuLayout(E), T = "" !== E && !S, A = jsx("input", {
                 type: "hidden",
                 id: this.cbid(n),
                 value: E
@@ -1610,7 +1610,7 @@ function registerMenuTab(b, v) {
                     i.card.classList.toggle("is-invalid", !!n), i.error && (i.error.textContent = n);
                 }
                 F.textContent = e.size > 0 ? _("Fix primary menu title errors before saving.") : "";
-            }, V = (e = serializeMenuLayout(k, x.categories, x.hiddenCategoryIds, x.hiddenItemPaths, x.pending, x.itemTitles))=>{
+            }, V = (e = serializeMenuLayout(I, x.categories, x.hiddenCategoryIds, x.hiddenItemPaths, x.pending, x.itemTitles))=>{
                 A.value = e, N.hidden = !0, U(), A.dispatchEvent(new Event("change", {
                     bubbles: !0
                 }));
@@ -1662,7 +1662,7 @@ function registerMenuTab(b, v) {
                     })(e);
                 }
             }, H = (e, t, i)=>{
-                M.has(e) && x.categories.some((e)=>e.id === t) && (x.pending.itemMoves = x.pending.itemMoves.filter(([t])=>t !== e), x.categories = moveMenuItem(x.categories, e, t, i), P.add(t), V(), el());
+                M.has(e) && x.categories.some((e)=>e.id === t) && (x.pending.itemMoves = x.pending.itemMoves.filter(([t])=>t !== e), x.categories = moveMenuItem(x.categories, e, t, i), P.add(t), V(), eo());
             }, J = ()=>{
                 let e = B;
                 if (e) {
@@ -1791,7 +1791,7 @@ function registerMenuTab(b, v) {
                             } else ("item-category" === t.kind || "item-list" === t.kind) && H(e.path, t.categoryId);
                             return;
                         }
-                        "category" === t.kind && (x.pending.categoryMoves = x.pending.categoryMoves.filter(([t])=>t !== e.categoryId), x.categories = moveMenuCategory(x.categories, e.categoryId, t.categoryId, t.position), V(), el());
+                        "category" === t.kind && (x.pending.categoryMoves = x.pending.categoryMoves.filter(([t])=>t !== e.categoryId), x.categories = moveMenuCategory(x.categories, e.categoryId, t.categoryId, t.position), V(), eo());
                     })(t.source, n);
                 } else J();
             }, et = (e, t, i)=>{
@@ -1868,7 +1868,7 @@ function registerMenuTab(b, v) {
                         onclick: ()=>{
                             if (!u()) return;
                             let e = a.value.trim();
-                            e === o.title ? x.itemTitles.delete(i) : x.itemTitles.set(i, e), V(), el(), L.ui.hideModal();
+                            e === o.title ? x.itemTitles.delete(i) : x.itemTitles.set(i, e), V(), eo(), L.ui.hideModal();
                         },
                         children: _("Save")
                     });
@@ -1924,7 +1924,7 @@ function registerMenuTab(b, v) {
                         })
                     ]
                 });
-                if (d.append(s, f, h), canRestoreMenuItem(x.categories, I, i)) {
+                if (d.append(s, f, h), canRestoreMenuItem(x.categories, k, i)) {
                     let t = _("Restore %s to its original menu position").format(o.title), n = jsx("button", {
                         class: "fluent-menu-editor__item-reset",
                         type: "button",
@@ -1933,7 +1933,7 @@ function registerMenuTab(b, v) {
                     });
                     n.addEventListener("click", ()=>{
                         let e;
-                        (e = M.get(i)) && P.add(primaryCategoryId(e.originalPrimaryPath)), x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== i), x.categories = restoreMenuItemToOriginalPosition(x.categories, I, i), V(), el();
+                        (e = M.get(i)) && P.add(primaryCategoryId(e.originalPrimaryPath)), x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== i), x.categories = restoreMenuItemToOriginalPosition(x.categories, k, i), V(), eo();
                     }), d.append(n);
                 }
                 return d.append(c), d;
@@ -1980,7 +1980,7 @@ function registerMenuTab(b, v) {
                     type: "button",
                     "aria-label": b,
                     title: b
-                }), k = ()=>{
+                }), I = ()=>{
                     let r = `${this.cbid(n)}-${l.id}-title`, o = jsx("input", {
                         id: r,
                         class: "cbi-input-text",
@@ -2002,7 +2002,7 @@ function registerMenuTab(b, v) {
                         type: "button",
                         class: "btn cbi-button-save",
                         onclick: ()=>{
-                            s() && (l.title = o.value.trim(), V(), el(), L.ui.hideModal());
+                            s() && (l.title = o.value.trim(), V(), eo(), L.ui.hideModal());
                         },
                         children: _("Save")
                     });
@@ -2051,7 +2051,7 @@ function registerMenuTab(b, v) {
                         o.focus(), o.select();
                     });
                 };
-                if (v.addEventListener("click", k), f.addEventListener("change", ()=>{
+                if (v.addEventListener("click", I), f.addEventListener("change", ()=>{
                     f.checked ? x.hiddenCategoryIds.delete(l.id) : x.hiddenCategoryIds.add(l.id), r.classList.toggle("is-hidden", !f.checked), V();
                 }), p) {
                     let t = {
@@ -2074,8 +2074,8 @@ function registerMenuTab(b, v) {
                         let e = [
                             ...l.items
                         ];
-                        for (let t of (x.categories = x.categories.filter((e)=>e.id !== l.id), x.hiddenCategoryIds.delete(l.id), x.pending.categoryMoves = x.pending.categoryMoves.filter(([e, t])=>e !== l.id && t !== l.id), x.pending.itemMoves = x.pending.itemMoves.filter(([, e])=>e !== l.id), P.delete(l.id), e))x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== t), x.categories = restoreMenuItemToOriginalPosition(x.categories, I, t);
-                        V(), el();
+                        for (let t of (x.categories = x.categories.filter((e)=>e.id !== l.id), x.hiddenCategoryIds.delete(l.id), x.pending.categoryMoves = x.pending.categoryMoves.filter(([e, t])=>e !== l.id && t !== l.id), x.pending.itemMoves = x.pending.itemMoves.filter(([, e])=>e !== l.id), P.delete(l.id), e))x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== t), x.categories = restoreMenuItemToOriginalPosition(x.categories, k, t);
+                        V(), eo();
                     }), o.append(t);
                 }
                 o.append(f), r.append(o), s && r.append(s), r.append(a);
@@ -2083,32 +2083,82 @@ function registerMenuTab(b, v) {
                     card: r
                 };
                 return s && (M.error = s), $.set(l.id, M), r;
-            };
-            function el() {
-                let e = new Map();
-                for (let t of R.querySelectorAll(".fluent-menu-editor__items")){
-                    let i = t.dataset.categoryId;
-                    i && e.set(i, t.scrollTop);
+            }, el = ()=>{
+                let e = x.pending.titles.length + x.pending.itemTitles.length + x.pending.categoryMoves.length + x.pending.itemMoves.length;
+                for (let t of x.hiddenItemPaths)M.has(t) || (e += 1);
+                let t = new Set(x.categories.map((e)=>e.id));
+                for (let i of x.hiddenCategoryIds)t.has(i) || (e += 1);
+                return e;
+            }, er = jsx("button", {
+                class: "btn cbi-button",
+                type: "button"
+            });
+            function eo() {
+                let e, t = new Map();
+                for (let e of R.querySelectorAll(".fluent-menu-editor__items")){
+                    let i = e.dataset.categoryId;
+                    i && t.set(i, e.scrollTop);
                 }
-                let t = window.scrollX, i = window.scrollY;
-                $.clear(), dom.content(R, x.categories.map((e)=>en(e))), U(), requestAnimationFrame(()=>{
-                    for (let t of R.querySelectorAll(".fluent-menu-editor__items")){
-                        let i = t.dataset.categoryId, n = i ? e.get(i) : void 0;
-                        null != n && (t.scrollTop = n);
+                let i = window.scrollX, n = window.scrollY;
+                $.clear(), dom.content(R, x.categories.map((e)=>en(e))), U(), er.disabled = 0 === (e = el()), e > 0 ? er.textContent = _("Clean up invalid items (%d)").format(e) : er.textContent = _("Clean up invalid items"), requestAnimationFrame(()=>{
+                    for (let e of R.querySelectorAll(".fluent-menu-editor__items")){
+                        let i = e.dataset.categoryId, n = i ? t.get(i) : void 0;
+                        null != n && (e.scrollTop = n);
                     }
-                    window.scrollTo(t, i);
+                    window.scrollTo(i, n);
                 });
             }
-            let er = jsx("button", {
+            er.addEventListener("click", ()=>{
+                let i = el();
+                0 !== i && L.ui.showModal(_("Clean up invalid items"), jsxs("div", {
+                    class: "fluent-menu-editor__rename-dialog",
+                    children: [
+                        jsx("p", {
+                            children: _("Are you sure you want to clean up %d invalid/uninstalled menu items or rules?").format(i)
+                        }),
+                        jsxs("div", {
+                            class: "right",
+                            children: [
+                                jsx("button", {
+                                    type: "button",
+                                    class: "btn",
+                                    onclick: ()=>L.ui.hideModal(),
+                                    children: _("Cancel")
+                                }),
+                                jsx("button", {
+                                    type: "button",
+                                    class: "btn cbi-button-save",
+                                    onclick: ()=>{
+                                        x.pending = {
+                                            titles: [],
+                                            itemTitles: [],
+                                            categoryMoves: [],
+                                            itemMoves: []
+                                        };
+                                        let e = new Set();
+                                        for (let t of x.hiddenItemPaths)M.has(t) && e.add(t);
+                                        x.hiddenItemPaths = e;
+                                        let t = new Set(), i = new Set(x.categories.map((e)=>e.id));
+                                        for (let e of x.hiddenCategoryIds)i.has(e) && t.add(e);
+                                        x.hiddenCategoryIds = t, V(), eo(), L.ui.hideModal();
+                                    },
+                                    children: _("Clean up")
+                                })
+                            ]
+                        })
+                    ]
+                }));
+            });
+            let ea = jsx("button", {
                 class: "btn cbi-button cbi-button-add",
                 type: "button",
                 children: _("Add primary menu")
-            }), eo = jsx("button", {
+            }), ed = jsx("button", {
                 class: "btn cbi-button cbi-button-reset",
                 type: "button",
                 children: _("Restore defaults")
             });
-            return er.addEventListener("click", ()=>{
+            return ea.addEventListener("click", ()=>{
                 let e = _("New primary menu"), t = new Set(x.categories.map((e)=>menu_h(e.title))), i = e, n = 2;
                 for(; t.has(menu_h(i));)i = _("New primary menu %d").format(n), n += 1;
                 let l = "u" > typeof crypto && "function" == typeof crypto.randomUUID ? crypto.randomUUID() : (menu_f += 1, `category-${Date.now()}-${menu_f}`);
@@ -2116,10 +2166,10 @@ function registerMenuTab(b, v) {
                     id: l,
                     title: i,
                     items: []
-                }), P.add(l), V(), el();
-            }), eo.addEventListener("click", ()=>{
+                }), P.add(l), V(), eo();
+            }), ed.addEventListener("click", ()=>{
                 x = {
-                    categories: buildDefaultMenuCategories(k),
+                    categories: buildDefaultMenuCategories(I),
                     hiddenCategoryIds: new Set(),
                     hiddenItemPaths: new Set(),
                     itemTitles: new Map(),
@@ -2129,8 +2179,8 @@ function registerMenuTab(b, v) {
                         categoryMoves: [],
                         itemMoves: []
                     }
-                }, P.clear(), V(""), el();
-            }), el(), jsxs("div", {
+                }, P.clear(), V(""), eo();
+            }), eo(), jsxs("div", {
                 class: "fluent-menu-editor",
                 children: [
                     A,
@@ -2139,7 +2189,8 @@ function registerMenuTab(b, v) {
                         class: "fluent-menu-editor__actions",
                         children: [
                             er,
-                            eo
+                            ea,
+                            ed
                         ]
                     }),
                     F,
@@ -2153,7 +2204,7 @@ function registerMenuTab(b, v) {
                 if ("string" != typeof t) return _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
                 let i = parseMenuLayout(t);
                 return i ? menu_y(resolveMenuLayout(e, i).categories).values().next().value ?? !0 : _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
-            })(k, t)
+            })(I, t)
     })), "menu_layout");
     E.optional = !0, E.rmempty = !0;
 }
