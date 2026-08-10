@@ -9374,6 +9374,7 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
 .fluent-menu-editor__category.is-drag-source, .fluent-menu-editor__item.is-drag-source {
   opacity: 0;
   pointer-events: none;
+  transition: none;
   position: absolute;
 }
 
