@@ -752,12 +752,29 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
       };
 
       function renderCategories(): void {
+        const listScrollPositions = new Map<string, number>();
+        for (const list of cards.querySelectorAll<HTMLElement>(".fluent-menu-editor__items")) {
+          const categoryId = list.dataset.categoryId;
+          if (categoryId) listScrollPositions.set(categoryId, list.scrollTop);
+        }
+        const pageScrollLeft = window.scrollX;
+        const pageScrollTop = window.scrollY;
+
         categoryElements.clear();
         dom.content(
           cards,
           state.categories.map((category) => renderCategory(category)),
         );
         updateValidation();
+
+        requestAnimationFrame(() => {
+          for (const list of cards.querySelectorAll<HTMLElement>(".fluent-menu-editor__items")) {
+            const categoryId = list.dataset.categoryId;
+            const scrollTop = categoryId ? listScrollPositions.get(categoryId) : undefined;
+            if (scrollTop != null) list.scrollTop = scrollTop;
+          }
+          window.scrollTo(pageScrollLeft, pageScrollTop);
+        });
       }
 
       const addButton = (
