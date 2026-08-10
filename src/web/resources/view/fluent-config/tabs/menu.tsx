@@ -384,6 +384,29 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         if (drag.handle.hasPointerCapture(drag.pointerId)) drag.handle.releasePointerCapture(drag.pointerId);
       };
 
+      const findNearestCategory = (clientX: number, clientY: number, excludeCategoryId?: string): HTMLElement | null => {
+        const categories = Array.from(cards.querySelectorAll<HTMLElement>(".fluent-menu-editor__category")).filter((cat) => {
+          const id = cat.dataset.categoryId;
+          return id && id !== excludeCategoryId && !cat.classList.contains("is-dragging");
+        });
+
+        let nearest: HTMLElement | null = null;
+        let minDistance = Number.MAX_VALUE;
+
+        for (const cat of categories) {
+          const rect = cat.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const distance = Math.hypot(clientX - centerX, clientY - centerY);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearest = cat;
+          }
+        }
+
+        return nearest;
+      };
+
       const updatePointerDropTarget = (source: MenuDragSource, event: PointerEvent): void => {
         if (pointerInsidePlaceholder(event.clientX, event.clientY)) return;
         const element = document.elementFromPoint(event.clientX, event.clientY);
@@ -393,7 +416,10 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         }
 
         if (source.kind === "category") {
-          const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+          let category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+          if (!category) {
+            category = findNearestCategory(event.clientX, event.clientY, source.categoryId);
+          }
           const categoryId = category?.dataset.categoryId;
           if (!category || !categoryId || categoryId === source.categoryId) {
             clearDropTarget();
@@ -426,7 +452,10 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           return;
         }
 
-        const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+        let category = element.closest<HTMLElement>(".fluent-menu-editor__category");
+        if (!category) {
+          category = findNearestCategory(event.clientX, event.clientY);
+        }
         const targetCategoryId = category?.dataset.categoryId;
         if (category && targetCategoryId) {
           setDropTarget({ kind: "item-category", categoryId: targetCategoryId, element: category, position: "after" });
