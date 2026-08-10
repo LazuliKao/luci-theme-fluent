@@ -9111,6 +9111,11 @@ label[data-tooltip] {
   opacity: .55;
 }
 
+.fluent-menu-editor__category.is-drag-over {
+  border-color: var(--fluent-primary);
+  background: var(--fluent-primary-lightest);
+}
+
 .fluent-menu-editor__category-header {
   align-items: center;
   gap: var(--fluent-space-xs);
@@ -9247,6 +9252,22 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
   bottom: var(--fluent-menu-drop-offset);
 }
 
+.fluent-menu-editor__drop-placeholder {
+  box-sizing: border-box;
+  pointer-events: none;
+  background: var(--fluent-primary-lightest);
+  border: 1px dashed var(--fluent-primary);
+  min-width: 0;
+}
+
+.fluent-menu-editor__drop-placeholder--category {
+  border-radius: var(--fluent-radius-lg);
+}
+
+.fluent-menu-editor__drop-placeholder--item {
+  border-radius: var(--fluent-radius-md);
+}
+
 .fluent-menu-editor__drag-handle {
   width: 24px;
   height: 32px;
@@ -9315,6 +9336,10 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
   background: var(--fluent-primary-lightest);
 }
 
+.fluent-menu-editor__items:has( > .fluent-menu-editor__drop-placeholder) > .fluent-menu-editor__empty {
+  display: none;
+}
+
 .fluent-menu-editor__item {
   --fluent-menu-drop-offset: calc(var(--fluent-space-xs) * -1);
   grid-template-columns: auto auto minmax(0, 1fr) var(--fluent-space-xxl) auto;
@@ -9344,6 +9369,12 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
 
 .fluent-menu-editor__item.is-dragging {
   opacity: .35;
+}
+
+.fluent-menu-editor__category.is-drag-source, .fluent-menu-editor__item.is-drag-source {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
 }
 
 .fluent-menu-editor__category-edit:before {

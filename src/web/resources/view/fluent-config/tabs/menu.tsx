@@ -24,26 +24,29 @@ interface EditorState {
   pending: PendingMenuLayout;
 }
 
-type TouchDragSource = { kind: "category"; categoryId: string } | { kind: "item"; path: string };
+type MenuDragSource = { kind: "category"; categoryId: string } | { kind: "item"; path: string };
 
-type TouchDropTarget =
+type MenuDropTarget =
   | { kind: "category"; categoryId: string; element: HTMLElement; position: MenuDropPosition }
   | { kind: "item"; categoryId: string; element: HTMLElement; path: string; position: MenuDropPosition }
   | { kind: "item-category"; categoryId: string; element: HTMLElement; position: MenuDropPosition }
   | { kind: "item-list"; categoryId: string; element: HTMLElement };
 
-interface ActiveTouchDrag {
+interface ActiveDragProjection {
+  placeholder: HTMLElement;
+  source: MenuDragSource;
+  sourceElement: HTMLElement;
+}
+
+interface ActivePointerDrag {
   handle: HTMLElement;
   offsetX: number;
   offsetY: number;
   pointerId: number;
   preview: HTMLElement;
-  source: TouchDragSource;
+  source: MenuDragSource;
   sourceElement: HTMLElement;
 }
-
-const CATEGORY_DRAG_TYPE = "application/x-fluent-menu-category";
-const ITEM_DRAG_TYPE = "application/x-fluent-menu-item";
 
 function dropPosition(event: Pick<MouseEvent, "clientY">, target: HTMLElement): MenuDropPosition {
   const bounds = target.getBoundingClientRect();
@@ -136,11 +139,11 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
       const hiddenInput = (<input type="hidden" id={this.cbid(sectionId)} value={initialStringValue} />) as HTMLInputElement;
       const cards = (<div class="fluent-menu-editor__categories" />) as HTMLElement;
       const categoryElements = new Map<string, { card: HTMLElement; error?: HTMLElement }>();
-      let activeDropTarget: HTMLElement | null = null;
-      let activeDropPosition: MenuDropPosition = "before";
-      let activeTouchDrag: ActiveTouchDrag | null = null;
-      let activeTouchDropList: HTMLElement | null = null;
-      let activeTouchDropTarget: TouchDropTarget | null = null;
+      let activeDropIndicator: HTMLElement | null = null;
+      let activeDropList: HTMLElement | null = null;
+      let activeDropTarget: MenuDropTarget | null = null;
+      let activeDragProjection: ActiveDragProjection | null = null;
+      let activePointerDrag: ActivePointerDrag | null = null;
       const validationSummary = (<div class="fluent-menu-editor__validation" role="alert" />) as HTMLElement;
       const storedValueNotice = (
         <div class="fluent-menu-editor__notice" hidden={!invalidStoredValue}>
@@ -166,17 +169,197 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
       };
 
-      const clearDropIndicator = (): void => {
-        activeDropTarget?.classList.remove("is-drop-before", "is-drop-after");
-        activeDropTarget = null;
+      const reduceMotion = (): boolean => document.body.dataset.reduceMotion === "true";
+
+      const clearDropDecorations = (): void => {
+        activeDropIndicator?.classList.remove("is-drop-before", "is-drop-after");
+        activeDropIndicator = null;
+        activeDropList?.classList.remove("is-drag-over");
+        activeDropList = null;
       };
 
       const showDropIndicator = (target: HTMLElement, position: MenuDropPosition): void => {
-        if (activeDropTarget !== target || activeDropPosition !== position) clearDropIndicator();
-        activeDropTarget = target;
-        activeDropPosition = position;
+        clearDropDecorations();
+        activeDropIndicator = target;
         target.classList.toggle("is-drop-before", position === "before");
         target.classList.toggle("is-drop-after", position === "after");
+      };
+
+      const projectionElements = (source: MenuDragSource): HTMLElement[] => {
+        const selector = source.kind === "category" ? ".fluent-menu-editor__category" : ".fluent-menu-editor__item";
+        return Array.from(cards.querySelectorAll<HTMLElement>(selector)).filter((element) => element !== activeDragProjection?.sourceElement && element.getClientRects().length > 0);
+      };
+
+      const animationTiming = (): { duration: number; easing: string } => {
+        const styles = getComputedStyle(document.documentElement);
+        const durationValue = styles.getPropertyValue("--fluent-duration-fast").trim();
+        const parsedDuration = Number.parseFloat(durationValue);
+        const duration = Number.isFinite(parsedDuration) ? parsedDuration * (durationValue.endsWith("ms") ? 1 : 1000) : 0;
+        return { duration, easing: styles.getPropertyValue("--fluent-easing-standard").trim() };
+      };
+
+      const movePlaceholder = (parent: HTMLElement, reference: ChildNode | null): void => {
+        const projection = activeDragProjection;
+        if (!projection || reduceMotion()) return;
+        if (projection.placeholder.parentElement === parent && projection.placeholder.nextSibling === reference) return;
+
+        const elements = projectionElements(projection.source);
+        const previousPositions = new Map(elements.map((element) => [element, element.getBoundingClientRect()]));
+        parent.insertBefore(projection.placeholder, reference);
+        const timing = animationTiming();
+
+        for (const element of elements) {
+          const previous = previousPositions.get(element);
+          if (!previous || !element.isConnected) continue;
+          const current = element.getBoundingClientRect();
+          const offsetX = previous.left - current.left;
+          const offsetY = previous.top - current.top;
+          if (offsetX === 0 && offsetY === 0) continue;
+          element.getAnimations().forEach((animation) => {
+            animation.cancel();
+          });
+          element.animate([{ transform: `translate(${offsetX}px, ${offsetY}px)` }, { transform: "translate(0, 0)" }], timing);
+        }
+      };
+
+      const beginDragProjection = (source: MenuDragSource, sourceElement: HTMLElement): void => {
+        if (reduceMotion()) return;
+        const bounds = sourceElement.getBoundingClientRect();
+        const modifier = source.kind === "category" ? "category" : "item";
+        const placeholder = document.createElement("div");
+        placeholder.className = `fluent-menu-editor__drop-placeholder fluent-menu-editor__drop-placeholder--${modifier}`;
+        placeholder.style.height = `${bounds.height}px`;
+        placeholder.setAttribute("aria-hidden", "true");
+        sourceElement.parentElement?.insertBefore(placeholder, sourceElement);
+        const projection = { placeholder, source, sourceElement };
+        activeDragProjection = projection;
+        sourceElement.classList.add("is-drag-source");
+      };
+
+      const clearDragProjection = (): void => {
+        const projection = activeDragProjection;
+        activeDragProjection = null;
+        if (!projection) return;
+        projection.placeholder.remove();
+        projection.sourceElement.classList.remove("is-drag-source");
+      };
+
+      const pointerInsidePlaceholder = (clientX: number, clientY: number): boolean => {
+        const placeholder = activeDragProjection?.placeholder;
+        if (!placeholder?.isConnected) return false;
+        const bounds = placeholder.getBoundingClientRect();
+        return clientX >= bounds.left && clientX <= bounds.right && clientY >= bounds.top && clientY <= bounds.bottom;
+      };
+
+      const sameDropTarget = (left: MenuDropTarget | null, right: MenuDropTarget): boolean => {
+        if (!left || left.kind !== right.kind || left.categoryId !== right.categoryId) return false;
+        if (left.kind === "item" && right.kind === "item") return left.path === right.path && left.position === right.position;
+        if (left.kind === "category" && right.kind === "category") return left.categoryId === right.categoryId && left.position === right.position;
+        return left.kind === "item-list" || (left.kind === "item-category" && right.kind === "item-category" && left.position === right.position);
+      };
+
+      const itemDropTargetAtPoint = (list: HTMLElement, clientX: number, clientY: number): MenuDropTarget | null => {
+        const categoryId = list.dataset.categoryId;
+        if (!categoryId) return null;
+
+        const positionedItems = Array.from(list.querySelectorAll<HTMLElement>(":scope > .fluent-menu-editor__item"))
+          .filter((element) => element !== activeDragProjection?.sourceElement && !element.classList.contains("is-dragging") && element.getClientRects().length > 0)
+          .map((element) => ({ element, path: element.dataset.itemPath, bounds: element.getBoundingClientRect() }))
+          .filter((item): item is { element: HTMLElement; path: string; bounds: DOMRect } => Boolean(item.path));
+        if (positionedItems.length === 0) return { kind: "item-list", categoryId, element: list };
+
+        const rows: Array<{ items: typeof positionedItems; top: number; bottom: number }> = [];
+        for (const item of positionedItems) {
+          const row = rows.at(-1);
+          if (!row || item.bounds.top >= row.bottom - 1) {
+            rows.push({ items: [item], top: item.bounds.top, bottom: item.bounds.bottom });
+          } else {
+            row.items.push(item);
+            row.top = Math.min(row.top, item.bounds.top);
+            row.bottom = Math.max(row.bottom, item.bounds.bottom);
+          }
+        }
+
+        const itemTarget = (item: (typeof positionedItems)[number], position: MenuDropPosition): MenuDropTarget => ({
+          kind: "item",
+          categoryId,
+          element: item.element,
+          path: item.path,
+          position,
+        });
+        const firstItem = positionedItems[0];
+        if (clientY < rows[0].top) return itemTarget(firstItem, "before");
+
+        for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
+          const row = rows[rowIndex];
+          if (clientY <= row.bottom) {
+            if (row.items.length === 1) {
+              const item = row.items[0];
+              return itemTarget(item, clientY < item.bounds.top + item.bounds.height / 2 ? "before" : "after");
+            }
+
+            const closestItem = row.items.reduce((closest, item) =>
+              Math.abs(clientX - item.bounds.left - item.bounds.width / 2) < Math.abs(clientX - closest.bounds.left - closest.bounds.width / 2) ? item : closest,
+            );
+            const itemCenter = closestItem.bounds.left + closestItem.bounds.width / 2;
+            const before = getComputedStyle(list).direction === "rtl" ? clientX > itemCenter : clientX < itemCenter;
+            return itemTarget(closestItem, before ? "before" : "after");
+          }
+
+          const nextRow = rows[rowIndex + 1];
+          if (nextRow && clientY < nextRow.top) return itemTarget(nextRow.items[0], "before");
+        }
+
+        return { kind: "item-list", categoryId, element: list };
+      };
+
+      const projectDropTarget = (target: MenuDropTarget): void => {
+        const projection = activeDragProjection;
+        if (!projection) return;
+
+        if (target.kind === "category" || target.kind === "item") {
+          const reference = target.position === "before" ? target.element : target.element.nextSibling;
+          const parent = target.element.parentElement;
+          if (parent) movePlaceholder(parent, reference);
+          return;
+        }
+
+        const list = target.kind === "item-list" ? target.element : target.element.querySelector<HTMLElement>(".fluent-menu-editor__items");
+        if (list) movePlaceholder(list, null);
+      };
+
+      const resetProjection = (): void => {
+        const projection = activeDragProjection;
+        const parent = projection?.sourceElement.parentElement;
+        if (projection && parent) movePlaceholder(parent, projection.sourceElement);
+      };
+
+      const clearDropTarget = (reset = true): void => {
+        clearDropDecorations();
+        activeDropTarget = null;
+        if (reset) resetProjection();
+      };
+
+      const setDropTarget = (target: MenuDropTarget): void => {
+        if (sameDropTarget(activeDropTarget, target)) return;
+        clearDropDecorations();
+        activeDropTarget = target;
+
+        if (reduceMotion()) {
+          if (target.kind === "item-list") {
+            activeDropList = target.element;
+            target.element.classList.add("is-drag-over");
+          } else {
+            showDropIndicator(target.element, target.position);
+          }
+          return;
+        }
+
+        if (target.kind === "item-category") {
+          activeDropList = target.element;
+          target.element.classList.add("is-drag-over");
+        }
+        projectDropTarget(target);
       };
 
       const moveItem = (path: string, targetCategoryId: string, beforePath?: string): void => {
@@ -188,40 +371,24 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         syncValue();
         renderCategories();
       };
-      const clearTouchDropTarget = (): void => {
-        clearDropIndicator();
-        activeTouchDropList?.classList.remove("is-drag-over");
-        activeTouchDropList = null;
-        activeTouchDropTarget = null;
-      };
 
-      const clearTouchDrag = (): void => {
-        const drag = activeTouchDrag;
+      const clearPointerDrag = (): void => {
+        const drag = activePointerDrag;
         if (!drag) return;
 
-        activeTouchDrag = null;
+        activePointerDrag = null;
         drag.sourceElement.classList.remove("is-dragging");
         drag.preview.remove();
-        clearTouchDropTarget();
+        clearDropTarget();
+        clearDragProjection();
         if (drag.handle.hasPointerCapture(drag.pointerId)) drag.handle.releasePointerCapture(drag.pointerId);
       };
 
-      const setTouchDropTarget = (target: TouchDropTarget): void => {
-        clearTouchDropTarget();
-        activeTouchDropTarget = target;
-        if (target.kind === "item-list") {
-          activeTouchDropList = target.element;
-          target.element.classList.add("is-drag-over");
-          return;
-        }
-
-        showDropIndicator(target.element, target.position);
-      };
-
-      const updateTouchDropTarget = (source: TouchDragSource, event: PointerEvent): void => {
+      const updatePointerDropTarget = (source: MenuDragSource, event: PointerEvent): void => {
+        if (pointerInsidePlaceholder(event.clientX, event.clientY)) return;
         const element = document.elementFromPoint(event.clientX, event.clientY);
         if (!element) {
-          clearTouchDropTarget();
+          clearDropTarget();
           return;
         }
 
@@ -229,11 +396,11 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
           const categoryId = category?.dataset.categoryId;
           if (!category || !categoryId || categoryId === source.categoryId) {
-            clearTouchDropTarget();
+            clearDropTarget();
             return;
           }
 
-          setTouchDropTarget({ kind: "category", categoryId, element: category, position: dropPosition(event, category) });
+          setDropTarget({ kind: "category", categoryId, element: category, position: dropPosition(event, category) });
           return;
         }
 
@@ -243,37 +410,32 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         const itemCategoryId = itemList?.dataset.categoryId;
         if (item && path && itemList && itemCategoryId) {
           if (path === source.path) {
-            clearTouchDropTarget();
+            clearDropTarget();
             return;
           }
 
-          setTouchDropTarget({ kind: "item", categoryId: itemCategoryId, element: item, path, position: dropPosition(event, item) });
+          setDropTarget({ kind: "item", categoryId: itemCategoryId, element: item, path, position: dropPosition(event, item) });
           return;
         }
 
         const list = element.closest<HTMLElement>(".fluent-menu-editor__items");
-        const categoryId = list?.dataset.categoryId;
-        if (list && categoryId) {
-          setTouchDropTarget({ kind: "item-list", categoryId, element: list });
+        if (list) {
+          const target = itemDropTargetAtPoint(list, event.clientX, event.clientY);
+          if (target) setDropTarget(target);
+          else clearDropTarget();
           return;
         }
 
         const category = element.closest<HTMLElement>(".fluent-menu-editor__category");
         const targetCategoryId = category?.dataset.categoryId;
         if (category && targetCategoryId) {
-          setTouchDropTarget({ kind: "item-category", categoryId: targetCategoryId, element: category, position: "after" });
+          setDropTarget({ kind: "item-category", categoryId: targetCategoryId, element: category, position: "after" });
         } else {
-          clearTouchDropTarget();
+          clearDropTarget();
         }
       };
 
-      const completeTouchDrag = (): void => {
-        const drag = activeTouchDrag;
-        const target = activeTouchDropTarget;
-        clearTouchDrag();
-        if (!drag || !target) return;
-        const source = drag.source;
-
+      const commitDrop = (source: MenuDragSource, target: MenuDropTarget): void => {
         if (source.kind === "item") {
           if (target.kind === "item") {
             const category = state.categories.find((candidate) => candidate.id === target.categoryId);
@@ -289,15 +451,22 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           return;
         }
 
-        if (source.kind !== "category" || target.kind !== "category") return;
+        if (target.kind !== "category") return;
         state.pending.categoryMoves = state.pending.categoryMoves.filter(([sourceId]) => sourceId !== source.categoryId);
         state.categories = moveMenuCategory(state.categories, source.categoryId, target.categoryId, target.position);
         syncValue();
         renderCategories();
       };
 
-      const beginTouchDrag = (event: PointerEvent, source: TouchDragSource, sourceElement: HTMLElement, handle: HTMLElement): void => {
-        if (event.pointerType !== "touch" || activeTouchDrag) return;
+      const completePointerDrag = (): void => {
+        const drag = activePointerDrag;
+        const target = activeDropTarget;
+        clearPointerDrag();
+        if (drag && target) commitDrop(drag.source, target);
+      };
+
+      const beginPointerDrag = (event: PointerEvent, source: MenuDragSource, sourceElement: HTMLElement, handle: HTMLElement): void => {
+        if (activePointerDrag || (event.pointerType !== "mouse" && event.pointerType !== "pen" && event.pointerType !== "touch")) return;
 
         event.preventDefault();
         event.stopPropagation();
@@ -312,7 +481,7 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         preview.style.width = `${bounds.width}px`;
         document.body.append(preview);
 
-        const drag: ActiveTouchDrag = {
+        const drag: ActivePointerDrag = {
           handle,
           offsetX: event.clientX - bounds.left,
           offsetY: event.clientY - bounds.top,
@@ -321,43 +490,44 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           source,
           sourceElement,
         };
-        activeTouchDrag = drag;
+        activePointerDrag = drag;
         sourceElement.classList.add("is-dragging");
+        beginDragProjection(source, sourceElement);
         preview.style.left = `${event.clientX - drag.offsetX}px`;
         preview.style.top = `${event.clientY - drag.offsetY}px`;
         handle.setPointerCapture(event.pointerId);
       };
 
-      const moveTouchDrag = (event: PointerEvent): void => {
-        const drag = activeTouchDrag;
+      const movePointerDrag = (event: PointerEvent): void => {
+        const drag = activePointerDrag;
         if (!drag || drag.pointerId !== event.pointerId) return;
 
         event.preventDefault();
         drag.preview.style.left = `${event.clientX - drag.offsetX}px`;
         drag.preview.style.top = `${event.clientY - drag.offsetY}px`;
-        updateTouchDropTarget(drag.source, event);
+        updatePointerDropTarget(drag.source, event);
       };
 
-      const endTouchDrag = (event: PointerEvent, shouldCommit: boolean): void => {
-        const drag = activeTouchDrag;
+      const endPointerDrag = (event: PointerEvent, shouldCommit: boolean): void => {
+        const drag = activePointerDrag;
         if (!drag || drag.pointerId !== event.pointerId) return;
 
         event.preventDefault();
         if (shouldCommit) {
-          updateTouchDropTarget(drag.source, event);
-          completeTouchDrag();
+          updatePointerDropTarget(drag.source, event);
+          completePointerDrag();
         } else {
-          clearTouchDrag();
+          clearPointerDrag();
         }
       };
 
-      const bindTouchDrag = (handle: HTMLElement, source: TouchDragSource, sourceElement: HTMLElement): void => {
-        handle.addEventListener("pointerdown", (event) => beginTouchDrag(event, source, sourceElement, handle));
-        handle.addEventListener("pointermove", moveTouchDrag);
-        handle.addEventListener("pointerup", (event) => endTouchDrag(event, true));
-        handle.addEventListener("pointercancel", (event) => endTouchDrag(event, false));
+      const bindPointerDrag = (handle: HTMLElement, source: MenuDragSource, sourceElement: HTMLElement): void => {
+        handle.addEventListener("pointerdown", (event) => beginPointerDrag(event, source, sourceElement, handle));
+        handle.addEventListener("pointermove", movePointerDrag);
+        handle.addEventListener("pointerup", (event) => endPointerDrag(event, true));
+        handle.addEventListener("pointercancel", (event) => endPointerDrag(event, false));
         handle.addEventListener("lostpointercapture", () => {
-          if (activeTouchDrag?.handle === handle) clearTouchDrag();
+          if (activePointerDrag?.handle === handle) clearPointerDrag();
         });
       };
 
@@ -378,48 +548,13 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         const row = (<div class={`fluent-menu-editor__item${state.hiddenItemPaths.has(path) ? " is-hidden" : ""}`} data-item-path={path} />) as HTMLElement;
         const dragHandle = (<span class="fluent-menu-editor__drag-handle" title={_("Drag to move second-level menu")} />) as HTMLElement;
         const visibility = (<input type="checkbox" checked={!state.hiddenItemPaths.has(path)} aria-label={_("Show %s in the menu").format(item.title)} />) as HTMLInputElement;
-        dragHandle.draggable = true;
-
-        dragHandle.addEventListener("dragstart", (event) => {
-          event.dataTransfer?.setData(ITEM_DRAG_TYPE, path);
-          if (event.dataTransfer) {
-            event.dataTransfer.effectAllowed = "move";
-            const rect = row.getBoundingClientRect();
-            event.dataTransfer.setDragImage(row, event.clientX - rect.left, event.clientY - rect.top);
-          }
-          row.classList.add("is-dragging");
-        });
-        dragHandle.addEventListener("dragend", () => {
-          row.classList.remove("is-dragging");
-          clearDropIndicator();
-        });
-        bindTouchDrag(dragHandle, { kind: "item", path }, row);
+        const dragSource: MenuDragSource = { kind: "item", path };
+        bindPointerDrag(dragHandle, dragSource, row);
         visibility.addEventListener("change", () => {
           if (visibility.checked) state.hiddenItemPaths.delete(path);
           else state.hiddenItemPaths.add(path);
           row.classList.toggle("is-hidden", !visibility.checked);
           syncValue();
-        });
-        row.addEventListener("dragover", (event) => {
-          if (!event.dataTransfer?.types.includes(ITEM_DRAG_TYPE)) return;
-          event.preventDefault();
-          event.stopPropagation();
-          showDropIndicator(row, dropPosition(event, row));
-        });
-        row.addEventListener("dragleave", (event) => {
-          if (!row.contains(event.relatedTarget as Node | null) && activeDropTarget === row) clearDropIndicator();
-        });
-        row.addEventListener("drop", (event) => {
-          const pathToMove = event.dataTransfer?.getData(ITEM_DRAG_TYPE);
-          if (!pathToMove) return;
-          event.preventDefault();
-          event.stopPropagation();
-
-          const position = activeDropTarget === row ? activeDropPosition : dropPosition(event, row);
-          const targetIndex = category.items.indexOf(path);
-          const beforePath = position === "before" ? path : category.items[targetIndex + 1];
-          clearDropIndicator();
-          moveItem(pathToMove, categoryId, beforePath);
         });
 
         const displayTitle = state.itemTitles.get(path) ?? item.title;
@@ -553,22 +688,6 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
             expandedCategoryIds.delete(category.id);
           }
         });
-        list.addEventListener("dragover", (event) => {
-          if (!event.dataTransfer?.types.includes(ITEM_DRAG_TYPE)) return;
-          event.preventDefault();
-          list.classList.add("is-drag-over");
-        });
-        list.addEventListener("dragleave", (event) => {
-          if (!list.contains(event.relatedTarget as Node | null)) list.classList.remove("is-drag-over");
-        });
-        list.addEventListener("drop", (event) => {
-          const path = event.dataTransfer?.getData(ITEM_DRAG_TYPE);
-          if (!path) return;
-          event.preventDefault();
-          event.stopPropagation();
-          list.classList.remove("is-drag-over");
-          moveItem(path, category.id);
-        });
 
         if (card.open) renderItems();
 
@@ -664,22 +783,9 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
         });
 
         if (canReorderCategories) {
+          const dragSource: MenuDragSource = { kind: "category", categoryId: category.id };
           const dragHandle = (<span class="fluent-menu-editor__drag-handle" title={_("Drag to reorder primary menu")} />) as HTMLElement;
-          dragHandle.draggable = true;
-          dragHandle.addEventListener("dragstart", (event) => {
-            event.dataTransfer?.setData(CATEGORY_DRAG_TYPE, category.id);
-            if (event.dataTransfer) {
-              event.dataTransfer.effectAllowed = "move";
-              const rect = card.getBoundingClientRect();
-              event.dataTransfer.setDragImage(card, event.clientX - rect.left, event.clientY - rect.top);
-            }
-            card.classList.add("is-dragging");
-          });
-          dragHandle.addEventListener("dragend", () => {
-            card.classList.remove("is-dragging");
-            clearDropIndicator();
-          });
-          bindTouchDrag(dragHandle, { kind: "category", categoryId: category.id }, card);
+          bindPointerDrag(dragHandle, dragSource, card);
           header.append(dragHandle);
         }
 
@@ -703,43 +809,6 @@ function createMenuLayoutOption(tree: LuCI.ui.menu.MenuNode) {
           header.append(deleteButton);
         }
         header.append(visibility);
-
-        card.addEventListener("dragover", (event) => {
-          const isItemDrag = event.dataTransfer?.types.includes(ITEM_DRAG_TYPE);
-          const isCategoryDrag = canReorderCategories && event.dataTransfer?.types.includes(CATEGORY_DRAG_TYPE);
-          if (isCategoryDrag) {
-            event.preventDefault();
-            showDropIndicator(card, dropPosition(event, card));
-            return;
-          }
-          if (!isItemDrag || list.contains(event.target as Node | null)) return;
-
-          event.preventDefault();
-          showDropIndicator(card, "after");
-        });
-        card.addEventListener("dragleave", (event) => {
-          if (card.contains(event.relatedTarget as Node | null)) return;
-          if (activeDropTarget === card) clearDropIndicator();
-        });
-        card.addEventListener("drop", (event) => {
-          const path = event.dataTransfer?.getData(ITEM_DRAG_TYPE);
-          if (path) {
-            event.preventDefault();
-            clearDropIndicator();
-            moveItem(path, category.id);
-            return;
-          }
-
-          const sourceId = event.dataTransfer?.getData(CATEGORY_DRAG_TYPE);
-          if (!canReorderCategories || !sourceId || sourceId === category.id) return;
-          event.preventDefault();
-          const position = activeDropTarget === card ? activeDropPosition : dropPosition(event, card);
-          clearDropIndicator();
-          state.pending.categoryMoves = state.pending.categoryMoves.filter(([pendingSourceId]) => pendingSourceId !== sourceId);
-          state.categories = moveMenuCategory(state.categories, sourceId, category.id, position);
-          syncValue();
-          renderCategories();
-        });
 
         card.append(header);
         if (error) card.append(error);

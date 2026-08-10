@@ -1533,41 +1533,40 @@ function buildMenuPresentation(e, t) {
 
 let menu_n = L.form;
 
-let menu_p = "application/x-fluent-menu-category", menu_f = "application/x-fluent-menu-item";
-function menu_v(e, t) {
+function menu_g(e, t) {
     let i = t.getBoundingClientRect();
     return e.clientY < i.top + i.height / 2 ? "before" : "after";
 }
-let menu_h = 0;
-function menu_y(e) {
+let menu_f = 0;
+function menu_h(e) {
     return e.trim().toLocaleLowerCase();
 }
-function menu_b(e) {
+function menu_y(e) {
     let t = new Map(), i = new Map();
     for (let n of e){
-        let e = n.title.trim(), a = menu_y(e);
+        let e = n.title.trim(), l = menu_h(e);
         if (!e) {
             t.set(n.id, _("Primary menu titles cannot be empty."));
             continue;
         }
-        let r = i.get(a);
-        r ? (t.set(r, _("Primary menu titles must be unique.")), t.set(n.id, _("Primary menu titles must be unique."))) : i.set(a, n.id);
+        let r = i.get(l);
+        r ? (t.set(r, _("Primary menu titles must be unique.")), t.set(n.id, _("Primary menu titles must be unique."))) : i.set(l, n.id);
     }
     return t;
 }
-function registerMenuTab(I, w) {
-    var M;
-    let T, k, E, D;
-    I.tab("menu", _("Menu"));
-    let x = I.taboption("menu", (M = w, k = new Map((T = discoverMenuItems(M)).map((e)=>[
+function registerMenuTab(b, v) {
+    var k;
+    let I, w, M, C;
+    b.tab("menu", _("Menu"));
+    let E = b.taboption("menu", (k = v, w = new Map((I = discoverMenuItems(k)).map((e)=>[
             e.path,
             e
-        ])), E = new Map(buildDefaultMenuCategories(M).map((e)=>[
+        ])), M = new Map(buildDefaultMenuCategories(k).map((e)=>[
             e.id,
             e
-        ])), D = new Map(), menu_n.Value.extend({
-        renderWidget (n, l, I) {
-            let w = "string" == typeof I || Array.isArray(I) ? I : null, x = "string" == typeof I ? I : "", C = function(e, t) {
+        ])), C = new Map(), menu_n.Value.extend({
+        renderWidget (n, o, b) {
+            let v = "string" == typeof b || Array.isArray(b) ? b : null, E = "string" == typeof b ? b : "", x = function(e, t) {
                 let i = parseMenuLayout(t);
                 if (!i) return {
                     categories: buildDefaultMenuCategories(e),
@@ -1589,200 +1588,283 @@ function registerMenuTab(I, w) {
                     itemTitles: new Map(n.itemTitles),
                     pending: n.pending
                 };
-            }(M, w), P = new Set(), S = "" === x ? null : parseMenuLayout(x), $ = "" !== x && !S, A = jsx("input", {
+            }(k, v), P = new Set(), S = "" === E ? null : parseMenuLayout(E), T = "" !== E && !S, $ = jsx("input", {
                 type: "hidden",
                 id: this.cbid(n),
-                value: x
+                value: E
             }), R = jsx("div", {
                 class: "fluent-menu-editor__categories"
-            }), Y = new Map(), X = null, q = "before", F = null, N = null, B = null, U = jsx("div", {
+            }), A = new Map(), q = null, D = null, Y = null, F = null, X = null, B = jsx("div", {
                 class: "fluent-menu-editor__validation",
                 role: "alert"
-            }), j = jsx("div", {
+            }), N = jsx("div", {
                 class: "fluent-menu-editor__notice",
-                hidden: !$,
+                hidden: !T,
                 children: _('The stored menu layout is invalid. Choose "Restore defaults" or make an edit before saving.')
             });
-            D.set(n, A);
-            let z = ()=>{
-                let e = menu_b(C.categories);
-                for (let [t, i] of Y){
+            C.set(n, $);
+            let U = ()=>{
+                let e = menu_y(x.categories);
+                for (let [t, i] of A){
                     let n = e.get(t) ?? "";
                     i.card.classList.toggle("is-invalid", !!n), i.error && (i.error.textContent = n);
                 }
-                U.textContent = e.size > 0 ? _("Fix primary menu title errors before saving.") : "";
-            }, O = (e = serializeMenuLayout(M, C.categories, C.hiddenCategoryIds, C.hiddenItemPaths, C.pending, C.itemTitles))=>{
-                A.value = e, j.hidden = !0, z(), A.dispatchEvent(new Event("change", {
+                B.textContent = e.size > 0 ? _("Fix primary menu title errors before saving.") : "";
+            }, j = (e = serializeMenuLayout(k, x.categories, x.hiddenCategoryIds, x.hiddenItemPaths, x.pending, x.itemTitles))=>{
+                $.value = e, N.hidden = !0, U(), $.dispatchEvent(new Event("change", {
                     bubbles: !0
                 }));
-            }, V = ()=>{
-                X?.classList.remove("is-drop-before", "is-drop-after"), X = null;
+            }, V = ()=>"true" === document.body.dataset.reduceMotion, z = ()=>{
+                q?.classList.remove("is-drop-before", "is-drop-after"), q = null, D?.classList.remove("is-drag-over"), D = null;
             }, W = (e, t)=>{
-                (X !== e || q !== t) && V(), X = e, q = t, e.classList.toggle("is-drop-before", "before" === t), e.classList.toggle("is-drop-after", "after" === t);
-            }, G = (e, t, i)=>{
-                k.has(e) && C.categories.some((e)=>e.id === t) && (C.pending.itemMoves = C.pending.itemMoves.filter(([t])=>t !== e), C.categories = moveMenuItem(C.categories, e, t, i), P.add(t), O(), ea());
-            }, H = ()=>{
-                V(), N?.classList.remove("is-drag-over"), N = null, B = null;
+                let i, n, l, r, o = F;
+                if (!o || V() || o.placeholder.parentElement === e && o.placeholder.nextSibling === t) return;
+                let a = (i = "category" === o.source.kind ? ".fluent-menu-editor__category" : ".fluent-menu-editor__item", Array.from(R.querySelectorAll(i)).filter((e)=>e !== F?.sourceElement && e.getClientRects().length > 0)), d = new Map(a.map((e)=>[
+                        e,
+                        e.getBoundingClientRect()
+                    ]));
+                e.insertBefore(o.placeholder, t);
+                let s = {
+                    duration: Number.isFinite(r = Number.parseFloat(l = (n = getComputedStyle(document.documentElement)).getPropertyValue("--fluent-duration-fast").trim())) ? r * (l.endsWith("ms") ? 1 : 1000) : 0,
+                    easing: n.getPropertyValue("--fluent-easing-standard").trim()
+                };
+                for (let e of a){
+                    let t = d.get(e);
+                    if (!t || !e.isConnected) continue;
+                    let i = e.getBoundingClientRect(), n = t.left - i.left, l = t.top - i.top;
+                    (0 !== n || 0 !== l) && (e.getAnimations().forEach((e)=>{
+                        e.cancel();
+                    }), e.animate([
+                        {
+                            transform: `translate(${n}px, ${l}px)`
+                        },
+                        {
+                            transform: "translate(0, 0)"
+                        }
+                    ], s));
+                }
+            }, O = (e = !0)=>{
+                let t, i;
+                z(), Y = null, e && (t = F, i = t?.sourceElement.parentElement, t && i && W(i, t.sourceElement));
+            }, G = (e)=>{
+                var t, i, n;
+                if (!(t = Y) || t.kind !== e.kind || t.categoryId !== e.categoryId || ("item" === t.kind && "item" === e.kind ? t.path !== e.path || t.position !== e.position : "category" === t.kind && "category" === e.kind ? t.categoryId !== e.categoryId || t.position !== e.position : "item-list" !== t.kind && ("item-category" !== t.kind || "item-category" !== e.kind || t.position !== e.position))) {
+                    if (z(), Y = e, V()) return void ("item-list" === e.kind ? (D = e.element, e.element.classList.add("is-drag-over")) : (i = e.element, n = e.position, z(), q = i, i.classList.toggle("is-drop-before", "before" === n), i.classList.toggle("is-drop-after", "after" === n)));
+                    "item-category" === e.kind && (D = e.element, e.element.classList.add("is-drag-over")), ((e)=>{
+                        if (!F) return;
+                        if ("category" === e.kind || "item" === e.kind) {
+                            let t = "before" === e.position ? e.element : e.element.nextSibling, i = e.element.parentElement;
+                            i && W(i, t);
+                            return;
+                        }
+                        let t = "item-list" === e.kind ? e.element : e.element.querySelector(".fluent-menu-editor__items");
+                        t && W(t, null);
+                    })(e);
+                }
+            }, H = (e, t, i)=>{
+                w.has(e) && x.categories.some((e)=>e.id === t) && (x.pending.itemMoves = x.pending.itemMoves.filter(([t])=>t !== e), x.categories = moveMenuItem(x.categories, e, t, i), P.add(t), j(), en());
             }, J = ()=>{
-                let e = F;
-                e && (F = null, e.sourceElement.classList.remove("is-dragging"), e.preview.remove(), H(), e.handle.hasPointerCapture(e.pointerId) && e.handle.releasePointerCapture(e.pointerId));
-            }, K = (e)=>{
-                if (H(), B = e, "item-list" === e.kind) {
-                    N = e.element, e.element.classList.add("is-drag-over");
+                let e = X;
+                if (e) {
+                    let t;
+                    X = null, e.sourceElement.classList.remove("is-dragging"), e.preview.remove(), O(), t = F, F = null, t && (t.placeholder.remove(), t.sourceElement.classList.remove("is-drag-source")), e.handle.hasPointerCapture(e.pointerId) && e.handle.releasePointerCapture(e.pointerId);
+                }
+            }, K = (e, t)=>{
+                if (((e, t)=>{
+                    let i = F?.placeholder;
+                    if (!i?.isConnected) return !1;
+                    let n = i.getBoundingClientRect();
+                    return e >= n.left && e <= n.right && t >= n.top && t <= n.bottom;
+                })(t.clientX, t.clientY)) return;
+                let i = document.elementFromPoint(t.clientX, t.clientY);
+                if (!i) return void O();
+                if ("category" === e.kind) {
+                    let n = i.closest(".fluent-menu-editor__category"), l = n?.dataset.categoryId;
+                    return n && l && l !== e.categoryId ? void G({
+                        kind: "category",
+                        categoryId: l,
+                        element: n,
+                        position: menu_g(t, n)
+                    }) : void O();
+                }
+                let n = i.closest(".fluent-menu-editor__item"), l = n?.dataset.itemPath, r = n?.closest(".fluent-menu-editor__items"), o = r?.dataset.categoryId;
+                if (n && l && r && o) return l === e.path ? void O() : void G({
+                    kind: "item",
+                    categoryId: o,
+                    element: n,
+                    path: l,
+                    position: menu_g(t, n)
+                });
+                let a = i.closest(".fluent-menu-editor__items");
+                if (a) {
+                    let e = ((e, t, i)=>{
+                        let n = e.dataset.categoryId;
+                        if (!n) return null;
+                        let l = Array.from(e.querySelectorAll(":scope > .fluent-menu-editor__item")).filter((e)=>e !== F?.sourceElement && !e.classList.contains("is-dragging") && e.getClientRects().length > 0).map((e)=>({
+                                element: e,
+                                path: e.dataset.itemPath,
+                                bounds: e.getBoundingClientRect()
+                            })).filter((e)=>!!e.path);
+                        if (0 === l.length) return {
+                            kind: "item-list",
+                            categoryId: n,
+                            element: e
+                        };
+                        let r = [];
+                        for (let e of l){
+                            let t = r.at(-1);
+                            !t || e.bounds.top >= t.bottom - 1 ? r.push({
+                                items: [
+                                    e
+                                ],
+                                top: e.bounds.top,
+                                bottom: e.bounds.bottom
+                            }) : (t.items.push(e), t.top = Math.min(t.top, e.bounds.top), t.bottom = Math.max(t.bottom, e.bounds.bottom));
+                        }
+                        let o = (e, t)=>({
+                                kind: "item",
+                                categoryId: n,
+                                element: e.element,
+                                path: e.path,
+                                position: t
+                            }), a = l[0];
+                        if (i < r[0].top) return o(a, "before");
+                        for(let n = 0; n < r.length; n += 1){
+                            let l = r[n];
+                            if (i <= l.bottom) {
+                                if (1 === l.items.length) {
+                                    let e = l.items[0];
+                                    return o(e, i < e.bounds.top + e.bounds.height / 2 ? "before" : "after");
+                                }
+                                let n = l.items.reduce((e, i)=>Math.abs(t - i.bounds.left - i.bounds.width / 2) < Math.abs(t - e.bounds.left - e.bounds.width / 2) ? i : e), r = n.bounds.left + n.bounds.width / 2;
+                                return o(n, ("rtl" === getComputedStyle(e).direction ? t > r : t < r) ? "before" : "after");
+                            }
+                            let a = r[n + 1];
+                            if (a && i < a.top) return o(a.items[0], "before");
+                        }
+                        return {
+                            kind: "item-list",
+                            categoryId: n,
+                            element: e
+                        };
+                    })(a, t.clientX, t.clientY);
+                    e ? G(e) : O();
                     return;
                 }
-                W(e.element, e.position);
-            }, Q = (e, t)=>{
-                let i = document.elementFromPoint(t.clientX, t.clientY);
-                if (!i) return void H();
-                if ("category" === e.kind) {
-                    let n = i.closest(".fluent-menu-editor__category"), a = n?.dataset.categoryId;
-                    return n && a && a !== e.categoryId ? void K({
-                        kind: "category",
-                        categoryId: a,
-                        element: n,
-                        position: menu_v(t, n)
-                    }) : void H();
-                }
-                let n = i.closest(".fluent-menu-editor__item"), a = n?.dataset.itemPath, r = n?.closest(".fluent-menu-editor__items"), l = r?.dataset.categoryId;
-                if (n && a && r && l) return a === e.path ? void H() : void K({
-                    kind: "item",
-                    categoryId: l,
-                    element: n,
-                    path: a,
-                    position: menu_v(t, n)
-                });
-                let d = i.closest(".fluent-menu-editor__items"), o = d?.dataset.categoryId;
-                if (d && o) return void K({
-                    kind: "item-list",
-                    categoryId: o,
-                    element: d
-                });
-                let s = i.closest(".fluent-menu-editor__category"), c = s?.dataset.categoryId;
-                s && c ? K({
+                let d = i.closest(".fluent-menu-editor__category"), s = d?.dataset.categoryId;
+                d && s ? G({
                     kind: "item-category",
-                    categoryId: c,
-                    element: s,
+                    categoryId: s,
+                    element: d,
                     position: "after"
-                }) : H();
-            }, Z = (e)=>{
-                let t = F;
-                t && t.pointerId === e.pointerId && (e.preventDefault(), t.preview.style.left = `${e.clientX - t.offsetX}px`, t.preview.style.top = `${e.clientY - t.offsetY}px`, Q(t.source, e));
-            }, ee = (e, t)=>{
-                let i = F;
-                i && i.pointerId === e.pointerId && (e.preventDefault(), t ? (Q(i.source, e), (()=>{
-                    let e = F, t = B;
-                    if (J(), !e || !t) return;
-                    let i = e.source;
-                    if ("item" === i.kind) {
-                        if ("item" === t.kind) {
-                            let e = C.categories.find((e)=>e.id === t.categoryId);
-                            if (!e) return;
-                            let n = e.items.indexOf(t.path);
-                            if (n < 0) return;
-                            let a = "before" === t.position ? t.path : e.items[n + 1];
-                            G(i.path, t.categoryId, a);
-                        } else ("item-category" === t.kind || "item-list" === t.kind) && G(i.path, t.categoryId);
-                        return;
-                    }
-                    "category" === i.kind && "category" === t.kind && (C.pending.categoryMoves = C.pending.categoryMoves.filter(([e])=>e !== i.categoryId), C.categories = moveMenuCategory(C.categories, i.categoryId, t.categoryId, t.position), O(), ea());
-                })()) : J());
-            }, et = (e, t, i)=>{
+                }) : O();
+            }, Q = (e)=>{
+                let t = X;
+                t && t.pointerId === e.pointerId && (e.preventDefault(), t.preview.style.left = `${e.clientX - t.offsetX}px`, t.preview.style.top = `${e.clientY - t.offsetY}px`, K(t.source, e));
+            }, Z = (e, t)=>{
+                let i = X;
+                if (i && i.pointerId === e.pointerId) if (e.preventDefault(), t) {
+                    let t, n;
+                    K(i.source, e), t = X, n = Y, J(), t && n && ((e, t)=>{
+                        if ("item" === e.kind) {
+                            if ("item" === t.kind) {
+                                let i = x.categories.find((e)=>e.id === t.categoryId);
+                                if (!i) return;
+                                let n = i.items.indexOf(t.path);
+                                if (n < 0) return;
+                                let l = "before" === t.position ? t.path : i.items[n + 1];
+                                H(e.path, t.categoryId, l);
+                            } else ("item-category" === t.kind || "item-list" === t.kind) && H(e.path, t.categoryId);
+                            return;
+                        }
+                        "category" === t.kind && (x.pending.categoryMoves = x.pending.categoryMoves.filter(([t])=>t !== e.categoryId), x.categories = moveMenuCategory(x.categories, e.categoryId, t.categoryId, t.position), j(), en());
+                    })(t.source, n);
+                } else J();
+            }, ee = (e, t, i)=>{
                 e.addEventListener("pointerdown", (n)=>((e, t, i, n)=>{
-                        if ("touch" !== e.pointerType || F) return;
+                        if (X || "mouse" !== e.pointerType && "pen" !== e.pointerType && "touch" !== e.pointerType) return;
                         e.preventDefault(), e.stopPropagation();
-                        let a = i.getBoundingClientRect(), r = i.cloneNode(!0);
-                        r.classList.add("fluent-menu-editor__drag-preview"), r.setAttribute("aria-hidden", "true"), "category" === t.kind && (r.querySelector(".fluent-menu-editor__category-error")?.remove(), r.querySelector(".fluent-menu-editor__items")?.remove()), r.style.width = `${a.width}px`, document.body.append(r);
-                        let l = {
+                        let l = i.getBoundingClientRect(), r = i.cloneNode(!0);
+                        r.classList.add("fluent-menu-editor__drag-preview"), r.setAttribute("aria-hidden", "true"), "category" === t.kind && (r.querySelector(".fluent-menu-editor__category-error")?.remove(), r.querySelector(".fluent-menu-editor__items")?.remove()), r.style.width = `${l.width}px`, document.body.append(r);
+                        let o = {
                             handle: n,
-                            offsetX: e.clientX - a.left,
-                            offsetY: e.clientY - a.top,
+                            offsetX: e.clientX - l.left,
+                            offsetY: e.clientY - l.top,
                             pointerId: e.pointerId,
                             preview: r,
                             source: t,
                             sourceElement: i
                         };
-                        F = l, i.classList.add("is-dragging"), r.style.left = `${e.clientX - l.offsetX}px`, r.style.top = `${e.clientY - l.offsetY}px`, n.setPointerCapture(e.pointerId);
-                    })(n, t, i, e)), e.addEventListener("pointermove", Z), e.addEventListener("pointerup", (e)=>ee(e, !0)), e.addEventListener("pointercancel", (e)=>ee(e, !1)), e.addEventListener("lostpointercapture", ()=>{
-                    F?.handle === e && J();
+                        X = o, i.classList.add("is-dragging"), ((e, t)=>{
+                            if (V()) return;
+                            let i = t.getBoundingClientRect(), n = "category" === e.kind ? "category" : "item", l = document.createElement("div");
+                            l.className = `fluent-menu-editor__drop-placeholder fluent-menu-editor__drop-placeholder--${n}`, l.style.height = `${i.height}px`, l.setAttribute("aria-hidden", "true"), t.parentElement?.insertBefore(l, t), F = {
+                                placeholder: l,
+                                source: e,
+                                sourceElement: t
+                            }, t.classList.add("is-drag-source");
+                        })(t, i), r.style.left = `${e.clientX - o.offsetX}px`, r.style.top = `${e.clientY - o.offsetY}px`, n.setPointerCapture(e.pointerId);
+                    })(n, t, i, e)), e.addEventListener("pointermove", Q), e.addEventListener("pointerup", (e)=>Z(e, !0)), e.addEventListener("pointercancel", (e)=>Z(e, !1)), e.addEventListener("lostpointercapture", ()=>{
+                    X?.handle === e && J();
                 });
-            }, ei = (i, a)=>{
-                let l = k.get(i), d = C.categories.find((e)=>e.id === a);
-                if (!l || !d) return null;
-                let o = jsx("div", {
-                    class: `fluent-menu-editor__item${C.hiddenItemPaths.has(i) ? " is-hidden" : ""}`,
+            }, et = (i, l)=>{
+                let o = w.get(i), a = x.categories.find((e)=>e.id === l);
+                if (!o || !a) return null;
+                let d = jsx("div", {
+                    class: `fluent-menu-editor__item${x.hiddenItemPaths.has(i) ? " is-hidden" : ""}`,
                     "data-item-path": i
                 }), s = jsx("span", {
                     class: "fluent-menu-editor__drag-handle",
                     title: _("Drag to move second-level menu")
-                }), u = jsx("input", {
+                }), c = jsx("input", {
                     type: "checkbox",
-                    checked: !C.hiddenItemPaths.has(i),
-                    "aria-label": _("Show %s in the menu").format(l.title)
+                    checked: !x.hiddenItemPaths.has(i),
+                    "aria-label": _("Show %s in the menu").format(o.title)
                 });
-                s.draggable = !0, s.addEventListener("dragstart", (e)=>{
-                    if (e.dataTransfer?.setData(menu_f, i), e.dataTransfer) {
-                        e.dataTransfer.effectAllowed = "move";
-                        let t = o.getBoundingClientRect();
-                        e.dataTransfer.setDragImage(o, e.clientX - t.left, e.clientY - t.top);
-                    }
-                    o.classList.add("is-dragging");
-                }), s.addEventListener("dragend", ()=>{
-                    o.classList.remove("is-dragging"), V();
-                }), et(s, {
+                ee(s, {
                     kind: "item",
                     path: i
-                }, o), u.addEventListener("change", ()=>{
-                    u.checked ? C.hiddenItemPaths.delete(i) : C.hiddenItemPaths.add(i), o.classList.toggle("is-hidden", !u.checked), O();
-                }), o.addEventListener("dragover", (e)=>{
-                    e.dataTransfer?.types.includes(menu_f) && (e.preventDefault(), e.stopPropagation(), W(o, menu_v(e, o)));
-                }), o.addEventListener("dragleave", (e)=>{
-                    o.contains(e.relatedTarget) || X !== o || V();
-                }), o.addEventListener("drop", (e)=>{
-                    let t = e.dataTransfer?.getData(menu_f);
-                    if (!t) return;
-                    e.preventDefault(), e.stopPropagation();
-                    let n = X === o ? q : menu_v(e, o), r = d.items.indexOf(i), l = "before" === n ? i : d.items[r + 1];
-                    V(), G(t, a, l);
+                }, d), c.addEventListener("change", ()=>{
+                    c.checked ? x.hiddenItemPaths.delete(i) : x.hiddenItemPaths.add(i), d.classList.toggle("is-hidden", !c.checked), j();
                 });
-                let g = C.itemTitles.get(i) ?? l.title, p = _("Edit"), h = jsx("button", {
+                let p = x.itemTitles.get(i) ?? o.title, g = _("Edit"), f = jsx("button", {
                     class: "fluent-menu-editor__category-edit",
                     type: "button",
-                    "aria-label": p,
-                    title: p
+                    "aria-label": g,
+                    title: g
                 });
-                h.addEventListener("click", ()=>{
-                    let a = C.itemTitles.get(i) ?? l.title, r = `${this.cbid(n)}-item-${i.replace(/\//g, "-")}-title`, d = jsx("input", {
+                f.addEventListener("click", ()=>{
+                    let l = x.itemTitles.get(i) ?? o.title, r = `${this.cbid(n)}-item-${i.replace(/\//g, "-")}-title`, a = jsx("input", {
                         id: r,
                         class: "cbi-input-text",
                         type: "text",
-                        value: a,
+                        value: l,
                         "aria-label": _("Second-level menu title")
-                    }), o = jsx("p", {
+                    }), d = jsx("p", {
                         class: "cbi-value-description",
                         role: "alert",
                         hidden: !0
-                    }), s = null, c = ()=>{
-                        let e = d.value.trim() ? "" : _("Menu title cannot be empty.");
-                        return o.textContent = e, o.hidden = !e, d.classList.toggle("cbi-input-invalid", !!e), s && (s.disabled = !!e), !e;
+                    }), s = null, u = ()=>{
+                        let e = a.value.trim() ? "" : _("Menu title cannot be empty.");
+                        return d.textContent = e, d.hidden = !e, a.classList.toggle("cbi-input-invalid", !!e), s && (s.disabled = !!e), !e;
                     };
-                    d.addEventListener("input", c), s = jsx("button", {
+                    a.addEventListener("input", u), s = jsx("button", {
                         type: "button",
                         class: "btn cbi-button-save",
                         onclick: ()=>{
-                            if (!c()) return;
-                            let e = d.value.trim();
-                            e === l.title ? C.itemTitles.delete(i) : C.itemTitles.set(i, e), O(), ea(), L.ui.hideModal();
+                            if (!u()) return;
+                            let e = a.value.trim();
+                            e === o.title ? x.itemTitles.delete(i) : x.itemTitles.set(i, e), j(), en(), L.ui.hideModal();
                         },
                         children: _("Save")
                     });
-                    let u = _("Restore to original title"), m = jsx("button", {
+                    let c = _("Restore to original title"), m = jsx("button", {
                         class: "fluent-menu-editor__item-reset",
                         type: "button",
-                        "aria-label": u,
-                        title: u,
+                        "aria-label": c,
+                        title: c,
                         onclick: ()=>{
-                            d.value = l.title, c(), d.focus();
+                            a.value = o.title, u(), a.focus();
                         }
                     });
                     L.ui.showModal(_("Second-level menu title"), jsxs("div", {
@@ -1795,11 +1877,11 @@ function registerMenuTab(I, w) {
                             jsxs("div", {
                                 class: "fluent-menu-editor__rename-control",
                                 children: [
-                                    d,
+                                    a,
                                     m
                                 ]
                             }),
-                            o,
+                            d,
                             jsxs("div", {
                                 class: "right",
                                 children: [
@@ -1813,23 +1895,23 @@ function registerMenuTab(I, w) {
                                 ]
                             })
                         ]
-                    })), c(), requestAnimationFrame(()=>{
-                        d.focus(), d.select();
+                    })), u(), requestAnimationFrame(()=>{
+                        a.focus(), a.select();
                     });
                 });
-                let y = jsxs("span", {
+                let h = jsxs("span", {
                     class: "fluent-menu-editor__item-label",
                     children: [
                         jsx("strong", {
-                            children: g
+                            children: p
                         }),
                         jsx("small", {
-                            children: l.path
+                            children: o.path
                         })
                     ]
                 });
-                if (o.append(s, h, y), canRestoreMenuItem(C.categories, T, i)) {
-                    let t = _("Restore %s to its original menu position").format(l.title), n = jsx("button", {
+                if (d.append(s, f, h), canRestoreMenuItem(x.categories, I, i)) {
+                    let t = _("Restore %s to its original menu position").format(o.title), n = jsx("button", {
                         class: "fluent-menu-editor__item-reset",
                         type: "button",
                         "aria-label": t,
@@ -1837,93 +1919,86 @@ function registerMenuTab(I, w) {
                     });
                     n.addEventListener("click", ()=>{
                         let e;
-                        (e = k.get(i)) && P.add(primaryCategoryId(e.originalPrimaryPath)), C.pending.itemMoves = C.pending.itemMoves.filter(([e])=>e !== i), C.categories = restoreMenuItemToOriginalPosition(C.categories, T, i), O(), ea();
-                    }), o.append(n);
+                        (e = w.get(i)) && P.add(primaryCategoryId(e.originalPrimaryPath)), x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== i), x.categories = restoreMenuItemToOriginalPosition(x.categories, I, i), j(), en();
+                    }), d.append(n);
                 }
-                return o.append(u), o;
-            }, en = (a)=>{
+                return d.append(c), d;
+            }, ei = (l)=>{
                 let r = document.createElement("details");
-                r.className = `fluent-menu-editor__category${C.hiddenCategoryIds.has(a.id) ? " is-hidden" : ""}`, r.dataset.categoryId = a.id, r.open = P.has(a.id);
-                let l = document.createElement("summary");
-                l.className = "fluent-menu-editor__category-header";
-                let o = jsx("div", {
+                r.className = `fluent-menu-editor__category${x.hiddenCategoryIds.has(l.id) ? " is-hidden" : ""}`, r.dataset.categoryId = l.id, r.open = P.has(l.id);
+                let o = document.createElement("summary");
+                o.className = "fluent-menu-editor__category-header";
+                let a = jsx("div", {
                     class: "fluent-menu-editor__items",
-                    "data-category-id": a.id
-                }), s = jsx("span", {
+                    "data-category-id": l.id
+                }), d = jsx("span", {
                     class: "fluent-menu-editor__category-count",
-                    title: _("%d second-level menus").format(a.items.length),
-                    children: a.items.length
-                }), c = jsx("div", {
+                    title: _("%d second-level menus").format(l.items.length),
+                    children: l.items.length
+                }), s = jsx("div", {
                     class: "fluent-menu-editor__category-error",
                     role: "alert"
-                }), u = !1, g = ()=>{
+                }), u = !1, c = ()=>{
                     if (u) return;
-                    let t = a.items.flatMap((e)=>{
-                        let t = ei(e, a.id);
+                    let t = l.items.flatMap((e)=>{
+                        let t = et(e, l.id);
                         return t ? [
                             t
                         ] : [];
                     });
-                    t.length > 0 ? o.append(...t) : o.appendChild(jsx("div", {
+                    t.length > 0 ? a.append(...t) : a.appendChild(jsx("div", {
                         class: "fluent-menu-editor__empty",
                         children: _("Drop second-level menus here")
                     })), u = !0;
                 };
                 r.addEventListener("toggle", ()=>{
-                    r.open ? (P.add(a.id), g()) : P.delete(a.id);
-                }), o.addEventListener("dragover", (e)=>{
-                    e.dataTransfer?.types.includes(menu_f) && (e.preventDefault(), o.classList.add("is-drag-over"));
-                }), o.addEventListener("dragleave", (e)=>{
-                    o.contains(e.relatedTarget) || o.classList.remove("is-drag-over");
-                }), o.addEventListener("drop", (e)=>{
-                    let t = e.dataTransfer?.getData(menu_f);
-                    t && (e.preventDefault(), e.stopPropagation(), o.classList.remove("is-drag-over"), G(t, a.id));
-                }), r.open && g();
-                let h = C.categories.length > 1, y = E.get(a.id), I = jsx("input", {
+                    r.open ? (P.add(l.id), c()) : P.delete(l.id);
+                }), r.open && c();
+                let p = x.categories.length > 1, g = M.get(l.id), f = jsx("input", {
                     type: "checkbox",
-                    checked: !C.hiddenCategoryIds.has(a.id),
-                    "aria-label": _("Show %s in the menu").format(a.title)
-                }), w = jsx("span", {
+                    checked: !x.hiddenCategoryIds.has(l.id),
+                    "aria-label": _("Show %s in the menu").format(l.title)
+                }), h = jsx("span", {
                     class: "fluent-menu-editor__category-name",
-                    children: a.title
-                }), M = _("Edit"), k = jsx("button", {
+                    children: l.title
+                }), b = _("Edit"), v = jsx("button", {
                     class: "fluent-menu-editor__category-edit",
                     type: "button",
-                    "aria-label": M,
-                    title: M
-                }), D = ()=>{
-                    let r = `${this.cbid(n)}-${a.id}-title`, l = jsx("input", {
+                    "aria-label": b,
+                    title: b
+                }), k = ()=>{
+                    let r = `${this.cbid(n)}-${l.id}-title`, o = jsx("input", {
                         id: r,
                         class: "cbi-input-text",
                         type: "text",
-                        value: a.title,
+                        value: l.title,
                         "aria-label": _("Primary menu title")
-                    }), d = jsx("p", {
+                    }), a = jsx("p", {
                         class: "cbi-value-description",
                         role: "alert",
                         hidden: !0
-                    }), o = null, s = ()=>{
-                        let e = l.value.trim(), t = menu_b(C.categories.map((t)=>t.id === a.id ? {
+                    }), d = null, s = ()=>{
+                        let e = o.value.trim(), t = menu_y(x.categories.map((t)=>t.id === l.id ? {
                                 ...t,
                                 title: e
-                            } : t)).get(a.id) ?? "";
-                        return d.textContent = t, d.hidden = !t, l.classList.toggle("cbi-input-invalid", !!t), o && (o.disabled = !!t), !t;
+                            } : t)).get(l.id) ?? "";
+                        return a.textContent = t, a.hidden = !t, o.classList.toggle("cbi-input-invalid", !!t), d && (d.disabled = !!t), !t;
                     };
-                    l.addEventListener("input", s), o = jsx("button", {
+                    o.addEventListener("input", s), d = jsx("button", {
                         type: "button",
                         class: "btn cbi-button-save",
                         onclick: ()=>{
-                            s() && (a.title = l.value.trim(), O(), ea(), L.ui.hideModal());
+                            s() && (l.title = o.value.trim(), j(), en(), L.ui.hideModal());
                         },
                         children: _("Save")
                     });
-                    let c = y ? _("Restore %s to its original menu name").format(y.title) : "", u = y ? jsx("button", {
+                    let u = g ? _("Restore %s to its original menu name").format(g.title) : "", c = g ? jsx("button", {
                         class: "fluent-menu-editor__item-reset",
                         type: "button",
-                        "aria-label": c,
-                        title: c,
+                        "aria-label": u,
+                        title: u,
                         onclick: ()=>{
-                            l.value = y.title, s(), l.focus();
+                            o.value = g.title, s(), o.focus();
                         }
                     }) : null;
                     L.ui.showModal(_("Primary menu title"), jsxs(Fragment, {
@@ -1938,11 +2013,11 @@ function registerMenuTab(I, w) {
                                     jsxs("div", {
                                         class: "fluent-menu-editor__rename-control",
                                         children: [
-                                            l,
-                                            u
+                                            o,
+                                            c
                                         ]
                                     }),
-                                    d
+                                    a
                                 ]
                             }),
                             jsxs("div", {
@@ -1954,36 +2029,27 @@ function registerMenuTab(I, w) {
                                         onclick: ()=>L.ui.hideModal(),
                                         children: _("Cancel")
                                     }),
-                                    o
+                                    d
                                 ]
                             })
                         ]
                     })), s(), requestAnimationFrame(()=>{
-                        l.focus(), l.select();
+                        o.focus(), o.select();
                     });
                 };
-                if (k.addEventListener("click", D), I.addEventListener("change", ()=>{
-                    I.checked ? C.hiddenCategoryIds.delete(a.id) : C.hiddenCategoryIds.add(a.id), r.classList.toggle("is-hidden", !I.checked), O();
-                }), h) {
-                    let t = jsx("span", {
+                if (v.addEventListener("click", k), f.addEventListener("change", ()=>{
+                    f.checked ? x.hiddenCategoryIds.delete(l.id) : x.hiddenCategoryIds.add(l.id), r.classList.toggle("is-hidden", !f.checked), j();
+                }), p) {
+                    let t = {
+                        kind: "category",
+                        categoryId: l.id
+                    }, i = jsx("span", {
                         class: "fluent-menu-editor__drag-handle",
                         title: _("Drag to reorder primary menu")
                     });
-                    t.draggable = !0, t.addEventListener("dragstart", (e)=>{
-                        if (e.dataTransfer?.setData(menu_p, a.id), e.dataTransfer) {
-                            e.dataTransfer.effectAllowed = "move";
-                            let t = r.getBoundingClientRect();
-                            e.dataTransfer.setDragImage(r, e.clientX - t.left, e.clientY - t.top);
-                        }
-                        r.classList.add("is-dragging");
-                    }), t.addEventListener("dragend", ()=>{
-                        r.classList.remove("is-dragging"), V();
-                    }), et(t, {
-                        kind: "category",
-                        categoryId: a.id
-                    }, r), l.append(t);
+                    ee(i, t, r), o.append(i);
                 }
-                if (l.append(k, w, s), !y) {
+                if (o.append(v, h, d), !g) {
                     let t = jsx("button", {
                         class: "fluent-menu-editor__category-delete",
                         type: "button",
@@ -1992,46 +2058,26 @@ function registerMenuTab(I, w) {
                     });
                     t.addEventListener("click", ()=>{
                         let e = [
-                            ...a.items
+                            ...l.items
                         ];
-                        for (let t of (C.categories = C.categories.filter((e)=>e.id !== a.id), C.hiddenCategoryIds.delete(a.id), C.pending.categoryMoves = C.pending.categoryMoves.filter(([e, t])=>e !== a.id && t !== a.id), C.pending.itemMoves = C.pending.itemMoves.filter(([, e])=>e !== a.id), P.delete(a.id), e))C.pending.itemMoves = C.pending.itemMoves.filter(([e])=>e !== t), C.categories = restoreMenuItemToOriginalPosition(C.categories, T, t);
-                        O(), ea();
-                    }), l.append(t);
+                        for (let t of (x.categories = x.categories.filter((e)=>e.id !== l.id), x.hiddenCategoryIds.delete(l.id), x.pending.categoryMoves = x.pending.categoryMoves.filter(([e, t])=>e !== l.id && t !== l.id), x.pending.itemMoves = x.pending.itemMoves.filter(([, e])=>e !== l.id), P.delete(l.id), e))x.pending.itemMoves = x.pending.itemMoves.filter(([e])=>e !== t), x.categories = restoreMenuItemToOriginalPosition(x.categories, I, t);
+                        j(), en();
+                    }), o.append(t);
                 }
-                l.append(I), r.addEventListener("dragover", (e)=>{
-                    let t = e.dataTransfer?.types.includes(menu_f);
-                    if (h && e.dataTransfer?.types.includes(menu_p)) {
-                        e.preventDefault(), W(r, menu_v(e, r));
-                        return;
-                    }
-                    !t || o.contains(e.target) || (e.preventDefault(), W(r, "after"));
-                }), r.addEventListener("dragleave", (e)=>{
-                    r.contains(e.relatedTarget) || X === r && V();
-                }), r.addEventListener("drop", (e)=>{
-                    let t = e.dataTransfer?.getData(menu_f);
-                    if (t) {
-                        e.preventDefault(), V(), G(t, a.id);
-                        return;
-                    }
-                    let i = e.dataTransfer?.getData(menu_p);
-                    if (!h || !i || i === a.id) return;
-                    e.preventDefault();
-                    let n = X === r ? q : menu_v(e, r);
-                    V(), C.pending.categoryMoves = C.pending.categoryMoves.filter(([e])=>e !== i), C.categories = moveMenuCategory(C.categories, i, a.id, n), O(), ea();
-                }), r.append(l), c && r.append(c), r.append(o);
-                let x = {
+                o.append(f), r.append(o), s && r.append(s), r.append(a);
+                let w = {
                     card: r
                 };
-                return c && (x.error = c), Y.set(a.id, x), r;
+                return s && (w.error = s), A.set(l.id, w), r;
             };
-            function ea() {
+            function en() {
                 let e = new Map();
                 for (let t of R.querySelectorAll(".fluent-menu-editor__items")){
                     let i = t.dataset.categoryId;
                     i && e.set(i, t.scrollTop);
                 }
                 let t = window.scrollX, i = window.scrollY;
-                Y.clear(), dom.content(R, C.categories.map((e)=>en(e))), z(), requestAnimationFrame(()=>{
+                A.clear(), dom.content(R, x.categories.map((e)=>ei(e))), U(), requestAnimationFrame(()=>{
                     for (let t of R.querySelectorAll(".fluent-menu-editor__items")){
                         let i = t.dataset.categoryId, n = i ? e.get(i) : void 0;
                         null != n && (t.scrollTop = n);
@@ -2039,27 +2085,27 @@ function registerMenuTab(I, w) {
                     window.scrollTo(t, i);
                 });
             }
-            let er = jsx("button", {
+            let el = jsx("button", {
                 class: "btn cbi-button cbi-button-add",
                 type: "button",
                 children: _("Add primary menu")
-            }), el = jsx("button", {
+            }), er = jsx("button", {
                 class: "btn cbi-button cbi-button-reset",
                 type: "button",
                 children: _("Restore defaults")
             });
-            return er.addEventListener("click", ()=>{
-                let e = _("New primary menu"), t = new Set(C.categories.map((e)=>menu_y(e.title))), i = e, n = 2;
-                for(; t.has(menu_y(i));)i = _("New primary menu %d").format(n), n += 1;
-                let a = "u" > typeof crypto && "function" == typeof crypto.randomUUID ? crypto.randomUUID() : (menu_h += 1, `category-${Date.now()}-${menu_h}`);
-                C.categories.push({
-                    id: a,
+            return el.addEventListener("click", ()=>{
+                let e = _("New primary menu"), t = new Set(x.categories.map((e)=>menu_h(e.title))), i = e, n = 2;
+                for(; t.has(menu_h(i));)i = _("New primary menu %d").format(n), n += 1;
+                let l = "u" > typeof crypto && "function" == typeof crypto.randomUUID ? crypto.randomUUID() : (menu_f += 1, `category-${Date.now()}-${menu_f}`);
+                x.categories.push({
+                    id: l,
                     title: i,
                     items: []
-                }), P.add(a), O(), ea();
-            }), el.addEventListener("click", ()=>{
-                C = {
-                    categories: buildDefaultMenuCategories(M),
+                }), P.add(l), j(), en();
+            }), er.addEventListener("click", ()=>{
+                x = {
+                    categories: buildDefaultMenuCategories(k),
                     hiddenCategoryIds: new Set(),
                     hiddenItemPaths: new Set(),
                     itemTitles: new Map(),
@@ -2069,33 +2115,33 @@ function registerMenuTab(I, w) {
                         categoryMoves: [],
                         itemMoves: []
                     }
-                }, P.clear(), O(""), ea();
-            }), ea(), jsxs("div", {
+                }, P.clear(), j(""), en();
+            }), en(), jsxs("div", {
                 class: "fluent-menu-editor",
                 children: [
-                    A,
-                    j,
+                    $,
+                    N,
                     jsx("div", {
                         class: "fluent-menu-editor__actions",
                         children: [
-                            er,
-                            el
+                            el,
+                            er
                         ]
                     }),
-                    U,
+                    B,
                     R
                 ]
             });
         },
-        formvalue: (e)=>D.get(e)?.value ?? "",
+        formvalue: (e)=>C.get(e)?.value ?? "",
         validate: (e, t)=>(function(e, t) {
                 if ("" === t || null == t) return !0;
                 if ("string" != typeof t) return _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
                 let i = parseMenuLayout(t);
-                return i ? menu_b(resolveMenuLayout(e, i).categories).values().next().value ?? !0 : _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
-            })(M, t)
+                return i ? menu_y(resolveMenuLayout(e, i).categories).values().next().value ?? !0 : _("The stored menu layout is invalid. Restore defaults or edit the layout before saving.");
+            })(k, t)
     })), "menu_layout");
-    x.optional = !0, x.rmempty = !0;
+    E.optional = !0, E.rmempty = !0;
 }
 
 ;// CONCATENATED MODULE: ./web/resources/view/fluent-config.tsx
