@@ -109,8 +109,8 @@ case "$1" in
 		installed_i18n=""
 		if command -v apk >/dev/null 2>&1; then
 			pkg_type="apk"
-			version=$(apk info -v luci-theme-fluent 2>/dev/null | sed 's/luci-theme-fluent-//')
-			installed_i18n=$(apk info 2>/dev/null | grep -E '^luci-i18n-fluent-' | sed 's/^luci-i18n-fluent-//')
+			version=$(apk list -I luci-theme-fluent 2>/dev/null | awk '{print $1}' | sed 's/^luci-theme-fluent-//' | head -1)
+			installed_i18n=$(apk list -I 2>/dev/null | grep -E '^luci-i18n-fluent-' | awk '{print $1}' | sed 's/^luci-i18n-fluent-//')
 		else
 			version=$(opkg status luci-theme-fluent 2>/dev/null | grep -m1 'Version:' | awk '{print $2}')
 			installed_i18n=$(opkg list-installed 2>/dev/null | grep -E '^luci-i18n-fluent-' | awk '{print $1}' | sed 's/^luci-i18n-fluent-//')
