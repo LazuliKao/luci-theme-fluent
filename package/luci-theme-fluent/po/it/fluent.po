@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 17:37+0800\n"
+"POT-Creation-Date: 2026-08-13 21:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -313,6 +313,9 @@ msgstr "Correggere gli errori nei titoli dei menu principali prima di salvare."
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "Tema Fluent Design 2 per LuCI"
+
+msgid "Fluent Theme"
+msgstr "Tema Fluent"
 
 msgid "Fluent theme settings"
 msgstr "Impostazioni del tema Fluent"

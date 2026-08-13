@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-10 17:36+0800\n"
+"POT-Creation-Date: 2026-08-13 21:39+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -286,6 +286,9 @@ msgstr "保存する前に、プライマリメニューのタイトルエラー
 
 msgid "Fluent Design 2 theme for LuCI"
 msgstr "LuCI用のFluent Design 2テーマ"
+
+msgid "Fluent Theme"
+msgstr "Fluentテーマ"
 
 msgid "Fluent theme settings"
 msgstr "Fluentテーマの設定"
