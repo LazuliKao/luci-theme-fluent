@@ -118,6 +118,15 @@
       animation: fluent-spin-swing 1s infinite ease;
     }
   }
+
+  &:disabled,
+  &[disabled] {
+    background: var(--fluent-bg-active);
+    color: var(--fluent-text-disabled);
+    border-color: var(--fluent-bg-active);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }
 
 // Icon button spacing

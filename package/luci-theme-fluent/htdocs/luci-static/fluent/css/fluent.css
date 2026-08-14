@@ -833,6 +833,14 @@ div[id="view"] > :not(.spinning) {
   transform: translateY(-50%);
 }
 
+.cbi-button:disabled, .cbi-button[disabled], .btn:disabled, .btn[disabled] {
+  background: var(--fluent-bg-active);
+  color: var(--fluent-text-disabled);
+  border-color: var(--fluent-bg-active);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .cbi-button svg, .cbi-button img {
   width: 16px;
   height: 16px;
