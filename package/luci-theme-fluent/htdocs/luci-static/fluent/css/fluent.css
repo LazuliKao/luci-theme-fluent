@@ -1053,7 +1053,6 @@ input[type="week"]::-webkit-calendar-picker-indicator:hover {
 
 .cbi-section .cbi-section-node {
   max-width: 100%;
-  overflow-x: auto;
 }
 
 .cbi-section .cbi-section-node:not(:first-child) {
