@@ -1,0 +1,75 @@
+// ============================================================
+// BOOTSTRAP THEME COMPATIBILITY LAYER
+// Forward standard luci-theme-bootstrap CSS variables to FluentUI tokens
+// Ensures plugins expecting Bootstrap CSS variables work seamlessly in Light & Dark modes
+// ============================================================
+@use "mixins" as *;
+
+:root {
+  // --- Background Colors ---
+  --background-color-high: var(--fluent-card-bg);
+  --background-color-medium: var(--fluent-bg-active);
+  --background-color-low: var(--fluent-table-header-bg);
+
+  // --- Text Colors ---
+  --text-color-highest: var(--fluent-text);
+  --text-color-high: var(--fluent-text);
+  --text-color-medium: var(--fluent-text-secondary);
+  --text-color-low: var(--fluent-text-disabled);
+
+  // --- Border Colors ---
+  --border-color-high: var(--fluent-border-hover);
+  --border-color-medium: var(--fluent-border);
+  --border-color-low: var(--fluent-table-border);
+
+  // --- Primary Brand Colors ---
+  --primary-color-high: var(--fluent-primary);
+  --primary-color-medium: var(--fluent-primary-hover);
+  --primary-color-low: var(--fluent-primary-active);
+  --on-primary-color: var(--fluent-text-on-primary);
+
+  // --- Status Colors: Error ---
+  --error-color-high-rgb: 209, 52, 56;
+  --error-color-high: var(--fluent-error);
+  --error-color-medium: var(--fluent-error-hover);
+  --error-color-low: var(--fluent-error-active);
+  --on-error-color: var(--fluent-text-on-primary);
+
+  // --- Status Colors: Success ---
+  --success-color-high-rgb: 16, 124, 16;
+  --success-color-high: var(--fluent-success);
+  --success-color-medium: var(--fluent-success);
+  --success-color-low: var(--fluent-success);
+  --on-success-color: var(--fluent-text-on-primary);
+
+  // --- Status Colors: Warning ---
+  --warn-color-high: var(--fluent-warning);
+  --warn-color-medium: var(--fluent-warning);
+  --warn-color-low: var(--fluent-warning);
+  --on-warn-color: var(--fluent-text);
+
+  // --- Fonts & Opacity ---
+  --font-sans: var(--fluent-font-family);
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --disabled-opacity: 0.7;
+}
+
+@include theme-dark {
+  --error-color-high-rgb: 255, 95, 95;
+  --success-color-high-rgb: 111, 235, 111;
+  --warn-color-medium: var(--fluent-warning-hover);
+  --warn-color-low: var(--fluent-warning-active);
+  --on-warn-color: var(--fluent-card-bg);
+  --disabled-opacity: 0.4;
+}
+
+// Fallback selector for plugins or scripts explicitly setting [data-darkmode="true"]
+:root[data-darkmode="true"],
+[data-darkmode="true"] {
+  --error-color-high-rgb: 255, 95, 95;
+  --success-color-high-rgb: 111, 235, 111;
+  --warn-color-medium: var(--fluent-warning-hover);
+  --warn-color-low: var(--fluent-warning-active);
+  --on-warn-color: var(--fluent-card-bg);
+  --disabled-opacity: 0.4;
+}

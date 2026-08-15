@@ -1,15 +1,7 @@
 @use "overrides-utils" as *;
 
 @include plugin-prefix("admin-services-appfilter") {
-    --background-color-low: var(--fluent-table-header-bg);
-    --background-color-medium: var(--fluent-bg-active);
-    --background-color-high: var(--fluent-card-bg);
-    --border-color-low: var(--fluent-table-border);
-    --border-color-medium: var(--fluent-border);
-    --border-color-high: var(--fluent-border-hover);
-    --text-color-medium: var(--fluent-text-secondary);
-    --text-color-high: var(--fluent-text);
-    .slider {
-        background-color: var(--background-color-medium);
-    }
+  .slider {
+    background-color: var(--background-color-medium);
+  }
 }

@@ -734,6 +734,49 @@ div[id="view"] > :not(.spinning) {
   }
 }
 
+:root {
+  --background-color-high: var(--fluent-card-bg);
+  --background-color-medium: var(--fluent-bg-active);
+  --background-color-low: var(--fluent-table-header-bg);
+  --text-color-highest: var(--fluent-text);
+  --text-color-high: var(--fluent-text);
+  --text-color-medium: var(--fluent-text-secondary);
+  --text-color-low: var(--fluent-text-disabled);
+  --border-color-high: var(--fluent-border-hover);
+  --border-color-medium: var(--fluent-border);
+  --border-color-low: var(--fluent-table-border);
+  --primary-color-high: var(--fluent-primary);
+  --primary-color-medium: var(--fluent-primary-hover);
+  --primary-color-low: var(--fluent-primary-active);
+  --on-primary-color: var(--fluent-text-on-primary);
+  --error-color-high-rgb: 209, 52, 56;
+  --error-color-high: var(--fluent-error);
+  --error-color-medium: var(--fluent-error-hover);
+  --error-color-low: var(--fluent-error-active);
+  --on-error-color: var(--fluent-text-on-primary);
+  --success-color-high-rgb: 16, 124, 16;
+  --success-color-high: var(--fluent-success);
+  --success-color-medium: var(--fluent-success);
+  --success-color-low: var(--fluent-success);
+  --on-success-color: var(--fluent-text-on-primary);
+  --warn-color-high: var(--fluent-warning);
+  --warn-color-medium: var(--fluent-warning);
+  --warn-color-low: var(--fluent-warning);
+  --on-warn-color: var(--fluent-text);
+  --font-sans: var(--fluent-font-family);
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --disabled-opacity: .7;
+}
+
+[data-theme="dark"], :root[data-darkmode="true"], [data-darkmode="true"] {
+  --error-color-high-rgb: 255, 95, 95;
+  --success-color-high-rgb: 111, 235, 111;
+  --warn-color-medium: var(--fluent-warning-hover);
+  --warn-color-low: var(--fluent-warning-active);
+  --on-warn-color: var(--fluent-card-bg);
+  --disabled-opacity: .4;
+}
+
 .cbi-button.cbi-button-remove, .cbi-button.cbi-button-negative, .cbi-button.danger, .btn.cbi-button-remove, .btn.cbi-button-negative, .btn.danger {
   background: var(--fluent-error);
   color: var(--fluent-text-on-primary);
@@ -11356,17 +11399,6 @@ body.fluent-log-fullscreen {
 
 body[data-page="admin-network-wireless"] > #modal_overlay > .modal {
   max-height: 90% !important;
-}
-
-body[data-page^="admin-services-appfilter"] > .main > .main-right > #maincontent {
-  --background-color-low: var(--fluent-table-header-bg);
-  --background-color-medium: var(--fluent-bg-active);
-  --background-color-high: var(--fluent-card-bg);
-  --border-color-low: var(--fluent-table-border);
-  --border-color-medium: var(--fluent-border);
-  --border-color-high: var(--fluent-border-hover);
-  --text-color-medium: var(--fluent-text-secondary);
-  --text-color-high: var(--fluent-text);
 }
 
 body[data-page^="admin-services-appfilter"] > .main > .main-right > #maincontent .slider {
