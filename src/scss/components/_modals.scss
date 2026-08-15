@@ -15,7 +15,7 @@
   background: var(--fluent-modal-overlay);
   z-index: var(--fluent-zindex-modal);
   display: none;
-  align-items: center;
+  align-items: safe center;
   justify-content: center;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

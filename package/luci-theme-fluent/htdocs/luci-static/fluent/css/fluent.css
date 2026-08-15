@@ -1453,7 +1453,7 @@ div.td, div.th {
   padding: var(--fluent-space-md);
   box-sizing: border-box;
   justify-content: center;
-  align-items: center;
+  align-items: safe center;
   display: none;
   position: fixed;
   inset-inline-start: 0;
