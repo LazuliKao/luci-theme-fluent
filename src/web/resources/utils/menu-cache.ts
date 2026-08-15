@@ -42,10 +42,9 @@ export function saveRenderedHtmlCache(): void {
       sessionStorage.setItem(SIDEBAR_HTML_CACHE_KEY, mainmenu.innerHTML);
     }
     const tabmenu = document.querySelector("#tabmenu");
-    if (tabmenu && tabmenu.children.length > 0) {
-      sessionStorage.setItem(TABMENU_HTML_CACHE_KEY, tabmenu.innerHTML);
-    } else {
-      sessionStorage.removeItem(TABMENU_HTML_CACHE_KEY);
+    const pathKey = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
+    if (tabmenu && tabmenu.children.length > 0 && pathKey) {
+      sessionStorage.setItem(`${TABMENU_HTML_CACHE_KEY}_${pathKey}`, tabmenu.innerHTML);
     }
   } catch (_) {}
 }

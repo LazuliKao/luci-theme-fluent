@@ -361,6 +361,46 @@
             var m = document.getElementById('mainmenu');
             m.innerHTML = cached;
             m.style.display = '';
+
+            var currentPath = location.pathname;
+            var links = m.querySelectorAll('a[href]');
+            var matched = null;
+            var maxLen = -1;
+
+            for (var i = 0; i < links.length; i++) {
+              var href = links[i].getAttribute('href');
+              if (href && href !== '#' && href.indexOf('javascript:') !== 0) {
+                if (currentPath === href || currentPath.indexOf(href) === 0) {
+                  if (href.length > maxLen) {
+                    matched = links[i];
+                    maxLen = href.length;
+                  }
+                }
+              }
+            }
+
+            if (matched) {
+              var actives = m.querySelectorAll('.active');
+              for (var j = 0; j < actives.length; j++) {
+                actives[j].classList.remove('active');
+              }
+
+              matched.classList.add('active');
+              if (matched.parentElement) {
+                matched.parentElement.classList.add('active');
+              }
+
+              var parentSubmenu = matched.closest('ul.slide-menu');
+              if (parentSubmenu) {
+                parentSubmenu.classList.add('active');
+                var parentLi = parentSubmenu.parentElement;
+                if (parentLi) {
+                  parentLi.classList.add('active');
+                  var parentA = parentLi.querySelector(':scope > a');
+                  if (parentA) parentA.classList.add('active');
+                }
+              }
+            }
           }
         } catch (_) {}
       })();
@@ -409,7 +449,9 @@
           <script>
             (function() {
               try {
-                var cachedTabs = sessionStorage.getItem('fluent_tabmenu_html');
+                var page = document.body.getAttribute('data-page') || '';
+                var pathKey = page.split('-').slice(0, 2).join('_');
+                var cachedTabs = sessionStorage.getItem('fluent_tabmenu_html_' + pathKey);
                 if (cachedTabs) {
                   var t = document.getElementById('tabmenu');
                   t.innerHTML = cachedTabs;

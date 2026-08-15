@@ -1450,7 +1450,7 @@ function setupMacSelector() {
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
-let menu_cache_e = "fluent_menu_cache", menu_cache_t = "fluent_tabmenu_html";
+let menu_cache_e = "fluent_menu_cache";
 function getCachedMenu() {
     try {
         let t = sessionStorage.getItem(menu_cache_e);
@@ -1475,8 +1475,8 @@ function saveRenderedHtmlCache() {
     try {
         let e = document.querySelector("#mainmenu");
         e && sessionStorage.setItem("fluent_sidebar_html", e.innerHTML);
-        let n = document.querySelector("#tabmenu");
-        n && n.children.length > 0 ? sessionStorage.setItem(menu_cache_t, n.innerHTML) : sessionStorage.removeItem(menu_cache_t);
+        let t = document.querySelector("#tabmenu"), n = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
+        t && t.children.length > 0 && n && sessionStorage.setItem(`fluent_tabmenu_html_${n}`, t.innerHTML);
     } catch (e) {}
 }
 function getResolvedMenuLayout() {

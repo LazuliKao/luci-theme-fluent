@@ -163,9 +163,9 @@ export function initSidebarController(handlerTarget: unknown) {
       return;
     }
 
-    const target = event.target as Node | null;
+    const clickNode = event.target as Node | null;
     const sidebar = document.querySelector("#mainmenu");
-    if (target && sidebar?.contains(target)) {
+    if (clickNode && sidebar?.contains(clickNode)) {
       return;
     }
 
