@@ -11255,6 +11255,10 @@ body.fluent-log-fullscreen {
   overflow: hidden !important;
 }
 
+body[data-page="admin-network-wireless"] > #modal_overlay > .modal {
+  max-height: 90% !important;
+}
+
 body.login-page {
   width: 100vw !important;
   min-width: 100vw !important;

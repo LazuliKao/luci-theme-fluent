@@ -1,0 +1,7 @@
+@use "overrides-utils" as *;
+
+@include plugin-dialog("admin-network-wireless") {
+    > .modal {
+        max-height: 90% !important;
+    }
+}
