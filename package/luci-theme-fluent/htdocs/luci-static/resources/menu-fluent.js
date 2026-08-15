@@ -1449,6 +1449,38 @@ function setupMacSelector() {
     });
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
+let menu_cache_t = "fluent_menu_cache";
+function getCachedMenu() {
+    try {
+        let e = sessionStorage.getItem(menu_cache_t);
+        if (!e) return null;
+        let n = JSON.parse(e);
+        if (n && "object" == typeof n) return {
+            tree: n,
+            raw: e
+        };
+    } catch (t) {}
+    return null;
+}
+function saveMenuCache(e) {
+    try {
+        let n = JSON.stringify(e);
+        return sessionStorage.setItem(menu_cache_t, n), n;
+    } catch (t) {
+        return null;
+    }
+}
+function getResolvedMenuLayout() {
+    let t = window;
+    if (void 0 !== t._fluent_menu_layout) return t._fluent_menu_layout;
+    let e = document.body?.getAttribute?.("data-menu-layout");
+    if (e) try {
+        let t = JSON.parse(e);
+        if ("string" == typeof t || Array.isArray(t) || null === t) return t;
+    } catch (t) {}
+}
+
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-search.ts
 function menu_search_e(e) {
     return e.toLowerCase().replace(/\s+/g, " ");
@@ -1866,6 +1898,75 @@ function select_dropdown_h(n) {
     });
     n.parentNode && p.observe(n.parentNode, {
         childList: !0
+    });
+}
+
+;// CONCATENATED MODULE: ./web/resources/utils/sidebar-controller.ts
+function applyDesktopSidebarState(e) {
+    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
+}
+function getDesktopSidebarState() {
+    try {
+        let e = localStorage.getItem("fluent-sidebar-state");
+        return "collapsed" === e || "expanded" === e ? e : "expanded";
+    } catch (e) {
+        return "expanded";
+    }
+}
+function closeCollapsedPopups() {
+    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open");
+    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
+    });
+}
+function adjustBrandTextSize() {
+    let e = document.querySelector(".sidenav-header .brand-text");
+    if (e) {
+        let t = e.parentElement;
+        if (t) {
+            let a = t.clientWidth - 32;
+            if (a > 0) {
+                let t = 16;
+                for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
+            }
+        }
+    }
+}
+function handleSidebarToggle(e) {
+    let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), d = document.querySelector(".darkMask"), o = document.querySelector(".main-right");
+    0 !== t.length && a && d && o && (Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
+        e.classList.remove("active");
+    }), a.classList.remove("active"), o.classList.remove("active"), d.classList.remove("active")) : (t.forEach((e)=>{
+        e.classList.add("active");
+    }), a.classList.add("active"), o.classList.add("active"), d.classList.add("active"), adjustBrandTextSize()));
+}
+function handleDesktopSidebarToggle(e) {
+    if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
+    let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
+    closeCollapsedPopups();
+    try {
+        localStorage.setItem("fluent-sidebar-state", t);
+    } catch (e) {}
+    applyDesktopSidebarState(t), "expanded" === t && adjustBrandTextSize();
+}
+let sidebar_controller_e = !1;
+function initSidebarController(t) {
+    if (sidebar_controller_e) return;
+    sidebar_controller_e = !0;
+    let a = document.querySelectorAll("a.showSide"), d = document.querySelector(".darkMask"), o = document.querySelector(".sidebar-collapse-toggle"), n = ui.createHandlerFn(t, "handleSidebarToggle") ?? (()=>{
+        handleSidebarToggle();
+    }), r = ui.createHandlerFn(t, "handleDesktopSidebarToggle") ?? ((e)=>{
+        handleDesktopSidebarToggle(e);
+    });
+    a.forEach((e)=>{
+        e.addEventListener("click", n);
+    }), d && d.addEventListener("click", n), o && o.addEventListener("click", r), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+        adjustBrandTextSize(), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded");
+    }), document.addEventListener("click", (e)=>{
+        if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
+        let t = e.target, a = document.querySelector("#mainmenu");
+        t && a?.contains(t) || closeCollapsedPopups();
     });
 }
 
@@ -2320,76 +2421,70 @@ function setupThemeFeatures() {
 
 
 
-function menu_fluent_f(e) {
-    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
-}
-function menu_fluent_v() {
-    let e = localStorage.getItem("fluent-sidebar-state");
-    return "collapsed" === e || "expanded" === e ? e : "expanded";
-}
-function menu_fluent_g() {
-    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open");
-    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
-    });
+
+
+let menu_fluent_x = !1;
+function menu_fluent_w(e) {
+    menu_fluent_x || (menu_fluent_x = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer());
 }
 const main = baseclass.extend({
     async __init__ () {
-        setupApplyChangePreview();
-        let [e] = await Promise.all([
-            ui.menu.load(),
-            L.uci.load("fluent")
-        ]), t = L.uci.get_first("fluent", "global", "menu_layout"), a = buildMenuPresentation(e, "string" == typeof t || Array.isArray(t) ? t : null);
-        this.render(e, a), setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(a), setupMacSelector(), setupLogViewer();
+        setupApplyChangePreview(), initSidebarController(this);
+        let e = getResolvedMenuLayout(), t = getCachedMenu(), l = !1;
+        if (t) {
+            let n = buildMenuPresentation(t.tree, e ?? null);
+            this.render(t.tree, n), menu_fluent_w(n), l = !0;
+        }
+        try {
+            let n = void 0 === e, [a] = await Promise.all([
+                ui.menu.load(),
+                n ? L.uci.load("fluent") : Promise.resolve()
+            ]), r = saveMenuCache(a);
+            if (!l || r !== t?.raw) {
+                if (n) {
+                    let t = L.uci.get_first("fluent", "global", "menu_layout");
+                    e = "string" == typeof t || Array.isArray(t) ? t : null;
+                }
+                let t = buildMenuPresentation(a, e ?? null);
+                this.render(a, t), menu_fluent_w(t);
+            }
+        } catch (e) {
+            l || console.error("Fluent menu: Failed to load menu data", e);
+        }
     },
     render (e, t) {
-        let a = e, n = "";
+        let l = e, i = "";
         if (t.configured) this.renderConfiguredMenu(t);
         else {
             let t = ui.menu.getChildren(e);
             for(let e = 0; e < t.length; e++)(L.env.requestpath.length ? t[e].name === L.env.requestpath[0] : 0 === e) && this.renderMainMenu(t[e], t[e].name);
         }
         if (L.env.dispatchpath.length >= 3) {
-            for(let e = 0; e < 3 && a; e++){
+            for(let e = 0; e < 3 && l; e++){
                 let t = L.env.dispatchpath[e];
-                a = a.children?.[t], n = n + (n ? "/" : "") + t;
+                l = l.children?.[t], i = i + (i ? "/" : "") + t;
             }
-            a && this.renderTabMenu(a, n, void 0, t.hiddenPaths);
+            l && this.renderTabMenu(l, i, void 0, t.hiddenPaths);
         }
-        let i = document.querySelectorAll("a.showSide"), l = document.querySelector(".darkMask"), r = document.querySelector(".sidebar-collapse-toggle"), s = ui.createHandlerFn(this, "handleSidebarToggle") ?? (()=>{
-            console.warn("Fluent menu: missing sidebar toggle handler");
-        }), d = ui.createHandlerFn(this, "handleDesktopSidebarToggle") ?? (()=>{
-            console.warn("Fluent menu: missing desktop sidebar toggle handler");
-        });
-        i.forEach((e)=>{
-            e.addEventListener("click", s);
-        }), l && l.addEventListener("click", s), r && r.addEventListener("click", d), window.innerWidth > 768 ? menu_fluent_f(menu_fluent_v()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-            this.adjustBrandTextSize(), window.innerWidth > 768 ? menu_fluent_f(menu_fluent_v()) : document.body.setAttribute("data-sidebar-state", "expanded");
-        }), document.addEventListener("click", (e)=>{
-            if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
-            let t = e.target, a = document.querySelector("#mainmenu");
-            t && a?.contains(t) || menu_fluent_g();
-        });
     },
     handleMenuExpand (e) {
         let t = e.currentTarget;
         if (!t) return;
-        let a = t.parentNode, n = t.nextElementSibling, i = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), l = !1;
-        if (document.querySelectorAll(i ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
-            l || e !== n || (l = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), i ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
-        }), n) {
-            if (!l) {
-                let e = a?.querySelector(".slide-menu");
+        let l = t.parentNode, i = t.nextElementSibling, n = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), a = !1;
+        if (document.querySelectorAll(n ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
+            a || e !== i || (a = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), n ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
+        }), i) {
+            if (!a) {
+                let e = l?.querySelector(".slide-menu");
                 if (e) {
-                    if (n.classList.add(i ? "popup-open" : "active"), t.classList.add(i ? "popup-open" : "active"), i) {
+                    if (i.classList.add(n ? "popup-open" : "active"), t.classList.add(n ? "popup-open" : "active"), n) {
                         SlideAnimations.stop(e), e.style.display = "block";
-                        let a = t.getBoundingClientRect(), n = e.offsetHeight, i = Math.max(8, window.innerHeight - n - 8), l = a.top - 8;
-                        e.style.top = `${Math.min(i, Math.max(8, l))}px`;
+                        let l = t.getBoundingClientRect(), i = e.offsetHeight, n = Math.max(8, window.innerHeight - i - 8), a = l.top - 8;
+                        e.style.top = `${Math.min(n, Math.max(8, a))}px`;
                     } else e.style.top = "", SlideAnimations.slideDown(e, "fast");
                     e.querySelectorAll("li > a").forEach((e)=>{
                         e.addEventListener("click", ()=>{
-                            menu_fluent_g();
+                            closeCollapsedPopups();
                         }, {
                             once: !0
                         });
@@ -2400,151 +2495,141 @@ const main = baseclass.extend({
             document.dispatchEvent(new CustomEvent("fluent-menu-expand")), e.preventDefault(), e.stopPropagation();
         }
     },
-    renderMainMenu (n, i, l) {
-        let r = (l || 0) + 1, s = l && n.title ? n.title.replace(/ /g, "_") : void 0, d = jsx("ul", {
-            class: l ? "slide-menu" : "nav",
+    renderMainMenu (i, n, a) {
+        let r = (a || 0) + 1, s = a && i.title ? i.title.replace(/ /g, "_") : void 0, o = jsx("ul", {
+            class: a ? "slide-menu" : "nav",
             "data-parent": s || void 0
-        }), o = ui.menu.getChildren(n);
-        if (0 === o.length || r > 2) return jsx(Fragment, {});
-        for(let a = 0; a < o.length; a++){
-            let l = o[a], s = L.env.dispatchpath[r] === l.name && L.env.dispatchpath[r - 1] === n.name, c = this.renderMainMenu(l, `${i}/${l.name}`, r), u = c.children.length > 0, p = u ? "slide" : null, m = u ? "menu" : "item";
-            s && (d.classList.add("active"), p = p ? `${p} active` : "null active");
-            let h = s ? `${m} active` : m, f = jsxs("li", {
-                class: p ?? void 0,
+        }), p = ui.menu.getChildren(i);
+        if (0 === p.length || r > 2) return jsx(Fragment, {});
+        for(let l = 0; l < p.length; l++){
+            let a = p[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === i.name, d = this.renderMainMenu(a, `${n}/${a.name}`, r), u = d.children.length > 0, c = u ? "slide" : null, h = u ? "menu" : "item";
+            s && (o.classList.add("active"), c = c ? `${c} active` : "null active");
+            let m = s ? `${h} active` : h, f = jsxs("li", {
+                class: c ?? void 0,
                 children: [
                     jsxs("a", {
-                        href: L.url(i, l.name),
+                        href: L.url(n, a.name),
                         onclick: 1 === r ? ui.createHandlerFn(this, "handleMenuExpand") : null,
-                        class: h,
-                        "data-title": (l.title || "").replace(/ /g, "_"),
+                        class: m,
+                        "data-title": (a.title || "").replace(/ /g, "_"),
                         children: [
                             1 === r || 2 === r ? jsx("span", {
                                 class: "menu-icon"
                             }) : null,
                             jsx("span", {
                                 class: "menu-label",
-                                children: _(l.title || "")
+                                children: _(a.title || "")
                             })
                         ]
                     }),
-                    c
+                    d
                 ]
             });
-            d.appendChild(f);
+            o.appendChild(f);
         }
         if (1 === r) {
             let e = document.querySelector("#mainmenu");
-            e && (e.appendChild(d), e.style.display = "", this.adjustBrandTextSize());
+            if (e) {
+                let t = "function" == typeof e.querySelector ? e.querySelector("ul.nav") : null;
+                t && "function" == typeof t.replaceWith ? t.replaceWith(o) : e.appendChild(o), e.style.display = "", adjustBrandTextSize();
+            }
         }
-        return d;
+        return o;
     },
-    renderConfiguredMenu (a) {
-        let n = jsx("ul", {
+    renderConfiguredMenu (l) {
+        let i = jsx("ul", {
             class: "nav"
         });
-        for (let i of a.categories){
-            if (a.hiddenCategoryIds.has(i.id)) continue;
-            let l = i.items.filter((e)=>!a.hiddenPaths.has(e.path));
-            if (!i.primary && 0 === l.length) continue;
+        for (let n of l.categories){
+            if (l.hiddenCategoryIds.has(n.id)) continue;
+            let a = n.items.filter((e)=>!l.hiddenPaths.has(e.path));
+            if (!n.primary && 0 === a.length) continue;
             let r = jsx("ul", {
                 class: "slide-menu",
-                "data-parent": i.title.replace(/ /g, "_")
+                "data-parent": n.title.replace(/ /g, "_")
             }), s = !1;
-            for (let a of l){
-                let n = a.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e);
-                s ||= n, r.appendChild(jsx("li", {
-                    class: n ? "active" : void 0,
+            for (let l of a){
+                let i = l.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e);
+                s ||= i, r.appendChild(jsx("li", {
+                    class: i ? "active" : void 0,
                     children: jsxs("a", {
-                        href: L.url(a.path),
-                        class: `item${n ? " active" : ""}`,
-                        "data-title": a.rawTitle.replace(/ /g, "_"),
+                        href: L.url(l.path),
+                        class: `item${i ? " active" : ""}`,
+                        "data-title": l.rawTitle.replace(/ /g, "_"),
                         children: [
                             jsx("span", {
                                 class: "menu-icon"
                             }),
                             jsx("span", {
                                 class: "menu-label",
-                                children: a.title
+                                children: l.title
                             })
                         ]
                     })
                 }));
             }
-            s && r.classList.add("active"), i.primary && L.env.dispatchpath.length <= 2 && (s ||= i.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
-            let d = l.length > 0, o = i.primary?.path ?? l[0]?.path ?? "#", c = i.primary?.rawTitle ?? i.title, u = `${d ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
-            n.appendChild(jsxs("li", {
+            s && r.classList.add("active"), n.primary && L.env.dispatchpath.length <= 2 && (s ||= n.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
+            let o = a.length > 0, p = n.primary?.path ?? a[0]?.path ?? "#", d = n.primary?.rawTitle ?? n.title, u = `${o ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
+            i.appendChild(jsxs("li", {
                 class: u,
                 children: [
                     jsxs("a", {
-                        href: "#" === o ? o : L.url(o),
-                        onclick: d ? ui.createHandlerFn(this, "handleMenuExpand") : null,
-                        class: `${d ? "menu" : "item"}${s ? " active" : ""}`,
-                        "data-title": c.replace(/ /g, "_"),
+                        href: "#" === p ? p : L.url(p),
+                        onclick: o ? ui.createHandlerFn(this, "handleMenuExpand") : null,
+                        class: `${o ? "menu" : "item"}${s ? " active" : ""}`,
+                        "data-title": d.replace(/ /g, "_"),
                         children: [
                             jsx("span", {
                                 class: "menu-icon"
                             }),
                             jsx("span", {
                                 class: "menu-label",
-                                children: i.title
+                                children: n.title
                             })
                         ]
                     }),
-                    d ? r : null
+                    o ? r : null
                 ]
             }));
         }
-        let i = document.querySelector("#mainmenu");
-        return i && (i.appendChild(n), i.style.display = "", this.adjustBrandTextSize()), n;
+        let n = document.querySelector("#mainmenu");
+        if (n) {
+            let e = "function" == typeof n.querySelector ? n.querySelector("ul.nav") : null;
+            e && "function" == typeof e.replaceWith ? e.replaceWith(i) : n.appendChild(i), n.style.display = "", adjustBrandTextSize();
+        }
+        return i;
     },
-    renderTabMenu (t, n, i, l) {
+    renderTabMenu (t, i, n, a) {
         let r = L.env.dispatchpath.slice(0, 2).join("/"), s = L.env.dispatchpath.slice(0, 3).join("/");
-        if (l.has(r) || l.has(s)) return jsx(Fragment, {});
-        let d = document.querySelector("#tabmenu"), o = (i || 0) + 1, c = jsx("ul", {
+        if (a.has(r) || a.has(s)) return jsx(Fragment, {});
+        let o = document.querySelector("#tabmenu"), p = (n || 0) + 1, d = jsx("ul", {
             class: "tabs"
-        }), u = ui.menu.getChildren(t), p = null;
-        if (0 === u.length) return jsx(Fragment, {});
+        }), u = ui.menu.getChildren(t), c = null;
+        if (0 === u.length) return o && 1 === p && (o.innerHTML = "", o.style.display = "none"), jsx(Fragment, {});
         for(let t = 0; t < u.length; t++){
-            let a = u[t], i = L.env.dispatchpath[o + 2] === a.name, l = i ? " active" : "", r = jsx("li", {
-                class: `tabmenu-item-${a.name}${l}`,
+            let l = u[t], n = L.env.dispatchpath[p + 2] === l.name, a = n ? " active" : "", r = jsx("li", {
+                class: `tabmenu-item-${l.name}${a}`,
                 children: jsx("a", {
-                    href: L.url(n, a.name),
-                    children: _(a.title || "")
+                    href: L.url(i, l.name),
+                    children: _(l.title || "")
                 })
             });
-            c.appendChild(r), i && (p = a);
+            d.appendChild(r), n && (c = l);
         }
-        if (d && (d.appendChild(c), d.style.display = "", p)) {
-            let e = this.renderTabMenu(p, `${n}/${p.name}`, o, l);
-            e.children.length > 0 && d.appendChild(e);
+        if (o && (1 === p && (o.innerHTML = ""), o.appendChild(d), o.style.display = "", c)) {
+            let e = this.renderTabMenu(c, `${i}/${c.name}`, p, a);
+            e.children.length > 0 && o.appendChild(e);
         }
-        return c;
+        return d;
     },
     adjustBrandTextSize () {
-        let e = document.querySelector(".sidenav-header .brand-text");
-        if (e) {
-            let t = e.parentElement;
-            if (t) {
-                let a = t.clientWidth - 32;
-                if (a > 0) {
-                    let t = 16;
-                    for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
-                }
-            }
-        }
+        adjustBrandTextSize();
     },
     handleSidebarToggle (e) {
-        let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), n = document.querySelector(".darkMask"), i = document.querySelector(".main-right");
-        0 !== t.length && a && n && i ? Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
-            e.classList.remove("active");
-        }), a.classList.remove("active"), i.classList.remove("active"), n.classList.remove("active")) : (t.forEach((e)=>{
-            e.classList.add("active");
-        }), a.classList.add("active"), i.classList.add("active"), n.classList.add("active"), this.adjustBrandTextSize()) : console.warn("Fluent menu: sidebar toggle elements are unavailable");
+        handleSidebarToggle(e);
     },
     handleDesktopSidebarToggle (e) {
-        if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
-        let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-        menu_fluent_g(), localStorage.setItem("fluent-sidebar-state", t), menu_fluent_f(t), "expanded" === t && this.adjustBrandTextSize();
+        handleDesktopSidebarToggle(e);
     }
 });
 

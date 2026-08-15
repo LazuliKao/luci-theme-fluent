@@ -56,6 +56,7 @@
   let dark_card_bg = defaults.dark_card_bg;
   let dark_sidebar_bg = defaults.dark_sidebar_bg;
   let progressbar_text_position = defaults.progressbar_text_position;
+  let menu_layout = defaults.menu_layout || null;
   let direction = {};
   include('themes/fluent/direction', { cfg, defaults, direction });
 
@@ -106,6 +107,7 @@
     prefers_reduced_motion = cfg.get_first('fluent', 'global', 'prefers_reduced_motion') || prefers_reduced_motion;
     loading_bar = cfg.get_first('fluent', 'global', 'loading_bar') || loading_bar;
     progressbar_text_position = cfg.get_first('fluent', 'global', 'progressbar_text_position') || progressbar_text_position;
+    menu_layout = cfg.get_first('fluent', 'global', 'menu_layout') || null;
 
     bar_color = mode === 'dark' ? dark_primary : primary;
     main_left_font_color = font_weight === 'normal' ? '#5f6368' : '#69758c';
@@ -295,6 +297,7 @@
   <script src="{{ resource }}/cbi.js?v={{ version.luciversion }}"></script>
   <script src="{{ resource }}/luci.js?v={{ version.luciversion }}"></script>
   <script>
+    window._fluent_menu_layout = {{ menu_layout ? sprintf('%J', menu_layout) : 'null' }};
     // Dark mode logic
     (function() {
       var mode = '{{ mode }}';
@@ -313,6 +316,7 @@
   class="lang_{{ dispatcher.lang }} {{ node ? entityencode(node.title, true) : '' }} {{ ctx.authsession ? 'logged-in' : '' }}"
   data-page="{{ entityencode(join('-', ctx.request_path), true) }}"
   data-theme-mode="{{ mode }}"
+  data-menu-layout="{{ entityencode(menu_layout ? sprintf('%J', menu_layout) : '', true) }}"
   data-fluent-dir="{{ direction.resolved }}"
   data-theme-custom-select="{{ custom_select }}"
   data-view-transition="{{ view_transition }}"

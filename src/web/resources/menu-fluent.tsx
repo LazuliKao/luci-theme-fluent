@@ -4,9 +4,11 @@ import { setupErrorTooltips } from "./utils/error-tooltips";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupLogViewer } from "./utils/log-viewer";
 import { setupMacSelector } from "./utils/mac-selector";
+import { getCachedMenu, getResolvedMenuLayout, saveMenuCache } from "./utils/menu-cache";
 import { setupMenuSearch } from "./utils/menu-search";
 import { setupSelectionPause } from "./utils/poll-pause";
 import { setupFluentSelects } from "./utils/select-dropdown";
+import { adjustBrandTextSize, closeCollapsedPopups, handleDesktopSidebarToggle, handleSidebarToggle, initSidebarController } from "./utils/sidebar-controller";
 import { SlideAnimations } from "./utils/slide-animations";
 import { setupTableWrappers } from "./utils/table-wrapper";
 import { setupThemeFeatures } from "./utils/theme-features";
@@ -25,27 +27,21 @@ interface Module {
 
 type MenuNode = LuCI.ui.menu.MenuNode;
 
-function applyDesktopSidebarState(state: "expanded" | "collapsed") {
-  document.body.setAttribute("data-sidebar-state", state);
-  document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
-}
+let utilitiesInitialized = false;
 
-function getDesktopSidebarState(): "expanded" | "collapsed" {
-  const storedState = localStorage.getItem("fluent-sidebar-state");
+function initThemeUtilities(presentation: MenuPresentation) {
+  if (utilitiesInitialized) return;
+  utilitiesInitialized = true;
 
-  return storedState === "collapsed" || storedState === "expanded" ? storedState : "expanded";
-}
-function closeCollapsedPopups() {
-  document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((node) => {
-    node.classList.remove("popup-open");
-  });
-
-  document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((node) => {
-    const menu = node as HTMLElement;
-    menu.classList.remove("popup-open");
-    menu.style.display = "none";
-    menu.style.top = "";
-  });
+  setupTableWrappers();
+  setupSelectionPause();
+  setupErrorTooltips();
+  setupFluentSelects();
+  setupIfaceboxTooltips();
+  setupThemeFeatures();
+  setupMenuSearch(presentation);
+  setupMacSelector();
+  setupLogViewer();
 }
 
 /**
@@ -55,29 +51,52 @@ function closeCollapsedPopups() {
 const module: Module = {
   /**
    * Initialize the menu module
-   * Load menu data and trigger rendering
+   * Prioritizes synchronous 0ms fast-path from sessionStorage cache,
+   * then asynchronously fetches fresh menu data to revalidate (SWR).
    */
   async __init__(this: Module) {
     setupApplyChangePreview();
-    const [data] = await Promise.all([ui.menu.load(), L.uci.load("fluent")]);
-    const configuredValue = L.uci.get_first("fluent", "global", "menu_layout");
-    const layoutValue = typeof configuredValue === "string" || Array.isArray(configuredValue) ? configuredValue : null;
-    const presentation = buildMenuPresentation(data, layoutValue);
-    this.render(data, presentation);
-    setupTableWrappers();
-    setupSelectionPause();
-    setupErrorTooltips();
-    setupFluentSelects();
-    setupIfaceboxTooltips();
-    setupThemeFeatures();
-    setupMenuSearch(presentation);
-    setupMacSelector();
-    setupLogViewer();
+    initSidebarController(this);
+
+    let layoutValue = getResolvedMenuLayout();
+    const cached = getCachedMenu();
+    let rendered = false;
+
+    // 1. Synchronous Fast-Path: render immediately if cache is available
+    if (cached) {
+      const presentation = buildMenuPresentation(cached.tree, layoutValue ?? null);
+      this.render(cached.tree, presentation);
+      initThemeUtilities(presentation);
+      rendered = true;
+    }
+
+    // 2. Asynchronous Revalidation (SWR)
+    try {
+      const needsUci = layoutValue === undefined;
+      const [data] = await Promise.all([ui.menu.load(), needsUci ? L.uci.load("fluent") : Promise.resolve()]);
+
+      const freshRaw = saveMenuCache(data);
+
+      if (!rendered || freshRaw !== cached?.raw) {
+        if (needsUci) {
+          const configuredValue = L.uci.get_first("fluent", "global", "menu_layout");
+          layoutValue = typeof configuredValue === "string" || Array.isArray(configuredValue) ? configuredValue : null;
+        }
+        const presentation = buildMenuPresentation(data, layoutValue ?? null);
+        this.render(data, presentation);
+        initThemeUtilities(presentation);
+      }
+    } catch (e) {
+      if (!rendered) {
+        console.error("Fluent menu: Failed to load menu data", e);
+      }
+    }
   },
 
   /**
    * Main render function for the menu system
    * @param {Object} tree - Menu tree structure from LuCI
+   * @param {Object} presentation - Built presentation structure
    */
   render(this: Module, tree: MenuNode, presentation: MenuPresentation) {
     let node: MenuNode | undefined = tree;
@@ -110,60 +129,6 @@ const module: Module = {
         this.renderTabMenu(node, url, undefined, presentation.hiddenPaths);
       }
     }
-
-    // Attach event listeners for sidebar toggle functionality.
-    const sidebarToggles = document.querySelectorAll("a.showSide");
-    const darkMask = document.querySelector(".darkMask");
-    const desktopSidebarToggle = document.querySelector(".sidebar-collapse-toggle");
-    const mobileToggleHandler =
-      ui.createHandlerFn(this, "handleSidebarToggle") ??
-      (() => {
-        console.warn("Fluent menu: missing sidebar toggle handler");
-      });
-    const desktopToggleHandler =
-      ui.createHandlerFn(this, "handleDesktopSidebarToggle") ??
-      (() => {
-        console.warn("Fluent menu: missing desktop sidebar toggle handler");
-      });
-
-    sidebarToggles.forEach((toggle) => {
-      toggle.addEventListener("click", mobileToggleHandler);
-    });
-    if (darkMask) {
-      darkMask.addEventListener("click", mobileToggleHandler);
-    }
-    if (desktopSidebarToggle) {
-      desktopSidebarToggle.addEventListener("click", desktopToggleHandler);
-    }
-
-    if (window.innerWidth > 768) {
-      applyDesktopSidebarState(getDesktopSidebarState());
-    } else {
-      document.body.setAttribute("data-sidebar-state", "expanded");
-    }
-
-    window.addEventListener("resize", () => {
-      this.adjustBrandTextSize();
-
-      if (window.innerWidth > 768) {
-        applyDesktopSidebarState(getDesktopSidebarState());
-      } else {
-        document.body.setAttribute("data-sidebar-state", "expanded");
-      }
-    });
-    document.addEventListener("click", (event) => {
-      if (window.innerWidth <= 768 || document.body.getAttribute("data-sidebar-state") !== "collapsed") {
-        return;
-      }
-
-      const target = event.target as Node | null;
-      const sidebar = document.querySelector("#mainmenu");
-      if (target && sidebar?.contains(target)) {
-        return;
-      }
-
-      closeCollapsedPopups();
-    });
   },
 
   /**
@@ -307,19 +272,29 @@ const module: Module = {
       menuContainer.appendChild(menuItem);
     }
 
-    // Append to main menu container if this is the top level
+    // Append/Replace in main menu container if this is the top level
     if (currentLevel === 1) {
       const mainMenuElement = document.querySelector("#mainmenu");
       if (mainMenuElement) {
-        (mainMenuElement as HTMLElement).appendChild(menuContainer);
+        const existingNav = typeof mainMenuElement.querySelector === "function" ? mainMenuElement.querySelector("ul.nav") : null;
+        if (existingNav && typeof existingNav.replaceWith === "function") {
+          existingNav.replaceWith(menuContainer);
+        } else {
+          mainMenuElement.appendChild(menuContainer);
+        }
         (mainMenuElement as HTMLElement).style.display = "";
-        this.adjustBrandTextSize();
+        adjustBrandTextSize();
       }
     }
 
     return menuContainer;
   },
 
+  /**
+   * Render custom configured menu presentation
+   * @param {Object} presentation - Presentation configuration
+   * @returns {Element} - Generated menu element
+   */
   renderConfiguredMenu(this: Module, presentation: MenuPresentation): HTMLElement {
     const menuContainer = (<ul class="nav"></ul>) as HTMLElement;
 
@@ -370,9 +345,14 @@ const module: Module = {
 
     const mainMenuElement = document.querySelector("#mainmenu") as HTMLElement | null;
     if (mainMenuElement) {
-      mainMenuElement.appendChild(menuContainer);
+      const existingNav = typeof mainMenuElement.querySelector === "function" ? mainMenuElement.querySelector("ul.nav") : null;
+      if (existingNav && typeof existingNav.replaceWith === "function") {
+        existingNav.replaceWith(menuContainer);
+      } else {
+        mainMenuElement.appendChild(menuContainer);
+      }
       mainMenuElement.style.display = "";
-      this.adjustBrandTextSize();
+      adjustBrandTextSize();
     }
 
     return menuContainer;
@@ -384,6 +364,7 @@ const module: Module = {
    * @param {Object} tree - Menu tree node to render
    * @param {string} url - Base URL for tab items
    * @param {number} level - Current nesting level (0-based)
+   * @param {ReadonlySet<string>} hiddenPaths - Hidden path set
    * @returns {Element} - Generated tab menu element
    */
   renderTabMenu(this: Module, tree: MenuNode, url: string, level: number | undefined, hiddenPaths: ReadonlySet<string>): HTMLElement {
@@ -401,6 +382,10 @@ const module: Module = {
 
     // Don't render empty tab menus
     if (children.length === 0) {
+      if (container && currentLevel === 1) {
+        container.innerHTML = "";
+        container.style.display = "none";
+      }
       // biome-ignore lint/complexity/noUselessFragments: LuCI TSX requires DocumentFragment for empty returns
       return <></>;
     }
@@ -428,6 +413,9 @@ const module: Module = {
 
     // Append tab container to main tab menu element
     if (container) {
+      if (currentLevel === 1) {
+        container.innerHTML = "";
+      }
       container.appendChild(tabContainer);
       container.style.display = "";
 
@@ -443,83 +431,16 @@ const module: Module = {
     return tabContainer;
   },
 
-  /**
-   * Adjust brand text font size to fit container (prevent overflow)
-   */
   adjustBrandTextSize() {
-    const brandText = document.querySelector(".sidenav-header .brand-text") as HTMLElement | null;
-    if (brandText) {
-      const container = brandText.parentElement as HTMLElement | null;
-      if (container) {
-        const maxW = container.clientWidth - 32; // subtract icon + gap
-        if (maxW > 0) {
-          let fontSize = 16;
-          brandText.style.fontSize = `${fontSize}px`;
-          while (brandText.scrollWidth > maxW && fontSize > 9) {
-            fontSize -= 0.5;
-            brandText.style.fontSize = `${fontSize}px`;
-          }
-        }
-      }
-    }
+    adjustBrandTextSize();
   },
 
-  /**
-   * Handle sidebar toggle functionality
-   * Toggles the mobile/responsive sidebar menu visibility
-   * @param {Event} _ev - Click event from sidebar toggle button or dark mask
-   */
-  handleSidebarToggle(this: Module, _ev: Event) {
-    const showSideButtons = document.querySelectorAll("a.showSide");
-    const sidebar = document.querySelector("#mainmenu") as HTMLElement | null;
-    const darkMask = document.querySelector(".darkMask") as HTMLElement | null;
-    const scrollbarArea = document.querySelector(".main-right") as HTMLElement | null;
-
-    // Check if any required elements are missing
-    if (showSideButtons.length === 0 || !sidebar || !darkMask || !scrollbarArea) {
-      console.warn("Fluent menu: sidebar toggle elements are unavailable");
-      return;
-    }
-
-    const isActive = Array.from(showSideButtons).some((button) => button.classList.contains("active"));
-
-    if (isActive) {
-      showSideButtons.forEach((button) => {
-        button.classList.remove("active");
-      });
-      sidebar.classList.remove("active");
-      scrollbarArea.classList.remove("active");
-      darkMask.classList.remove("active");
-    } else {
-      showSideButtons.forEach((button) => {
-        button.classList.add("active");
-      });
-      sidebar.classList.add("active");
-      scrollbarArea.classList.add("active");
-      darkMask.classList.add("active");
-      this.adjustBrandTextSize();
-    }
+  handleSidebarToggle(this: Module, ev: Event) {
+    handleSidebarToggle(ev);
   },
 
   handleDesktopSidebarToggle(this: Module, ev: Event) {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    if (window.innerWidth <= 768) {
-      return;
-    }
-
-    const currentState = document.body.getAttribute("data-sidebar-state") === "collapsed" ? "collapsed" : "expanded";
-    const nextState = currentState === "collapsed" ? "expanded" : "collapsed";
-
-    closeCollapsedPopups();
-
-    localStorage.setItem("fluent-sidebar-state", nextState);
-    applyDesktopSidebarState(nextState);
-
-    if (nextState === "expanded") {
-      this.adjustBrandTextSize();
-    }
+    handleDesktopSidebarToggle(ev);
   },
 };
 
