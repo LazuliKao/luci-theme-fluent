@@ -1,0 +1,335 @@
+// ============================================================
+// IFACEBOX - LuCI Interface Box & Port Status Cards
+// WinUI 3 InfoBadge & Unified Fluent Card Design
+// ============================================================
+@use "../mixins" as *;
+
+$indicator-inline-offset: 10px;
+
+// Base Interface Box Card
+.ifacebox {
+  @include card;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: visible;
+
+  > :first-child {
+    border-start-start-radius: calc(var(--fluent-card-radius) - 1px);
+    border-start-end-radius: calc(var(--fluent-card-radius) - 1px);
+  }
+
+  > :last-child {
+    border-end-start-radius: calc(var(--fluent-card-radius) - 1px);
+    border-end-end-radius: calc(var(--fluent-card-radius) - 1px);
+  }
+
+  &:hover {
+    z-index: 1;
+  }
+
+  // Port icon images (direct children only, e.g. in Portweaver)
+  > .ifacebox-body > img {
+    display: block;
+    margin: 0 auto var(--fluent-space-xs);
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  // Zone badge stripe inside ifacebox (Overview page port cards: ifacebox-head.cbi-tooltip-container)
+  > .ifacebox-head.cbi-tooltip-container {
+    padding: 2px 8px;
+    border: none;
+    background: transparent;
+    min-height: 3px;
+
+    > .zonebadge {
+      padding: 0;
+      border: none;
+      border-radius: 9999px;
+      box-shadow: none;
+      min-height: 3px;
+      height: 3px;
+    }
+  }
+
+  // Zone badge stripe inside ifacebox (cbi-tooltip-container)
+  > .ifacebox-body {
+    padding: 0;
+    border-bottom: none;
+    background: none;
+
+    .cbi-tooltip {
+      inset-inline: 0;
+      transform: translateY(var(--fluent-space-xs));
+      white-space: normal;
+      &::before {
+        inset-inline-start: $indicator-inline-offset;
+      }
+    }
+
+    &:hover > .cbi-tooltip:not(:empty) {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+
+      @starting-style {
+        opacity: 0;
+        transform: translateY(var(--fluent-space-xs));
+      }
+    }
+  }
+
+  // Nested SSID cards inside a radio ifacebox
+  .ifacebox {
+    display: flex;
+    width: 100%;
+    border-radius: var(--fluent-radius-md);
+    box-shadow: none;
+    border: 1px solid var(--fluent-card-border);
+    background: var(--fluent-bg-page);
+    margin: 0;
+
+    .ifacebox-head {
+      padding: var(--fluent-space-xs) var(--fluent-space-md);
+      font-size: var(--fluent-font-size-sm);
+      background: transparent;
+      border-bottom: 1px solid var(--fluent-card-border);
+    }
+
+    .ifacebox-head.active {
+      background: transparent;
+      color: var(--fluent-success);
+      border-bottom-color: var(--fluent-card-border);
+      border-inline-start: 3px solid var(--fluent-success);
+    }
+
+    .ifacebox-body {
+      padding: var(--fluent-space-xs) var(--fluent-space-md);
+      font-size: var(--fluent-font-size-sm);
+    }
+  }
+}
+
+.ifacebox-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fluent-space-sm);
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  border-bottom: 1px solid var(--fluent-card-border);
+  background: var(--fluent-bg-page);
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-semibold);
+  line-height: var(--fluent-line-height-normal);
+}
+
+.ifacebox-head.active {
+  border-bottom-color: var(--fluent-card-border);
+  background: var(--fluent-success-light);
+  color: var(--fluent-success);
+
+  * {
+    color: var(--fluent-success) !important;
+  }
+}
+
+.ifacebox-body {
+  gap: var(--fluent-space-xs);
+  padding: var(--fluent-space-sm) var(--fluent-space-md);
+  color: var(--fluent-text-secondary);
+  text-align: start;
+
+  &.left {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  &.center {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+// ------------------------------------------------------------
+// Network > Interfaces Table Column (_ifacebox)
+// ------------------------------------------------------------
+td[data-name="_ifacebox"],
+.td[data-name="_ifacebox"] {
+  min-width: 180px;
+  vertical-align: middle;
+  align-self: center !important;
+
+  .ifacebox {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+
+    .ifacebox-head {
+      justify-content: center;
+      text-align: center;
+      background: transparent !important;
+      border-bottom: 1px solid var(--fluent-card-border);
+      padding: var(--fluent-space-xs) var(--fluent-space-sm);
+
+      // WinUI 3 InfoBadge Capsule for Zone / Interface Name
+      > strong,
+      strong {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 2px 10px;
+        border-radius: 9999px;
+        font-size: var(--fluent-font-size-sm);
+        font-weight: var(--fluent-font-weight-semibold);
+        line-height: var(--fluent-line-height-normal);
+        background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 18%, var(--fluent-bg-page));
+        border: 1px solid color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 35%, var(--fluent-card-border));
+        color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 80%, #000000);
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: rgb(var(--zone-color-rgb, 238, 238, 238));
+          flex-shrink: 0;
+        }
+      }
+    }
+
+    .ifacebox-body {
+      display: block;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: var(--fluent-space-xs) var(--fluent-space-sm) var(--fluent-space-sm);
+      overflow-x: auto;
+      white-space: nowrap;
+      @include custom-scrollbar;
+
+      .cbi-tooltip-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        padding: 2px 4px;
+        border-radius: var(--fluent-radius-sm);
+        transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+        &:hover {
+          background-color: var(--fluent-bg-hover);
+        }
+
+        img {
+          vertical-align: middle;
+        }
+      }
+
+      // Hide local tooltips in the scrollable body so they don't clip
+      .cbi-tooltip {
+        display: none !important;
+      }
+
+      small {
+        display: block;
+        margin-top: var(--fluent-space-xxs);
+        white-space: normal;
+        color: var(--fluent-text-secondary);
+        font-size: var(--fluent-font-size-xs);
+        line-height: var(--fluent-line-height-tight);
+      }
+    }
+  }
+}
+
+// Dark mode adaptation for Network > Interfaces InfoBadge
+@include theme-dark {
+  td[data-name="_ifacebox"] .ifacebox .ifacebox-head,
+  .td[data-name="_ifacebox"] .ifacebox .ifacebox-head {
+    > strong,
+    strong {
+      background-color: rgba(var(--zone-color-rgb, 238, 238, 238), 0.16);
+      border-color: rgba(var(--zone-color-rgb, 238, 238, 238), 0.32);
+      color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 65%, var(--fluent-text));
+
+      &::before {
+        background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 75%, #ffffff);
+        box-shadow: 0 0 4px rgba(var(--zone-color-rgb, 238, 238, 238), 0.4);
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Status > Overview Port Status Grid Cards
+// ------------------------------------------------------------
+div[style*="display:grid;grid-template-columns:repeat"] {
+  align-items: stretch !important;
+
+  .ifacebox {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    border-radius: var(--fluent-radius-md);
+
+    .ifacebox-head:first-child {
+      justify-content: center;
+      text-align: center;
+      font-size: var(--fluent-font-size-sm);
+      font-weight: var(--fluent-font-weight-semibold);
+      padding: 6px var(--fluent-space-xs);
+      background: transparent;
+      color: var(--fluent-text);
+      border-bottom: 1px solid var(--fluent-card-border);
+    }
+
+    .ifacebox-body {
+      align-items: center !important;
+      text-align: center !important;
+      padding: var(--fluent-space-xs);
+
+      .cbi-tooltip-container {
+        text-align: center !important;
+        justify-content: center !important;
+        font-size: 11px;
+        line-height: 1.35;
+        color: var(--fluent-text-secondary);
+      }
+    }
+
+    // Zone indicator in port status card
+    .ifacebox-head.cbi-tooltip-container {
+      padding: 2px 8px;
+      margin: 2px 0;
+      border: none;
+      background: transparent;
+
+      .zonebadge {
+        border-radius: 9999px;
+        height: 3px;
+        min-height: 3px;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Global Tooltip Portal (for ifacebox badge tooltips)
+// ------------------------------------------------------------
+#fluent-global-tooltip {
+  transform: translateY(0) !important;
+  opacity: 0;
+  transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
+
+  &::before {
+    left: var(--arrow-left, 50%) !important;
+    transform: translateX(-50%) rotate(45deg) !important;
+  }
+}

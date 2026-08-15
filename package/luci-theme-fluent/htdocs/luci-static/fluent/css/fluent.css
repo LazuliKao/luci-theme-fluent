@@ -2992,9 +2992,9 @@ td > .ifacebadge, .td > .ifacebadge {
   gap: var(--fluent-space-sm);
   padding: var(--fluent-space-xs) var(--fluent-space-sm);
   border: 1px solid var(--fluent-card-border);
-  border-radius: var(--fluent-radius-lg);
+  border-radius: var(--fluent-radius-circular);
   background: var(--fluent-card-bg);
-  box-shadow: var(--fluent-card-shadow);
+  box-shadow: none;
   color: var(--fluent-zonebadge-text);
   flex-wrap: wrap;
   justify-content: center;
@@ -3046,141 +3046,6 @@ td > .ifacebadge, .td > .ifacebadge {
   background: var(--fluent-bg-page);
   color: var(--fluent-text);
   display: inline-flex;
-}
-
-.ifacebox {
-  background: var(--fluent-card-bg);
-  border-radius: var(--fluent-card-radius);
-  box-shadow: var(--fluent-card-shadow);
-  padding: var(--fluent-card-padding);
-  border: none;
-  flex-direction: column;
-  padding: 0;
-  display: inline-flex;
-  position: relative;
-  overflow: visible;
-}
-
-.ifacebox > :first-child {
-  border-start-start-radius: calc(var(--fluent-card-radius) - 1px);
-  border-start-end-radius: calc(var(--fluent-card-radius) - 1px);
-}
-
-.ifacebox > :last-child {
-  border-end-end-radius: calc(var(--fluent-card-radius) - 1px);
-  border-end-start-radius: calc(var(--fluent-card-radius) - 1px);
-}
-
-.ifacebox:hover {
-  z-index: 1;
-}
-
-.ifacebox > .ifacebox-body > img {
-  margin: 0 auto var(--fluent-space-xs);
-  object-fit: contain;
-  width: 48px;
-  height: 48px;
-  display: block;
-}
-
-.ifacebox > .ifacebox-body {
-  background: none;
-  border-bottom: none;
-  padding: 0;
-}
-
-.ifacebox > .ifacebox-body .cbi-tooltip {
-  transform: translateY(var(--fluent-space-xs));
-  white-space: normal;
-  inset-inline: 0;
-}
-
-.ifacebox > .ifacebox-body .cbi-tooltip:before {
-  inset-inline-start: 10px;
-}
-
-.ifacebox > .ifacebox-body:hover > .cbi-tooltip:not(:empty) {
-  opacity: 1;
-  pointer-events: auto;
-  display: block;
-  transform: translateY(0);
-}
-
-@starting-style {
-  .ifacebox > .ifacebox-body:hover > .cbi-tooltip:not(:empty) {
-    opacity: 0;
-    transform: translateY(var(--fluent-space-xs));
-  }
-}
-
-.ifacebox .ifacebox {
-  border-radius: var(--fluent-radius-lg);
-  width: 100%;
-  box-shadow: none;
-  border: 1px solid var(--fluent-card-border);
-  background: var(--fluent-bg-page);
-  margin: 0;
-  display: flex;
-}
-
-.ifacebox .ifacebox .ifacebox-head {
-  padding: var(--fluent-space-sm) var(--fluent-space-md);
-  font-size: var(--fluent-font-size-sm);
-  border-bottom: 1px solid var(--fluent-card-border);
-  background: none;
-}
-
-.ifacebox .ifacebox .ifacebox-head.active {
-  color: var(--fluent-success);
-  border-bottom-color: var(--fluent-card-border);
-  border-inline-start: 3px solid var(--fluent-success);
-  background: none;
-}
-
-.ifacebox .ifacebox .ifacebox-body {
-  padding: var(--fluent-space-sm) var(--fluent-space-md);
-  font-size: var(--fluent-font-size-sm);
-}
-
-.ifacebox-head {
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--fluent-space-sm);
-  padding: var(--fluent-space-sm) var(--fluent-space-md);
-  border-bottom: 1px solid var(--fluent-card-border);
-  background: var(--fluent-bg-page);
-  color: var(--fluent-text);
-  font-size: var(--fluent-font-size-base);
-  font-weight: var(--fluent-font-weight-semibold);
-  line-height: var(--fluent-line-height-normal);
-  display: flex;
-}
-
-.ifacebox-head.active {
-  border-bottom-color: var(--fluent-card-border);
-  background: var(--fluent-success-light);
-  color: var(--fluent-success);
-}
-
-.ifacebox-head.active * {
-  color: var(--fluent-success) !important;
-}
-
-.ifacebox-body {
-  gap: var(--fluent-space-xs);
-  padding: var(--fluent-space-sm) var(--fluent-space-md);
-  color: var(--fluent-text-secondary);
-  text-align: start;
-}
-
-.ifacebox-body.left {
-  text-align: start;
-  align-items: flex-start;
-}
-
-.ifacebox-body.center {
-  text-align: center;
-  align-items: center;
 }
 
 .network-status-table {
@@ -3367,6 +3232,157 @@ td > .ifacebadge, .td > .ifacebadge {
   overflow: auto;
 }
 
+.ifacebox {
+  background: var(--fluent-card-bg);
+  border-radius: var(--fluent-card-radius);
+  box-shadow: var(--fluent-card-shadow);
+  padding: var(--fluent-card-padding);
+  border: none;
+  flex-direction: column;
+  padding: 0;
+  display: inline-flex;
+  position: relative;
+  overflow: visible;
+}
+
+.ifacebox > :first-child {
+  border-start-start-radius: calc(var(--fluent-card-radius) - 1px);
+  border-start-end-radius: calc(var(--fluent-card-radius) - 1px);
+}
+
+.ifacebox > :last-child {
+  border-end-end-radius: calc(var(--fluent-card-radius) - 1px);
+  border-end-start-radius: calc(var(--fluent-card-radius) - 1px);
+}
+
+.ifacebox:hover {
+  z-index: 1;
+}
+
+.ifacebox > .ifacebox-body > img {
+  margin: 0 auto var(--fluent-space-xs);
+  object-fit: contain;
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.ifacebox > .ifacebox-head.cbi-tooltip-container {
+  background: none;
+  border: none;
+  min-height: 3px;
+  padding: 2px 8px;
+}
+
+.ifacebox > .ifacebox-head.cbi-tooltip-container > .zonebadge {
+  box-shadow: none;
+  border: none;
+  border-radius: 9999px;
+  height: 3px;
+  min-height: 3px;
+  padding: 0;
+}
+
+.ifacebox > .ifacebox-body {
+  background: none;
+  border-bottom: none;
+  padding: 0;
+}
+
+.ifacebox > .ifacebox-body .cbi-tooltip {
+  transform: translateY(var(--fluent-space-xs));
+  white-space: normal;
+  inset-inline: 0;
+}
+
+.ifacebox > .ifacebox-body .cbi-tooltip:before {
+  inset-inline-start: 10px;
+}
+
+.ifacebox > .ifacebox-body:hover > .cbi-tooltip:not(:empty) {
+  opacity: 1;
+  pointer-events: auto;
+  display: block;
+  transform: translateY(0);
+}
+
+@starting-style {
+  .ifacebox > .ifacebox-body:hover > .cbi-tooltip:not(:empty) {
+    opacity: 0;
+    transform: translateY(var(--fluent-space-xs));
+  }
+}
+
+.ifacebox .ifacebox {
+  border-radius: var(--fluent-radius-md);
+  width: 100%;
+  box-shadow: none;
+  border: 1px solid var(--fluent-card-border);
+  background: var(--fluent-bg-page);
+  margin: 0;
+  display: flex;
+}
+
+.ifacebox .ifacebox .ifacebox-head {
+  padding: var(--fluent-space-xs) var(--fluent-space-md);
+  font-size: var(--fluent-font-size-sm);
+  border-bottom: 1px solid var(--fluent-card-border);
+  background: none;
+}
+
+.ifacebox .ifacebox .ifacebox-head.active {
+  color: var(--fluent-success);
+  border-bottom-color: var(--fluent-card-border);
+  border-inline-start: 3px solid var(--fluent-success);
+  background: none;
+}
+
+.ifacebox .ifacebox .ifacebox-body {
+  padding: var(--fluent-space-xs) var(--fluent-space-md);
+  font-size: var(--fluent-font-size-sm);
+}
+
+.ifacebox-head {
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--fluent-space-sm);
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  border-bottom: 1px solid var(--fluent-card-border);
+  background: var(--fluent-bg-page);
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-base);
+  font-weight: var(--fluent-font-weight-semibold);
+  line-height: var(--fluent-line-height-normal);
+  display: flex;
+}
+
+.ifacebox-head.active {
+  border-bottom-color: var(--fluent-card-border);
+  background: var(--fluent-success-light);
+  color: var(--fluent-success);
+}
+
+.ifacebox-head.active * {
+  color: var(--fluent-success) !important;
+}
+
+.ifacebox-body {
+  gap: var(--fluent-space-xs);
+  padding: var(--fluent-space-sm) var(--fluent-space-md);
+  color: var(--fluent-text-secondary);
+  text-align: start;
+}
+
+.ifacebox-body.left {
+  text-align: start;
+  align-items: flex-start;
+}
+
+.ifacebox-body.center {
+  text-align: center;
+  align-items: center;
+}
+
 td[data-name="_ifacebox"], .td[data-name="_ifacebox"] {
   vertical-align: middle;
   min-width: 180px;
@@ -3381,14 +3397,42 @@ td[data-name="_ifacebox"] .ifacebox, .td[data-name="_ifacebox"] .ifacebox {
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-head, .td[data-name="_ifacebox"] .ifacebox .ifacebox-head {
   text-align: center;
+  border-bottom: 1px solid var(--fluent-card-border);
+  padding: var(--fluent-space-xs) var(--fluent-space-sm);
   justify-content: center;
+  background: none !important;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong, td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong, .td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong, .td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong {
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-semibold);
+  line-height: var(--fluent-line-height-normal);
+  background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 18%, var(--fluent-bg-page));
+  border: 1px solid color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 35%, var(--fluent-card-border));
+  color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 80%, #000);
+  border-radius: 9999px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  display: inline-flex;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong:before, td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong:before, .td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong:before, .td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong:before {
+  content: "";
+  background-color: rgb(var(--zone-color-rgb, 238, 238, 238));
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  display: inline-block;
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body {
   text-align: center;
   box-sizing: border-box;
   width: 100%;
-  padding: var(--fluent-space-xs) var(--fluent-space-sm);
+  padding: var(--fluent-space-xs) var(--fluent-space-sm) var(--fluent-space-sm);
   white-space: nowrap;
   display: block;
   overflow-x: auto;
@@ -3476,7 +3520,20 @@ td[data-name="_ifacebox"] .ifacebox .ifacebox-body::-webkit-resizer {
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container {
   vertical-align: middle;
+  border-radius: var(--fluent-radius-sm);
+  transition: background-color var(--fluent-duration-fast) var(--fluent-easing-standard);
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
   display: inline-flex;
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container:hover, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container:hover {
+  background-color: var(--fluent-bg-hover);
+}
+
+td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container img, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip-container img {
+  vertical-align: middle;
 }
 
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip {
@@ -3486,7 +3543,70 @@ td[data-name="_ifacebox"] .ifacebox .ifacebox-body .cbi-tooltip, .td[data-name="
 td[data-name="_ifacebox"] .ifacebox .ifacebox-body small, .td[data-name="_ifacebox"] .ifacebox .ifacebox-body small {
   margin-top: var(--fluent-space-xxs);
   white-space: normal;
-  display: inline-block;
+  color: var(--fluent-text-secondary);
+  font-size: var(--fluent-font-size-xs);
+  line-height: var(--fluent-line-height-tight);
+  display: block;
+}
+
+[data-theme="dark"] td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong, [data-theme="dark"] td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong, [data-theme="dark"] .td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong, [data-theme="dark"] .td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong {
+  background-color: rgba(var(--zone-color-rgb, 238, 238, 238), .16);
+  border-color: rgba(var(--zone-color-rgb, 238, 238, 238), .32);
+  color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 65%, var(--fluent-text));
+}
+
+[data-theme="dark"] td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong:before, [data-theme="dark"] td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong:before, [data-theme="dark"] .td[data-name="_ifacebox"] .ifacebox .ifacebox-head > strong:before, [data-theme="dark"] .td[data-name="_ifacebox"] .ifacebox .ifacebox-head strong:before {
+  background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 75%, #fff);
+  box-shadow: 0 0 4px rgba(var(--zone-color-rgb, 238, 238, 238), .4);
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] {
+  align-items: stretch !important;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox {
+  border-radius: var(--fluent-radius-md);
+  flex-direction: column;
+  height: auto;
+  display: flex;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-head:first-child {
+  text-align: center;
+  font-size: var(--fluent-font-size-sm);
+  font-weight: var(--fluent-font-weight-semibold);
+  padding: 6px var(--fluent-space-xs);
+  color: var(--fluent-text);
+  border-bottom: 1px solid var(--fluent-card-border);
+  background: none;
+  justify-content: center;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-body {
+  padding: var(--fluent-space-xs);
+  text-align: center !important;
+  align-items: center !important;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-body .cbi-tooltip-container {
+  color: var(--fluent-text-secondary);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-head.cbi-tooltip-container {
+  background: none;
+  border: none;
+  margin: 2px 0;
+  padding: 2px 8px;
+}
+
+div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-head.cbi-tooltip-container .zonebadge {
+  border-radius: 9999px;
+  height: 3px;
+  min-height: 3px;
 }
 
 #fluent-global-tooltip {
@@ -3498,27 +3618,6 @@ td[data-name="_ifacebox"] .ifacebox .ifacebox-body small, .td[data-name="_ifaceb
 #fluent-global-tooltip:before {
   left: var(--arrow-left, 50%) !important;
   transform: translateX(-50%) rotate(45deg) !important;
-}
-
-div[style*="display:grid;grid-template-columns:repeat"] {
-  align-items: stretch !important;
-}
-
-div[style*="display:grid;grid-template-columns:repeat"] .ifacebox {
-  flex-direction: column;
-  height: auto;
-  display: flex;
-}
-
-div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-body {
-  flex-grow: 1;
-  text-align: center !important;
-  align-items: center !important;
-}
-
-div[style*="display:grid;grid-template-columns:repeat"] .ifacebox .ifacebox-body .cbi-tooltip-container {
-  text-align: center !important;
-  justify-content: center !important;
 }
 
 .cbi-input-invalid {
