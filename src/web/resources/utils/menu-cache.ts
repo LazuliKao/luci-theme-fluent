@@ -1,6 +1,8 @@
 type MenuNode = LuCI.ui.menu.MenuNode;
 
 const MENU_CACHE_KEY = "fluent_menu_cache";
+const SIDEBAR_HTML_CACHE_KEY = "fluent_sidebar_html";
+const TABMENU_HTML_CACHE_KEY = "fluent_tabmenu_html";
 
 /**
  * Read cached menu node tree from sessionStorage synchronously
@@ -28,6 +30,24 @@ export function saveMenuCache(data: MenuNode): string | null {
   } catch (_) {
     return null;
   }
+}
+
+/**
+ * Persist current rendered innerHTML of mainmenu and tabmenu for instant frame-0 HTML hydration
+ */
+export function saveRenderedHtmlCache(): void {
+  try {
+    const mainmenu = document.querySelector("#mainmenu");
+    if (mainmenu) {
+      sessionStorage.setItem(SIDEBAR_HTML_CACHE_KEY, mainmenu.innerHTML);
+    }
+    const tabmenu = document.querySelector("#tabmenu");
+    if (tabmenu && tabmenu.children.length > 0) {
+      sessionStorage.setItem(TABMENU_HTML_CACHE_KEY, tabmenu.innerHTML);
+    } else {
+      sessionStorage.removeItem(TABMENU_HTML_CACHE_KEY);
+    }
+  } catch (_) {}
 }
 
 /**

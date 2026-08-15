@@ -215,21 +215,24 @@
       navigation: auto;
     }
     
-    /* Smooth fade-out/fade-in page transition */
+    /* Smooth fade-over page transition without dimming unchanged areas */
     ::view-transition-old(root) {
-      animation: 180ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+      animation: none;
     }
     ::view-transition-new(root) {
-      animation: 180ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+      animation: 180ms cubic-bezier(0, 0, 0.2, 1) both fade-in;
     }
     
-    @keyframes fade-out {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
     @keyframes fade-in {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none !important;
+      }
     }
   </style>
   {% } %}
@@ -350,6 +353,18 @@
     <div class="main-left" id="mainmenu" style="display:none">
       <div class="sidebar__search-slot" aria-hidden="true"></div>
     </div>
+    <script>
+      (function() {
+        try {
+          var cached = sessionStorage.getItem('fluent_sidebar_html');
+          if (cached) {
+            var m = document.getElementById('mainmenu');
+            m.innerHTML = cached;
+            m.style.display = '';
+          }
+        } catch (_) {}
+      })();
+    </script>
     {% } %}
     <div class="main-right">
       <header class="header">
@@ -391,6 +406,18 @@
           </noscript>
 
           <div id="tabmenu" style="display:none"></div>
+          <script>
+            (function() {
+              try {
+                var cachedTabs = sessionStorage.getItem('fluent_tabmenu_html');
+                if (cachedTabs) {
+                  var t = document.getElementById('tabmenu');
+                  t.innerHTML = cachedTabs;
+                  t.style.display = '';
+                }
+              } catch (_) {}
+            })();
+          </script>
 {% } else { %}
 {% include("themes/fluent/out_header_login"); %}
 {% include("themes/fluent/sysauth"); %}

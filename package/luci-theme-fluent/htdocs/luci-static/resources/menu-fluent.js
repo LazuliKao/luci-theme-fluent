@@ -1450,35 +1450,43 @@ function setupMacSelector() {
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
-let menu_cache_t = "fluent_menu_cache";
+let menu_cache_e = "fluent_menu_cache", menu_cache_t = "fluent_tabmenu_html";
 function getCachedMenu() {
     try {
-        let e = sessionStorage.getItem(menu_cache_t);
-        if (!e) return null;
-        let n = JSON.parse(e);
+        let t = sessionStorage.getItem(menu_cache_e);
+        if (!t) return null;
+        let n = JSON.parse(t);
         if (n && "object" == typeof n) return {
             tree: n,
-            raw: e
+            raw: t
         };
-    } catch (t) {}
+    } catch (e) {}
     return null;
 }
-function saveMenuCache(e) {
+function saveMenuCache(t) {
     try {
-        let n = JSON.stringify(e);
-        return sessionStorage.setItem(menu_cache_t, n), n;
-    } catch (t) {
+        let n = JSON.stringify(t);
+        return sessionStorage.setItem(menu_cache_e, n), n;
+    } catch (e) {
         return null;
     }
 }
+function saveRenderedHtmlCache() {
+    try {
+        let e = document.querySelector("#mainmenu");
+        e && sessionStorage.setItem("fluent_sidebar_html", e.innerHTML);
+        let n = document.querySelector("#tabmenu");
+        n && n.children.length > 0 ? sessionStorage.setItem(menu_cache_t, n.innerHTML) : sessionStorage.removeItem(menu_cache_t);
+    } catch (e) {}
+}
 function getResolvedMenuLayout() {
-    let t = window;
-    if (void 0 !== t._fluent_menu_layout) return t._fluent_menu_layout;
-    let e = document.body?.getAttribute?.("data-menu-layout");
-    if (e) try {
-        let t = JSON.parse(e);
-        if ("string" == typeof t || Array.isArray(t) || null === t) return t;
-    } catch (t) {}
+    let e = window;
+    if (void 0 !== e._fluent_menu_layout) return e._fluent_menu_layout;
+    let t = document.body?.getAttribute?.("data-menu-layout");
+    if (t) try {
+        let e = JSON.parse(t);
+        if ("string" == typeof e || Array.isArray(e) || null === e) return e;
+    } catch (e) {}
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-search.ts
@@ -2423,9 +2431,9 @@ function setupThemeFeatures() {
 
 
 
-let menu_fluent_x = !1;
-function menu_fluent_w(e) {
-    menu_fluent_x || (menu_fluent_x = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer());
+let menu_fluent_w = !1;
+function menu_fluent_$(e) {
+    menu_fluent_w || (menu_fluent_w = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer());
 }
 const main = baseclass.extend({
     async __init__ () {
@@ -2433,7 +2441,7 @@ const main = baseclass.extend({
         let e = getResolvedMenuLayout(), t = getCachedMenu(), l = !1;
         if (t) {
             let n = buildMenuPresentation(t.tree, e ?? null);
-            this.render(t.tree, n), menu_fluent_w(n), l = !0;
+            this.render(t.tree, n), menu_fluent_$(n), l = !0;
         }
         try {
             let n = void 0 === e, [a] = await Promise.all([
@@ -2446,7 +2454,7 @@ const main = baseclass.extend({
                     e = "string" == typeof t || Array.isArray(t) ? t : null;
                 }
                 let t = buildMenuPresentation(a, e ?? null);
-                this.render(a, t), menu_fluent_w(t);
+                this.render(a, t), menu_fluent_$(t);
             }
         } catch (e) {
             l || console.error("Fluent menu: Failed to load menu data", e);
@@ -2466,6 +2474,7 @@ const main = baseclass.extend({
             }
             l && this.renderTabMenu(l, i, void 0, t.hiddenPaths);
         }
+        saveRenderedHtmlCache();
     },
     handleMenuExpand (e) {
         let t = e.currentTarget;

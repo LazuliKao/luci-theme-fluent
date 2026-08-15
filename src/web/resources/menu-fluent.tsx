@@ -4,7 +4,7 @@ import { setupErrorTooltips } from "./utils/error-tooltips";
 import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
 import { setupLogViewer } from "./utils/log-viewer";
 import { setupMacSelector } from "./utils/mac-selector";
-import { getCachedMenu, getResolvedMenuLayout, saveMenuCache } from "./utils/menu-cache";
+import { getCachedMenu, getResolvedMenuLayout, saveMenuCache, saveRenderedHtmlCache } from "./utils/menu-cache";
 import { setupMenuSearch } from "./utils/menu-search";
 import { setupSelectionPause } from "./utils/poll-pause";
 import { setupFluentSelects } from "./utils/select-dropdown";
@@ -129,6 +129,8 @@ const module: Module = {
         this.renderTabMenu(node, url, undefined, presentation.hiddenPaths);
       }
     }
+
+    saveRenderedHtmlCache();
   },
 
   /**
