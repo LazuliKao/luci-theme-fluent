@@ -1480,12 +1480,10 @@ function saveRenderedHtmlCache() {
     } catch (e) {}
 }
 function getResolvedMenuLayout() {
-    let e = window;
-    if (void 0 !== e._fluent_menu_layout) return e._fluent_menu_layout;
-    let t = document.body?.getAttribute?.("data-menu-layout");
-    if (t) try {
-        let e = JSON.parse(t);
-        if ("string" == typeof e || Array.isArray(e) || null === e) return e;
+    let e = document.body?.getAttribute?.("data-menu-layout");
+    if (e) try {
+        let t = JSON.parse(e);
+        if ("string" == typeof t || Array.isArray(t) || null === t) return t;
     } catch (e) {}
 }
 

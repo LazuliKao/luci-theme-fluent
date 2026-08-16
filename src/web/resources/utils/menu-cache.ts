@@ -50,14 +50,9 @@ export function saveRenderedHtmlCache(): void {
 }
 
 /**
- * Resolve menu layout configuration synchronously from server-injected window / DOM attributes
+ * Resolve menu layout configuration synchronously from the server-rendered DOM attribute.
  */
 export function getResolvedMenuLayout(): string | string[] | null | undefined {
-  const win = window as unknown as { _fluent_menu_layout?: string | string[] | null };
-  if (win._fluent_menu_layout !== undefined) {
-    return win._fluent_menu_layout;
-  }
-
   const bodyLayout = document.body?.getAttribute?.("data-menu-layout");
   if (bodyLayout) {
     try {

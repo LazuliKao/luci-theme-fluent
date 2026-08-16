@@ -300,7 +300,6 @@
   <script src="{{ resource }}/cbi.js?v={{ version.luciversion }}"></script>
   <script src="{{ resource }}/luci.js?v={{ version.luciversion }}"></script>
   <script>
-    window._fluent_menu_layout = {{ menu_layout ? sprintf('%J', menu_layout) : 'null' }};
     // Dark mode logic
     (function() {
       var mode = '{{ mode }}';
