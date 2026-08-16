@@ -67,6 +67,8 @@ export function searchMenu(presentation: MenuPresentation, query: string): Searc
 const SEARCH_BOX_CLASS = "fluent-menu-search";
 const OVERLAY_CLASS = "fluent-menu-search-overlay";
 
+let menuSearchKeydownListener: ((event: KeyboardEvent) => void) | undefined;
+
 function createSearchInput(presentation: MenuPresentation): { container: HTMLDivElement; input: HTMLInputElement; overlay: HTMLDivElement } {
   // Container
   const container = document.createElement("div");
@@ -262,6 +264,11 @@ function createSearchInput(presentation: MenuPresentation): { container: HTMLDiv
  * and registers keyboard shortcuts.
  */
 export function setupMenuSearch(presentation: MenuPresentation): void {
+  if (menuSearchKeydownListener) {
+    document.removeEventListener("keydown", menuSearchKeydownListener);
+    menuSearchKeydownListener = undefined;
+  }
+
   const inputs: HTMLInputElement[] = [];
 
   const setupSlot = (selector: string) => {
@@ -280,7 +287,7 @@ export function setupMenuSearch(presentation: MenuPresentation): void {
   if (inputs.length === 0) return;
 
   // Keyboard shortcuts
-  document.addEventListener("keydown", (e) => {
+  menuSearchKeydownListener = (e) => {
     // Helper to focus the first visible input
     const focusVisibleInput = () => {
       for (const input of inputs) {
@@ -315,9 +322,11 @@ export function setupMenuSearch(presentation: MenuPresentation): void {
     }
 
     // Escape to close
-    const activeInput = inputs.find((inp) => document.activeElement === inp);
+    const activeInput = inputs.find((input) => document.activeElement === input);
     if (e.key === "Escape" && activeInput) {
       activeInput.blur();
     }
-  });
+  };
+
+  document.addEventListener("keydown", menuSearchKeydownListener);
 }

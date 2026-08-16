@@ -1488,23 +1488,24 @@ function getResolvedMenuLayout() {
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-search.ts
-function menu_search_e(e) {
+let menu_search_e;
+function menu_search_t(e) {
     return e.toLowerCase().replace(/\s+/g, " ");
 }
-function menu_search_t(t, n, l) {
-    return menu_search_e(n).includes(l) || menu_search_e(t).includes(l);
+function menu_search_n(e, n, l) {
+    return menu_search_t(n).includes(l) || menu_search_t(e).includes(l);
 }
-function searchMenu(n, l) {
-    let r = menu_search_e(l);
+function searchMenu(e, l) {
+    let r = menu_search_t(l);
     if (!r) return [];
-    let a = [], i = (e, n, l)=>{
+    let a = [], i = (e, t, l)=>{
         for (let u of ui.menu.getChildren(e)){
             if (!u.satisfied) continue;
-            let e = `${n}/${u.name}`, c = u.title || u.name || "", s = c ? _(c) : "", o = c ? [
+            let e = `${t}/${u.name}`, c = u.title || u.name || "", s = c ? _(c) : "", o = c ? [
                 ...l,
                 s
             ] : l;
-            menu_search_t(c, s, r) && a.push({
+            menu_search_n(c, s, r) && a.push({
                 node: u,
                 url: e,
                 breadcrumb: [
@@ -1513,19 +1514,19 @@ function searchMenu(n, l) {
             }), i(u, e, o);
         }
     };
-    for (let e of n.categories)if (!n.hiddenCategoryIds.has(e.id)) for (let l of (e.primary && menu_search_t(e.primary.rawTitle, e.title, r) && a.push({
-        node: e.primary.node,
-        url: e.primary.path,
+    for (let t of e.categories)if (!e.hiddenCategoryIds.has(t.id)) for (let l of (t.primary && menu_search_n(t.primary.rawTitle, t.title, r) && a.push({
+        node: t.primary.node,
+        url: t.primary.path,
         breadcrumb: [
-            e.title
+            t.title
         ]
-    }), e.items)){
-        if (n.hiddenPaths.has(l.path)) continue;
+    }), t.items)){
+        if (e.hiddenPaths.has(l.path)) continue;
         let u = [
-            e.title,
+            t.title,
             l.title
         ];
-        menu_search_t(l.rawTitle, l.title, r) && a.push({
+        menu_search_n(l.rawTitle, l.title, r) && a.push({
             node: l.node,
             url: l.path,
             breadcrumb: u
@@ -1533,9 +1534,10 @@ function searchMenu(n, l) {
     }
     return a;
 }
-function setupMenuSearch(e) {
-    let t = [], n = (n)=>{
-        let l = document.querySelector(n);
+function setupMenuSearch(t) {
+    menu_search_e && (document.removeEventListener("keydown", menu_search_e), menu_search_e = void 0);
+    let n = [], l = (e)=>{
+        let l = document.querySelector(e);
         if (!l) return;
         l.innerHTML = "";
         let { container: r, input: a } = function(e) {
@@ -1618,22 +1620,22 @@ function setupMenuSearch(e) {
                 input: n,
                 overlay: r
             };
-        }(e);
-        l.appendChild(r), t.push(a);
+        }(t);
+        l.appendChild(r), n.push(a);
     };
-    n(".header__search-slot"), n(".sidebar__search-slot"), 0 !== t.length && document.addEventListener("keydown", (e)=>{
+    l(".header__search-slot"), l(".sidebar__search-slot"), 0 !== n.length && (menu_search_e = (e)=>{
         if ((e.ctrlKey || e.metaKey) && "k" === e.key || "/" === e.key && !e.ctrlKey && !e.metaKey && !e.altKey && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA" && !document.activeElement?.getAttribute("contenteditable")) {
             e.preventDefault(), (()=>{
-                for (let e of t)if (null !== e.offsetParent) {
+                for (let e of n)if (null !== e.offsetParent) {
                     e.focus(), e.select();
                     return;
                 }
             })();
             return;
         }
-        let n = t.find((e)=>document.activeElement === e);
-        "Escape" === e.key && n && n.blur();
-    });
+        let t = n.find((e)=>document.activeElement === e);
+        "Escape" === e.key && t && t.blur();
+    }, document.addEventListener("keydown", menu_search_e));
 }
 
 ;// CONCATENATED MODULE: ./web/resources/utils/poll-pause.ts
@@ -2431,7 +2433,7 @@ function setupThemeFeatures() {
 
 let menu_fluent_w = !1;
 function menu_fluent_$(e) {
-    menu_fluent_w || (menu_fluent_w = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMenuSearch(e), setupMacSelector(), setupLogViewer());
+    menu_fluent_w || (menu_fluent_w = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMacSelector(), setupLogViewer()), setupMenuSearch(e);
 }
 const main = baseclass.extend({
     async __init__ () {

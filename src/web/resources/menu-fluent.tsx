@@ -30,18 +30,20 @@ type MenuNode = LuCI.ui.menu.MenuNode;
 let utilitiesInitialized = false;
 
 function initThemeUtilities(presentation: MenuPresentation) {
-  if (utilitiesInitialized) return;
-  utilitiesInitialized = true;
+  if (!utilitiesInitialized) {
+    utilitiesInitialized = true;
 
-  setupTableWrappers();
-  setupSelectionPause();
-  setupErrorTooltips();
-  setupFluentSelects();
-  setupIfaceboxTooltips();
-  setupThemeFeatures();
+    setupTableWrappers();
+    setupSelectionPause();
+    setupErrorTooltips();
+    setupFluentSelects();
+    setupIfaceboxTooltips();
+    setupThemeFeatures();
+    setupMacSelector();
+    setupLogViewer();
+  }
+
   setupMenuSearch(presentation);
-  setupMacSelector();
-  setupLogViewer();
 }
 
 /**
