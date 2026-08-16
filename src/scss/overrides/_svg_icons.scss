@@ -99,6 +99,12 @@ img[src="/luci-static/resources/icons/tunnel_disabled.svg"] {
         var(--fluent-text-secondary)
     );
 }
+img[src="/luci-static/resources/icons/vlan.svg"] {
+    @include fluent-mask-icon-by-path("../assets/icons/override/vlan.svg", $icon-size, var(--fluent-text-secondary));
+}
+img[src="/luci-static/resources/icons/vlan_disabled.svg"] {
+    @include fluent-mask-icon-by-path("../assets/icons/override/vlan_disabled.svg", $icon-size, var(--fluent-text-secondary));
+}
 img[src="/luci-static/resources/icons/alias.svg"] {
     @include fluent-mask-icon-by-path("../assets/icons/override/alias.svg", $icon-size, var(--fluent-text-secondary));
 }

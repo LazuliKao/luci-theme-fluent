@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="115 80 334 334" role="img" aria-labelledby="title desc">
+  <title id="title">Network VLAN</title>
+  <desc id="desc">A Fluent UI style ethernet port icon showing a VLAN tag badge.</desc>
+  <g fill="none" stroke="#424242" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Cutout outer box for bottom-right badge -->
+    <path d="M139 135h239c8.8 0 16 7.2 16 16v120 M275 388 H139c-8.8 0-16-7.2-16-16V151c0-8.8 7.2-16 16-16" stroke-width="10"/>
+    <path d="M171 186h173v101h-33v27h-27v23h-55v-23h-27v-27h-31z" stroke-width="10"/>
+    <path d="M195 186v26" stroke-width="9"/>
+    <path d="M213 186v26" stroke-width="9"/>
+    <path d="M231 186v26" stroke-width="9"/>
+    <path d="M249 186v26" stroke-width="9"/>
+    <path d="M267 186v26" stroke-width="9"/>
+    <path d="M285 186v26" stroke-width="9"/>
+    <path d="M303 186v26" stroke-width="9"/>
+    <path d="M321 186v26" stroke-width="9"/>
+  </g>
+  <!-- VLAN Tag Badge (Bottom-Right) -->
+  <path fill="#424242" transform="translate(275 277) scale(8.25)" d="M2.587 7.314a1.99 1.99 0 0 0 0 2.822l3.296 3.28a2.013 2.013 0 0 0 2.836 0l4.67-4.647a2 2 0 0 0 .587-1.397L14 4.01A2 2 0 0 0 11.987 2l-3.25.014a2 2 0 0 0-1.41.584zM11 6a1 1 0 1 1 0-2a1 1 0 0 1 0 2" />
+</svg>
