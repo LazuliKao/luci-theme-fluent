@@ -1451,32 +1451,40 @@ function setupMacSelector() {
 
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
 let menu_cache_e = "fluent_menu_cache";
+function menu_cache_t(e) {
+    let t = document.body?.getAttribute("data-menu-cache-scope");
+    return t ? `${e}_${t}` : null;
+}
 function getCachedMenu() {
     try {
-        let t = sessionStorage.getItem(menu_cache_e);
-        if (!t) return null;
-        let n = JSON.parse(t);
-        if (n && "object" == typeof n) return {
-            tree: n,
-            raw: t
+        let n = menu_cache_t(menu_cache_e);
+        if (!n) return null;
+        let r = sessionStorage.getItem(n);
+        if (!r) return null;
+        let u = JSON.parse(r);
+        if (u && "object" == typeof u) return {
+            tree: u,
+            raw: r
         };
     } catch (e) {}
     return null;
 }
-function saveMenuCache(t) {
+function saveMenuCache(n) {
     try {
-        let n = JSON.stringify(t);
-        return sessionStorage.setItem(menu_cache_e, n), n;
+        let r = menu_cache_t(menu_cache_e);
+        if (!r) return null;
+        let u = JSON.stringify(n);
+        return sessionStorage.setItem(r, u), u;
     } catch (e) {
         return null;
     }
 }
 function saveRenderedHtmlCache() {
     try {
-        let e = document.querySelector("#mainmenu");
-        e && sessionStorage.setItem("fluent_sidebar_html", e.innerHTML);
-        let t = document.querySelector("#tabmenu"), n = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
-        t && t.children.length > 0 && n && sessionStorage.setItem(`fluent_tabmenu_html_${n}`, t.innerHTML);
+        let e = document.querySelector("#mainmenu"), n = menu_cache_t("fluent_sidebar_html");
+        e && n && sessionStorage.setItem(n, e.innerHTML);
+        let r = document.querySelector("#tabmenu"), u = menu_cache_t("fluent_tabmenu_html"), l = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
+        r && r.children.length > 0 && u && l && sessionStorage.setItem(`${u}_${l}`, r.innerHTML);
     } catch (e) {}
 }
 function getResolvedMenuLayout() {

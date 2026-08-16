@@ -4,12 +4,19 @@ const MENU_CACHE_KEY = "fluent_menu_cache";
 const SIDEBAR_HTML_CACHE_KEY = "fluent_sidebar_html";
 const TABMENU_HTML_CACHE_KEY = "fluent_tabmenu_html";
 
+function getScopedCacheKey(cacheKey: string): string | null {
+  const scope = document.body?.getAttribute("data-menu-cache-scope");
+  return scope ? `${cacheKey}_${scope}` : null;
+}
+
 /**
  * Read cached menu node tree from sessionStorage synchronously
  */
 export function getCachedMenu(): { tree: MenuNode; raw: string } | null {
   try {
-    const raw = sessionStorage.getItem(MENU_CACHE_KEY);
+    const cacheKey = getScopedCacheKey(MENU_CACHE_KEY);
+    if (!cacheKey) return null;
+    const raw = sessionStorage.getItem(cacheKey);
     if (!raw) return null;
     const tree = JSON.parse(raw) as MenuNode;
     if (tree && typeof tree === "object") {
@@ -24,8 +31,10 @@ export function getCachedMenu(): { tree: MenuNode; raw: string } | null {
  */
 export function saveMenuCache(data: MenuNode): string | null {
   try {
+    const cacheKey = getScopedCacheKey(MENU_CACHE_KEY);
+    if (!cacheKey) return null;
     const raw = JSON.stringify(data);
-    sessionStorage.setItem(MENU_CACHE_KEY, raw);
+    sessionStorage.setItem(cacheKey, raw);
     return raw;
   } catch (_) {
     return null;
@@ -38,13 +47,15 @@ export function saveMenuCache(data: MenuNode): string | null {
 export function saveRenderedHtmlCache(): void {
   try {
     const mainmenu = document.querySelector("#mainmenu");
-    if (mainmenu) {
-      sessionStorage.setItem(SIDEBAR_HTML_CACHE_KEY, mainmenu.innerHTML);
+    const sidebarCacheKey = getScopedCacheKey(SIDEBAR_HTML_CACHE_KEY);
+    if (mainmenu && sidebarCacheKey) {
+      sessionStorage.setItem(sidebarCacheKey, mainmenu.innerHTML);
     }
     const tabmenu = document.querySelector("#tabmenu");
+    const tabCacheKey = getScopedCacheKey(TABMENU_HTML_CACHE_KEY);
     const pathKey = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
-    if (tabmenu && tabmenu.children.length > 0 && pathKey) {
-      sessionStorage.setItem(`${TABMENU_HTML_CACHE_KEY}_${pathKey}`, tabmenu.innerHTML);
+    if (tabmenu && tabmenu.children.length > 0 && tabCacheKey && pathKey) {
+      sessionStorage.setItem(`${tabCacheKey}_${pathKey}`, tabmenu.innerHTML);
     }
   } catch (_) {}
 }
