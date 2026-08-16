@@ -9,23 +9,18 @@ body[data-page^="admin-quickstart"],
 body[data-page^="admin-network_guide"],
 body[data-page^="admin-nas-raid"],
 body[data-page^="admin-network-interfaceconfig"] {
+  canvas {
+    filter: invert(1) hue-rotate(180deg) contrast(1.25) brightness(1.1);
+  }
   #actioner {
     z-index: 9999;
 
-    form,
-    .action-main,
-    .action-container,
-    .actioner-container,
-    .actioner-dns {
+    form {
       background-color: var(--fluent-card-bg) !important;
     }
   }
 
   #actioner > form,
-  #actioner .action-main,
-  #actioner .action-container,
-  #actioner .actioner-container,
-  #actioner .actioner-dns,
   > #{$override-dialog-root},
   > #{$override-root} {
     --flow-bg-color: var(--fluent-card-bg);
@@ -57,70 +52,71 @@ body[data-page^="admin-network-interfaceconfig"] {
 // ── 2. Dark Mode Inversion Hack (Light Baseline -> Filter Invert) ──
 @include theme-dark {
   body[data-page^="admin-network_guide"] {
-    .title,
-    .desc {
+    .title {
       color: var(--fluent-text) !important;
+    }
+    .desc {
+      color: var(--fluent-text-secondary) !important;
+    }
+    .title,
+    .desc,
+    code {
+      background-color: unset !important;
     }
   }
   body[data-page^="admin-quickstart"] {
     #actioner > form,
-    #actioner .action-main,
-    #actioner .action-container,
-    #actioner .actioner-container,
-    #actioner .actioner-dns,
     > #{$override-dialog-root},
     > #{$override-root} {
       color-scheme: dark !important;
       @include light-theme-tokens;
-      // Light Baseline values (inverted by filter into clean dark palette)
-      --flow-bg-color: #ffffff;
-      --flow-span-color: #666666;
-      --card-bg-color: var(--fluent-card-bg);
+
+      // Light Baseline values (inverted by filter into Fluent dark palette #1a1a1a / #292929)
+      --flow-bg-color: #d6d6d6; // inverts to #292929 (Grey16 Card)
+      --flow-span-color: #525252; // inverts to #adadad (Grey68 Secondary Text)
+      --card-bg-color: #d6d6d6; // inverts to #292929 (Grey16 Card)
       --card-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.4);
-      --app-container_title-color: #1e1e1e;
-      --app-container_status-label_block: #1e1e1e;
-      --item-label_key-span-color: #666666;
-      --item-label_value-span-color: #1e1e1e;
-      --app-container_status-label_bg: #f3f3f3;
+      --app-container_title-color: #000000; // inverts to #ffffff (White Title)
+      --app-container_status-label_block: #000000;
+      --item-label_key-span-color: #525252; // inverts to #adadad
+      --item-label_value-span-color: #000000; // inverts to #ffffff
+      --app-container_status-label_bg: #cccccc; // inverts to #333333 (Grey20 Status Bg)
       --item_btn-border: 1px solid #0078d4;
       --item_btn-color: #0078d4;
-      --tit-color: #1e1e1e;
-      --popup-bg-color: #ffffff;
-      --tag-bg-color: #f5f5f5;
+      --tit-color: #000000; // inverts to #ffffff
+      --popup-bg-color: #d6d6d6; // inverts to #292929
+      --tag-bg-color: #cccccc; // inverts to #333333
       --gradient-bg-color: linear-gradient(
         90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.8) 62%,
-        rgba(255, 255, 255, 1) 100%
+        rgba(214, 214, 214, 0) 0%,
+        rgba(214, 214, 214, 0.8) 62%,
+        rgba(214, 214, 214, 1) 100%
       );
-      --breadcrumbs-tit-color: #666666;
-      --breadcrumbs-tit-color1: #1e1e1e;
-      --border-color: #e5e5e5;
+      --breadcrumbs-tit-color: #525252;
+      --breadcrumbs-tit-color1: #000000;
+      --border-color: #c2c2c2; // inverts to #3d3d3d (Grey24 Card Border)
       --SystemUpdateBanner-bg-color: #eff6ff;
       --SystemUpdateBanner-border-color: #bedbff;
-      --btn-border-color: #e5e5e5;
-      --card-txt-color: #1e1e1e;
-      --SystemInfo-bg-color: #f9fafd;
+      --btn-border-color: #c2c2c2;
+      --card-txt-color: #000000;
+      --SystemInfo-bg-color: #d6d6d6;
 
-      background-color: #ffffff;
-      color: #1e1e1e;
+      background-color: #e5e5e5; // inverts to #1a1a1a (Fluent Grey10 Page Background)
+      color: #000000;
       border-radius: var(--fluent-card-radius);
 
       filter: invert(1) hue-rotate(180deg);
       transition: filter var(--fluent-duration-normal) var(--fluent-easing-standard);
 
       // ── 2.1 Re-invert Real Media, Avatars & Hardware Illustrations ──
+      #main > div > div:nth-child(1) > div:has(> a:first-child):has(svg),
       #main > div > .card-container > .feature-card > div > .header > div > svg,
-      canvas,
       img,
+      canvas,
       div.network-containers .model_btn {
         filter: invert(1) hue-rotate(180deg);
       }
-
-      .cbi-button-negative,
       .del-button,
-      .cbi-button-neutral,
-      .cbi-button-reset,
       .footer-btn,
       .app-back,
       .btn-pink {
@@ -130,7 +126,7 @@ body[data-page^="admin-network-interfaceconfig"] {
         border-color: var(--fluent-error) !important;
       }
       // ── 2.2 Re-invert Buttons to Restore Authentic Fluent Colors ──
-      .cbi-button .add-button,
+      .cbi-button,
       .modal-button.confirm,
       .add-button,
       .app-next {
