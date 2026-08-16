@@ -1483,7 +1483,7 @@ function saveRenderedHtmlCache() {
     try {
         let e = document.querySelector("#mainmenu"), n = menu_cache_t("fluent_sidebar_html");
         e && n && sessionStorage.setItem(n, e.innerHTML);
-        let r = document.querySelector("#tabmenu"), u = menu_cache_t("fluent_tabmenu_html"), l = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
+        let r = document.querySelector("#tabmenu"), u = menu_cache_t("fluent_tabmenu_html"), l = Array.isArray(L?.env?.dispatchpath) ? JSON.stringify(L.env.dispatchpath) : "";
         r && r.children.length > 0 && u && l && sessionStorage.setItem(`${u}_${l}`, r.innerHTML);
     } catch (e) {}
 }
@@ -2481,6 +2481,9 @@ const main = baseclass.extend({
                 l = l.children?.[t], i = i + (i ? "/" : "") + t;
             }
             l && this.renderTabMenu(l, i, void 0, t.hiddenPaths);
+        } else {
+            let e = document.querySelector("#tabmenu");
+            e && (e.innerHTML = "", e.style.display = "none");
         }
         saveRenderedHtmlCache();
     },
@@ -2516,10 +2519,10 @@ const main = baseclass.extend({
         let r = (a || 0) + 1, s = a && i.title ? i.title.replace(/ /g, "_") : void 0, o = jsx("ul", {
             class: a ? "slide-menu" : "nav",
             "data-parent": s || void 0
-        }), p = ui.menu.getChildren(i);
-        if (0 === p.length || r > 2) return jsx(Fragment, {});
-        for(let l = 0; l < p.length; l++){
-            let a = p[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === i.name, d = this.renderMainMenu(a, `${n}/${a.name}`, r), u = d.children.length > 0, c = u ? "slide" : null, h = u ? "menu" : "item";
+        }), u = ui.menu.getChildren(i);
+        if (0 === u.length || r > 2) return jsx(Fragment, {});
+        for(let l = 0; l < u.length; l++){
+            let a = u[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === i.name, d = this.renderMainMenu(a, `${n}/${a.name}`, r), p = d.children.length > 0, c = p ? "slide" : null, h = p ? "menu" : "item";
             s && (o.classList.add("active"), c = c ? `${c} active` : "null active");
             let m = s ? `${h} active` : h, f = jsxs("li", {
                 class: c ?? void 0,
@@ -2586,12 +2589,12 @@ const main = baseclass.extend({
                 }));
             }
             s && r.classList.add("active"), n.primary && L.env.dispatchpath.length <= 2 && (s ||= n.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
-            let o = a.length > 0, p = n.primary?.path ?? a[0]?.path ?? "#", d = n.primary?.rawTitle ?? n.title, u = `${o ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
+            let o = a.length > 0, u = n.primary?.path ?? a[0]?.path ?? "#", d = n.primary?.rawTitle ?? n.title, p = `${o ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
             i.appendChild(jsxs("li", {
-                class: u,
+                class: p,
                 children: [
                     jsxs("a", {
-                        href: "#" === p ? p : L.url(p),
+                        href: "#" === u ? u : L.url(u),
                         onclick: o ? ui.createHandlerFn(this, "handleMenuExpand") : null,
                         class: `${o ? "menu" : "item"}${s ? " active" : ""}`,
                         "data-title": d.replace(/ /g, "_"),
@@ -2619,12 +2622,12 @@ const main = baseclass.extend({
     renderTabMenu (t, i, n, a) {
         let r = L.env.dispatchpath.slice(0, 2).join("/"), s = L.env.dispatchpath.slice(0, 3).join("/");
         if (a.has(r) || a.has(s)) return jsx(Fragment, {});
-        let o = document.querySelector("#tabmenu"), p = (n || 0) + 1, d = jsx("ul", {
+        let o = document.querySelector("#tabmenu"), u = (n || 0) + 1, d = jsx("ul", {
             class: "tabs"
-        }), u = ui.menu.getChildren(t), c = null;
-        if (0 === u.length) return o && 1 === p && (o.innerHTML = "", o.style.display = "none"), jsx(Fragment, {});
-        for(let t = 0; t < u.length; t++){
-            let l = u[t], n = L.env.dispatchpath[p + 2] === l.name, a = n ? " active" : "", r = jsx("li", {
+        }), p = ui.menu.getChildren(t), c = null;
+        if (0 === p.length) return o && 1 === u && (o.innerHTML = "", o.style.display = "none"), jsx(Fragment, {});
+        for(let t = 0; t < p.length; t++){
+            let l = p[t], n = L.env.dispatchpath[u + 2] === l.name, a = n ? " active" : "", r = jsx("li", {
                 class: `tabmenu-item-${l.name}${a}`,
                 children: jsx("a", {
                     href: L.url(i, l.name),
@@ -2633,8 +2636,8 @@ const main = baseclass.extend({
             });
             d.appendChild(r), n && (c = l);
         }
-        if (o && (1 === p && (o.innerHTML = ""), o.appendChild(d), o.style.display = "", c)) {
-            let e = this.renderTabMenu(c, `${i}/${c.name}`, p, a);
+        if (o && (1 === u && (o.innerHTML = ""), o.appendChild(d), o.style.display = "", c)) {
+            let e = this.renderTabMenu(c, `${i}/${c.name}`, u, a);
             e.children.length > 0 && o.appendChild(e);
         }
         return d;

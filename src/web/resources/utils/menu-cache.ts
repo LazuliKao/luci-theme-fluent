@@ -53,7 +53,7 @@ export function saveRenderedHtmlCache(): void {
     }
     const tabmenu = document.querySelector("#tabmenu");
     const tabCacheKey = getScopedCacheKey(TABMENU_HTML_CACHE_KEY);
-    const pathKey = Array.isArray(L?.env?.dispatchpath) ? L.env.dispatchpath.slice(0, 2).join("_") : "";
+    const pathKey = Array.isArray(L?.env?.dispatchpath) ? JSON.stringify(L.env.dispatchpath) : "";
     if (tabmenu && tabmenu.children.length > 0 && tabCacheKey && pathKey) {
       sessionStorage.setItem(`${tabCacheKey}_${pathKey}`, tabmenu.innerHTML);
     }

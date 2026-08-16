@@ -130,6 +130,12 @@ const module: Module = {
       if (node) {
         this.renderTabMenu(node, url, undefined, presentation.hiddenPaths);
       }
+    } else {
+      const container = document.querySelector("#tabmenu") as HTMLElement | null;
+      if (container) {
+        container.innerHTML = "";
+        container.style.display = "none";
+      }
     }
 
     saveRenderedHtmlCache();

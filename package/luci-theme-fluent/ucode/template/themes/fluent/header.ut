@@ -320,6 +320,7 @@
   data-theme-mode="{{ mode }}"
   data-menu-layout="{{ entityencode(menu_layout ? sprintf('%J', menu_layout) : '', true) }}"
   data-menu-cache-scope="{{ entityencode(ctx.authsession, true) }}"
+  data-tab-cache-path="{{ entityencode(sprintf('%J', ctx.request_path), true) }}"
   data-fluent-dir="{{ direction.resolved }}"
   data-theme-custom-select="{{ custom_select }}"
   data-view-transition="{{ view_transition }}"
@@ -453,8 +454,10 @@
               try {
                 var cacheScope = document.body.getAttribute('data-menu-cache-scope');
                 if (!cacheScope) return;
-                var page = document.body.getAttribute('data-page') || '';
-                var pathKey = page.split('-').slice(0, 2).join('_');
+                var encodedPath = document.body.getAttribute('data-tab-cache-path');
+                var pathParts = encodedPath ? JSON.parse(encodedPath) : [];
+                if (!Array.isArray(pathParts) || pathParts.length < 3) return;
+                var pathKey = JSON.stringify(pathParts);
                 var cachedTabs = sessionStorage.getItem('fluent_tabmenu_html_' + cacheScope + '_' + pathKey);
                 if (cachedTabs) {
                   var t = document.getElementById('tabmenu');
