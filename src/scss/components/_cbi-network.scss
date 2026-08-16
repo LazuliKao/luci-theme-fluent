@@ -27,8 +27,8 @@ $indicator-inline-offset: 10px;
     }
   }
 
-  // Truncate name with ellipsis when container overflows
-  > span:not(.cbi-tooltip-container) {
+  // Truncate name with ellipsis when container overflows (only for inline single-item badges)
+  &:not(.cbi-tooltip):not(.large) > span:not(.cbi-tooltip-container) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -129,35 +129,6 @@ td > .ifacebadge,
   border-radius: var(--fluent-radius-sm);
   background: var(--fluent-bg-page);
   color: var(--fluent-text);
-}
-
-.network-status-table {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: var(--fluent-space-lg);
-  align-items: stretch;
-}
-
-.network-status-table .ifacebox {
-  display: flex;
-  width: 100%;
-  margin: 0;
-}
-
-.network-status-table .ifacebox-body {
-  flex-grow: 1;
-  padding: var(--fluent-space-sm) var(--fluent-space-md) var(--fluent-space-md);
-}
-
-.network-status-table .ifacebox-body > span {
-  display: block;
-  color: var(--fluent-text-secondary);
-  word-break: break-word;
-}
-
-.network-status-table .ifacebox-body > div {
-  color: var(--fluent-text);
-  word-break: break-word;
 }
 
 #syslog {

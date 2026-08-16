@@ -40,6 +40,7 @@ $indicator-inline-offset: 10px;
 
   // Zone badge stripe inside ifacebox (Overview page port cards: ifacebox-head.cbi-tooltip-container)
   > .ifacebox-head.cbi-tooltip-container {
+    position: relative;
     padding: 2px 8px;
     border: none;
     background: transparent;
@@ -53,6 +54,56 @@ $indicator-inline-offset: 10px;
       min-height: 3px;
       height: 3px;
     }
+
+    .cbi-tooltip {
+      width: max-content;
+      min-width: unset;
+      max-width: min(18rem, 80vw);
+      padding: var(--fluent-space-xs) var(--fluent-space-sm);
+      white-space: nowrap;
+      font-size: var(--fluent-font-size-xs);
+      line-height: var(--fluent-line-height-normal);
+      inset-inline: auto;
+      inset-inline-start: 50%;
+      transform: translateX(-50%) translateY(var(--fluent-space-xs));
+
+      &::before {
+        inset-inline-start: 50%;
+        transform: translateX(-50%) rotate(45deg);
+      }
+
+      .ifacebadge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--fluent-space-xs);
+        min-height: unset;
+        margin: 2px 0;
+        padding: 2px var(--fluent-space-xs);
+        font-size: var(--fluent-font-size-xs);
+        background: var(--fluent-bg-page);
+        border: 1px solid var(--fluent-card-border);
+        border-radius: var(--fluent-radius-sm);
+
+        .zonebadge {
+          padding: 0 4px;
+          min-height: unset;
+          height: auto;
+          border-radius: var(--fluent-radius-circular);
+        }
+      }
+    }
+
+    &:hover .cbi-tooltip:not(:empty) {
+      display: block;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+
+      @starting-style {
+        opacity: 0;
+        transform: translateX(-50%) translateY(var(--fluent-space-xs));
+      }
+    }
   }
 
   // Zone badge stripe inside ifacebox (cbi-tooltip-container)
@@ -62,23 +113,32 @@ $indicator-inline-offset: 10px;
     background: none;
 
     .cbi-tooltip {
-      inset-inline: 0;
-      transform: translateY(var(--fluent-space-xs));
-      white-space: normal;
+      width: max-content;
+      min-width: unset;
+      max-width: min(20rem, 80vw);
+      padding: var(--fluent-space-xs) var(--fluent-space-sm);
+      font-size: var(--fluent-font-size-xs);
+      white-space: nowrap;
+      inset-inline: auto;
+      inset-inline-start: 50%;
+      transform: translateX(-50%) translateY(var(--fluent-space-xs));
+
       &::before {
-        inset-inline-start: $indicator-inline-offset;
+        inset-inline-start: 50%;
+        transform: translateX(-50%) rotate(45deg);
       }
     }
 
-    &:hover > .cbi-tooltip:not(:empty) {
+    .cbi-tooltip-container:hover .cbi-tooltip:not(:empty),
+    &:hover .cbi-tooltip:not(:empty) {
       display: block;
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(-50%) translateY(0);
       pointer-events: auto;
 
       @starting-style {
         opacity: 0;
-        transform: translateY(var(--fluent-space-xs));
+        transform: translateX(-50%) translateY(var(--fluent-space-xs));
       }
     }
   }
@@ -102,9 +162,9 @@ $indicator-inline-offset: 10px;
 
     .ifacebox-head.active {
       background: transparent;
-      color: var(--fluent-success);
+      color: var(--fluent-primary);
       border-bottom-color: var(--fluent-card-border);
-      border-inline-start: 3px solid var(--fluent-success);
+      border-inline-start: 3px solid var(--fluent-primary);
     }
 
     .ifacebox-body {
@@ -126,15 +186,20 @@ $indicator-inline-offset: 10px;
   font-size: var(--fluent-font-size-base);
   font-weight: var(--fluent-font-weight-semibold);
   line-height: var(--fluent-line-height-normal);
+
+  &.center {
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .ifacebox-head.active {
   border-bottom-color: var(--fluent-card-border);
-  background: var(--fluent-success-light);
-  color: var(--fluent-success);
+  background: var(--fluent-primary-lightest);
+  color: var(--fluent-primary);
 
   * {
-    color: var(--fluent-success) !important;
+    color: var(--fluent-primary) !important;
   }
 }
 
@@ -183,14 +248,14 @@ td[data-name="_ifacebox"],
         align-items: center;
         justify-content: center;
         gap: 6px;
-        padding: 2px 10px;
+        padding: 2px 12px;
         border-radius: 9999px;
-        font-size: var(--fluent-font-size-sm);
+        font-size: var(--fluent-font-size-base);
         font-weight: var(--fluent-font-weight-semibold);
         line-height: var(--fluent-line-height-normal);
         background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 18%, var(--fluent-bg-page));
         border: 1px solid color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 35%, var(--fluent-card-border));
-        color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 80%, #000000);
+        color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 80%, var(--fluent-text));
 
         &::before {
           content: "";
@@ -255,13 +320,13 @@ td[data-name="_ifacebox"],
   .td[data-name="_ifacebox"] .ifacebox .ifacebox-head {
     > strong,
     strong {
-      background-color: rgba(var(--zone-color-rgb, 238, 238, 238), 0.16);
-      border-color: rgba(var(--zone-color-rgb, 238, 238, 238), 0.32);
+      background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 16%, transparent);
+      border-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 32%, transparent);
       color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 65%, var(--fluent-text));
 
       &::before {
-        background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 75%, #ffffff);
-        box-shadow: 0 0 4px rgba(var(--zone-color-rgb, 238, 238, 238), 0.4);
+        background-color: color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 75%, var(--fluent-white));
+        box-shadow: 0 0 4px color-mix(in srgb, rgb(var(--zone-color-rgb, 238, 238, 238)) 40%, transparent);
       }
     }
   }
@@ -296,16 +361,22 @@ div[style*="display:grid;grid-template-columns:repeat"] {
       padding: var(--fluent-space-xs);
 
       .cbi-tooltip-container {
+        position: relative;
         text-align: center !important;
         justify-content: center !important;
         font-size: 11px;
         line-height: 1.35;
         color: var(--fluent-text-secondary);
+
+        &:hover .cbi-tooltip:not(:empty) {
+          transform: translateX(-50%) translateY(0) !important;
+        }
       }
     }
 
     // Zone indicator in port status card
     .ifacebox-head.cbi-tooltip-container {
+      position: relative;
       padding: 2px 8px;
       margin: 2px 0;
       border: none;
@@ -316,6 +387,164 @@ div[style*="display:grid;grid-template-columns:repeat"] {
         height: 3px;
         min-height: 3px;
       }
+
+      &:hover .cbi-tooltip:not(:empty) {
+        transform: translateX(-50%) translateY(0) !important;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Status > Overview Network Status Cards (.network-status-table)
+// ------------------------------------------------------------
+.network-status-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--fluent-space-md);
+  align-items: stretch;
+
+  .ifacebox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    border-radius: var(--fluent-radius-md);
+
+    .ifacebox-head {
+      justify-content: center;
+      text-align: center;
+      background: transparent;
+      border-bottom: 1px solid var(--fluent-card-border);
+      padding: var(--fluent-space-xs) var(--fluent-space-sm);
+
+      // WinUI 3 InfoBadge Capsule for Network Interface State
+      > strong,
+      strong {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 2px 10px;
+        border-radius: 9999px;
+        font-size: var(--fluent-font-size-sm);
+        font-weight: var(--fluent-font-weight-semibold);
+        line-height: var(--fluent-line-height-normal);
+        background-color: var(--fluent-bg-page);
+        border: 1px solid var(--fluent-card-border);
+        color: var(--fluent-text-secondary);
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: var(--fluent-text-disabled);
+          flex-shrink: 0;
+        }
+      }
+
+      &.active {
+        background: transparent;
+
+        > strong,
+        strong {
+          background-color: color-mix(in srgb, var(--fluent-primary) 14%, var(--fluent-bg-page));
+          border-color: color-mix(in srgb, var(--fluent-primary) 35%, var(--fluent-card-border));
+          color: var(--fluent-primary);
+
+          &::before {
+            background-color: var(--fluent-primary);
+          }
+        }
+      }
+    }
+
+    .ifacebox-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+      padding: var(--fluent-space-sm) var(--fluent-space-md);
+      font-size: var(--fluent-font-size-sm);
+      gap: var(--fluent-space-sm);
+
+      > span {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        color: var(--fluent-text-secondary);
+        word-break: break-all;
+
+        > br {
+          display: none;
+        }
+
+        .nowrap {
+          display: inline-block;
+          white-space: normal;
+          word-break: break-word;
+
+          strong {
+            color: var(--fluent-text);
+            font-weight: var(--fluent-font-weight-semibold);
+            margin-inline-end: var(--fluent-space-xxs);
+          }
+        }
+
+        .cbi-tooltip-container {
+          position: relative;
+          display: inline-flex;
+          cursor: help;
+          vertical-align: middle;
+        }
+      }
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        gap: var(--fluent-space-xs);
+
+        .ifacebadge {
+          display: flex;
+          align-items: flex-start;
+          width: 100%;
+          min-height: unset;
+          padding: var(--fluent-space-xs) var(--fluent-space-sm);
+          background: var(--fluent-bg-page);
+          border: 1px solid var(--fluent-card-border);
+          border-radius: var(--fluent-radius-sm);
+
+          > img {
+            margin-top: 2px;
+          }
+
+          > span {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow: visible;
+            white-space: normal;
+            font-size: var(--fluent-font-size-xs);
+            line-height: var(--fluent-line-height-normal);
+
+            > br {
+              display: none;
+            }
+
+            .nowrap {
+              white-space: normal;
+              word-break: break-word;
+
+              strong {
+                color: var(--fluent-text);
+                font-weight: var(--fluent-font-weight-semibold);
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -323,7 +552,25 @@ div[style*="display:grid;grid-template-columns:repeat"] {
 // ------------------------------------------------------------
 // Global Tooltip Portal (for ifacebox badge tooltips)
 // ------------------------------------------------------------
-#fluent-global-tooltip {
+#fluent-global-tooltip,
+.cbi-tooltip.ifacebadge.large {
+  display: flex !important;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--fluent-space-sm);
+  min-width: 14rem;
+  max-width: min(24rem, 90vw);
+  padding: var(--fluent-space-sm) var(--fluent-space-md);
+  background: var(--fluent-card-bg);
+  border: 1px solid var(--fluent-card-border);
+  border-radius: var(--fluent-radius-md);
+  box-shadow: var(--fluent-shadow-md);
+  color: var(--fluent-text);
+  font-size: var(--fluent-font-size-xs);
+  font-weight: var(--fluent-font-weight-normal);
+  line-height: var(--fluent-line-height-normal);
+  white-space: normal;
+  overflow: visible;
   transform: translateY(0) !important;
   opacity: 0;
   transition: opacity var(--fluent-duration-fast) var(--fluent-easing-standard);
@@ -331,5 +578,42 @@ div[style*="display:grid;grid-template-columns:repeat"] {
   &::before {
     left: var(--arrow-left, 50%) !important;
     transform: translateX(-50%) rotate(45deg) !important;
+    background-color: var(--fluent-card-bg);
+    border-inline-start: 1px solid var(--fluent-card-border);
+    border-top: 1px solid var(--fluent-card-border);
+  }
+
+  > img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    object-fit: contain;
+  }
+
+  > .left,
+  > span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1 1 auto;
+    white-space: normal;
+    overflow: visible;
+    color: var(--fluent-text-secondary);
+
+    > br {
+      display: none;
+    }
+
+    .nowrap {
+      white-space: normal;
+      word-break: break-word;
+
+      strong {
+        color: var(--fluent-text);
+        font-weight: var(--fluent-font-weight-semibold);
+      }
+    }
   }
 }
