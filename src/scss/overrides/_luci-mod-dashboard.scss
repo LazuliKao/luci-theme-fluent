@@ -122,6 +122,13 @@
         color: var(--fluent-text);
         border-bottom: 1px solid var(--fluent-table-border);
         vertical-align: middle;
+        position: static;
+        top: auto;
+        overflow: visible;
+
+        &:nth-child(3) {
+          min-width: 140px;
+        }
       }
 
       .tr:hover .td {
@@ -151,7 +158,8 @@
   // ──────────────────────────────────────────────────────────
 
   .cbi-progressbar {
-    height: 12px;
+    min-width: 120px;
+    background: transparent !important;
   }
 
   // ──────────────────────────────────────────────────────────
