@@ -2166,19 +2166,8 @@ function setupThemeFeatures() {
             inlineSize: c.width - h.inlineStart - h.inlineEnd
         }, p = `${b.inlineStart}px`, g = `${b.inlineSize}px`;
         if (s.dataset.inlineStart === p && s.dataset.inlineSize === g) return;
-        let y = function(e) {
-            if (e.classList.contains("tabs")) return "header-tabs";
-            let t = e.closest(".cbi-section");
-            return t?.id ? `cbi-tabs-${t.id}` : "cbi-tabs-generic";
-        }(l), S = window._fluent_last_tab_pos?.[y];
-        void 0 === s.dataset.inlineStart && S && Date.now() - S.time < 2000 && (s.style.transition = "none", applyInlineGeometryToStyle(s.style, {
-            inlineStart: Number.parseFloat(S.inlineStart),
-            inlineSize: Number.parseFloat(S.inlineSize)
-        }), s.dataset.inlineStart = S.inlineStart, s.dataset.inlineSize = S.inlineSize, s.offsetHeight, s.style.transition = ""), applyInlineGeometryToStyle(s.style, b), s.dataset.inlineStart = p, s.dataset.inlineSize = g, window._fluent_last_tab_pos && (window._fluent_last_tab_pos[y] = {
-            inlineStart: p,
-            inlineSize: g,
-            time: Date.now()
-        });
+        let y = void 0 === s.dataset.inlineStart;
+        y && (s.style.transition = "none"), applyInlineGeometryToStyle(s.style, b), s.dataset.inlineStart = p, s.dataset.inlineSize = g, y && (s.offsetHeight, s.style.transition = "");
     }
     function p() {
         document.querySelectorAll("ul.cbi-tabmenu, ul.tabs").forEach((i)=>{
@@ -2283,7 +2272,7 @@ function setupThemeFeatures() {
             if (o.length > 0) for (let i of (t || ((t = document.createElement("div")).className = "modal-content-wrap", s ? e.insertBefore(t, s) : e.appendChild(t)), o))t.appendChild(i);
         });
     }
-    if (window._fluent_last_tab_pos = window._fluent_last_tab_pos || {}, p(), g(), new MutationObserver(()=>{
+    if (p(), g(), new MutationObserver(()=>{
         p(), g();
     }).observe(l, {
         childList: !0,

@@ -1,11 +1,5 @@
 import { applyInlineGeometryToStyle, getEffectiveDocumentDirection, getInlinePadding, getRectInlineStart, getViewportInlineSize, type InlineGeometry } from "./direction";
 
-declare global {
-  interface Window {
-    _fluent_last_tab_pos?: Record<string, { inlineStart: string; inlineSize: string; time: number }>;
-  }
-}
-
 /**
  * Fluent Theme Features Initialization Module
  * Handles dark mode toggle, top loading bar behavior, sliding tab indicator,
@@ -165,18 +159,6 @@ export function setupThemeFeatures() {
   // 3. SLIDING TAB INDICATOR BEHAVIOR
   // ============================================================
   const tabAnimationEnabled = body.getAttribute("data-tab-animation") === "1";
-  window._fluent_last_tab_pos = window._fluent_last_tab_pos || {};
-
-  function getTabMenuKey(ul: HTMLElement): string {
-    if (ul.classList.contains("tabs")) {
-      return "header-tabs";
-    }
-    const section = ul.closest(".cbi-section");
-    if (section?.id) {
-      return `cbi-tabs-${section.id}`;
-    }
-    return "cbi-tabs-generic";
-  }
 
   function updateSlider(ul: HTMLElement) {
     const rectUl = ul.getBoundingClientRect();
@@ -221,32 +203,20 @@ export function setupThemeFeatures() {
       return;
     }
 
-    const key = getTabMenuKey(ul);
-    const lastPos = window._fluent_last_tab_pos?.[key];
-    const hasInlineStart = slider.dataset.inlineStart !== undefined;
-
-    if (!hasInlineStart && lastPos && Date.now() - lastPos.time < 2000) {
+    const isInitialPosition = slider.dataset.inlineStart === undefined;
+    if (isInitialPosition) {
       slider.style.transition = "none";
-      applyInlineGeometryToStyle(slider.style, {
-        inlineStart: Number.parseFloat(lastPos.inlineStart),
-        inlineSize: Number.parseFloat(lastPos.inlineSize),
-      });
-      slider.dataset.inlineStart = lastPos.inlineStart;
-      slider.dataset.inlineSize = lastPos.inlineSize;
-      slider.offsetHeight; // force reflow
-      slider.style.transition = "";
     }
 
     applyInlineGeometryToStyle(slider.style, inlineGeometry);
     slider.dataset.inlineStart = newInlineStartStr;
     slider.dataset.inlineSize = newInlineSizeStr;
 
-    if (window._fluent_last_tab_pos) {
-      window._fluent_last_tab_pos[key] = {
-        inlineStart: newInlineStartStr,
-        inlineSize: newInlineSizeStr,
-        time: Date.now(),
-      };
+    // A newly rendered CBI tab list must start at its active tab. Only later
+    // class changes represent user navigation and should animate the slider.
+    if (isInitialPosition) {
+      slider.offsetHeight; // force reflow before restoring transitions
+      slider.style.transition = "";
     }
   }
 
