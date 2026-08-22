@@ -11802,7 +11802,7 @@ body[data-page^="admin-services-appfilter"] > .main > .main-right > #maincontent
   --fluent-focus-inner-color: #fff;
 }
 
-body[data-page^="admin-quickstart"] canvas, body[data-page^="admin-network_guide"] canvas, body[data-page^="admin-nas-raid"] canvas, body[data-page^="admin-network-interfaceconfig"] canvas {
+body[data-page^="admin-quickstart"] .network_container canvas, body[data-page^="admin-network_guide"] .network_container canvas, body[data-page^="admin-nas-raid"] .network_container canvas, body[data-page^="admin-network-interfaceconfig"] .network_container canvas {
   filter: invert() hue-rotate(180deg) contrast(1.25) brightness(1.1);
 }
 

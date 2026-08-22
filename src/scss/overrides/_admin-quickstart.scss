@@ -9,8 +9,10 @@ body[data-page^="admin-quickstart"],
 body[data-page^="admin-network_guide"],
 body[data-page^="admin-nas-raid"],
 body[data-page^="admin-network-interfaceconfig"] {
-  canvas {
-    filter: invert(1) hue-rotate(180deg) contrast(1.25) brightness(1.1);
+  .network_container {
+    canvas {
+      filter: invert(1) hue-rotate(180deg) contrast(1.25) brightness(1.1);
+    }
   }
   #actioner {
     z-index: 9999;
