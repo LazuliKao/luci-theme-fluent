@@ -34,6 +34,9 @@ define Build/Prepare
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
 
+define Build/Compile
+endef
+
 define Package/$(PKG_NAME)/install
 	$(CP) $(PKG_BUILD_DIR)/root/* $(1)/
 	$(INSTALL_DIR) $(1)/www $(1)/usr/share/ucode/template/themes
