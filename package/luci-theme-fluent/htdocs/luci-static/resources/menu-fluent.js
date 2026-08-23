@@ -1648,14 +1648,22 @@ function setupMenuSearch(t) {
 
 ;// CONCATENATED MODULE: ./web/resources/utils/poll-pause.ts
 function setupSelectionPause() {
-    let e = !1, t = L.poll;
-    document.addEventListener("selectionchange", ()=>{
-        let n = document.getSelection(), o = (n?.toString().trim().length ?? 0) > 0;
-        if (!o) {
-            let e = document.activeElement;
-            (e instanceof HTMLInputElement || e instanceof HTMLTextAreaElement) && (o = e.selectionStart !== e.selectionEnd);
+    let t = !1, e = L.poll, n = "u" < typeof XHR ? void 0 : XHR, o = "function" == typeof e?.active && "function" == typeof e.stop && "function" == typeof e.start ? e : null, i = "function" == typeof n?.running && "function" == typeof n.halt && "function" == typeof n.run ? n : null, c = o ? {
+        isActive: ()=>o.active(),
+        stop: ()=>o.stop(),
+        start: ()=>o.start()
+    } : i ? {
+        isActive: ()=>i.running(),
+        stop: ()=>i.halt(),
+        start: ()=>i.run()
+    } : null;
+    c && document.addEventListener("selectionchange", ()=>{
+        let e = document.getSelection(), n = (e?.toString().trim().length ?? 0) > 0;
+        if (!n) {
+            let t = document.activeElement;
+            (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) && (n = t.selectionStart !== t.selectionEnd);
         }
-        o ? !e && t.active() && (t.stop(), e = !0) : e && (t.start(), e = !1);
+        n ? !t && c.isActive() && (t = c.stop()) : t && (c.start(), t = !1);
     });
 }
 
