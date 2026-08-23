@@ -9,8 +9,6 @@ LUCI_TITLE:=Fluent Theme for LuCI
 LUCI_DEPENDS:=+luci-base
 LUCI_MINIFY_CSS:=0
 
-include $(TOPDIR)/feeds/luci/luci.mk
-
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
@@ -46,3 +44,5 @@ define Package/$(PKG_NAME)/postinst
 	/etc/init.d/rpcd restart
 }
 endef
+
+include $(TOPDIR)/feeds/luci/luci.mk
