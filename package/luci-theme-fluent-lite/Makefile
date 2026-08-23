@@ -14,7 +14,6 @@ define Package/$(PKG_NAME)
   CATEGORY:=LuCI
   TITLE:=Fluent Theme for LuCI (lite)
   DEPENDS:=+luci-base
-  PROVIDES:=luci-theme-fluent
   CONFLICTS:=luci-theme-fluent
 endef
 
