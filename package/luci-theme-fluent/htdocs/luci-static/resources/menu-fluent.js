@@ -620,149 +620,6 @@ function getResolvedMenuLayout() {
     } catch (e) {}
 }
 
-;// CONCATENATED MODULE: ./web/resources/utils/sidebar-controller.ts
-function applyDesktopSidebarState(e) {
-    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
-}
-function getDesktopSidebarState() {
-    try {
-        let e = localStorage.getItem("fluent-sidebar-state");
-        return "collapsed" === e || "expanded" === e ? e : "expanded";
-    } catch (e) {
-        return "expanded";
-    }
-}
-function closeCollapsedPopups() {
-    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open");
-    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
-    });
-}
-function adjustBrandTextSize() {
-    let e = document.querySelector(".sidenav-header .brand-text");
-    if (e) {
-        let t = e.parentElement;
-        if (t) {
-            let a = t.clientWidth - 32;
-            if (a > 0) {
-                let t = 16;
-                for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
-            }
-        }
-    }
-}
-function handleSidebarToggle(e) {
-    let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), d = document.querySelector(".darkMask"), o = document.querySelector(".main-right");
-    0 !== t.length && a && d && o && (Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
-        e.classList.remove("active");
-    }), a.classList.remove("active"), o.classList.remove("active"), d.classList.remove("active")) : (t.forEach((e)=>{
-        e.classList.add("active");
-    }), a.classList.add("active"), o.classList.add("active"), d.classList.add("active"), adjustBrandTextSize()));
-}
-function handleDesktopSidebarToggle(e) {
-    if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
-    let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-    closeCollapsedPopups();
-    try {
-        localStorage.setItem("fluent-sidebar-state", t);
-    } catch (e) {}
-    applyDesktopSidebarState(t), "expanded" === t && adjustBrandTextSize();
-}
-let sidebar_controller_e = !1;
-function initSidebarController(t) {
-    if (sidebar_controller_e) return;
-    sidebar_controller_e = !0;
-    let a = document.querySelectorAll("a.showSide"), d = document.querySelector(".darkMask"), o = document.querySelector(".sidebar-collapse-toggle"), n = ui.createHandlerFn(t, "handleSidebarToggle") ?? (()=>{
-        handleSidebarToggle();
-    }), r = ui.createHandlerFn(t, "handleDesktopSidebarToggle") ?? ((e)=>{
-        handleDesktopSidebarToggle(e);
-    });
-    a.forEach((e)=>{
-        e.addEventListener("click", n);
-    }), d && d.addEventListener("click", n), o && o.addEventListener("click", r), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-        adjustBrandTextSize(), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded");
-    }), document.addEventListener("click", (e)=>{
-        if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
-        let t = e.target, a = document.querySelector("#mainmenu");
-        t && a?.contains(t) || closeCollapsedPopups();
-    });
-}
-
-;// CONCATENATED MODULE: ./web/resources/utils/slide-animations.ts
-let slide_animations_t = {
-    fast: 200,
-    normal: 400,
-    slow: 600
-}, slide_animations_e = (e)=>{
-    if ("number" == typeof e) return e || slide_animations_t.normal;
-    switch(e){
-        case "fast":
-        case "slow":
-            return slide_animations_t[e];
-        default:
-            return slide_animations_t.normal;
-    }
-};
-const SlideAnimations = {
-    durations: slide_animations_t,
-    runningAnimations: new WeakMap(),
-    slideDown (t, i, n) {
-        if (!t) return void console.warn("SlideAnimations.slideDown: No element provided");
-        this.stop(t);
-        let s = slide_animations_e(i), o = {
-            display: t.style.display,
-            overflow: t.style.overflow,
-            height: t.style.height,
-            transition: t.style.transition
-        };
-        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${s}ms ease-out`, t.offsetHeight;
-        let l = t.scrollHeight;
-        t.style.height = `${l}px`;
-        let r = ()=>{
-            if (t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
-                n.call(t);
-            } catch (t) {
-                console.error("SlideAnimations callback error:", t);
-            }
-        }, a = setTimeout(r, s);
-        this.runningAnimations.set(t, {
-            timeoutId: a,
-            cleanup: r
-        });
-    },
-    slideUp (t, i, n) {
-        if (!t) return void console.warn("SlideAnimations.slideUp: No element provided");
-        this.stop(t);
-        let s = slide_animations_e(i), o = {
-            display: t.style.display,
-            overflow: t.style.overflow,
-            height: t.style.height,
-            transition: t.style.transition
-        }, l = t.scrollHeight;
-        t.style.overflow = "hidden", t.style.height = `${l}px`, t.style.transition = `height ${s}ms ease-out`, t.offsetHeight, t.style.height = "0px";
-        let r = ()=>{
-            if (t.style.display = "none", t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
-                n.call(t);
-            } catch (t) {
-                console.error("SlideAnimations callback error:", t);
-            }
-        }, a = setTimeout(r, s);
-        this.runningAnimations.set(t, {
-            timeoutId: a,
-            cleanup: r
-        });
-    },
-    stop (t) {
-        if (!t) return;
-        let e = this.runningAnimations.get(t);
-        e && (clearTimeout(e.timeoutId), e.cleanup()), t.style.transition = "", t.offsetHeight;
-    },
-    isAnimating (t) {
-        return this.runningAnimations.has(t);
-    }
-};
-
 ;// CONCATENATED MODULE: ./web/resources/utils/apply-change-preview.ts
 let apply_change_preview_e = Symbol("fluentApplyChangePreview");
 function apply_change_preview_t(e, t) {
@@ -2440,6 +2297,149 @@ const setupMenuFeatures = (r)=>{
     setupMenuSearch(r);
 };
 
+;// CONCATENATED MODULE: ./web/resources/utils/sidebar-controller.ts
+function applyDesktopSidebarState(e) {
+    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
+}
+function getDesktopSidebarState() {
+    try {
+        let e = localStorage.getItem("fluent-sidebar-state");
+        return "collapsed" === e || "expanded" === e ? e : "expanded";
+    } catch (e) {
+        return "expanded";
+    }
+}
+function closeCollapsedPopups() {
+    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open");
+    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
+    });
+}
+function adjustBrandTextSize() {
+    let e = document.querySelector(".sidenav-header .brand-text");
+    if (e) {
+        let t = e.parentElement;
+        if (t) {
+            let a = t.clientWidth - 32;
+            if (a > 0) {
+                let t = 16;
+                for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
+            }
+        }
+    }
+}
+function handleSidebarToggle(e) {
+    let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), d = document.querySelector(".darkMask"), o = document.querySelector(".main-right");
+    0 !== t.length && a && d && o && (Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
+        e.classList.remove("active");
+    }), a.classList.remove("active"), o.classList.remove("active"), d.classList.remove("active")) : (t.forEach((e)=>{
+        e.classList.add("active");
+    }), a.classList.add("active"), o.classList.add("active"), d.classList.add("active"), adjustBrandTextSize()));
+}
+function handleDesktopSidebarToggle(e) {
+    if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
+    let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
+    closeCollapsedPopups();
+    try {
+        localStorage.setItem("fluent-sidebar-state", t);
+    } catch (e) {}
+    applyDesktopSidebarState(t), "expanded" === t && adjustBrandTextSize();
+}
+let sidebar_controller_e = !1;
+function initSidebarController(t) {
+    if (sidebar_controller_e) return;
+    sidebar_controller_e = !0;
+    let a = document.querySelectorAll("a.showSide"), d = document.querySelector(".darkMask"), o = document.querySelector(".sidebar-collapse-toggle"), n = ui.createHandlerFn(t, "handleSidebarToggle") ?? (()=>{
+        handleSidebarToggle();
+    }), r = ui.createHandlerFn(t, "handleDesktopSidebarToggle") ?? ((e)=>{
+        handleDesktopSidebarToggle(e);
+    });
+    a.forEach((e)=>{
+        e.addEventListener("click", n);
+    }), d && d.addEventListener("click", n), o && o.addEventListener("click", r), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+        adjustBrandTextSize(), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded");
+    }), document.addEventListener("click", (e)=>{
+        if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
+        let t = e.target, a = document.querySelector("#mainmenu");
+        t && a?.contains(t) || closeCollapsedPopups();
+    });
+}
+
+;// CONCATENATED MODULE: ./web/resources/utils/slide-animations.ts
+let slide_animations_t = {
+    fast: 200,
+    normal: 400,
+    slow: 600
+}, slide_animations_e = (e)=>{
+    if ("number" == typeof e) return e || slide_animations_t.normal;
+    switch(e){
+        case "fast":
+        case "slow":
+            return slide_animations_t[e];
+        default:
+            return slide_animations_t.normal;
+    }
+};
+const SlideAnimations = {
+    durations: slide_animations_t,
+    runningAnimations: new WeakMap(),
+    slideDown (t, i, n) {
+        if (!t) return void console.warn("SlideAnimations.slideDown: No element provided");
+        this.stop(t);
+        let s = slide_animations_e(i), o = {
+            display: t.style.display,
+            overflow: t.style.overflow,
+            height: t.style.height,
+            transition: t.style.transition
+        };
+        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${s}ms ease-out`, t.offsetHeight;
+        let l = t.scrollHeight;
+        t.style.height = `${l}px`;
+        let r = ()=>{
+            if (t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
+            } catch (t) {
+                console.error("SlideAnimations callback error:", t);
+            }
+        }, a = setTimeout(r, s);
+        this.runningAnimations.set(t, {
+            timeoutId: a,
+            cleanup: r
+        });
+    },
+    slideUp (t, i, n) {
+        if (!t) return void console.warn("SlideAnimations.slideUp: No element provided");
+        this.stop(t);
+        let s = slide_animations_e(i), o = {
+            display: t.style.display,
+            overflow: t.style.overflow,
+            height: t.style.height,
+            transition: t.style.transition
+        }, l = t.scrollHeight;
+        t.style.overflow = "hidden", t.style.height = `${l}px`, t.style.transition = `height ${s}ms ease-out`, t.offsetHeight, t.style.height = "0px";
+        let r = ()=>{
+            if (t.style.display = "none", t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
+            } catch (t) {
+                console.error("SlideAnimations callback error:", t);
+            }
+        }, a = setTimeout(r, s);
+        this.runningAnimations.set(t, {
+            timeoutId: a,
+            cleanup: r
+        });
+    },
+    stop (t) {
+        if (!t) return;
+        let e = this.runningAnimations.get(t);
+        e && (clearTimeout(e.timeoutId), e.cleanup()), t.style.transition = "", t.offsetHeight;
+    },
+    isAnimating (t) {
+        return this.runningAnimations.has(t);
+    }
+};
+
 ;// CONCATENATED MODULE: ./web/resources/menu-fluent.tsx
 
 
@@ -2524,14 +2524,14 @@ const main = baseclass.extend({
         }
     },
     renderMainMenu (n, i, a) {
-        let r = (a || 0) + 1, s = a && n.title ? n.title.replace(/ /g, "_") : void 0, u = jsx("ul", {
+        let r = (a || 0) + 1, s = a && n.title ? n.title.replace(/ /g, "_") : void 0, d = jsx("ul", {
             class: a ? "slide-menu" : "nav",
             "data-parent": s || void 0
-        }), c = ui.menu.getChildren(n);
-        if (0 === c.length || r > 2) return jsx(Fragment, {});
-        for(let l = 0; l < c.length; l++){
-            let a = c[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === n.name, d = this.renderMainMenu(a, `${i}/${a.name}`, r), o = d.children.length > 0, p = o ? "slide" : null, h = o ? "menu" : "item";
-            s && (u.classList.add("active"), p = p ? `${p} active` : "null active");
+        }), u = ui.menu.getChildren(n);
+        if (0 === u.length || r > 2) return jsx(Fragment, {});
+        for(let l = 0; l < u.length; l++){
+            let a = u[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === n.name, c = this.renderMainMenu(a, `${i}/${a.name}`, r), o = c.children.length > 0, p = o ? "slide" : null, h = o ? "menu" : "item";
+            s && (d.classList.add("active"), p = p ? `${p} active` : "null active");
             let m = s ? `${h} active` : h, f = jsxs("li", {
                 class: p ?? void 0,
                 children: [
@@ -2550,19 +2550,19 @@ const main = baseclass.extend({
                             })
                         ]
                     }),
-                    d
+                    c
                 ]
             });
-            u.appendChild(f);
+            d.appendChild(f);
         }
         if (1 === r) {
             let e = document.querySelector("#mainmenu");
             if (e) {
                 let t = "function" == typeof e.querySelector ? e.querySelector("ul.nav") : null;
-                t && "function" == typeof t.replaceWith ? t.replaceWith(u) : e.appendChild(u), e.style.display = "", adjustBrandTextSize();
+                t && "function" == typeof t.replaceWith ? t.replaceWith(d) : e.appendChild(d), e.style.display = "", adjustBrandTextSize();
             }
         }
-        return u;
+        return d;
     },
     renderConfiguredMenu (l) {
         let n = jsx("ul", {
