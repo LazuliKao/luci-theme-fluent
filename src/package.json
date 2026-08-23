@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build",
-    "watch": "rsbuild build --watch",
+    "build": "rsbuild build --env-mode full",
+    "build:lite": "rsbuild build --env-mode lite",
+    "watch": "rsbuild build --env-mode full --watch",
+    "watch:lite": "rsbuild build --env-mode lite --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {

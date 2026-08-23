@@ -1,0 +1,9 @@
+// Lite entry: preserve standard LuCI styling while omitting optional enhancements.
+@use "core";
+@use "overrides/lite";
+@use "layouts/login";
+@use "layouts/sidebar";
+@use "layouts/header";
+@use "layouts/main";
+@use "themes/light";
+@use "themes/dark";

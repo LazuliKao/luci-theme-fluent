@@ -1,2 +1,7 @@
-pnpm exec lint-staged
-pnpm run typecheck
+if command -v pwsh >/dev/null 2>&1; then
+  # PowerShell preserves native PATH entries for Node child processes on Windows.
+  pwsh -NoProfile -Command '$env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User"); pnpm exec lint-staged; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; pnpm run typecheck'
+else
+  pnpm exec lint-staged
+  pnpm run typecheck
+fi

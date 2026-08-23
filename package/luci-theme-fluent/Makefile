@@ -9,8 +9,6 @@ LUCI_TITLE:=Fluent Theme for LuCI
 LUCI_DEPENDS:=+luci-base
 LUCI_MINIFY_CSS:=0
 
-include $(TOPDIR)/feeds/luci/luci.mk
-
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
@@ -22,7 +20,20 @@ define Package/$(PKG_NAME)/conffiles
 endef
 
 
-# Build call
+define Package/$(PKG_NAME)/preinst
+#!/bin/sh
+[ -n "$${IPKG_INSTROOT}" ] || {
+	if command -v apk >/dev/null 2>&1 && apk info -e luci-theme-fluent-lite >/dev/null 2>&1; then
+		echo "luci-theme-fluent-lite is installed; remove it before installing luci-theme-fluent" >&2
+		exit 1
+	fi
+	if command -v opkg >/dev/null 2>&1 && opkg list-installed luci-theme-fluent-lite 2>/dev/null | grep -q '^luci-theme-fluent-lite '; then
+		echo "luci-theme-fluent-lite is installed; remove it before installing luci-theme-fluent" >&2
+		exit 1
+	fi
+}
+endef
+
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
 [ -n "$${IPKG_INSTROOT}" ] || {
@@ -34,4 +45,4 @@ define Package/$(PKG_NAME)/postinst
 }
 endef
 
-# call BuildPackage - OpenWrt buildroot signature
+include $(TOPDIR)/feeds/luci/luci.mk

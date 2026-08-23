@@ -2,9 +2,14 @@
 
 set -eu
 
-PKG_NAME="luci-theme-fluent"
 REPO="LazuliKao/luci-theme-fluent"
 RELEASE_TAG="${1:-latest}"
+VARIANT="${2:-full}"
+case "${VARIANT}" in
+   full) PKG_NAME="luci-theme-fluent" ;;
+   lite) PKG_NAME="luci-theme-fluent-lite" ;;
+   *) echo "Usage: $0 [latest|tag] [full|lite]" >&2; exit 1 ;;
+esac
 PKG_FILE=""
 TMP_JSON=""
 
@@ -63,7 +68,7 @@ fetch_release_metadata() {
 select_download_url() {
    DOWNLOAD_URL="$(grep -oE '"browser_download_url":[[:space:]]*"[^"]+"' "${TMP_JSON}" \
       | sed -E 's/.*"([^"]+)"/\1/' \
-      | grep -E "/${PKG_NAME}[^/]*\.${PKG_EXT}$" \
+       | grep -E "/${PKG_NAME}(_|-)[^/]*\.${PKG_EXT}$" \
       | head -n 1 || true)"
 
    [ -n "${DOWNLOAD_URL}" ] || fail "no .${PKG_EXT} asset found for release ${RELEASE_TAG}"
@@ -96,7 +101,7 @@ setup_release_source
 trap cleanup EXIT INT TERM
 
 log "Detected package manager: ${PKG_MGR} (expecting .${PKG_EXT})"
-log "Using release selector: ${RELEASE_TAG}"
+log "Using release selector: ${RELEASE_TAG} (${VARIANT})"
 fetch_release_metadata
 select_download_url
 download_package

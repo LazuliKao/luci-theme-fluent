@@ -4,11 +4,15 @@
   "type": "module",
   "description": "FluentUI theme for OpenWrt LuCI",
   "scripts": {
-    "css:build": "cd src && pnpm exec rsbuild build --environment css",
-    "build:js": "cd src && pnpm exec rsbuild build --environment js",
+    "css:build": "cd src && pnpm exec rsbuild build --environment css --env-mode full",
+    "css:build:lite": "cd src && pnpm exec rsbuild build --environment css --env-mode lite",
+    "build:js": "cd src && pnpm exec rsbuild build --environment js --env-mode full",
+    "build:js:lite": "cd src && pnpm exec rsbuild build --environment js --env-mode lite",
     "build": "cd src && pnpm run build",
-    "watch:css": "cd src && pnpm exec rsbuild build --environment css --watch",
-    "watch:js": "cd src && pnpm exec rsbuild build --environment js --watch",
+    "build:lite": "cd src && pnpm run build:lite",
+    "watch:css": "cd src && pnpm exec rsbuild build --environment css --env-mode full --watch",
+    "watch:js": "cd src && pnpm exec rsbuild build --environment js --env-mode full --watch",
+    "watch:lite": "cd src && pnpm run watch:lite",
     "watch": "cd src && pnpm run watch",
     "lint": "biome lint --no-errors-on-unmatched package/luci-theme-fluent/htdocs src/web/resources",
     "format": "biome format --write --no-errors-on-unmatched package/luci-theme-fluent/htdocs src/web/resources",
@@ -19,6 +23,7 @@
     "test:menu-layout": "tsx --test src/web/resources/menu-layout.test.ts",
     "test:apply-change-preview": "tsx --test src/web/resources/utils/apply-change-preview.test.ts",
     "dev:remote": "luci-types dev",
+    "dev:lite:remote": "tsx src/script/dev-lite-remote.ts",
     "icons:generate": "tsx src/script/generate-icons.ts",
     "screenshot": "pnpm run screenshot:run && pnpm run screenshot:showcase && pnpm run screenshot:run:zh-Hans && pnpm run screenshot:showcase:zh-Hans",
     "screenshot:run": "tsx src/script/screenshot/run.ts",
@@ -29,7 +34,7 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,jsx,json}": [
+    "src/**/*.{js,ts,tsx,jsx,json}": [
       "biome check --write --no-errors-on-unmatched"
     ]
   },

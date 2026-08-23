@@ -3,7 +3,7 @@ const form = L.form;
 import { FLUENT_DEFAULTS, fluentFlagDefault } from "../../../fluent-defaults";
 import { omitDefaultValue } from "../shared";
 
-export const registerGeneralTab = (section: LuCI.form.TypedSection): void => {
+export const registerGeneralTab = (section: LuCI.form.TypedSection, includeCustomSelect = true): void => {
   section.tab("general", _("General"));
 
   {
@@ -46,7 +46,7 @@ export const registerGeneralTab = (section: LuCI.form.TypedSection): void => {
     option.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
   }
 
-  {
+  if (includeCustomSelect) {
     const option = section.taboption("general", form.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
     option.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? option.enabled : option.disabled;
     omitDefaultValue(option);

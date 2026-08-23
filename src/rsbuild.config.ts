@@ -10,201 +10,211 @@ const luciRequires = `"use strict";
 "require dom";
 `;
 const minify = process.env.RSBUILD_MINIFY === "true" || process.env.RSBUILD_MINIFY === "1";
-export default defineConfig({
-  environments: {
-    js: {
-      source: {
-        entry: {
-          "menu-fluent": "./web/resources/menu-fluent.tsx",
-          "view/fluent-config": "./web/resources/view/fluent-config.tsx",
+
+export default defineConfig(({ envMode }) => {
+  const variant = envMode === "lite" ? "lite" : "full";
+  const packageRoot = variant === "lite" ? "../package/luci-theme-fluent-lite" : "../package/luci-theme-fluent";
+  const menuFeatures = variant === "lite" ? "./web/resources/utils/menu-features-lite.ts" : "./web/resources/utils/menu-features.ts";
+
+  return {
+    environments: {
+      js: {
+        source: {
+          entry: {
+            "menu-fluent": "./web/resources/menu-fluent.tsx",
+            "view/fluent-config": variant === "lite" ? "./web/resources/view/fluent-config-lite.tsx" : "./web/resources/view/fluent-config.tsx",
+          },
+          tsconfigPath: "./tsconfig.json",
         },
-        tsconfigPath: "./tsconfig.json",
-      },
-      resolve: {
-        aliasStrategy: "prefer-tsconfig",
-      },
-      output: {
-        module: true,
-        charset: "ascii",
-        overrideBrowserslist: ["defaults", "not ie <= 11", "not op_mini all", "chrome >= 125", "firefox >= 147", "safari >= 26", "edge >= 125"],
-        distPath: {
-          root: "../package/luci-theme-fluent/htdocs/luci-static/resources",
-          js: ".",
-        },
-        filename: {
-          js: "[name].js",
-        },
-        assetPrefix: "",
-        minify: minify,
-        cleanDistPath: false,
-      },
-      tools: {
-        htmlPlugin: false,
-        swc: {
-          jsc: {
-            parser: {
-              syntax: "typescript",
-              tsx: true,
-              decorators: true,
-            },
-            transform: {
-              react: {
-                runtime: "automatic",
-                importSource: "@lazulikao/luci-types",
-                useBuiltins: true,
-              },
-              optimizer: {
-                simplify: true,
-              },
-            },
-            minify: {
-              compress: true,
-              mangle: {},
-            },
+        resolve: {
+          aliasStrategy: "prefer-alias",
+          alias: {
+            "./utils/menu-features": menuFeatures,
           },
         },
-        rspack: (config) => {
-          config.output = config.output || {};
-          config.optimization = config.optimization || {};
-          config.optimization.splitChunks = false;
-          config.optimization.runtimeChunk = false;
-          config.optimization.avoidEntryIife = true;
-          config.optimization.usedExports = false;
-          config.optimization.sideEffects = false;
-
-          config.plugins = config.plugins || [];
-          if (minify) {
-            // Ensure "main" is not mangled so "return main;" works correctly
-            config.optimization.minimizer = [
-              new SwcJsMinimizerRspackPlugin({
-                minimizerOptions: {
-                  // Treat as module to avoid IIFE wrapping (keeps variables at top level)
-                  module: true,
-                  compress: true,
-                  mangle: {
-                    reserved: ["main"],
-                  },
+        output: {
+          module: true,
+          charset: "ascii",
+          overrideBrowserslist: ["defaults", "not ie <= 11", "not op_mini all", "chrome >= 125", "firefox >= 147", "safari >= 26", "edge >= 125"],
+          distPath: {
+            root: `${packageRoot}/htdocs/luci-static/resources`,
+            js: ".",
+          },
+          filename: {
+            js: "[name].js",
+          },
+          assetPrefix: "",
+          minify: minify,
+          cleanDistPath: false,
+        },
+        tools: {
+          htmlPlugin: false,
+          swc: {
+            jsc: {
+              parser: {
+                syntax: "typescript",
+                tsx: true,
+                decorators: true,
+              },
+              transform: {
+                react: {
+                  runtime: "automatic",
+                  importSource: "@lazulikao/luci-types",
+                  useBuiltins: true,
                 },
-              }),
-            ];
-            config.plugins.push({
-              name: "AddLuCIWrapperPlugin",
-              apply(compiler: Compiler) {
-                compiler.hooks.emit.tapAsync("AddLuCIWrapperPlugin", (compilation, callback) => {
-                  for (const name of Object.keys(compilation.assets)) {
-                    if (name.endsWith(".js")) {
-                      const asset = compilation.assets[name];
-                      const src = asset.source();
-                      const sourceEdit = `${luciRequires}${src}\nreturn main;`;
-                      compilation.assets[name] = {
-                        source: () => sourceEdit,
-                        buffer: () => Buffer.from(sourceEdit),
-                        size: () => sourceEdit.length,
-                        map: () => null,
-                        sourceAndMap: () => ({ source: sourceEdit, map: null }),
-                        updateHash: (hash: { update(s: string): void }) => hash.update(sourceEdit),
-                        buffers: () => [Buffer.from(sourceEdit)],
-                        clearCache: () => undefined,
-                      };
+                optimizer: {
+                  simplify: true,
+                },
+              },
+              minify: {
+                compress: true,
+                mangle: {},
+              },
+            },
+          },
+          rspack: (config) => {
+            config.output = config.output || {};
+            config.optimization = config.optimization || {};
+            config.optimization.splitChunks = false;
+            config.optimization.runtimeChunk = false;
+            config.optimization.avoidEntryIife = true;
+            config.optimization.usedExports = false;
+            config.optimization.sideEffects = false;
+
+            config.plugins = config.plugins || [];
+            if (minify) {
+              // Ensure "main" is not mangled so "return main;" works correctly
+              config.optimization.minimizer = [
+                new SwcJsMinimizerRspackPlugin({
+                  minimizerOptions: {
+                    // Treat as module to avoid IIFE wrapping (keeps variables at top level)
+                    module: true,
+                    compress: true,
+                    mangle: {
+                      reserved: ["main"],
+                    },
+                  },
+                }),
+              ];
+              config.plugins.push({
+                name: "AddLuCIWrapperPlugin",
+                apply(compiler: Compiler) {
+                  compiler.hooks.emit.tapAsync("AddLuCIWrapperPlugin", (compilation, callback) => {
+                    for (const name of Object.keys(compilation.assets)) {
+                      if (name.endsWith(".js")) {
+                        const asset = compilation.assets[name];
+                        const src = asset.source();
+                        const sourceEdit = `${luciRequires}${src}\nreturn main;`;
+                        compilation.assets[name] = {
+                          source: () => sourceEdit,
+                          buffer: () => Buffer.from(sourceEdit),
+                          size: () => sourceEdit.length,
+                          map: () => null,
+                          sourceAndMap: () => ({ source: sourceEdit, map: null }),
+                          updateHash: (hash: { update(s: string): void }) => hash.update(sourceEdit),
+                          buffers: () => [Buffer.from(sourceEdit)],
+                          clearCache: () => undefined,
+                        };
+                      }
                     }
-                  }
+                    callback();
+                  });
+                },
+              });
+            } else {
+              config.plugins.push(new rspack.BannerPlugin({ banner: `${luciRequires}// WARN: generated by rsbuild - do not edit\n`, raw: true, entryOnly: true }));
+              config.plugins.push(new rspack.BannerPlugin({ banner: "return main;", raw: true, entryOnly: true, footer: true }));
+              config.optimization.minimize = false;
+            }
+            return config;
+          },
+        },
+        performance: {
+          chunkSplit: {
+            strategy: "all-in-one",
+          },
+        },
+      },
+      css: {
+        plugins: [pluginSass()],
+        source: {
+          entry: {
+            fluent: variant === "lite" ? "./scss/fluent-lite.scss" : "./scss/fluent.scss",
+          },
+        },
+        output: {
+          distPath: {
+            root: `${packageRoot}/htdocs/luci-static/fluent/css`,
+            css: ".",
+            js: ".",
+          },
+          filename: {
+            css: "[name].css",
+            js: "[name].js",
+          },
+          cleanDistPath: true,
+          charset: "ascii",
+          minify: minify,
+          dataUriLimit: Number.MAX_SAFE_INTEGER,
+        },
+        tools: {
+          htmlPlugin: false,
+          cssLoader: (config) => {
+            config.url = {
+              filter: (url: string) => url.startsWith("../assets/") || url.startsWith("./assets/"),
+            };
+            return config;
+          },
+          rspack: (config) => {
+            config.plugins = config.plugins || [];
+            config.plugins.push({
+              name: "RemoveEntryJsPlugin",
+              apply(compiler: Compiler) {
+                compiler.hooks.emit.tapAsync("RemoveEntryJsPlugin", (compilation, callback) => {
+                  delete compilation.assets["fluent.js"];
+                  delete compilation.assets["fluent.js.map"];
                   callback();
                 });
               },
             });
-          } else {
-            config.plugins.push(new rspack.BannerPlugin({ banner: `${luciRequires}// WARN: generated by rsbuild - do not edit\n`, raw: true, entryOnly: true }));
-            config.plugins.push(new rspack.BannerPlugin({ banner: "return main;", raw: true, entryOnly: true, footer: true }));
-            config.optimization.minimize = false;
-          }
-          return config;
-        },
-      },
-      performance: {
-        chunkSplit: {
-          strategy: "all-in-one",
-        },
-      },
-    },
-    css: {
-      plugins: [pluginSass()],
-      source: {
-        entry: {
-          fluent: "./scss/fluent.scss",
-        },
-      },
-      output: {
-        distPath: {
-          root: "../package/luci-theme-fluent/htdocs/luci-static/fluent/css",
-          css: ".",
-          js: ".",
-        },
-        filename: {
-          css: "[name].css",
-          js: "[name].js",
-        },
-        cleanDistPath: true,
-        charset: "ascii",
-        minify: minify,
-        dataUriLimit: Number.MAX_SAFE_INTEGER,
-      },
-      tools: {
-        htmlPlugin: false,
-        cssLoader: (config) => {
-          config.url = {
-            filter: (url: string) => url.startsWith("../assets/") || url.startsWith("./assets/"),
-          };
-          return config;
-        },
-        rspack: (config) => {
-          config.plugins = config.plugins || [];
-          config.plugins.push({
-            name: "RemoveEntryJsPlugin",
-            apply(compiler: Compiler) {
-              compiler.hooks.emit.tapAsync("RemoveEntryJsPlugin", (compilation, callback) => {
-                delete compilation.assets["fluent.js"];
-                delete compilation.assets["fluent.js.map"];
-                callback();
-              });
-            },
-          });
-          config.plugins.push({
-            name: "GenerateFluentIconsPlugin",
-            apply(compiler: Compiler) {
-              const regenerate = () => {
-                if (!generateIcons()) {
-                  throw new Error("Failed to generate Fluent icons");
-                }
-              };
-              compiler.hooks.beforeRun.tapAsync("GenerateFluentIconsPlugin", (_, callback) => {
-                regenerate();
-                callback();
-              });
-              compiler.hooks.watchRun.tapAsync("GenerateFluentIconsPlugin", (_, callback) => {
-                regenerate();
-                callback();
-              });
-            },
-          });
-          config.plugins.push({
-            name: "GenerateThemeDefaultsPlugin",
-            apply(compiler: Compiler) {
-              const regenerate = () => {
-                generateThemeDefaults();
-              };
-              compiler.hooks.beforeRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
-                regenerate();
-                callback();
-              });
-              compiler.hooks.watchRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
-                regenerate();
-                callback();
-              });
-            },
-          });
-          return config;
+            config.plugins.push({
+              name: "GenerateFluentIconsPlugin",
+              apply(compiler: Compiler) {
+                const regenerate = () => {
+                  if (!generateIcons()) {
+                    throw new Error("Failed to generate Fluent icons");
+                  }
+                };
+                compiler.hooks.beforeRun.tapAsync("GenerateFluentIconsPlugin", (_, callback) => {
+                  regenerate();
+                  callback();
+                });
+                compiler.hooks.watchRun.tapAsync("GenerateFluentIconsPlugin", (_, callback) => {
+                  regenerate();
+                  callback();
+                });
+              },
+            });
+            config.plugins.push({
+              name: "GenerateThemeDefaultsPlugin",
+              apply(compiler: Compiler) {
+                const regenerate = () => {
+                  generateThemeDefaults();
+                };
+                compiler.hooks.beforeRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
+                  regenerate();
+                  callback();
+                });
+                compiler.hooks.watchRun.tapAsync("GenerateThemeDefaultsPlugin", (_, callback) => {
+                  regenerate();
+                  callback();
+                });
+              },
+            });
+            return config;
+          },
         },
       },
     },
-  },
+  };
 });

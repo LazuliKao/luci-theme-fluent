@@ -164,9 +164,9 @@ export async function fetchLatestRelease(channel: "stable" | "nightly", pkgType:
 
   for (const asset of assets) {
     const name = String(asset.name || "");
-    if (pkgType === "apk" && name.startsWith("luci-theme-fluent") && name.endsWith(".apk")) {
+    if (pkgType === "apk" && /^luci-theme-fluent-[0-9].*\.apk$/.test(name)) {
       package_asset = asset;
-    } else if (pkgType === "ipk" && name.startsWith("luci-theme-fluent") && (name.endsWith("_all.ipk") || name.endsWith(".ipk"))) {
+    } else if (pkgType === "ipk" && /^luci-theme-fluent_[^/]+\.ipk$/.test(name)) {
       package_asset = asset;
     }
   }

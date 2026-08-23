@@ -1,14 +1,20 @@
 #!/bin/sh
 # build.sh - Downloads OpenWrt SDK and builds packages
-# Usage: build.sh <version>
-# Example: build.sh 24.10.7  (produces .ipk)
-#          build.sh 25.12.4  (produces .apk)
+# Usage: build.sh <version> <full|lite>
+# Example: build.sh 24.10.7 full  (produces .ipk)
+#          build.sh 25.12.4 lite  (produces .apk)
 #
 # OpenWrt 24.x uses opkg/ipk, OpenWrt 25.x+ uses apk.
 
 set -e
 
-VERSION="${1:?Usage: build.sh <version>}"
+VERSION="${1:?Usage: build.sh <version> <full|lite>}"
+VARIANT="${2:?Usage: build.sh <version> <full|lite>}"
+case "${VARIANT}" in
+  full) PACKAGE="luci-theme-fluent" ;;
+  lite) PACKAGE="luci-theme-fluent-lite" ;;
+  *) echo "ERROR: variant must be full or lite" >&2; exit 1 ;;
+esac
 SDK_BASE_URL="https://downloads.openwrt.org/releases/${VERSION}/targets/x86/64"
 
 # Use local directory (works on GitHub Actions runners and Docker)
@@ -28,6 +34,7 @@ else
 fi
 
 echo "=== OpenWrt ${VERSION} SDK Build ==="
+echo "Theme variant: ${VARIANT} (${PACKAGE})"
 echo "Package format: ${PKG_FORMAT} (.${PKG_EXT})"
 echo "Builder directory: ${BUILDER_DIR}"
 
@@ -95,16 +102,18 @@ done
 echo ">>> Running defconfig..."
 make defconfig
 
-# Build luci-theme-fluent package
+# Build the selected theme package.
 echo ">>> Building packages..."
 make -j$(nproc) V=s BUILD_LOG=1 \
-  package/luci-theme-fluent/compile
+  "package/${PACKAGE}/compile"
 
-# Collect built packages — only luci-theme-fluent, not SDK dependencies
+# Collect the selected package. Full builds also own the shared translations.
 echo ">>> Collecting ${PKG_EXT} files..."
 mkdir -p "${OUTPUT_DIR}"
-find bin -name "luci-theme-fluent*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
-find bin -name "luci-i18n-fluent*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
+find bin -name "${PACKAGE}*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
+if [ "${VARIANT}" = "full" ]; then
+  find bin -name "luci-i18n-fluent*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
+fi
 tar -cJf "${OUTPUT_DIR}/logs.tar.xz" logs 2>/dev/null || true
 
 echo "=== Build complete ==="

@@ -39,8 +39,10 @@ jobs:
         run: |
           VERSION="${{ steps.meta.outputs.version }}"
           sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent/Makefile
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent-lite/Makefile
           sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
           grep '^PKG_VERSION:=' package/luci-theme-fluent/Makefile
+          grep '^PKG_VERSION:=' package/luci-theme-fluent-lite/Makefile
           grep '^  "version":' package.json
 
       - name: Pack prepared source
@@ -76,31 +78,45 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build minified CSS & JS
+      - name: Build minified full and lite CSS & JS
         env:
           RSBUILD_MINIFY: "true"
-        run: pnpm run build
+        run: |
+          pnpm run build
+          pnpm run build:lite
 
-      - name: Verify built assets
+      - name: Verify built assets and lite size reduction
         run: |
           test -s package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
           test -s package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
           test -s package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
-          css_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css)
-          menu_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js)
-          config_size=$(wc -c < package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js)
-          echo "Built fluent.css (${css_size} bytes)"
-          echo "Built menu-fluent.js (${menu_size} bytes)"
-          echo "Built fluent-config.js (${config_size} bytes)"
+          test -s package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css
+          test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
+          test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
+          full_size=$(cat package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
+          lite_size=$(cat package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
+          test "${lite_size}" -lt "${full_size}"
+          ! grep -q 'fluent-menu-search\|mac-selector\|luci-theme-fluent update' package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
+          echo "Full assets: ${full_size} bytes"
+          echo "Lite assets: ${lite_size} bytes"
 
-      - name: Upload built assets
+      - name: Upload full assets
         uses: actions/upload-artifact@v7
         with:
-          name: fluent-assets
+          name: fluent-assets-full
           path: |
             package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
             package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
             package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
+
+      - name: Upload lite assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: fluent-assets-lite
+          path: |
+            package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css
+            package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
+            package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
 
   lint:
     name: Lint
@@ -123,13 +139,14 @@ jobs:
         run: pnpm run lint || true
 
   openwrt-sdk:
-    name: OpenWrt SDK Build (${{ matrix.version }})
+    name: OpenWrt SDK Build (${{ matrix.version }}, ${{ matrix.variant }})
     needs: assets
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         version: ['24.10.7', '25.12.4']
+        variant: [full, lite]
     steps:
       - name: Download prepared source
         uses: actions/download-artifact@v8
@@ -139,11 +156,17 @@ jobs:
       - name: Extract prepared source
         run: tar -xzf ci-source.tar.gz
 
-      - name: Download built assets
+      - name: Download full assets
         uses: actions/download-artifact@v8
         with:
-          name: fluent-assets
+          name: fluent-assets-full
           path: package/luci-theme-fluent/htdocs/luci-static
+
+      - name: Download lite assets
+        uses: actions/download-artifact@v8
+        with:
+          name: fluent-assets-lite
+          path: package/luci-theme-fluent-lite/htdocs/luci-static
 
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget
@@ -152,33 +175,32 @@ jobs:
         run: |
           mkdir -p ${HOME}/builder/packages
           cp -r "$PWD/package/luci-theme-fluent" "${HOME}/builder/packages/luci-theme-fluent"
+          cp -r "$PWD/package/luci-theme-fluent-lite" "${HOME}/builder/packages/luci-theme-fluent-lite"
           echo "Staged packages:"
           ls -la ${HOME}/builder/packages/
 
       - name: Build packages
         run: |
           chmod +x .github/workflows/build.sh
-          bash .github/workflows/build.sh "${{ matrix.version }}"
+          bash .github/workflows/build.sh "${{ matrix.version }}" "${{ matrix.variant }}"
 
       - name: Collect built packages
         run: |
           mkdir -p output
-          cp ${HOME}/builder/output/luci-theme-fluent*.ipk output/ 2>/dev/null || true
-          cp ${HOME}/builder/output/luci-theme-fluent*.apk output/ 2>/dev/null || true
-          cp ${HOME}/builder/output/luci-i18n-fluent*.ipk output/ 2>/dev/null || true
-          cp ${HOME}/builder/output/luci-i18n-fluent*.apk output/ 2>/dev/null || true
+          cp ${HOME}/builder/output/luci-theme-fluent${{ matrix.variant == 'lite' && '-lite' || '' }}*.ipk output/ 2>/dev/null || true
+          cp ${HOME}/builder/output/luci-theme-fluent${{ matrix.variant == 'lite' && '-lite' || '' }}*.apk output/ 2>/dev/null || true
+          if [ "${{ matrix.variant }}" = "full" ]; then
+            cp ${HOME}/builder/output/luci-i18n-fluent*.ipk output/ 2>/dev/null || true
+            cp ${HOME}/builder/output/luci-i18n-fluent*.apk output/ 2>/dev/null || true
+          fi
           echo "Built packages:"
           ls -lh output/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: packages-openwrt-${{ matrix.version }}
-          path: |
-            output/luci-theme-fluent*.ipk
-            output/luci-theme-fluent*.apk
-            output/luci-i18n-fluent*.ipk
-            output/luci-i18n-fluent*.apk
+          name: packages-openwrt-${{ matrix.version }}-${{ matrix.variant }}
+          path: output/*
           if-no-files-found: warn
 
   nightly:

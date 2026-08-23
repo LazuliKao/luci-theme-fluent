@@ -574,6 +574,195 @@ function buildMenuPresentation(e, t) {
     };
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
+let menu_cache_e = "fluent_menu_cache";
+function menu_cache_t(e) {
+    let t = document.body?.getAttribute("data-menu-cache-scope");
+    return t ? `${e}_${t}` : null;
+}
+function getCachedMenu() {
+    try {
+        let n = menu_cache_t(menu_cache_e);
+        if (!n) return null;
+        let r = sessionStorage.getItem(n);
+        if (!r) return null;
+        let u = JSON.parse(r);
+        if (u && "object" == typeof u) return {
+            tree: u,
+            raw: r
+        };
+    } catch (e) {}
+    return null;
+}
+function saveMenuCache(n) {
+    try {
+        let r = menu_cache_t(menu_cache_e);
+        if (!r) return null;
+        let u = JSON.stringify(n);
+        return sessionStorage.setItem(r, u), u;
+    } catch (e) {
+        return null;
+    }
+}
+function saveRenderedHtmlCache() {
+    try {
+        let e = document.querySelector("#mainmenu"), n = menu_cache_t("fluent_sidebar_html");
+        e && n && sessionStorage.setItem(n, e.innerHTML);
+        let r = document.querySelector("#tabmenu"), u = menu_cache_t("fluent_tabmenu_html"), l = Array.isArray(L?.env?.dispatchpath) ? JSON.stringify(L.env.dispatchpath) : "";
+        r && r.children.length > 0 && u && l && sessionStorage.setItem(`${u}_${l}`, r.innerHTML);
+    } catch (e) {}
+}
+function getResolvedMenuLayout() {
+    let e = document.body?.getAttribute?.("data-menu-layout");
+    if (e) try {
+        let t = JSON.parse(e);
+        if ("string" == typeof t || Array.isArray(t) || null === t) return t;
+    } catch (e) {}
+}
+
+;// CONCATENATED MODULE: ./web/resources/utils/sidebar-controller.ts
+function applyDesktopSidebarState(e) {
+    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
+}
+function getDesktopSidebarState() {
+    try {
+        let e = localStorage.getItem("fluent-sidebar-state");
+        return "collapsed" === e || "expanded" === e ? e : "expanded";
+    } catch (e) {
+        return "expanded";
+    }
+}
+function closeCollapsedPopups() {
+    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open");
+    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
+        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
+    });
+}
+function adjustBrandTextSize() {
+    let e = document.querySelector(".sidenav-header .brand-text");
+    if (e) {
+        let t = e.parentElement;
+        if (t) {
+            let a = t.clientWidth - 32;
+            if (a > 0) {
+                let t = 16;
+                for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
+            }
+        }
+    }
+}
+function handleSidebarToggle(e) {
+    let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), d = document.querySelector(".darkMask"), o = document.querySelector(".main-right");
+    0 !== t.length && a && d && o && (Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
+        e.classList.remove("active");
+    }), a.classList.remove("active"), o.classList.remove("active"), d.classList.remove("active")) : (t.forEach((e)=>{
+        e.classList.add("active");
+    }), a.classList.add("active"), o.classList.add("active"), d.classList.add("active"), adjustBrandTextSize()));
+}
+function handleDesktopSidebarToggle(e) {
+    if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
+    let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
+    closeCollapsedPopups();
+    try {
+        localStorage.setItem("fluent-sidebar-state", t);
+    } catch (e) {}
+    applyDesktopSidebarState(t), "expanded" === t && adjustBrandTextSize();
+}
+let sidebar_controller_e = !1;
+function initSidebarController(t) {
+    if (sidebar_controller_e) return;
+    sidebar_controller_e = !0;
+    let a = document.querySelectorAll("a.showSide"), d = document.querySelector(".darkMask"), o = document.querySelector(".sidebar-collapse-toggle"), n = ui.createHandlerFn(t, "handleSidebarToggle") ?? (()=>{
+        handleSidebarToggle();
+    }), r = ui.createHandlerFn(t, "handleDesktopSidebarToggle") ?? ((e)=>{
+        handleDesktopSidebarToggle(e);
+    });
+    a.forEach((e)=>{
+        e.addEventListener("click", n);
+    }), d && d.addEventListener("click", n), o && o.addEventListener("click", r), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
+        adjustBrandTextSize(), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded");
+    }), document.addEventListener("click", (e)=>{
+        if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
+        let t = e.target, a = document.querySelector("#mainmenu");
+        t && a?.contains(t) || closeCollapsedPopups();
+    });
+}
+
+;// CONCATENATED MODULE: ./web/resources/utils/slide-animations.ts
+let slide_animations_t = {
+    fast: 200,
+    normal: 400,
+    slow: 600
+}, slide_animations_e = (e)=>{
+    if ("number" == typeof e) return e || slide_animations_t.normal;
+    switch(e){
+        case "fast":
+        case "slow":
+            return slide_animations_t[e];
+        default:
+            return slide_animations_t.normal;
+    }
+};
+const SlideAnimations = {
+    durations: slide_animations_t,
+    runningAnimations: new WeakMap(),
+    slideDown (t, i, n) {
+        if (!t) return void console.warn("SlideAnimations.slideDown: No element provided");
+        this.stop(t);
+        let s = slide_animations_e(i), o = {
+            display: t.style.display,
+            overflow: t.style.overflow,
+            height: t.style.height,
+            transition: t.style.transition
+        };
+        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${s}ms ease-out`, t.offsetHeight;
+        let l = t.scrollHeight;
+        t.style.height = `${l}px`;
+        let r = ()=>{
+            if (t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
+            } catch (t) {
+                console.error("SlideAnimations callback error:", t);
+            }
+        }, a = setTimeout(r, s);
+        this.runningAnimations.set(t, {
+            timeoutId: a,
+            cleanup: r
+        });
+    },
+    slideUp (t, i, n) {
+        if (!t) return void console.warn("SlideAnimations.slideUp: No element provided");
+        this.stop(t);
+        let s = slide_animations_e(i), o = {
+            display: t.style.display,
+            overflow: t.style.overflow,
+            height: t.style.height,
+            transition: t.style.transition
+        }, l = t.scrollHeight;
+        t.style.overflow = "hidden", t.style.height = `${l}px`, t.style.transition = `height ${s}ms ease-out`, t.offsetHeight, t.style.height = "0px";
+        let r = ()=>{
+            if (t.style.display = "none", t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
+                n.call(t);
+            } catch (t) {
+                console.error("SlideAnimations callback error:", t);
+            }
+        }, a = setTimeout(r, s);
+        this.runningAnimations.set(t, {
+            timeoutId: a,
+            cleanup: r
+        });
+    },
+    stop (t) {
+        if (!t) return;
+        let e = this.runningAnimations.get(t);
+        e && (clearTimeout(e.timeoutId), e.cleanup()), t.style.transition = "", t.offsetHeight;
+    },
+    isAnimating (t) {
+        return this.runningAnimations.has(t);
+    }
+};
+
 ;// CONCATENATED MODULE: ./web/resources/utils/apply-change-preview.ts
 let apply_change_preview_e = Symbol("fluentApplyChangePreview");
 function apply_change_preview_t(e, t) {
@@ -1449,52 +1638,6 @@ function setupMacSelector() {
     });
 }
 
-;// CONCATENATED MODULE: ./web/resources/utils/menu-cache.ts
-let menu_cache_e = "fluent_menu_cache";
-function menu_cache_t(e) {
-    let t = document.body?.getAttribute("data-menu-cache-scope");
-    return t ? `${e}_${t}` : null;
-}
-function getCachedMenu() {
-    try {
-        let n = menu_cache_t(menu_cache_e);
-        if (!n) return null;
-        let r = sessionStorage.getItem(n);
-        if (!r) return null;
-        let u = JSON.parse(r);
-        if (u && "object" == typeof u) return {
-            tree: u,
-            raw: r
-        };
-    } catch (e) {}
-    return null;
-}
-function saveMenuCache(n) {
-    try {
-        let r = menu_cache_t(menu_cache_e);
-        if (!r) return null;
-        let u = JSON.stringify(n);
-        return sessionStorage.setItem(r, u), u;
-    } catch (e) {
-        return null;
-    }
-}
-function saveRenderedHtmlCache() {
-    try {
-        let e = document.querySelector("#mainmenu"), n = menu_cache_t("fluent_sidebar_html");
-        e && n && sessionStorage.setItem(n, e.innerHTML);
-        let r = document.querySelector("#tabmenu"), u = menu_cache_t("fluent_tabmenu_html"), l = Array.isArray(L?.env?.dispatchpath) ? JSON.stringify(L.env.dispatchpath) : "";
-        r && r.children.length > 0 && u && l && sessionStorage.setItem(`${u}_${l}`, r.innerHTML);
-    } catch (e) {}
-}
-function getResolvedMenuLayout() {
-    let e = document.body?.getAttribute?.("data-menu-layout");
-    if (e) try {
-        let t = JSON.parse(e);
-        if ("string" == typeof t || Array.isArray(t) || null === t) return t;
-    } catch (e) {}
-}
-
 ;// CONCATENATED MODULE: ./web/resources/utils/menu-search.ts
 let menu_search_e;
 function menu_search_t(e) {
@@ -1925,149 +2068,6 @@ function select_dropdown_h(n) {
     });
 }
 
-;// CONCATENATED MODULE: ./web/resources/utils/sidebar-controller.ts
-function applyDesktopSidebarState(e) {
-    document.body.setAttribute("data-sidebar-state", e), document.dispatchEvent(new CustomEvent("fluent-sidebar-state-change"));
-}
-function getDesktopSidebarState() {
-    try {
-        let e = localStorage.getItem("fluent-sidebar-state");
-        return "collapsed" === e || "expanded" === e ? e : "expanded";
-    } catch (e) {
-        return "expanded";
-    }
-}
-function closeCollapsedPopups() {
-    document.querySelectorAll("#mainmenu ul.nav > li > a.menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open");
-    }), document.querySelectorAll("#mainmenu ul.nav > li > ul.slide-menu.popup-open").forEach((e)=>{
-        e.classList.remove("popup-open"), e.style.display = "none", e.style.top = "";
-    });
-}
-function adjustBrandTextSize() {
-    let e = document.querySelector(".sidenav-header .brand-text");
-    if (e) {
-        let t = e.parentElement;
-        if (t) {
-            let a = t.clientWidth - 32;
-            if (a > 0) {
-                let t = 16;
-                for(e.style.fontSize = `${t}px`; e.scrollWidth > a && t > 9;)t -= 0.5, e.style.fontSize = `${t}px`;
-            }
-        }
-    }
-}
-function handleSidebarToggle(e) {
-    let t = document.querySelectorAll("a.showSide"), a = document.querySelector("#mainmenu"), d = document.querySelector(".darkMask"), o = document.querySelector(".main-right");
-    0 !== t.length && a && d && o && (Array.from(t).some((e)=>e.classList.contains("active")) ? (t.forEach((e)=>{
-        e.classList.remove("active");
-    }), a.classList.remove("active"), o.classList.remove("active"), d.classList.remove("active")) : (t.forEach((e)=>{
-        e.classList.add("active");
-    }), a.classList.add("active"), o.classList.add("active"), d.classList.add("active"), adjustBrandTextSize()));
-}
-function handleDesktopSidebarToggle(e) {
-    if (e.preventDefault(), e.stopPropagation(), window.innerWidth <= 768) return;
-    let t = "collapsed" == ("collapsed" === document.body.getAttribute("data-sidebar-state") ? "collapsed" : "expanded") ? "expanded" : "collapsed";
-    closeCollapsedPopups();
-    try {
-        localStorage.setItem("fluent-sidebar-state", t);
-    } catch (e) {}
-    applyDesktopSidebarState(t), "expanded" === t && adjustBrandTextSize();
-}
-let sidebar_controller_e = !1;
-function initSidebarController(t) {
-    if (sidebar_controller_e) return;
-    sidebar_controller_e = !0;
-    let a = document.querySelectorAll("a.showSide"), d = document.querySelector(".darkMask"), o = document.querySelector(".sidebar-collapse-toggle"), n = ui.createHandlerFn(t, "handleSidebarToggle") ?? (()=>{
-        handleSidebarToggle();
-    }), r = ui.createHandlerFn(t, "handleDesktopSidebarToggle") ?? ((e)=>{
-        handleDesktopSidebarToggle(e);
-    });
-    a.forEach((e)=>{
-        e.addEventListener("click", n);
-    }), d && d.addEventListener("click", n), o && o.addEventListener("click", r), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded"), window.addEventListener("resize", ()=>{
-        adjustBrandTextSize(), window.innerWidth > 768 ? applyDesktopSidebarState(getDesktopSidebarState()) : document.body.setAttribute("data-sidebar-state", "expanded");
-    }), document.addEventListener("click", (e)=>{
-        if (window.innerWidth <= 768 || "collapsed" !== document.body.getAttribute("data-sidebar-state")) return;
-        let t = e.target, a = document.querySelector("#mainmenu");
-        t && a?.contains(t) || closeCollapsedPopups();
-    });
-}
-
-;// CONCATENATED MODULE: ./web/resources/utils/slide-animations.ts
-let slide_animations_t = {
-    fast: 200,
-    normal: 400,
-    slow: 600
-}, slide_animations_e = (e)=>{
-    if ("number" == typeof e) return e || slide_animations_t.normal;
-    switch(e){
-        case "fast":
-        case "slow":
-            return slide_animations_t[e];
-        default:
-            return slide_animations_t.normal;
-    }
-};
-const SlideAnimations = {
-    durations: slide_animations_t,
-    runningAnimations: new WeakMap(),
-    slideDown (t, i, n) {
-        if (!t) return void console.warn("SlideAnimations.slideDown: No element provided");
-        this.stop(t);
-        let s = slide_animations_e(i), o = {
-            display: t.style.display,
-            overflow: t.style.overflow,
-            height: t.style.height,
-            transition: t.style.transition
-        };
-        t.style.display = "block", t.style.overflow = "hidden", t.style.height = "0px", t.style.transition = `height ${s}ms ease-out`, t.offsetHeight;
-        let l = t.scrollHeight;
-        t.style.height = `${l}px`;
-        let r = ()=>{
-            if (t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
-                n.call(t);
-            } catch (t) {
-                console.error("SlideAnimations callback error:", t);
-            }
-        }, a = setTimeout(r, s);
-        this.runningAnimations.set(t, {
-            timeoutId: a,
-            cleanup: r
-        });
-    },
-    slideUp (t, i, n) {
-        if (!t) return void console.warn("SlideAnimations.slideUp: No element provided");
-        this.stop(t);
-        let s = slide_animations_e(i), o = {
-            display: t.style.display,
-            overflow: t.style.overflow,
-            height: t.style.height,
-            transition: t.style.transition
-        }, l = t.scrollHeight;
-        t.style.overflow = "hidden", t.style.height = `${l}px`, t.style.transition = `height ${s}ms ease-out`, t.offsetHeight, t.style.height = "0px";
-        let r = ()=>{
-            if (t.style.display = "none", t.style.height = o.height || "", t.style.overflow = o.overflow || "", t.style.transition = o.transition || "", this.runningAnimations.delete(t), n && "function" == typeof n) try {
-                n.call(t);
-            } catch (t) {
-                console.error("SlideAnimations callback error:", t);
-            }
-        }, a = setTimeout(r, s);
-        this.runningAnimations.set(t, {
-            timeoutId: a,
-            cleanup: r
-        });
-    },
-    stop (t) {
-        if (!t) return;
-        let e = this.runningAnimations.get(t);
-        e && (clearTimeout(e.timeoutId), e.cleanup()), t.style.transition = "", t.offsetHeight;
-    },
-    isAnimating (t) {
-        return this.runningAnimations.has(t);
-    }
-};
-
 ;// CONCATENATED MODULE: ./web/resources/utils/table-wrapper.ts
 let table_wrapper_e = "table.table, table.cbi-section-table, div.table, div.cbi-section-table";
 function table_wrapper_t(e) {
@@ -2420,6 +2420,26 @@ function setupThemeFeatures() {
     });
 }
 
+;// CONCATENATED MODULE: ./web/resources/utils/menu-features.ts
+
+
+
+
+
+
+
+
+
+
+const setupMenuStartup = ()=>setupApplyChangePreview();
+const setupMenuFeatures = (r)=>{
+    if (!r) {
+        setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMacSelector(), setupLogViewer();
+        return;
+    }
+    setupMenuSearch(r);
+};
+
 ;// CONCATENATED MODULE: ./web/resources/menu-fluent.tsx
 
 
@@ -2427,46 +2447,37 @@ function setupThemeFeatures() {
 
 
 
-
-
-
-
-
-
-
-
-
-let menu_fluent_w = !1;
-function menu_fluent_$(e) {
-    menu_fluent_w || (menu_fluent_w = !0, setupTableWrappers(), setupSelectionPause(), setupErrorTooltips(), setupFluentSelects(), setupIfaceboxTooltips(), setupThemeFeatures(), setupMacSelector(), setupLogViewer()), setupMenuSearch(e);
+let menu_fluent_v = !1;
+function menu_fluent_y(e) {
+    menu_fluent_v || (menu_fluent_v = !0, setupMenuFeatures()), setupMenuFeatures(e);
 }
 const main = baseclass.extend({
     async __init__ () {
-        setupApplyChangePreview(), initSidebarController(this);
+        setupMenuStartup(), initSidebarController(this);
         let e = getResolvedMenuLayout(), t = getCachedMenu(), l = !1;
         if (t) {
-            let n = buildMenuPresentation(t.tree, e ?? null);
-            this.render(t.tree, n), menu_fluent_$(n), l = !0;
+            let i = buildMenuPresentation(t.tree, e ?? null);
+            this.render(t.tree, i), menu_fluent_y(i), l = !0;
         }
         try {
-            let n = void 0 === e, [a] = await Promise.all([
+            let i = void 0 === e, [a] = await Promise.all([
                 ui.menu.load(),
-                n ? L.uci.load("fluent") : Promise.resolve()
-            ]), r = saveMenuCache(a);
-            if (!l || r !== t?.raw) {
-                if (n) {
+                i ? L.uci.load("fluent") : Promise.resolve()
+            ]), s = saveMenuCache(a);
+            if (!l || s !== t?.raw) {
+                if (i) {
                     let t = L.uci.get_first("fluent", "global", "menu_layout");
                     e = "string" == typeof t || Array.isArray(t) ? t : null;
                 }
                 let t = buildMenuPresentation(a, e ?? null);
-                this.render(a, t), menu_fluent_$(t);
+                this.render(a, t), menu_fluent_y(t);
             }
         } catch (e) {
             l || console.error("Fluent menu: Failed to load menu data", e);
         }
     },
     render (e, t) {
-        let l = e, i = "";
+        let l = e, n = "";
         if (t.configured) this.renderConfiguredMenu(t);
         else {
             let t = ui.menu.getChildren(e);
@@ -2475,9 +2486,9 @@ const main = baseclass.extend({
         if (L.env.dispatchpath.length >= 3) {
             for(let e = 0; e < 3 && l; e++){
                 let t = L.env.dispatchpath[e];
-                l = l.children?.[t], i = i + (i ? "/" : "") + t;
+                l = l.children?.[t], n = n + (n ? "/" : "") + t;
             }
-            l && this.renderTabMenu(l, i, void 0, t.hiddenPaths);
+            l && this.renderTabMenu(l, n, void 0, t.hiddenPaths);
         } else {
             let e = document.querySelector("#tabmenu");
             e && (e.innerHTML = "", e.style.display = "none");
@@ -2487,17 +2498,17 @@ const main = baseclass.extend({
     handleMenuExpand (e) {
         let t = e.currentTarget;
         if (!t) return;
-        let l = t.parentNode, i = t.nextElementSibling, n = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), a = !1;
-        if (document.querySelectorAll(n ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
-            a || e !== i || (a = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), n ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
-        }), i) {
+        let l = t.parentNode, n = t.nextElementSibling, i = window.innerWidth > 768 && "collapsed" === document.body.getAttribute("data-sidebar-state"), a = !1;
+        if (document.querySelectorAll(i ? ".main .main-left .nav > li > ul.slide-menu.popup-open" : ".main .main-left .nav > li > ul.slide-menu.active").forEach((e)=>{
+            a || e !== n || (a = !0), e.classList.remove("popup-open", "active"), e.previousElementSibling?.classList.remove("popup-open", "active"), SlideAnimations.stop(e), i ? (e.style.display = "none", e.style.top = "") : SlideAnimations.slideUp(e, "fast");
+        }), n) {
             if (!a) {
                 let e = l?.querySelector(".slide-menu");
                 if (e) {
-                    if (i.classList.add(n ? "popup-open" : "active"), t.classList.add(n ? "popup-open" : "active"), n) {
+                    if (n.classList.add(i ? "popup-open" : "active"), t.classList.add(i ? "popup-open" : "active"), i) {
                         SlideAnimations.stop(e), e.style.display = "block";
-                        let l = t.getBoundingClientRect(), i = e.offsetHeight, n = Math.max(8, window.innerHeight - i - 8), a = l.top - 8;
-                        e.style.top = `${Math.min(n, Math.max(8, a))}px`;
+                        let l = t.getBoundingClientRect(), n = e.offsetHeight, i = Math.max(8, window.innerHeight - n - 8), a = l.top - 8;
+                        e.style.top = `${Math.min(i, Math.max(8, a))}px`;
                     } else e.style.top = "", SlideAnimations.slideDown(e, "fast");
                     e.querySelectorAll("li > a").forEach((e)=>{
                         e.addEventListener("click", ()=>{
@@ -2512,20 +2523,20 @@ const main = baseclass.extend({
             document.dispatchEvent(new CustomEvent("fluent-menu-expand")), e.preventDefault(), e.stopPropagation();
         }
     },
-    renderMainMenu (i, n, a) {
-        let r = (a || 0) + 1, s = a && i.title ? i.title.replace(/ /g, "_") : void 0, o = jsx("ul", {
+    renderMainMenu (n, i, a) {
+        let r = (a || 0) + 1, s = a && n.title ? n.title.replace(/ /g, "_") : void 0, u = jsx("ul", {
             class: a ? "slide-menu" : "nav",
             "data-parent": s || void 0
-        }), u = ui.menu.getChildren(i);
-        if (0 === u.length || r > 2) return jsx(Fragment, {});
-        for(let l = 0; l < u.length; l++){
-            let a = u[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === i.name, d = this.renderMainMenu(a, `${n}/${a.name}`, r), p = d.children.length > 0, c = p ? "slide" : null, h = p ? "menu" : "item";
-            s && (o.classList.add("active"), c = c ? `${c} active` : "null active");
+        }), c = ui.menu.getChildren(n);
+        if (0 === c.length || r > 2) return jsx(Fragment, {});
+        for(let l = 0; l < c.length; l++){
+            let a = c[l], s = L.env.dispatchpath[r] === a.name && L.env.dispatchpath[r - 1] === n.name, d = this.renderMainMenu(a, `${i}/${a.name}`, r), o = d.children.length > 0, p = o ? "slide" : null, h = o ? "menu" : "item";
+            s && (u.classList.add("active"), p = p ? `${p} active` : "null active");
             let m = s ? `${h} active` : h, f = jsxs("li", {
-                class: c ?? void 0,
+                class: p ?? void 0,
                 children: [
                     jsxs("a", {
-                        href: L.url(n, a.name),
+                        href: L.url(i, a.name),
                         onclick: 1 === r ? ui.createHandlerFn(this, "handleMenuExpand") : null,
                         class: m,
                         "data-title": (a.title || "").replace(/ /g, "_"),
@@ -2542,36 +2553,36 @@ const main = baseclass.extend({
                     d
                 ]
             });
-            o.appendChild(f);
+            u.appendChild(f);
         }
         if (1 === r) {
             let e = document.querySelector("#mainmenu");
             if (e) {
                 let t = "function" == typeof e.querySelector ? e.querySelector("ul.nav") : null;
-                t && "function" == typeof t.replaceWith ? t.replaceWith(o) : e.appendChild(o), e.style.display = "", adjustBrandTextSize();
+                t && "function" == typeof t.replaceWith ? t.replaceWith(u) : e.appendChild(u), e.style.display = "", adjustBrandTextSize();
             }
         }
-        return o;
+        return u;
     },
     renderConfiguredMenu (l) {
-        let i = jsx("ul", {
+        let n = jsx("ul", {
             class: "nav"
         });
-        for (let n of l.categories){
-            if (l.hiddenCategoryIds.has(n.id)) continue;
-            let a = n.items.filter((e)=>!l.hiddenPaths.has(e.path));
-            if (!n.primary && 0 === a.length) continue;
+        for (let i of l.categories){
+            if (l.hiddenCategoryIds.has(i.id)) continue;
+            let a = i.items.filter((e)=>!l.hiddenPaths.has(e.path));
+            if (!i.primary && 0 === a.length) continue;
             let r = jsx("ul", {
                 class: "slide-menu",
-                "data-parent": n.title.replace(/ /g, "_")
+                "data-parent": i.title.replace(/ /g, "_")
             }), s = !1;
             for (let l of a){
-                let i = l.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e);
-                s ||= i, r.appendChild(jsx("li", {
-                    class: i ? "active" : void 0,
+                let n = l.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e);
+                s ||= n, r.appendChild(jsx("li", {
+                    class: n ? "active" : void 0,
                     children: jsxs("a", {
                         href: L.url(l.path),
-                        class: `item${i ? " active" : ""}`,
+                        class: `item${n ? " active" : ""}`,
                         "data-title": l.rawTitle.replace(/ /g, "_"),
                         children: [
                             jsx("span", {
@@ -2585,59 +2596,59 @@ const main = baseclass.extend({
                     })
                 }));
             }
-            s && r.classList.add("active"), n.primary && L.env.dispatchpath.length <= 2 && (s ||= n.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
-            let o = a.length > 0, u = n.primary?.path ?? a[0]?.path ?? "#", d = n.primary?.rawTitle ?? n.title, p = `${o ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
-            i.appendChild(jsxs("li", {
-                class: p,
+            s && r.classList.add("active"), i.primary && L.env.dispatchpath.length <= 2 && (s ||= i.primary.pathSegments.every((e, t)=>L.env.dispatchpath[t] === e));
+            let d = a.length > 0, u = i.primary?.path ?? a[0]?.path ?? "#", c = i.primary?.rawTitle ?? i.title, o = `${d ? "slide" : ""}${s ? " active" : ""}`.trim() || void 0;
+            n.appendChild(jsxs("li", {
+                class: o,
                 children: [
                     jsxs("a", {
                         href: "#" === u ? u : L.url(u),
-                        onclick: o ? ui.createHandlerFn(this, "handleMenuExpand") : null,
-                        class: `${o ? "menu" : "item"}${s ? " active" : ""}`,
-                        "data-title": d.replace(/ /g, "_"),
+                        onclick: d ? ui.createHandlerFn(this, "handleMenuExpand") : null,
+                        class: `${d ? "menu" : "item"}${s ? " active" : ""}`,
+                        "data-title": c.replace(/ /g, "_"),
                         children: [
                             jsx("span", {
                                 class: "menu-icon"
                             }),
                             jsx("span", {
                                 class: "menu-label",
-                                children: n.title
+                                children: i.title
                             })
                         ]
                     }),
-                    o ? r : null
+                    d ? r : null
                 ]
             }));
         }
-        let n = document.querySelector("#mainmenu");
-        if (n) {
-            let e = "function" == typeof n.querySelector ? n.querySelector("ul.nav") : null;
-            e && "function" == typeof e.replaceWith ? e.replaceWith(i) : n.appendChild(i), n.style.display = "", adjustBrandTextSize();
+        let i = document.querySelector("#mainmenu");
+        if (i) {
+            let e = "function" == typeof i.querySelector ? i.querySelector("ul.nav") : null;
+            e && "function" == typeof e.replaceWith ? e.replaceWith(n) : i.appendChild(n), i.style.display = "", adjustBrandTextSize();
         }
-        return i;
+        return n;
     },
-    renderTabMenu (t, i, n, a) {
+    renderTabMenu (t, n, i, a) {
         let r = L.env.dispatchpath.slice(0, 2).join("/"), s = L.env.dispatchpath.slice(0, 3).join("/");
         if (a.has(r) || a.has(s)) return jsx(Fragment, {});
-        let o = document.querySelector("#tabmenu"), u = (n || 0) + 1, d = jsx("ul", {
+        let d = document.querySelector("#tabmenu"), u = (i || 0) + 1, c = jsx("ul", {
             class: "tabs"
-        }), p = ui.menu.getChildren(t), c = null;
-        if (0 === p.length) return o && 1 === u && (o.innerHTML = "", o.style.display = "none"), jsx(Fragment, {});
-        for(let t = 0; t < p.length; t++){
-            let l = p[t], n = L.env.dispatchpath[u + 2] === l.name, a = n ? " active" : "", r = jsx("li", {
+        }), o = ui.menu.getChildren(t), p = null;
+        if (0 === o.length) return d && 1 === u && (d.innerHTML = "", d.style.display = "none"), jsx(Fragment, {});
+        for(let t = 0; t < o.length; t++){
+            let l = o[t], i = L.env.dispatchpath[u + 2] === l.name, a = i ? " active" : "", r = jsx("li", {
                 class: `tabmenu-item-${l.name}${a}`,
                 children: jsx("a", {
-                    href: L.url(i, l.name),
+                    href: L.url(n, l.name),
                     children: _(l.title || "")
                 })
             });
-            d.appendChild(r), n && (c = l);
+            c.appendChild(r), i && (p = l);
         }
-        if (o && (1 === u && (o.innerHTML = ""), o.appendChild(d), o.style.display = "", c)) {
-            let e = this.renderTabMenu(c, `${i}/${c.name}`, u, a);
-            e.children.length > 0 && o.appendChild(e);
+        if (d && (1 === u && (d.innerHTML = ""), d.appendChild(c), d.style.display = "", p)) {
+            let e = this.renderTabMenu(p, `${n}/${p.name}`, u, a);
+            e.children.length > 0 && d.appendChild(e);
         }
-        return d;
+        return c;
     },
     adjustBrandTextSize () {
         adjustBrandTextSize();

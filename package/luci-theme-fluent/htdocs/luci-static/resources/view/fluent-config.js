@@ -141,25 +141,25 @@ async function fetchLatestRelease(t, e, l = [], s) {
     s && (a.Authorization = `token ${s}`);
     let r = await fetch("nightly" === t ? "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/tags/nightly" : "https://api.github.com/repos/LazuliKao/luci-theme-fluent/releases/latest", {
         headers: a
-    }), i = await r.json();
+    }), n = await r.json();
     if (!r.ok) {
-        let t = i?.message ? `: ${i.message}` : "";
+        let t = n?.message ? `: ${n.message}` : "";
         throw new GitHubAPIError(`GitHub API returned status ${r.status}${t}`, r.status);
     }
-    let n = i.assets || [], o = null, u = [];
-    for (let t of n){
+    let i = n.assets || [], o = null, u = [];
+    for (let t of i){
         let l = String(t.name || "");
-        "apk" === e && l.startsWith("luci-theme-fluent") && l.endsWith(".apk") ? o = t : "ipk" === e && l.startsWith("luci-theme-fluent") && (l.endsWith("_all.ipk") || l.endsWith(".ipk")) && (o = t);
+        "apk" === e && /^luci-theme-fluent-[0-9].*\.apk$/.test(l) ? o = t : "ipk" === e && /^luci-theme-fluent_[^/]+\.ipk$/.test(l) && (o = t);
     }
     for (let t of l){
-        let l = matchI18nAsset(n, t, e);
+        let l = matchI18nAsset(i, t, e);
         l && !u.includes(l) && u.push(l);
     }
     return {
-        tag_name: String(i.tag_name || ""),
-        published_at: String(i.published_at || ""),
-        body: String(i.body || ""),
-        html_url: String(i.html_url || ""),
+        tag_name: String(n.tag_name || ""),
+        published_at: String(n.published_at || ""),
+        body: String(n.body || ""),
+        html_url: String(n.html_url || ""),
         package_asset: o,
         i18n_assets: u
     };
@@ -848,7 +848,7 @@ const registerColorsTab = (d)=>{
 let general_e = L.form;
 
 
-const registerGeneralTab = (l)=>{
+const registerGeneralTab = (l, r = !0)=>{
     l.tab("general", _("General"));
     {
         let o = l.taboption("general", general_e.ListValue, "mode", _("Color mode"));
@@ -866,7 +866,7 @@ const registerGeneralTab = (l)=>{
         let o = l.taboption("general", general_e.ListValue, "control_height", _("Control height"));
         o.value("32", _("Compact (32px)")), o.value("42", _("Comfortable (42px)")), o.default = FLUENT_DEFAULTS.control_height, omitDefaultValue(o), o.description = _("Applies to standard buttons, inputs, selects, and similar form controls across the theme.");
     }
-    {
+    if (r) {
         let r = l.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
         r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, omitDefaultValue(r);
     }

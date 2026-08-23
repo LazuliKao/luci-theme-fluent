@@ -44,16 +44,23 @@ def main():
 
     files = os.listdir(args.dir)
     
-    theme_ipk = None
-    theme_apk = None
+    themes = {
+        'full': {'package': 'luci-theme-fluent', 'ipk': None, 'apk': None},
+        'lite': {'package': 'luci-theme-fluent-lite', 'ipk': None, 'apk': None},
+    }
     i18n_data = {}  # lang_code -> {'ipk': filename, 'apk': filename}
 
     for f in files:
-        if f.startswith('luci-theme-fluent'):
+        if f.startswith('luci-theme-fluent-lite_') or f.startswith('luci-theme-fluent-lite-'):
             if f.endswith('.ipk'):
-                theme_ipk = f
+                themes['lite']['ipk'] = f
             elif f.endswith('.apk'):
-                theme_apk = f
+                themes['lite']['apk'] = f
+        elif f.startswith('luci-theme-fluent_') or f.startswith('luci-theme-fluent-'):
+            if f.endswith('.ipk'):
+                themes['full']['ipk'] = f
+            elif f.endswith('.apk'):
+                themes['full']['apk'] = f
         elif f.startswith('luci-i18n-fluent'):
             # Match ipk (e.g. luci-i18n-fluent-zh-hans_1.0.6-1_all.ipk)
             ipk_match = re.match(r'^luci-i18n-fluent-([a-zA-Z_-]+)_(.+)_all\.ipk$', f)
@@ -83,7 +90,8 @@ def main():
         md.append(f"## LuCI Theme Fluent {args.tag}\n")
 
     md.append("### Packages")
-    md.append("- `luci-theme-fluent` — FluentUI theme for OpenWrt LuCI")
+    md.append("- `luci-theme-fluent` — Full FluentUI theme for OpenWrt LuCI")
+    md.append("- `luci-theme-fluent-lite` — Core FluentUI theme without optional enhancements (mutually exclusive with full)")
     md.append("- `luci-i18n-fluent` — Translations\n")
 
     # Add Downloads Section
@@ -94,15 +102,15 @@ def main():
     
     base_url = f"https://github.com/{args.repo}/releases/download/{args.tag}"
     
-    if theme_ipk:
-        md.append(f"| **OpenWrt 24.10.x (ipk)** | `luci-theme-fluent` | [Download (ipk)]({base_url}/{theme_ipk}) |")
-    else:
-        md.append(f"| **OpenWrt 24.10.x (ipk)** | `luci-theme-fluent` | - |")
-        
-    if theme_apk:
-        md.append(f"| **OpenWrt 25.12.x (apk)** | `luci-theme-fluent` | [Download (apk)]({base_url}/{theme_apk}) |")
-    else:
-        md.append(f"| **OpenWrt 25.12.x (apk)** | `luci-theme-fluent` | - |")
+    for variant in ('full', 'lite'):
+        package = themes[variant]['package']
+        label = 'Full' if variant == 'full' else 'Lite'
+        ipk = themes[variant]['ipk']
+        apk = themes[variant]['apk']
+        ipk_link = f"[Download (ipk)]({base_url}/{ipk})" if ipk else "-"
+        apk_link = f"[Download (apk)]({base_url}/{apk})" if apk else "-"
+        md.append(f"| **OpenWrt 24.10.x (ipk)** | `{package}` ({label}) | {ipk_link} |")
+        md.append(f"| **OpenWrt 25.12.x (apk)** | `{package}` ({label}) | {apk_link} |")
         
     md.append("\n")
 
@@ -127,12 +135,15 @@ def main():
     md.append("### Installation\n")
     md.append("**OpenWrt 24.10.x (opkg/ipk):**")
     md.append("```bash")
-    md.append("opkg install luci-theme-fluent_*.ipk")
+    md.append("opkg install luci-theme-fluent_*.ipk  # Full (default)")
+    md.append("opkg install luci-theme-fluent-lite_*.ipk  # Lite")
     md.append("```\n")
     md.append("**OpenWrt 25.12.x (apk):**")
     md.append("```bash")
-    md.append("apk add luci-theme-fluent_*.apk")
+    md.append("apk add luci-theme-fluent-*.apk  # Full (default)")
+    md.append("apk add luci-theme-fluent-lite-*.apk  # Lite")
     md.append("```")
+    md.append("\nInstall only one variant at a time.")
 
     with open(args.output, 'w', encoding='utf-8') as f:
         f.write('\n'.join(md))

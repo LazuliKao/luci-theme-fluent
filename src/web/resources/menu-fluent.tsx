@@ -1,17 +1,8 @@
 import { buildMenuPresentation, type MenuPresentation } from "./menu-layout";
-import { setupApplyChangePreview } from "./utils/apply-change-preview";
-import { setupErrorTooltips } from "./utils/error-tooltips";
-import { setupIfaceboxTooltips } from "./utils/ifacebox-tooltip";
-import { setupLogViewer } from "./utils/log-viewer";
-import { setupMacSelector } from "./utils/mac-selector";
 import { getCachedMenu, getResolvedMenuLayout, saveMenuCache, saveRenderedHtmlCache } from "./utils/menu-cache";
-import { setupMenuSearch } from "./utils/menu-search";
-import { setupSelectionPause } from "./utils/poll-pause";
-import { setupFluentSelects } from "./utils/select-dropdown";
+import { setupMenuFeatures, setupMenuStartup } from "./utils/menu-features";
 import { adjustBrandTextSize, closeCollapsedPopups, handleDesktopSidebarToggle, handleSidebarToggle, initSidebarController } from "./utils/sidebar-controller";
 import { SlideAnimations } from "./utils/slide-animations";
-import { setupTableWrappers } from "./utils/table-wrapper";
-import { setupThemeFeatures } from "./utils/theme-features";
 
 interface Module {
   __init__: () => void;
@@ -33,17 +24,10 @@ function initThemeUtilities(presentation: MenuPresentation) {
   if (!utilitiesInitialized) {
     utilitiesInitialized = true;
 
-    setupTableWrappers();
-    setupSelectionPause();
-    setupErrorTooltips();
-    setupFluentSelects();
-    setupIfaceboxTooltips();
-    setupThemeFeatures();
-    setupMacSelector();
-    setupLogViewer();
+    setupMenuFeatures();
   }
 
-  setupMenuSearch(presentation);
+  setupMenuFeatures(presentation);
 }
 
 /**
@@ -57,7 +41,7 @@ const module: Module = {
    * then asynchronously fetches fresh menu data to revalidate (SWR).
    */
   async __init__(this: Module) {
-    setupApplyChangePreview();
+    setupMenuStartup();
     initSidebarController(this);
 
     let layoutValue = getResolvedMenuLayout();
