@@ -1,8 +1,8 @@
 #!/bin/sh
 # build.sh - Downloads OpenWrt SDK and builds packages
 # Usage: build.sh <version> <full|lite>
-# Example: build.sh 24.10.7 full  (produces .ipk)
-#          build.sh 25.12.4 lite  (produces .apk)
+# Example: build.sh 24.10.7 full  (produces full theme, dashboard, and .ipk translations)
+#          build.sh 25.12.4 lite  (produces lite theme .apk)
 #
 # OpenWrt 24.x uses opkg/ipk, OpenWrt 25.x+ uses apk.
 
@@ -100,19 +100,45 @@ done
 
 # Configure
 echo ">>> Running defconfig..."
+echo "CONFIG_PACKAGE_${PACKAGE}=m" >> .config
+if [ "${VARIANT}" = "full" ]; then
+  echo "CONFIG_PACKAGE_luci-mod-fluentdashboard=m" >> .config
+  echo "CONFIG_PACKAGE_luci-i18n-fluentdashboard-zh-cn=m" >> .config
+fi
 make defconfig
 
-# Build the selected theme package.
+# Build the selected theme package. Full builds also produce the dashboard replacement.
 echo ">>> Building packages..."
-make -j$(nproc) V=s BUILD_LOG=1 \
-  "package/${PACKAGE}/compile"
+if [ "${VARIANT}" = "full" ]; then
+  make -j$(nproc) V=s BUILD_LOG=1 \
+    "package/${PACKAGE}/compile" \
+    "package/luci-mod-fluentdashboard/compile"
+else
+  make -j$(nproc) V=s BUILD_LOG=1 \
+    "package/${PACKAGE}/compile"
+fi
 
 # Collect the selected package. Full builds also own the shared translations.
 echo ">>> Collecting ${PKG_EXT} files..."
 mkdir -p "${OUTPUT_DIR}"
 find bin -name "${PACKAGE}*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
 if [ "${VARIANT}" = "full" ]; then
+  find bin -name "luci-mod-fluentdashboard*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
   find bin -name "luci-i18n-fluent*.${PKG_EXT}" -exec cp {} "${OUTPUT_DIR}/" \;
+fi
+if ! find "${OUTPUT_DIR}" -maxdepth 1 -name "${PACKAGE}*.${PKG_EXT}" -print -quit | grep -q .; then
+  echo "ERROR: ${PACKAGE} .${PKG_EXT} was not produced" >&2
+  exit 1
+fi
+if [ "${VARIANT}" = "full" ]; then
+  if ! find "${OUTPUT_DIR}" -maxdepth 1 -name "luci-mod-fluentdashboard*.${PKG_EXT}" -print -quit | grep -q .; then
+    echo "ERROR: luci-mod-fluentdashboard .${PKG_EXT} was not produced" >&2
+    exit 1
+  fi
+  if ! find "${OUTPUT_DIR}" -maxdepth 1 -name "luci-i18n-fluentdashboard-zh-cn*.${PKG_EXT}" -print -quit | grep -q .; then
+    echo "ERROR: luci-i18n-fluentdashboard-zh-cn .${PKG_EXT} was not produced" >&2
+    exit 1
+  fi
 fi
 tar -cJf "${OUTPUT_DIR}/logs.tar.xz" logs 2>/dev/null || true
 

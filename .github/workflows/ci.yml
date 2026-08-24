@@ -40,9 +40,11 @@ jobs:
           VERSION="${{ steps.meta.outputs.version }}"
           sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent/Makefile
           sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-theme-fluent-lite/Makefile
+          sed -i "s/^PKG_VERSION:=.*/PKG_VERSION:=${VERSION}/" package/luci-mod-fluentdashboard/Makefile
           sed -i "s/^  \"version\": \"[^\"]*\",/  \"version\": \"${VERSION}\",/" package.json
           grep '^PKG_VERSION:=' package/luci-theme-fluent/Makefile
           grep '^PKG_VERSION:=' package/luci-theme-fluent-lite/Makefile
+          grep '^PKG_VERSION:=' package/luci-mod-fluentdashboard/Makefile
           grep '^  "version":' package.json
 
       - name: Pack prepared source
@@ -93,6 +95,10 @@ jobs:
           test -s package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css
           test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
           test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
+          test -s package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
+          test -s package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.css
+          grep -q '"require network"' package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
+          grep -q 'return main;' package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
           full_size=$(cat package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
           lite_size=$(cat package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
           test "${lite_size}" -lt "${full_size}"
@@ -118,6 +124,14 @@ jobs:
             package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
             package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
 
+      - name: Upload dashboard assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: fluent-dashboard-assets
+          path: |
+            package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
+            package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.css
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -136,7 +150,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint with Biome
-        run: pnpm run lint || true
+        run: pnpm run lint
+
+      - name: Type-check TypeScript
+        run: pnpm run typecheck
+
+      - name: Run focused tests
+        run: pnpm run test
 
   openwrt-sdk:
     name: OpenWrt SDK Build (${{ matrix.version }}, ${{ matrix.variant }})
@@ -168,6 +188,12 @@ jobs:
           name: fluent-assets-lite
           path: package/luci-theme-fluent-lite/htdocs/luci-static
 
+      - name: Download dashboard assets
+        uses: actions/download-artifact@v8
+        with:
+          name: fluent-dashboard-assets
+          path: package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard
+
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y zstd wget
 
@@ -176,6 +202,7 @@ jobs:
           mkdir -p ${HOME}/builder/packages
           cp -r "$PWD/package/luci-theme-fluent" "${HOME}/builder/packages/luci-theme-fluent"
           cp -r "$PWD/package/luci-theme-fluent-lite" "${HOME}/builder/packages/luci-theme-fluent-lite"
+          cp -r "$PWD/package/luci-mod-fluentdashboard" "${HOME}/builder/packages/luci-mod-fluentdashboard"
           echo "Staged packages:"
           ls -la ${HOME}/builder/packages/
 
@@ -190,6 +217,8 @@ jobs:
           cp ${HOME}/builder/output/luci-theme-fluent${{ matrix.variant == 'lite' && '-lite' || '' }}*.ipk output/ 2>/dev/null || true
           cp ${HOME}/builder/output/luci-theme-fluent${{ matrix.variant == 'lite' && '-lite' || '' }}*.apk output/ 2>/dev/null || true
           if [ "${{ matrix.variant }}" = "full" ]; then
+            cp ${HOME}/builder/output/luci-mod-fluentdashboard*.ipk output/ 2>/dev/null || true
+            cp ${HOME}/builder/output/luci-mod-fluentdashboard*.apk output/ 2>/dev/null || true
             cp ${HOME}/builder/output/luci-i18n-fluent*.ipk output/ 2>/dev/null || true
             cp ${HOME}/builder/output/luci-i18n-fluent*.apk output/ 2>/dev/null || true
           fi

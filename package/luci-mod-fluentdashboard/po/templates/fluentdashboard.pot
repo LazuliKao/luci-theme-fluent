@@ -1,0 +1,177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-mod-fluentdashboard\n"
+"POT-Creation-Date: 2026-08-24 00:20+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A live overview of this OpenWrt device."
+msgstr ""
+
+msgid "Active DHCP Leases"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Architecture"
+msgstr ""
+
+msgid "Channel"
+msgstr ""
+
+msgid "Device"
+msgstr ""
+
+msgid "Encryption"
+msgstr ""
+
+msgid "Expired"
+msgstr ""
+
+msgid "Expires"
+msgstr ""
+
+msgid "Family"
+msgstr ""
+
+msgid "Firmware Version"
+msgstr ""
+
+msgid "Fluent Dashboard"
+msgstr ""
+
+msgid "Gateway"
+msgstr ""
+
+msgid "Host"
+msgstr ""
+
+msgid "Hostname"
+msgstr ""
+
+msgid "Interface"
+msgstr ""
+
+msgid "Interfaces"
+msgstr ""
+
+msgid "Internet"
+msgstr ""
+
+msgid "Kernel Version"
+msgstr ""
+
+msgid "Load Average"
+msgstr ""
+
+msgid "Local Time"
+msgstr ""
+
+msgid "LuCI Version"
+msgstr ""
+
+msgid "MAC / DUID"
+msgstr ""
+
+msgid "MAC address"
+msgstr ""
+
+msgid "Mbit/s"
+msgstr ""
+
+msgid "Memory"
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Model"
+msgstr ""
+
+msgid "Network"
+msgstr ""
+
+msgid "No Internet connection information is available."
+msgstr ""
+
+msgid "No network interfaces were found."
+msgstr ""
+
+msgid "No wireless clients are connected."
+msgstr ""
+
+msgid "No wireless radios were found."
+msgstr ""
+
+msgid "Offline"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Radio"
+msgstr ""
+
+msgid "Received"
+msgstr ""
+
+msgid "Resources"
+msgstr ""
+
+msgid "Root storage"
+msgstr ""
+
+msgid "RX / TX Rate"
+msgstr ""
+
+msgid "Signal"
+msgstr ""
+
+msgid "SSID"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Swap"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "Target Platform"
+msgstr ""
+
+msgid "Temporary storage"
+msgstr ""
+
+msgid "There are no active DHCP leases."
+msgstr ""
+
+msgid "Transmitted"
+msgstr ""
+
+msgid "Unlimited"
+msgstr ""
+
+msgid "Updated"
+msgstr ""
+
+msgid "Uptime"
+msgstr ""
+
+msgid "Wireless"
+msgstr ""
+
+msgid "Wireless Clients"
+msgstr ""

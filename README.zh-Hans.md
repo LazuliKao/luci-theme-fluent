@@ -46,6 +46,7 @@
 - 使用 ucode 模板渲染 LuCI 页头、页脚与登录页。
 - 提供主题设置界面,可配置颜色、动画与登录页外观。
 - 针对特定插件页面提供结构化的样式覆盖。
+- 提供可选且不依赖主题的 `luci-mod-fluentdashboard` 状态概览。
 
 ## 快速上手
 
@@ -117,6 +118,20 @@ make menuconfig
 
 选择 `LuCI -> Themes -> luci-theme-fluent`，然后像往常一样构建固件或软件包即可。
 
+### Fluent 状态概览
+
+`luci-mod-fluentdashboard` 是适用于 OpenWrt 24.10 和 25.12 的可选固定卡片式状态概览。它使用独立的 `admin/fluentdashboard` 路由，可配合任意 LuCI 主题使用，也可以与官方 `luci-mod-dashboard` 同时安装。
+
+```bash
+# OpenWrt 24.10.x
+opkg install /tmp/luci-mod-fluentdashboard_*.ipk
+
+# OpenWrt 25.12.x
+apk add --allow-untrusted /tmp/luci-mod-fluentdashboard-*.apk
+```
+
+该模块显示系统、内存与存储、WAN、接口流量、无线、DHCP 租约及无线客户端信息。其资源和简体中文翻译软件包均与主题独立构建。
+
 ## 配置
 
 主题提供了 LuCI 设置页面,支持配置以下内容:
@@ -153,12 +168,15 @@ pnpm run lint
 pnpm run typecheck
 # 提取并构建翻译；需要在 `.env` 中设置 `OPENAI_API_KEY`。
 pnpm run i18n:build
+# 提取独立状态概览的翻译目录。
+pnpm run i18n:dashboard
 ```
 
 ### 输出路径
 
 - CSS:`package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css`
 - JS:`package/luci-theme-fluent/htdocs/luci-static/resources/`
+- 状态概览：`package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/`
 这些 CSS 和 JavaScript 文件由构建生成，请勿直接编辑。
 
 ### 项目结构

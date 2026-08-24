@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build --env-mode full",
+    "build": "rsbuild build --env-mode full && rsbuild build -c rsbuild.dashboard.config.ts",
     "build:lite": "rsbuild build --env-mode lite",
     "watch": "rsbuild build --env-mode full --watch",
+    "watch:dashboard": "rsbuild build -c rsbuild.dashboard.config.ts --watch",
     "watch:lite": "rsbuild build --env-mode lite --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

@@ -1,0 +1,13 @@
+{
+	"luci-mod-fluentdashboard-index": {
+		"description": "Grant access to the Fluent dashboard status display",
+		"read": {
+			"ubus": {
+				"iwinfo": [ "assoclist" ],
+				"luci": [ "getVersion" ],
+				"luci-rpc": [ "getDHCPLeases" ],
+				"system": [ "board", "info" ]
+			}
+		}
+	}
+}

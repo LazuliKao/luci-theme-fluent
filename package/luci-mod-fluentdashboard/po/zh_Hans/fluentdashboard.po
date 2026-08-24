@@ -1,0 +1,177 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-mod-fluentdashboard\n"
+"POT-Creation-Date: 2026-08-24 00:20+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: LazuliKao\n"
+"Language-Team: LuCI Fluent Dashboard\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A live overview of this OpenWrt device."
+msgstr "此 OpenWrt 设备的实时概览。"
+
+msgid "Active DHCP Leases"
+msgstr "活动的 DHCP 租约"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Architecture"
+msgstr "架构"
+
+msgid "Channel"
+msgstr "信道"
+
+msgid "Device"
+msgstr "设备"
+
+msgid "Encryption"
+msgstr "加密"
+
+msgid "Expired"
+msgstr "已过期"
+
+msgid "Expires"
+msgstr "到期时间"
+
+msgid "Family"
+msgstr "协议族"
+
+msgid "Firmware Version"
+msgstr "固件版本"
+
+msgid "Fluent Dashboard"
+msgstr "Fluent 状态概览"
+
+msgid "Gateway"
+msgstr "网关"
+
+msgid "Host"
+msgstr "主机"
+
+msgid "Hostname"
+msgstr "主机名"
+
+msgid "Interface"
+msgstr "接口"
+
+msgid "Interfaces"
+msgstr "接口"
+
+msgid "Internet"
+msgstr "互联网"
+
+msgid "Kernel Version"
+msgstr "内核版本"
+
+msgid "Load Average"
+msgstr "平均负载"
+
+msgid "Local Time"
+msgstr "本地时间"
+
+msgid "LuCI Version"
+msgstr "LuCI 版本"
+
+msgid "MAC / DUID"
+msgstr "MAC / DUID"
+
+msgid "MAC address"
+msgstr "MAC 地址"
+
+msgid "Mbit/s"
+msgstr "Mbit/s"
+
+msgid "Memory"
+msgstr "内存"
+
+msgid "Mode"
+msgstr "模式"
+
+msgid "Model"
+msgstr "型号"
+
+msgid "Network"
+msgstr "网络"
+
+msgid "No Internet connection information is available."
+msgstr "没有可用的互联网连接信息。"
+
+msgid "No network interfaces were found."
+msgstr "未找到网络接口。"
+
+msgid "No wireless clients are connected."
+msgstr "没有已连接的无线客户端。"
+
+msgid "No wireless radios were found."
+msgstr "未找到无线射频。"
+
+msgid "Offline"
+msgstr "离线"
+
+msgid "Online"
+msgstr "在线"
+
+msgid "Protocol"
+msgstr "协议"
+
+msgid "Radio"
+msgstr "射频"
+
+msgid "Received"
+msgstr "已接收"
+
+msgid "Resources"
+msgstr "资源"
+
+msgid "Root storage"
+msgstr "根存储"
+
+msgid "RX / TX Rate"
+msgstr "接收 / 发送速率"
+
+msgid "Signal"
+msgstr "信号"
+
+msgid "SSID"
+msgstr "SSID"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Swap"
+msgstr "交换空间"
+
+msgid "System"
+msgstr "系统"
+
+msgid "Target Platform"
+msgstr "目标平台"
+
+msgid "Temporary storage"
+msgstr "临时存储"
+
+msgid "There are no active DHCP leases."
+msgstr "没有活动的 DHCP 租约。"
+
+msgid "Transmitted"
+msgstr "已发送"
+
+msgid "Unlimited"
+msgstr "无限制"
+
+msgid "Updated"
+msgstr "更新时间"
+
+msgid "Uptime"
+msgstr "运行时间"
+
+msgid "Wireless"
+msgstr "无线"
+
+msgid "Wireless Clients"
+msgstr "无线客户端"

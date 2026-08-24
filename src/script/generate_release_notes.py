@@ -48,10 +48,22 @@ def main():
         'full': {'package': 'luci-theme-fluent', 'ipk': None, 'apk': None},
         'lite': {'package': 'luci-theme-fluent-lite', 'ipk': None, 'apk': None},
     }
+    dashboard = {'package': 'luci-mod-fluentdashboard', 'ipk': None, 'apk': None}
+    dashboard_i18n = {'ipk': None, 'apk': None}
     i18n_data = {}  # lang_code -> {'ipk': filename, 'apk': filename}
 
     for f in files:
-        if f.startswith('luci-theme-fluent-lite_') or f.startswith('luci-theme-fluent-lite-'):
+        if f.startswith('luci-mod-fluentdashboard_') or f.startswith('luci-mod-fluentdashboard-'):
+            if f.endswith('.ipk'):
+                dashboard['ipk'] = f
+            elif f.endswith('.apk'):
+                dashboard['apk'] = f
+        elif f.startswith('luci-i18n-fluentdashboard-zh-cn_') or f.startswith('luci-i18n-fluentdashboard-zh-cn-'):
+            if f.endswith('.ipk'):
+                dashboard_i18n['ipk'] = f
+            elif f.endswith('.apk'):
+                dashboard_i18n['apk'] = f
+        elif f.startswith('luci-theme-fluent-lite_') or f.startswith('luci-theme-fluent-lite-'):
             if f.endswith('.ipk'):
                 themes['lite']['ipk'] = f
             elif f.endswith('.apk'):
@@ -92,6 +104,8 @@ def main():
     md.append("### Packages")
     md.append("- `luci-theme-fluent` — Full FluentUI theme for OpenWrt LuCI")
     md.append("- `luci-theme-fluent-lite` — Core FluentUI theme without optional enhancements (mutually exclusive with full)")
+    md.append("- `luci-mod-fluentdashboard` — Theme-independent dashboard that can coexist with `luci-mod-dashboard`")
+    md.append("- `luci-i18n-fluentdashboard-zh-cn` — Simplified Chinese dashboard translation")
     md.append("- `luci-i18n-fluent` — Translations\n")
 
     # Add Downloads Section
@@ -111,6 +125,15 @@ def main():
         apk_link = f"[Download (apk)]({base_url}/{apk})" if apk else "-"
         md.append(f"| **OpenWrt 24.10.x (ipk)** | `{package}` ({label}) | {ipk_link} |")
         md.append(f"| **OpenWrt 25.12.x (apk)** | `{package}` ({label}) | {apk_link} |")
+
+    dashboard_ipk_link = f"[Download (ipk)]({base_url}/{dashboard['ipk']})" if dashboard['ipk'] else "-"
+    dashboard_apk_link = f"[Download (apk)]({base_url}/{dashboard['apk']})" if dashboard['apk'] else "-"
+    dashboard_i18n_ipk_link = f"[Download (ipk)]({base_url}/{dashboard_i18n['ipk']})" if dashboard_i18n['ipk'] else "-"
+    dashboard_i18n_apk_link = f"[Download (apk)]({base_url}/{dashboard_i18n['apk']})" if dashboard_i18n['apk'] else "-"
+    md.append(f"| **OpenWrt 24.10.x (ipk)** | `{dashboard['package']}` | {dashboard_ipk_link} |")
+    md.append(f"| **OpenWrt 25.12.x (apk)** | `{dashboard['package']}` | {dashboard_apk_link} |")
+    md.append(f"| **OpenWrt 24.10.x (ipk)** | `luci-i18n-fluentdashboard-zh-cn` | {dashboard_i18n_ipk_link} |")
+    md.append(f"| **OpenWrt 25.12.x (apk)** | `luci-i18n-fluentdashboard-zh-cn` | {dashboard_i18n_apk_link} |")
         
     md.append("\n")
 
@@ -137,13 +160,15 @@ def main():
     md.append("```bash")
     md.append("opkg install luci-theme-fluent_*.ipk  # Full (default)")
     md.append("opkg install luci-theme-fluent-lite_*.ipk  # Lite")
+    md.append("opkg install luci-mod-fluentdashboard_*.ipk")
     md.append("```\n")
     md.append("**OpenWrt 25.12.x (apk):**")
     md.append("```bash")
     md.append("apk add luci-theme-fluent-*.apk  # Full (default)")
     md.append("apk add luci-theme-fluent-lite-*.apk  # Lite")
+    md.append("apk add luci-mod-fluentdashboard-*.apk")
     md.append("```")
-    md.append("\nInstall only one variant at a time.")
+    md.append("\nInstall only one theme variant at a time. The Fluent dashboard uses its own route and can coexist with the official `luci-mod-dashboard` package.")
 
     with open(args.output, 'w', encoding='utf-8') as f:
         f.write('\n'.join(md))

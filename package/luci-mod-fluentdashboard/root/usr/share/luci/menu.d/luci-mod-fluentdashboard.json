@@ -1,0 +1,13 @@
+{
+	"admin/fluentdashboard": {
+		"title": "Fluent Dashboard",
+		"order": 1,
+		"action": {
+			"type": "view",
+			"path": "fluentdashboard/index"
+		},
+		"depends": {
+			"acl": [ "luci-mod-fluentdashboard-index" ]
+		}
+	}
+}

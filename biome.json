@@ -6,7 +6,9 @@
       "!src/scss/**/*",
       "!package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js",
       "!package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js",
-      "!package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css"
+      "!package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css",
+      "!package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js",
+      "!package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.css"
     ]
   },
   "vcs": {

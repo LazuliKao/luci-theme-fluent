@@ -1,0 +1,242 @@
+.fluent-dashboard {
+  --fluent-dashboard-border: color-mix(in srgb, currentColor 16%, transparent);
+  --fluent-dashboard-muted: color-mix(in srgb, currentColor 68%, transparent);
+  --fluent-dashboard-surface: color-mix(in srgb, Canvas 96%, currentColor 4%);
+  color: CanvasText;
+  container-type: inline-size;
+}
+
+.fluent-dashboard,
+.fluent-dashboard * {
+  box-sizing: border-box;
+}
+
+.fluent-dashboard__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 1rem;
+  padding: 1.25rem;
+  overflow: hidden;
+  color: HighlightText;
+  background: linear-gradient(120deg, Highlight, color-mix(in srgb, Highlight 68%, CanvasText));
+  border-radius: 0.75rem;
+}
+
+.fluent-dashboard__header h1,
+.fluent-dashboard__header p {
+  margin: 0;
+  color: inherit;
+}
+
+.fluent-dashboard__header h1 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.fluent-dashboard__header h1 + p {
+  margin-block-start: 0.4rem;
+  opacity: 0.82;
+}
+
+.fluent-dashboard__updated {
+  flex: none;
+  font-size: 0.85rem;
+  opacity: 0.86;
+}
+
+.fluent-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fluent-dashboard__card {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  background: var(--fluent-dashboard-surface);
+  border: 1px solid var(--fluent-dashboard-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 1rem color-mix(in srgb, CanvasText 8%, transparent);
+}
+
+.fluent-dashboard__card--wide {
+  grid-column: 1 / -1;
+}
+
+.fluent-dashboard__card-title {
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.1rem 0.85rem 1.35rem;
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.25;
+  border-block-end: 1px solid var(--fluent-dashboard-border);
+}
+
+.fluent-dashboard__card-title::before {
+  position: absolute;
+  inset: 1rem auto 0.85rem 0.7rem;
+  width: 0.2rem;
+  background: Highlight;
+  border-radius: 1rem;
+  content: "";
+}
+
+.fluent-dashboard__card-content {
+  padding: 1rem 1.1rem;
+}
+
+.fluent-dashboard__details {
+  display: grid;
+  grid-template-columns: minmax(8rem, 36%) minmax(0, 1fr);
+  gap: 0.6rem 1rem;
+  margin: 0;
+}
+
+.fluent-dashboard__details dt {
+  color: var(--fluent-dashboard-muted);
+}
+
+.fluent-dashboard__details dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 550;
+}
+
+.fluent-dashboard__meter + .fluent-dashboard__meter {
+  margin-block-start: 1.1rem;
+}
+
+.fluent-dashboard__meter-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 0.45rem;
+  font-size: 0.85rem;
+}
+
+.fluent-dashboard__meter-label span:last-child {
+  color: var(--fluent-dashboard-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fluent-dashboard__meter-track {
+  height: 0.5rem;
+  overflow: hidden;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 1rem;
+}
+
+.fluent-dashboard__meter-value {
+  display: block;
+  height: 100%;
+  background: Highlight;
+  border-radius: inherit;
+  transition: width 200ms ease;
+}
+
+.fluent-dashboard__table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.fluent-dashboard__table {
+  width: 100%;
+  margin: 0;
+  color: inherit;
+  border-collapse: collapse;
+}
+
+.fluent-dashboard__table th,
+.fluent-dashboard__table td {
+  padding: 0.7rem 0.65rem;
+  text-align: start;
+  vertical-align: middle;
+  border-block-end: 1px solid var(--fluent-dashboard-border);
+}
+
+.fluent-dashboard__table th {
+  color: var(--fluent-dashboard-muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.fluent-dashboard__table tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.fluent-dashboard__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.fluent-dashboard__status::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+.fluent-dashboard__status--up {
+  color: color-mix(in srgb, LinkText 75%, Highlight);
+}
+
+.fluent-dashboard__status--down {
+  color: color-mix(in srgb, currentColor 58%, transparent);
+}
+
+.fluent-dashboard__table .fluent-dashboard__empty {
+  padding-block: 1.5rem;
+  color: var(--fluent-dashboard-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+@container (max-width: 44rem) {
+  .fluent-dashboard__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fluent-dashboard__card--wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .fluent-dashboard__header {
+    align-items: start;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .fluent-dashboard__details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .fluent-dashboard__details dd + dt {
+    margin-block-start: 0.45rem;
+  }
+
+  .fluent-dashboard__card-content {
+    padding: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fluent-dashboard__meter-value {
+    transition: none;
+  }
+}
