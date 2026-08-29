@@ -13,15 +13,12 @@ define LUCI_DESCRIPTION
 Core FluentUI theme styling for LuCI without optional menu, updater, log, and application enhancements.
 endef
 
-# luci.mk installs the merged tree from PKG_BUILD_DIR. The local ucode file
-# keeps luci.mk aware that this package provides ucode templates.
 define Build/Prepare/$(PKG_NAME)
 	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs/* $(PKG_BUILD_DIR)/htdocs/
 	$(CP) $(TOPDIR)/package/luci-theme-fluent/root/* $(PKG_BUILD_DIR)/root/
 	$(CP) $(TOPDIR)/package/luci-theme-fluent/ucode/* $(PKG_BUILD_DIR)/ucode/
 	$(CP) ./htdocs/* $(PKG_BUILD_DIR)/htdocs/
 	$(CP) ./root/* $(PKG_BUILD_DIR)/root/
-	$(CP) ./ucode/* $(PKG_BUILD_DIR)/ucode/
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
