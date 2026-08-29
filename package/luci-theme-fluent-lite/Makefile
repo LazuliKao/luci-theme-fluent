@@ -1,50 +1,47 @@
 include $(TOPDIR)/rules.mk
 
+LUCI_TITLE:=Fluent Theme for LuCI (lite)
+LUCI_DEPENDS:=+luci-base
+LUCI_MINIFY_CSS:=0
+
 PKG_NAME:=luci-theme-fluent-lite
 PKG_VERSION:=1.0.9
 PKG_RELEASE:=1
 PKG_LICENSE:=Apache-2.0
-PKGARCH:=all
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
-include $(INCLUDE_DIR)/package.mk
-
-define Package/$(PKG_NAME)
-  SECTION:=luci
-  CATEGORY:=LuCI
-  TITLE:=Fluent Theme for LuCI (lite)
-  DEPENDS:=+luci-base
-  CONFLICTS:=luci-theme-fluent
-endef
-
-define Package/$(PKG_NAME)/description
+define LUCI_DESCRIPTION
 Core FluentUI theme styling for LuCI without optional menu, updater, log, and application enhancements.
 endef
 
-define Build/Prepare
-	$(call Build/Prepare/Default)
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/root $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/ucode $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css $(PKG_BUILD_DIR)/htdocs/luci-static/fluent/css/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/htdocs/luci-static/resources/* $(PKG_BUILD_DIR)/htdocs/luci-static/resources/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/root/* $(PKG_BUILD_DIR)/root/
+# luci.mk installs the merged tree from PKG_BUILD_DIR. The local ucode file
+# keeps luci.mk aware that this package provides ucode templates.
+define Build/Prepare/$(PKG_NAME)
+	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs/* $(PKG_BUILD_DIR)/htdocs/
+	$(CP) $(TOPDIR)/package/luci-theme-fluent/root/* $(PKG_BUILD_DIR)/root/
+	$(CP) $(TOPDIR)/package/luci-theme-fluent/ucode/* $(PKG_BUILD_DIR)/ucode/
+	$(CP) ./htdocs/* $(PKG_BUILD_DIR)/htdocs/
+	$(CP) ./root/* $(PKG_BUILD_DIR)/root/
+	$(CP) ./ucode/* $(PKG_BUILD_DIR)/ucode/
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
 
-define Build/Compile
-endef
-
-define Package/$(PKG_NAME)/install
-	$(CP) $(PKG_BUILD_DIR)/root/* $(1)/
-	$(INSTALL_DIR) $(1)/www $(1)/usr/share/ucode/template/themes
-	$(CP) $(PKG_BUILD_DIR)/htdocs/luci-static $(1)/www/
-	$(CP) $(PKG_BUILD_DIR)/ucode/template/themes/fluent $(1)/usr/share/ucode/template/themes/
-endef
-
 define Package/$(PKG_NAME)/conffiles
 /etc/config/fluent
+endef
+
+define Package/$(PKG_NAME)/preinst
+#!/bin/sh
+[ -n "$${IPKG_INSTROOT}" ] || {
+	if command -v apk >/dev/null 2>&1 && apk info -e luci-theme-fluent >/dev/null 2>&1; then
+		echo "luci-theme-fluent is installed; remove it before installing luci-theme-fluent-lite" >&2
+		exit 1
+	fi
+	if command -v opkg >/dev/null 2>&1 && opkg list-installed luci-theme-fluent 2>/dev/null | grep -q '^luci-theme-fluent '; then
+		echo "luci-theme-fluent is installed; remove it before installing luci-theme-fluent-lite" >&2
+		exit 1
+	fi
+}
 endef
 
 define Package/$(PKG_NAME)/postinst
@@ -58,4 +55,5 @@ define Package/$(PKG_NAME)/postinst
 }
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+# call BuildPackage - OpenWrt buildroot signature
+include $(TOPDIR)/feeds/luci/luci.mk
