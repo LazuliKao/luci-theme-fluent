@@ -1,0 +1,63 @@
+@use "overrides-utils" as *;
+
+@include plugin("admin-services-pushbot") {
+  :root[data-theme="dark"] & {
+    --pb-input-bg: var(--fluent-input-bg);
+    .pushbot-preview-box {
+      background: var(--fluent-card-bg);
+      color: var(--fluent-text-secondary);
+    }
+
+    .pushbot-tab:hover:not(.is-active) {
+      background: var(--fluent-bg-hover);
+      border-color: var(--fluent-border-hover);
+      color: var(--fluent-text);
+    }
+
+    .pushbot-mode-card {
+      background: var(--fluent-card-bg);
+      border-color: var(--fluent-card-border);
+    }
+
+    .pushbot-inline-field {
+      background: var(--fluent-input-bg);
+      border-color: var(--fluent-input-border);
+    }
+
+    .pushbot-card-title {
+      color: var(--fluent-text);
+    }
+
+    .pushbot-card-subtitle,
+    .pushbot-inline-title,
+    .pushbot-inline-description,
+    .pushbot-tab {
+      color: var(--fluent-text-secondary);
+    }
+
+    .pushbot-tab-bar {
+      background: var(--fluent-bg-hover);
+      border-color: var(--fluent-border);
+    }
+
+    .pushbot-tab.is-active {
+      background: var(--fluent-card-bg);
+      color: var(--fluent-text);
+    }
+
+    .pushbot-choice-button:not(.is-on) {
+      background: var(--fluent-btn-secondary-bg);
+      border-color: var(--fluent-btn-secondary-border);
+      color: var(--fluent-text);
+    }
+
+    .pushbot-sel-list {
+      background: var(--fluent-card-bg);
+      border-color: var(--fluent-card-border);
+    }
+
+    .pushbot-sel-item {
+      color: var(--fluent-text);
+    }
+  }
+}
