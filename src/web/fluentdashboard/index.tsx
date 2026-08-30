@@ -216,18 +216,21 @@ function statusPill(up: boolean): HTMLElement {
 
 function definitionList(rows: Array<[string, string | number | Node]>): HTMLElement {
   return (
-    <dl class="fluent-dashboard__details">
-      {rows.flatMap(([label, value]) => [<dt>{label}</dt>, <dd>{value instanceof Node ? value : valueOrDash(value)}</dd>])}
-    </dl>
+    <div class="fluent-dashboard__details">
+      {rows.flatMap(([label, value]) => [
+        <div class="fluent-dashboard__details-label">{label}</div>,
+        <div class="fluent-dashboard__details-value">{value instanceof Node ? value : valueOrDash(value)}</div>,
+      ])}
+    </div>
   );
 }
 
 function card(name: string, title: string, content: Node | Node[], wide = false): HTMLElement {
   return (
-    <section class={`fluent-dashboard__card${wide ? " fluent-dashboard__card--wide" : ""}`} data-dashboard-section={name}>
+    <div class={`fluent-dashboard__card${wide ? " fluent-dashboard__card--wide" : ""}`} data-dashboard-section={name}>
       <h2 class="fluent-dashboard__card-title">{title}</h2>
       <div class="fluent-dashboard__card-content">{content}</div>
-    </section>
+    </div>
   );
 }
 
@@ -434,7 +437,7 @@ class mainImpl extends L.view {
     ensureStylesheet();
     this.root = (
       <div class="fluent-dashboard">
-        <header class="fluent-dashboard__header">
+        <div class="fluent-dashboard__header">
           <div>
             <h1>{_("Fluent Dashboard")}</h1>
             <p>{_("A live overview of this OpenWrt device.")}</p>
@@ -442,7 +445,7 @@ class mainImpl extends L.view {
           <p class="fluent-dashboard__updated">
             {_("Updated")} <time data-dashboard-updated="">{summary.updatedAt.toLocaleTimeString()}</time>
           </p>
-        </header>
+        </div>
         <div class="fluent-dashboard__grid">
           {renderSystem(summary.system)}
           {renderResources(summary.system)}

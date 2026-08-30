@@ -46,7 +46,7 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
     let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
@@ -91,7 +91,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/fluentdashboard/model.ts
@@ -170,10 +170,10 @@ function formatLocalTime(t) {
 ;// CONCATENATED MODULE: ./web/fluentdashboard/index.tsx
 
 
-let fluentdashboard_o = rpc.declare({
+let fluentdashboard_l = rpc.declare({
     object: "system",
     method: "board"
-}), fluentdashboard_l = rpc.declare({
+}), fluentdashboard_o = rpc.declare({
     object: "system",
     method: "info"
 }), c = rpc.declare({
@@ -218,9 +218,9 @@ function y(e, t = !1) {
 }
 async function g() {
     await fluentdashboard_f(network.flushCache(), {});
-    let [e, t, r, a, n, s, d, u] = await Promise.all([
-        fluentdashboard_f(fluentdashboard_o(), {}),
+    let [e, t, r, a, s, n, d, u] = await Promise.all([
         fluentdashboard_f(fluentdashboard_l(), {}),
+        fluentdashboard_f(fluentdashboard_o(), {}),
         fluentdashboard_f(c(), {}),
         fluentdashboard_f(network.getWANNetworks(), []),
         fluentdashboard_f(network.getWAN6Networks(), []),
@@ -253,8 +253,8 @@ async function g() {
     return {
         system: normalizeSystemSnapshot(e, t, r),
         wan4: a.map((e)=>y(e)),
-        wan6: n.map((e)=>y(e, !0)),
-        interfaces: s.filter((e)=>"loopback" !== e.getName()).map((e)=>y(e)),
+        wan6: s.map((e)=>y(e, !0)),
+        interfaces: n.filter((e)=>"loopback" !== e.getName()).map((e)=>y(e)),
         wireless: h,
         updatedAt: new Date()
     };
@@ -267,10 +267,10 @@ async function w() {
     ]), a = await Promise.all(t.map(async (e)=>({
             wifi: e,
             peers: await fluentdashboard_f(e.getAssocList(), [])
-        }))), n = [];
+        }))), s = [];
     for (let { wifi: e, peers: t } of a)for (let a of t){
         let t = r?.getHostnameByMACAddr(a.mac) || r?.getIPAddrByMACAddr(a.mac) || r?.getIP6AddrByMACAddr(a.mac) || "";
-        n.push({
+        s.push({
             network: e.getActiveSSID() || e.getSSID() || e.getName(),
             hostname: t,
             mac: a.mac,
@@ -305,7 +305,7 @@ async function w() {
             }
             return r;
         }(e),
-        clients: n
+        clients: s
     };
 }
 function b(e) {
@@ -317,9 +317,9 @@ function v(t) {
         children: t ? _("Online") : _("Offline")
     });
 }
-function A(r, a, n, s = !1) {
-    return jsxs("section", {
-        class: `fluent-dashboard__card${s ? " fluent-dashboard__card--wide" : ""}`,
+function A(r, a, s, n = !1) {
+    return jsxs("div", {
+        class: `fluent-dashboard__card${n ? " fluent-dashboard__card--wide" : ""}`,
         "data-dashboard-section": r,
         children: [
             jsx("h2", {
@@ -328,12 +328,12 @@ function A(r, a, n, s = !1) {
             }),
             jsx("div", {
                 class: "fluent-dashboard__card-content",
-                children: n
+                children: s
             })
         ]
     });
 }
-function S(r, a, n) {
+function S(r, a, s) {
     return jsx("div", {
         class: "fluent-dashboard__table-wrap",
         children: jsxs("table", {
@@ -355,7 +355,7 @@ function S(r, a, n) {
                         children: jsx("td", {
                             class: "fluent-dashboard__empty",
                             colSpan: r.length,
-                            children: n
+                            children: s
                         })
                     })
                 })
@@ -364,7 +364,7 @@ function S(r, a, n) {
     });
 }
 function x(t) {
-    return A("system", _("System"), jsx("dl", {
+    return A("system", _("System"), jsx("div", {
         class: "fluent-dashboard__details",
         children: [
             [
@@ -408,17 +408,19 @@ function x(t) {
                 formatLoad(t.load)
             ]
         ].flatMap(([t, r])=>[
-                jsx("dt", {
+                jsx("div", {
+                    class: "fluent-dashboard__details-label",
                     children: t
                 }),
-                jsx("dd", {
+                jsx("div", {
+                    class: "fluent-dashboard__details-value",
                     children: r instanceof Node ? r : b(r)
                 })
             ])
     }));
 }
 function I(a) {
-    let n = [
+    let s = [
         [
             _("Memory"),
             a.memory
@@ -436,9 +438,9 @@ function I(a) {
             a.tmp
         ]
     ];
-    return A("resources", _("Resources"), n.map(([a, n])=>{
-        let s, i;
-        return s = Math.max(0, n.total - n.free), i = usedPercent(n), jsxs("div", {
+    return A("resources", _("Resources"), s.map(([a, s])=>{
+        let n, i;
+        return n = Math.max(0, s.total - s.free), i = usedPercent(s), jsxs("div", {
             class: "fluent-dashboard__meter",
             children: [
                 jsxs("div", {
@@ -448,7 +450,7 @@ function I(a) {
                             children: a
                         }),
                         jsx("span", {
-                            children: `${formatBytes(s)} / ${formatBytes(n.total)}`
+                            children: `${formatBytes(n)} / ${formatBytes(s.total)}`
                         })
                     ]
                 }),
@@ -604,7 +606,7 @@ class $ extends L.view {
         })), this.root = jsxs("div", {
             class: "fluent-dashboard",
             children: [
-                jsxs("header", {
+                jsxs("div", {
                     class: "fluent-dashboard__header",
                     children: [
                         jsxs("div", {
