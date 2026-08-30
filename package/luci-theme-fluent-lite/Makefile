@@ -16,7 +16,6 @@ endef
 define Build/Prepare/$(PKG_NAME)
 	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs/* $(PKG_BUILD_DIR)/htdocs/
 	$(CP) $(TOPDIR)/package/luci-theme-fluent/root/* $(PKG_BUILD_DIR)/root/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/ucode/* $(PKG_BUILD_DIR)/ucode/
 	$(CP) ./htdocs/* $(PKG_BUILD_DIR)/htdocs/
 	$(CP) ./root/* $(PKG_BUILD_DIR)/root/
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
