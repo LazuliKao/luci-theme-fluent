@@ -7,6 +7,10 @@ PKG_LICENSE:=Apache-2.0
 PKGARCH:=all
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
+# 在 include package.mk 之前捕获包源码目录，此时 CURDIR 指向包自身
+FLUENT_LITE_SOURCE_DIR:=$(CURDIR)
+FLUENT_FULL_SOURCE_DIR:=$(abspath $(CURDIR)/../luci-theme-fluent)
+
 include $(INCLUDE_DIR)/package.mk
 
 define Package/$(PKG_NAME)
@@ -23,12 +27,12 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/root $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/ucode $(PKG_BUILD_DIR)/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css $(PKG_BUILD_DIR)/htdocs/luci-static/fluent/css/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/htdocs/luci-static/resources/* $(PKG_BUILD_DIR)/htdocs/luci-static/resources/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent-lite/root/* $(PKG_BUILD_DIR)/root/
+	$(CP) $(FLUENT_FULL_SOURCE_DIR)/htdocs $(PKG_BUILD_DIR)/
+	$(CP) $(FLUENT_FULL_SOURCE_DIR)/root $(PKG_BUILD_DIR)/
+	$(CP) $(FLUENT_FULL_SOURCE_DIR)/ucode $(PKG_BUILD_DIR)/
+	$(CP) $(FLUENT_LITE_SOURCE_DIR)/htdocs/luci-static/fluent/css/fluent.css $(PKG_BUILD_DIR)/htdocs/luci-static/fluent/css/
+	$(CP) $(FLUENT_LITE_SOURCE_DIR)/htdocs/luci-static/resources/* $(PKG_BUILD_DIR)/htdocs/luci-static/resources/
+	$(CP) $(FLUENT_LITE_SOURCE_DIR)/root/* $(PKG_BUILD_DIR)/root/
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
