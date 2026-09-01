@@ -46,6 +46,54 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+const Fragment = Symbol.for("jsx.fragment");
+function jsx_factory_e(e, t) {
+    let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
+        for (let r of t)null != r && "boolean" != typeof r && (Array.isArray(r) ? e(r, n) : n.push(r instanceof Node ? r : String(r)));
+        return n;
+    }(null == n ? [] : Array.isArray(n) ? n : [
+        n
+    ]);
+    if (e === Fragment) {
+        let e = document.createDocumentFragment();
+        return e.append(...o), e;
+    }
+    if ("function" == typeof e) {
+        let t = Reflect.apply(e, void 0, [
+            {
+                ...r,
+                children: o
+            }
+        ]);
+        if (!(t instanceof Node)) throw TypeError("JSX components must return a DOM Node");
+        return t;
+    }
+    if ("string" != typeof e) throw TypeError("JSX element types must be tag names or component functions");
+    let f = {}, l = {
+        ...r
+    };
+    for (let [e, t] of Object.entries(l))e.startsWith("on") && "function" == typeof t ? (f[e] = t, delete l[e]) : "boolean" == typeof t && (t ? l[e] = e : delete l[e]);
+    let s = Object.keys(l).length > 0 ? o.length > 1 ? E(e, l, o) : E(e, l, o[0]) : o.length > 1 ? E(e, {}, o) : E(e, {}, o[0]);
+    for (let [e, t] of Object.entries(f)){
+        let n = e.slice(2).toLowerCase();
+        s.addEventListener(n, t);
+    }
+    return s;
+}
+function jsx(t, n) {
+    return jsx_factory_e(t, n);
+}
+function jsxs(t, n) {
+    return jsx_factory_e(t, n);
+}
+function jsxDEV(t, n) {
+    return jsx_factory_e(t, n);
+}
+
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+
+
 ;// CONCATENATED MODULE: ./web/fluentdashboard/model.ts
 function model_t(t) {
     return null === t || "object" != typeof t || Array.isArray(t) ? {} : t;
@@ -121,40 +169,41 @@ function formatLocalTime(t) {
 
 ;// CONCATENATED MODULE: ./web/fluentdashboard/index.tsx
 
-let fluentdashboard_i = rpc.declare({
+
+let fluentdashboard_l = rpc.declare({
     object: "system",
     method: "board"
 }), fluentdashboard_o = rpc.declare({
     object: "system",
     method: "info"
-}), d = rpc.declare({
+}), c = rpc.declare({
     object: "luci",
     method: "getVersion"
-}), fluentdashboard_l = rpc.declare({
+}), fluentdashboard_u = rpc.declare({
     object: "luci-rpc",
     method: "getDHCPLeases",
     expect: {
         "": {}
     }
 });
-function fluentdashboard_c(e) {
+function fluentdashboard_h(e) {
     return null === e || "object" != typeof e || Array.isArray(e) ? {} : e;
 }
-function fluentdashboard_u(e) {
+function fluentdashboard_m(e) {
     return "string" == typeof e ? e : "";
 }
-function fluentdashboard_m(e) {
+function p(e) {
     return "number" == typeof e && Number.isFinite(e) ? e : 0;
 }
-async function p(e, t) {
+async function fluentdashboard_f(e, t) {
     try {
         return await e;
     } catch  {
         return t;
     }
 }
-function fluentdashboard_f(e, t = !1) {
-    let a = e.getL3Device() ?? e.getDevice();
+function y(e, t = !1) {
+    let r = e.getL3Device() ?? e.getDevice();
     return {
         name: e.getName(),
         protocol: e.getI18n(),
@@ -162,24 +211,24 @@ function fluentdashboard_f(e, t = !1) {
         addresses: t ? e.getIP6Addrs() : e.getIPAddrs(),
         gateway: t ? e.getGateway6Addr() : e.getGatewayAddr(),
         uptime: e.getUptime(),
-        device: a?.getName() ?? "",
-        rx: a?.getRXBytes() ?? 0,
-        tx: a?.getTXBytes() ?? 0
+        device: r?.getName() ?? "",
+        rx: r?.getRXBytes() ?? 0,
+        tx: r?.getTXBytes() ?? 0
     };
 }
-async function h() {
-    await p(network.flushCache(), {});
-    let [e, t, a, r, n, l, c, u] = await Promise.all([
-        p(fluentdashboard_i(), {}),
-        p(fluentdashboard_o(), {}),
-        p(d(), {}),
-        p(network.getWANNetworks(), []),
-        p(network.getWAN6Networks(), []),
-        p(network.getNetworks(), []),
-        p(network.getWifiDevices(), []),
-        p(network.getWifiNetworks(), [])
-    ]), m = u.map((e)=>{
-        let t = c.find((t)=>t.getName() === e.getWifiDeviceName());
+async function g() {
+    await fluentdashboard_f(network.flushCache(), {});
+    let [e, t, r, a, s, n, d, u] = await Promise.all([
+        fluentdashboard_f(fluentdashboard_l(), {}),
+        fluentdashboard_f(fluentdashboard_o(), {}),
+        fluentdashboard_f(c(), {}),
+        fluentdashboard_f(network.getWANNetworks(), []),
+        fluentdashboard_f(network.getWAN6Networks(), []),
+        fluentdashboard_f(network.getNetworks(), []),
+        fluentdashboard_f(network.getWifiDevices(), []),
+        fluentdashboard_f(network.getWifiNetworks(), [])
+    ]), h = u.map((e)=>{
+        let t = d.find((t)=>t.getName() === e.getWifiDeviceName());
         return {
             radio: t?.getName() ?? e.getWifiDeviceName() ?? "",
             hardware: t?.getI18n() ?? "",
@@ -191,7 +240,7 @@ async function h() {
             encryption: e.getActiveEncryption()
         };
     });
-    for (let e of c)m.some((t)=>t.radio === e.getName()) || m.push({
+    for (let e of d)h.some((t)=>t.radio === e.getName()) || h.push({
         radio: e.getName(),
         hardware: e.getI18n(),
         up: e.isUp() && !e.isDisabled(),
@@ -202,194 +251,226 @@ async function h() {
         encryption: ""
     });
     return {
-        system: normalizeSystemSnapshot(e, t, a),
-        wan4: r.map((e)=>fluentdashboard_f(e)),
-        wan6: n.map((e)=>fluentdashboard_f(e, !0)),
-        interfaces: l.filter((e)=>"loopback" !== e.getName()).map((e)=>fluentdashboard_f(e)),
-        wireless: m,
+        system: normalizeSystemSnapshot(e, t, r),
+        wan4: a.map((e)=>y(e)),
+        wan6: s.map((e)=>y(e, !0)),
+        interfaces: n.filter((e)=>"loopback" !== e.getName()).map((e)=>y(e)),
+        wireless: h,
         updatedAt: new Date()
     };
 }
-async function y() {
-    let [e, t, a] = await Promise.all([
-        p(fluentdashboard_l(), {}),
-        p(network.getWifiNetworks(), []),
-        p(network.getHostHints(), null)
-    ]), r = await Promise.all(t.map(async (e)=>({
+async function w() {
+    let [e, t, r] = await Promise.all([
+        fluentdashboard_f(fluentdashboard_u(), {}),
+        fluentdashboard_f(network.getWifiNetworks(), []),
+        fluentdashboard_f(network.getHostHints(), null)
+    ]), a = await Promise.all(t.map(async (e)=>({
             wifi: e,
-            peers: await p(e.getAssocList(), [])
+            peers: await fluentdashboard_f(e.getAssocList(), [])
         }))), s = [];
-    for (let { wifi: e, peers: t } of r)for (let r of t){
-        let t = a?.getHostnameByMACAddr(r.mac) || a?.getIPAddrByMACAddr(r.mac) || a?.getIP6AddrByMACAddr(r.mac) || "";
+    for (let { wifi: e, peers: t } of a)for (let a of t){
+        let t = r?.getHostnameByMACAddr(a.mac) || r?.getIPAddrByMACAddr(a.mac) || r?.getIP6AddrByMACAddr(a.mac) || "";
         s.push({
             network: e.getActiveSSID() || e.getSSID() || e.getName(),
             hostname: t,
-            mac: r.mac,
-            signal: r.signal,
-            noise: r.noise ?? null,
-            rxRate: r.rx?.rate ?? 0,
-            txRate: r.tx?.rate ?? 0
+            mac: a.mac,
+            signal: a.signal,
+            noise: a.noise ?? null,
+            rxRate: a.rx?.rate ?? 0,
+            txRate: a.tx?.rate ?? 0
         });
     }
     return {
         leases: function(e) {
-            let t = fluentdashboard_c(e), a = [];
+            let t = fluentdashboard_h(e), r = [];
             if (Array.isArray(t.dhcp_leases)) for (let e of t.dhcp_leases){
-                let t = fluentdashboard_c(e);
-                a.push({
+                let t = fluentdashboard_h(e);
+                r.push({
                     family: "IPv4",
-                    hostname: fluentdashboard_u(t.hostname),
-                    address: fluentdashboard_u(t.ipaddr),
-                    identifier: fluentdashboard_u(t.macaddr),
-                    expires: !1 !== t.expires && fluentdashboard_m(t.expires)
+                    hostname: fluentdashboard_m(t.hostname),
+                    address: fluentdashboard_m(t.ipaddr),
+                    identifier: fluentdashboard_m(t.macaddr),
+                    expires: !1 !== t.expires && p(t.expires)
                 });
             }
             if (Array.isArray(t.dhcp6_leases)) for (let e of t.dhcp6_leases){
-                let t = fluentdashboard_c(e), r = Array.isArray(t.ip6addrs) ? t.ip6addrs.filter((e)=>"string" == typeof e) : [];
-                a.push({
+                let t = fluentdashboard_h(e), a = Array.isArray(t.ip6addrs) ? t.ip6addrs.filter((e)=>"string" == typeof e) : [];
+                r.push({
                     family: "IPv6",
-                    hostname: fluentdashboard_u(t.hostname),
-                    address: r.join(", ") || fluentdashboard_u(t.ip6addr),
-                    identifier: fluentdashboard_u(t.duid),
-                    expires: !1 !== t.expires && fluentdashboard_m(t.expires)
+                    hostname: fluentdashboard_m(t.hostname),
+                    address: a.join(", ") || fluentdashboard_m(t.ip6addr),
+                    identifier: fluentdashboard_m(t.duid),
+                    expires: !1 !== t.expires && p(t.expires)
                 });
             }
-            return a;
+            return r;
         }(e),
         clients: s
     };
 }
-function g(e) {
+function b(e) {
     return null == e || "" === e ? "-" : String(e);
 }
-function w(e) {
-    return E("span", {
-        class: `fluent-dashboard__status fluent-dashboard__status--${e ? "up" : "down"}`
-    }, e ? _("Online") : _("Offline"));
+function v(t) {
+    return jsx("span", {
+        class: `fluent-dashboard__status fluent-dashboard__status--${t ? "up" : "down"}`,
+        children: t ? _("Online") : _("Offline")
+    });
 }
-function b(e, t, a, r = !1) {
-    return E("section", {
-        class: `fluent-dashboard__card${r ? " fluent-dashboard__card--wide" : ""}`,
-        "data-dashboard-section": e
-    }, [
-        E("h2", {
-            class: "fluent-dashboard__card-title"
-        }, t),
-        E("div", {
-            class: "fluent-dashboard__card-content"
-        }, a)
-    ]);
-}
-function v(e, t, a) {
-    let r = t.length ? t.map((e)=>E("tr", {}, e.map((e)=>E("td", {}, e instanceof Node ? e : g(e))))) : [
-        E("tr", {}, E("td", {
-            class: "fluent-dashboard__empty",
-            colspan: e.length
-        }, a))
-    ];
-    return E("div", {
-        class: "fluent-dashboard__table-wrap"
-    }, E("table", {
-        class: "fluent-dashboard__table"
-    }, [
-        E("thead", {}, E("tr", {}, e.map((e)=>E("th", {}, e)))),
-        E("tbody", {}, r)
-    ]));
-}
-function A(e) {
-    return b("system", _("System"), E("dl", {
-        class: "fluent-dashboard__details"
-    }, [
-        [
-            _("Hostname"),
-            e.hostname
-        ],
-        [
-            _("Model"),
-            e.model
-        ],
-        [
-            _("Architecture"),
-            e.architecture
-        ],
-        [
-            _("Target Platform"),
-            e.target
-        ],
-        [
-            _("Firmware Version"),
-            e.firmware
-        ],
-        [
-            _("Kernel Version"),
-            e.kernel
-        ],
-        [
-            _("LuCI Version"),
-            e.luciVersion
-        ],
-        [
-            _("Local Time"),
-            formatLocalTime(e.localtime)
-        ],
-        [
-            _("Uptime"),
-            formatDuration(e.uptime)
-        ],
-        [
-            _("Load Average"),
-            formatLoad(e.load)
+function A(r, a, s, n = !1) {
+    return jsxs("div", {
+        class: `fluent-dashboard__card${n ? " fluent-dashboard__card--wide" : ""}`,
+        "data-dashboard-section": r,
+        children: [
+            jsx("h2", {
+                class: "fluent-dashboard__card-title",
+                children: a
+            }),
+            jsx("div", {
+                class: "fluent-dashboard__card-content",
+                children: s
+            })
         ]
-    ].flatMap(([e, t])=>[
-            E("dt", {}, e),
-            E("dd", {}, t instanceof Node ? t : g(t))
-        ])));
+    });
 }
-function S(t) {
-    let a = [
+function S(r, a, s) {
+    return jsx("div", {
+        class: "fluent-dashboard__table-wrap",
+        children: jsxs("table", {
+            class: "fluent-dashboard__table",
+            children: [
+                jsx("thead", {
+                    children: jsx("tr", {
+                        children: r.map((t)=>jsx("th", {
+                                children: t
+                            }))
+                    })
+                }),
+                jsx("tbody", {
+                    children: a.length ? a.map((t)=>jsx("tr", {
+                            children: t.map((t)=>jsx("td", {
+                                    children: t instanceof Node ? t : b(t)
+                                }))
+                        })) : jsx("tr", {
+                        children: jsx("td", {
+                            class: "fluent-dashboard__empty",
+                            colSpan: r.length,
+                            children: s
+                        })
+                    })
+                })
+            ]
+        })
+    });
+}
+function x(t) {
+    return A("system", _("System"), jsx("div", {
+        class: "fluent-dashboard__details",
+        children: [
+            [
+                _("Hostname"),
+                t.hostname
+            ],
+            [
+                _("Model"),
+                t.model
+            ],
+            [
+                _("Architecture"),
+                t.architecture
+            ],
+            [
+                _("Target Platform"),
+                t.target
+            ],
+            [
+                _("Firmware Version"),
+                t.firmware
+            ],
+            [
+                _("Kernel Version"),
+                t.kernel
+            ],
+            [
+                _("LuCI Version"),
+                t.luciVersion
+            ],
+            [
+                _("Local Time"),
+                formatLocalTime(t.localtime)
+            ],
+            [
+                _("Uptime"),
+                formatDuration(t.uptime)
+            ],
+            [
+                _("Load Average"),
+                formatLoad(t.load)
+            ]
+        ].flatMap(([t, r])=>[
+                jsx("div", {
+                    class: "fluent-dashboard__details-label",
+                    children: t
+                }),
+                jsx("div", {
+                    class: "fluent-dashboard__details-value",
+                    children: r instanceof Node ? r : b(r)
+                })
+            ])
+    }));
+}
+function I(a) {
+    let s = [
         [
             _("Memory"),
-            t.memory
+            a.memory
         ],
         [
             _("Swap"),
-            t.swap
+            a.swap
         ],
         [
             _("Root storage"),
-            t.root
+            a.root
         ],
         [
             _("Temporary storage"),
-            t.tmp
+            a.tmp
         ]
     ];
-    return b("resources", _("Resources"), a.map(([t, a])=>{
-        let r, s;
-        return r = Math.max(0, a.total - a.free), s = usedPercent(a), E("div", {
-            class: "fluent-dashboard__meter"
-        }, [
-            E("div", {
-                class: "fluent-dashboard__meter-label"
-            }, [
-                E("span", {}, t),
-                E("span", {}, `${formatBytes(r)} / ${formatBytes(a.total)}`)
-            ]),
-            E("div", {
-                class: "fluent-dashboard__meter-track",
-                role: "progressbar",
-                "aria-valuemin": 0,
-                "aria-valuemax": 100,
-                "aria-valuenow": Math.round(s)
-            }, E("span", {
-                class: "fluent-dashboard__meter-value",
-                style: `width:${s.toFixed(1)}%`
-            }))
-        ]);
+    return A("resources", _("Resources"), s.map(([a, s])=>{
+        let n, i;
+        return n = Math.max(0, s.total - s.free), i = usedPercent(s), jsxs("div", {
+            class: "fluent-dashboard__meter",
+            children: [
+                jsxs("div", {
+                    class: "fluent-dashboard__meter-label",
+                    children: [
+                        jsx("span", {
+                            children: a
+                        }),
+                        jsx("span", {
+                            children: `${formatBytes(n)} / ${formatBytes(s.total)}`
+                        })
+                    ]
+                }),
+                jsx("div", {
+                    class: "fluent-dashboard__meter-track",
+                    role: "progressbar",
+                    "aria-valuemin": 0,
+                    "aria-valuemax": 100,
+                    "aria-valuenow": Math.round(i),
+                    children: jsx("span", {
+                        class: "fluent-dashboard__meter-value",
+                        style: `width:${i.toFixed(1)}%`
+                    })
+                })
+            ]
+        });
     }));
 }
-function x(e) {
-    let a = [
+function N(e) {
+    let t = [
         ...e.wan4.map((e)=>[
                 "IPv4",
                 e
@@ -399,7 +480,7 @@ function x(e) {
                 e
             ])
     ];
-    return b("internet", _("Internet"), v([
+    return A("internet", _("Internet"), S([
         _("Family"),
         _("Interface"),
         _("Status"),
@@ -407,75 +488,76 @@ function x(e) {
         _("Address"),
         _("Gateway"),
         _("Uptime")
-    ], a.map(([e, a])=>[
+    ], t.map(([e, t])=>[
             e,
-            a.name,
-            w(a.up),
-            a.protocol,
-            a.addresses.join(", "),
-            a.gateway,
-            formatDuration(a.uptime)
+            t.name,
+            v(t.up),
+            t.protocol,
+            t.addresses.join(", "),
+            t.gateway,
+            formatDuration(t.uptime)
         ]), _("No Internet connection information is available.")), !0);
 }
-function I(t) {
-    return b("interfaces", _("Interfaces"), v([
+function D(e) {
+    return A("interfaces", _("Interfaces"), S([
         _("Interface"),
         _("Device"),
         _("Status"),
         _("Address"),
         _("Received"),
         _("Transmitted")
-    ], t.map((t)=>[
-            t.name,
-            t.device,
-            w(t.up),
-            t.addresses.join(", "),
-            formatBytes(t.rx),
-            formatBytes(t.tx)
+    ], e.map((e)=>[
+            e.name,
+            e.device,
+            v(e.up),
+            e.addresses.join(", "),
+            formatBytes(e.rx),
+            formatBytes(e.tx)
         ]), _("No network interfaces were found.")), !0);
 }
-function N(e) {
-    return b("wireless", _("Wireless"), v([
+function k(t) {
+    return A("wireless", _("Wireless"), S([
         _("Radio"),
         _("SSID"),
         _("Status"),
         _("Mode"),
         _("Channel"),
         _("Encryption")
-    ], e.map((e)=>[
-            E("span", {
-                title: e.hardware
-            }, g(e.radio)),
-            e.ssid,
-            w(e.up),
-            e.mode,
-            null === e.channel ? "-" : e.frequency ? `${e.channel} (${e.frequency} GHz)` : e.channel,
-            e.encryption
+    ], t.map((t)=>[
+            jsx("span", {
+                title: t.hardware,
+                children: b(t.radio)
+            }),
+            t.ssid,
+            v(t.up),
+            t.mode,
+            null === t.channel ? "-" : t.frequency ? `${t.channel} (${t.frequency} GHz)` : t.channel,
+            t.encryption
         ]), _("No wireless radios were found.")), !0);
 }
-function D(e) {
-    return b("leases", _("Active DHCP Leases"), v([
+function C(e) {
+    return A("leases", _("Active DHCP Leases"), S([
         _("Family"),
         _("Hostname"),
         _("Address"),
         _("MAC / DUID"),
         _("Expires")
     ], e.map((e)=>{
-        var a;
+        var t;
         return [
             e.family,
             e.hostname,
             e.address,
             e.identifier,
-            !1 === (a = e.expires) ? _("Unlimited") : a <= 0 ? _("Expired") : formatDuration(a)
+            !1 === (t = e.expires) ? _("Unlimited") : t <= 0 ? _("Expired") : formatDuration(t)
         ];
     }), _("There are no active DHCP leases.")), !0);
 }
-function k(e) {
+function P(e) {
     return e > 0 ? `${(e / 1000).toFixed(1)} ${_("Mbit/s")}` : "-";
 }
-function C(e) {
-    return b("clients", _("Wireless Clients"), v([
+function M(e) {
+    return A("clients", _("Wireless Clients"), S([
         _("Network"),
         _("Host"),
         _("MAC address"),
@@ -486,18 +568,18 @@ function C(e) {
             e.hostname,
             e.mac,
             null === e.noise ? `${e.signal} dBm` : `${e.signal} / ${e.noise} dBm`,
-            `${k(e.rxRate)} / ${k(e.txRate)}`
+            `${P(e.rxRate)} / ${P(e.txRate)}`
         ]), _("No wireless clients are connected.")), !0);
 }
-class P extends L.view {
+class $ extends L.view {
     handleSave = null;
     handleSaveApply = null;
     handleReset = null;
     root = null;
     load() {
         return Promise.all([
-            h(),
-            y()
+            g(),
+            w()
         ]);
     }
     replaceSection(e, t) {
@@ -505,57 +587,68 @@ class P extends L.view {
     }
     async refreshSummary() {
         if (!this.root?.isConnected) return;
-        let e = await h();
+        let e = await g();
         if (!this.root?.isConnected) return;
-        this.replaceSection("system", A(e.system)), this.replaceSection("resources", S(e.system)), this.replaceSection("internet", x(e)), this.replaceSection("interfaces", I(e.interfaces)), this.replaceSection("wireless", N(e.wireless));
+        this.replaceSection("system", x(e.system)), this.replaceSection("resources", I(e.system)), this.replaceSection("internet", N(e)), this.replaceSection("interfaces", D(e.interfaces)), this.replaceSection("wireless", k(e.wireless));
         let t = this.root.querySelector("[data-dashboard-updated]");
         t && (t.textContent = e.updatedAt.toLocaleTimeString());
     }
     async refreshDetails() {
         if (!this.root?.isConnected) return;
-        let e = await y();
-        this.root?.isConnected && (this.replaceSection("leases", D(e.leases)), this.replaceSection("clients", C(e.clients)));
+        let e = await w();
+        this.root?.isConnected && (this.replaceSection("leases", C(e.leases)), this.replaceSection("clients", M(e.clients)));
     }
-    render([e, t]) {
-        return document.getElementById("fluent-dashboard-styles") || document.head.appendChild(E("link", {
+    render([r, a]) {
+        return document.getElementById("fluent-dashboard-styles") || document.head.appendChild(jsx("link", {
             id: "fluent-dashboard-styles",
             rel: "stylesheet",
             href: L.resource("view/fluentdashboard/index.css")
-        })), this.root = E("div", {
-            class: "fluent-dashboard"
-        }, [
-            E("header", {
-                class: "fluent-dashboard__header"
-            }, [
-                E("div", {}, [
-                    E("h1", {}, _("Fluent Dashboard")),
-                    E("p", {}, _("A live overview of this OpenWrt device."))
-                ]),
-                E("p", {
-                    class: "fluent-dashboard__updated"
-                }, [
-                    _("Updated"),
-                    " ",
-                    E("time", {
-                        "data-dashboard-updated": ""
-                    }, e.updatedAt.toLocaleTimeString())
-                ])
-            ]),
-            E("div", {
-                class: "fluent-dashboard__grid"
-            }, [
-                A(e.system),
-                S(e.system),
-                x(e),
-                I(e.interfaces),
-                N(e.wireless),
-                D(t.leases),
-                C(t.clients)
-            ])
-        ]), poll.add(()=>this.refreshSummary(), 5), poll.add(()=>this.refreshDetails(), 15), this.root;
+        })), this.root = jsxs("div", {
+            class: "fluent-dashboard",
+            children: [
+                jsxs("div", {
+                    class: "fluent-dashboard__header",
+                    children: [
+                        jsxs("div", {
+                            children: [
+                                jsx("h1", {
+                                    children: _("Fluent Dashboard")
+                                }),
+                                jsx("p", {
+                                    children: _("A live overview of this OpenWrt device.")
+                                })
+                            ]
+                        }),
+                        jsxs("p", {
+                            class: "fluent-dashboard__updated",
+                            children: [
+                                _("Updated"),
+                                " ",
+                                jsx("time", {
+                                    "data-dashboard-updated": "",
+                                    children: r.updatedAt.toLocaleTimeString()
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                jsxs("div", {
+                    class: "fluent-dashboard__grid",
+                    children: [
+                        x(r.system),
+                        I(r.system),
+                        N(r),
+                        D(r.interfaces),
+                        k(r.wireless),
+                        C(a.leases),
+                        M(a.clients)
+                    ]
+                })
+            ]
+        }), poll.add(()=>this.refreshSummary(), 5), poll.add(()=>this.refreshDetails(), 15), this.root;
     }
 }
-const main = P;
+const main = $;
 
 
 return main;

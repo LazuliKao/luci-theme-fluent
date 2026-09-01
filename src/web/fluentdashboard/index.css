@@ -1,8 +1,9 @@
 .fluent-dashboard {
-  --fluent-dashboard-border: color-mix(in srgb, currentColor 16%, transparent);
-  --fluent-dashboard-muted: color-mix(in srgb, currentColor 68%, transparent);
-  --fluent-dashboard-surface: color-mix(in srgb, Canvas 96%, currentColor 4%);
-  color: CanvasText;
+  --fluent-dashboard-border: var(--fluent-card-border, var(--inputborder-color, color-mix(in srgb, currentColor 16%, transparent)));
+  --fluent-dashboard-muted: var(--fluent-text-secondary, color-mix(in srgb, currentColor 68%, transparent));
+  --fluent-dashboard-surface: var(--fluent-card-bg, rgba(var(--primary-rgbbody, 255, 255, 255), 0.7));
+  --fluent-dashboard-shadow: var(--fluent-card-shadow, 0 0.1rem 0.3rem var(--input-boxcolor, color-mix(in srgb, CanvasText 8%, transparent)));
+  color: var(--fluent-text, CanvasText);
   container-type: inline-size;
 }
 
@@ -18,8 +19,10 @@
   gap: 1rem;
   margin-block-end: 1rem;
   padding: 1.25rem;
+  z-index: 0;
   overflow: hidden;
   color: HighlightText;
+  position: relative;
   background: linear-gradient(120deg, Highlight, color-mix(in srgb, Highlight 68%, CanvasText));
   border-radius: 0.75rem;
 }
@@ -59,7 +62,7 @@
   background: var(--fluent-dashboard-surface);
   border: 1px solid var(--fluent-dashboard-border);
   border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 1rem color-mix(in srgb, CanvasText 8%, transparent);
+  box-shadow: var(--fluent-dashboard-shadow);
 }
 
 .fluent-dashboard__card--wide {
@@ -97,13 +100,12 @@
   margin: 0;
 }
 
-.fluent-dashboard__details dt {
+.fluent-dashboard__details-label {
   color: var(--fluent-dashboard-muted);
 }
 
-.fluent-dashboard__details dd {
+.fluent-dashboard__details-value {
   min-width: 0;
-  margin: 0;
   overflow-wrap: anywhere;
   font-weight: 550;
 }
@@ -226,7 +228,7 @@
     gap: 0.2rem;
   }
 
-  .fluent-dashboard__details dd + dt {
+  .fluent-dashboard__details-value + .fluent-dashboard__details-label {
     margin-block-start: 0.45rem;
   }
 

@@ -11696,6 +11696,64 @@ body[data-page^="admin-services-appfilter"] > .main > .main-right > #maincontent
   background-color: var(--background-color-medium);
 }
 
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent {
+  --pb-input-bg: var(--fluent-input-bg);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-preview-box {
+  background: var(--fluent-card-bg);
+  color: var(--fluent-text-secondary);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-tab:hover:not(.is-active) {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border-hover);
+  color: var(--fluent-text);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-mode-card {
+  background: var(--fluent-card-bg);
+  border-color: var(--fluent-card-border);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-inline-field {
+  background: var(--fluent-input-bg);
+  border-color: var(--fluent-input-border);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-card-title {
+  color: var(--fluent-text);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-card-subtitle, :root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-inline-title, :root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-inline-description, :root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-tab {
+  color: var(--fluent-text-secondary);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-tab-bar {
+  background: var(--fluent-bg-hover);
+  border-color: var(--fluent-border);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-tab.is-active {
+  background: var(--fluent-card-bg);
+  color: var(--fluent-text);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-choice-button:not(.is-on) {
+  background: var(--fluent-btn-secondary-bg);
+  border-color: var(--fluent-btn-secondary-border);
+  color: var(--fluent-text);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-sel-list {
+  background: var(--fluent-card-bg);
+  border-color: var(--fluent-card-border);
+}
+
+:root[data-theme="dark"] body[data-page="admin-services-pushbot"] > .main > .main-right > #maincontent .pushbot-sel-item {
+  color: var(--fluent-text);
+}
+
 :root, [data-theme="light"] {
   --lightningcss-light: initial;
   --lightningcss-dark: ;

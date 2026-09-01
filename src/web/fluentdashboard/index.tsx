@@ -211,64 +211,64 @@ function valueOrDash(value: string | number | null | undefined): string {
 }
 
 function statusPill(up: boolean): HTMLElement {
-  return E("span", { class: `fluent-dashboard__status fluent-dashboard__status--${up ? "up" : "down"}` }, up ? _("Online") : _("Offline"));
+  return <span class={`fluent-dashboard__status fluent-dashboard__status--${up ? "up" : "down"}`}>{up ? _("Online") : _("Offline")}</span>;
 }
 
 function definitionList(rows: Array<[string, string | number | Node]>): HTMLElement {
-  return E(
-    "dl",
-    { class: "fluent-dashboard__details" },
-    rows.flatMap(([label, value]) => [E("dt", {}, label), E("dd", {}, value instanceof Node ? value : valueOrDash(value))]),
+  return (
+    <div class="fluent-dashboard__details">
+      {rows.flatMap(([label, value]) => [
+        <div class="fluent-dashboard__details-label">{label}</div>,
+        <div class="fluent-dashboard__details-value">{value instanceof Node ? value : valueOrDash(value)}</div>,
+      ])}
+    </div>
   );
 }
 
 function card(name: string, title: string, content: Node | Node[], wide = false): HTMLElement {
-  return E("section", { class: `fluent-dashboard__card${wide ? " fluent-dashboard__card--wide" : ""}`, "data-dashboard-section": name }, [
-    E("h2", { class: "fluent-dashboard__card-title" }, title),
-    E("div", { class: "fluent-dashboard__card-content" }, content),
-  ]);
+  return (
+    <div class={`fluent-dashboard__card${wide ? " fluent-dashboard__card--wide" : ""}`} data-dashboard-section={name}>
+      <h2 class="fluent-dashboard__card-title">{title}</h2>
+      <div class="fluent-dashboard__card-content">{content}</div>
+    </div>
+  );
 }
 
 function renderTable(headers: string[], rows: Array<Array<string | number | Node>>, emptyMessage: string): HTMLElement {
-  const body = rows.length
-    ? rows.map((row) =>
-        E(
-          "tr",
-          {},
-          row.map((cell) => E("td", {}, cell instanceof Node ? cell : valueOrDash(cell))),
-        ),
-      )
-    : [E("tr", {}, E("td", { class: "fluent-dashboard__empty", colspan: headers.length }, emptyMessage))];
-
-  return E(
-    "div",
-    { class: "fluent-dashboard__table-wrap" },
-    E("table", { class: "fluent-dashboard__table" }, [
-      E(
-        "thead",
-        {},
-        E(
-          "tr",
-          {},
-          headers.map((header) => E("th", {}, header)),
-        ),
-      ),
-      E("tbody", {}, body),
-    ]),
+  return (
+    <div class="fluent-dashboard__table-wrap">
+      <table class="fluent-dashboard__table">
+        <thead>
+          <tr>{headers.map((header) => <th>{header}</th>)}</tr>
+        </thead>
+        <tbody>
+          {rows.length ? (
+            rows.map((row) => <tr>{row.map((cell) => <td>{cell instanceof Node ? cell : valueOrDash(cell)}</td>)}</tr>)
+          ) : (
+            <tr>
+              <td class="fluent-dashboard__empty" colSpan={headers.length}>{emptyMessage}</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
 function resourceMeter(label: string, storage: StorageSnapshot): HTMLElement {
   const used = Math.max(0, storage.total - storage.free);
   const percent = usedPercent(storage);
-  return E("div", { class: "fluent-dashboard__meter" }, [
-    E("div", { class: "fluent-dashboard__meter-label" }, [E("span", {}, label), E("span", {}, `${formatBytes(used)} / ${formatBytes(storage.total)}`)]),
-    E(
-      "div",
-      { class: "fluent-dashboard__meter-track", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": 100, "aria-valuenow": Math.round(percent) },
-      E("span", { class: "fluent-dashboard__meter-value", style: `width:${percent.toFixed(1)}%` }),
-    ),
-  ]);
+  return (
+    <div class="fluent-dashboard__meter">
+      <div class="fluent-dashboard__meter-label">
+        <span>{label}</span>
+        <span>{`${formatBytes(used)} / ${formatBytes(storage.total)}`}</span>
+      </div>
+      <div class="fluent-dashboard__meter-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(percent)}>
+        <span class="fluent-dashboard__meter-value" style={`width:${percent.toFixed(1)}%`}></span>
+      </div>
+    </div>
+  );
 }
 
 function renderSystem(system: SystemSnapshot): HTMLElement {
@@ -338,7 +338,7 @@ function renderWireless(items: WirelessRow[]): HTMLElement {
     renderTable(
       [_("Radio"), _("SSID"), _("Status"), _("Mode"), _("Channel"), _("Encryption")],
       items.map((item) => [
-        E("span", { title: item.hardware }, valueOrDash(item.radio)),
+        <span title={item.hardware}>{valueOrDash(item.radio)}</span>,
         item.ssid,
         statusPill(item.up),
         item.mode,
@@ -395,7 +395,7 @@ function renderClients(clients: ClientRow[]): HTMLElement {
 
 function ensureStylesheet(): void {
   if (document.getElementById("fluent-dashboard-styles")) return;
-  document.head.appendChild(E("link", { id: "fluent-dashboard-styles", rel: "stylesheet", href: L.resource("view/fluentdashboard/index.css") }));
+  document.head.appendChild(<link id="fluent-dashboard-styles" rel="stylesheet" href={L.resource("view/fluentdashboard/index.css")} />);
 }
 
 class mainImpl extends L.view {
@@ -435,21 +435,28 @@ class mainImpl extends L.view {
 
   render([summary, details]: [SummarySnapshot, DetailSnapshot]): HTMLElement {
     ensureStylesheet();
-    this.root = E("div", { class: "fluent-dashboard" }, [
-      E("header", { class: "fluent-dashboard__header" }, [
-        E("div", {}, [E("h1", {}, _("Fluent Dashboard")), E("p", {}, _("A live overview of this OpenWrt device."))]),
-        E("p", { class: "fluent-dashboard__updated" }, [_("Updated"), " ", E("time", { "data-dashboard-updated": "" }, summary.updatedAt.toLocaleTimeString())]),
-      ]),
-      E("div", { class: "fluent-dashboard__grid" }, [
-        renderSystem(summary.system),
-        renderResources(summary.system),
-        renderInternet(summary),
-        renderInterfaces(summary.interfaces),
-        renderWireless(summary.wireless),
-        renderLeases(details.leases),
-        renderClients(details.clients),
-      ]),
-    ]);
+    this.root = (
+      <div class="fluent-dashboard">
+        <div class="fluent-dashboard__header">
+          <div>
+            <h1>{_("Fluent Dashboard")}</h1>
+            <p>{_("A live overview of this OpenWrt device.")}</p>
+          </div>
+          <p class="fluent-dashboard__updated">
+            {_("Updated")} <time data-dashboard-updated="">{summary.updatedAt.toLocaleTimeString()}</time>
+          </p>
+        </div>
+        <div class="fluent-dashboard__grid">
+          {renderSystem(summary.system)}
+          {renderResources(summary.system)}
+          {renderInternet(summary)}
+          {renderInterfaces(summary.interfaces)}
+          {renderWireless(summary.wireless)}
+          {renderLeases(details.leases)}
+          {renderClients(details.clients)}
+        </div>
+      </div>
+    );
     poll.add(() => this.refreshSummary(), 5);
     poll.add(() => this.refreshDetails(), 15);
     return this.root;
