@@ -9,15 +9,18 @@ PKG_VERSION:=1.0.9
 PKG_RELEASE:=1
 PKG_LICENSE:=Apache-2.0
 
+FLUENT_LITE_SOURCE_DIR:=$(CURDIR)
+FLUENT_FULL_SOURCE_DIR:=$(abspath $(CURDIR)/../luci-theme-fluent)
+
 define LUCI_DESCRIPTION
 Core FluentUI theme styling for LuCI without optional menu, updater, log, and application enhancements.
 endef
 
 define Build/Prepare/$(PKG_NAME)
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/htdocs/* $(PKG_BUILD_DIR)/htdocs/
-	$(CP) $(TOPDIR)/package/luci-theme-fluent/root/* $(PKG_BUILD_DIR)/root/
-	$(CP) ./htdocs/* $(PKG_BUILD_DIR)/htdocs/
-	$(CP) ./root/* $(PKG_BUILD_DIR)/root/
+	$(CP) $(FLUENT_FULL_SOURCE_DIR)/htdocs/* $(PKG_BUILD_DIR)/htdocs/
+	$(CP) $(FLUENT_FULL_SOURCE_DIR)/root/* $(PKG_BUILD_DIR)/root/
+	$(CP) $(FLUENT_LITE_SOURCE_DIR)/htdocs/* $(PKG_BUILD_DIR)/htdocs/
+	$(CP) $(FLUENT_LITE_SOURCE_DIR)/root/* $(PKG_BUILD_DIR)/root/
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
 	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
