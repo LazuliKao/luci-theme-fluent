@@ -175,6 +175,10 @@
   border-radius: var(--fluent-radius-lg);
   box-shadow: var(--fluent-shadow-lg);
 
+  body[data-sticky-action-bar="0"] & {
+    position: static;
+  }
+
   > form[method="post"] {
     display: inline-flex;
   }

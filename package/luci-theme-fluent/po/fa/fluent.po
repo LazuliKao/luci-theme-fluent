@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-13 21:39+0800\n"
+"POT-Creation-Date: 2026-09-05 23:37+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -398,6 +398,16 @@ msgstr "نسخه نصب‌شده"
 
 msgid "Installing package"
 msgstr "در حال نصب بسته"
+
+msgid "Keep action bar visible while scrolling"
+msgstr "نوار عملگرها را هنگام پیمایش، قابل مشاهده نگه دارید."
+
+msgid ""
+"Keep Save, Apply, and Reset actions fixed at the bottom of the viewport "
+"while scrolling."
+msgstr ""
+"دکمه‌های ذخیره، اعمال و بازنشانی را در پایین صفحه ثابت نگه دارید تا هنگام "
+"پیمایش همیشه قابل دسترس باشند."
 
 msgid "Large"
 msgstr "بزرگ"

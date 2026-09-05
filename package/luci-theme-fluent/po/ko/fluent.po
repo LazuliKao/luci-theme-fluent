@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-13 21:39+0800\n"
+"POT-Creation-Date: 2026-09-05 23:38+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -368,6 +368,14 @@ msgstr "설치된 버전"
 
 msgid "Installing package"
 msgstr "패키지 설치 중"
+
+msgid "Keep action bar visible while scrolling"
+msgstr "스크롤 시 작업 표시줄을 계속 보이게 합니다."
+
+msgid ""
+"Keep Save, Apply, and Reset actions fixed at the bottom of the viewport "
+"while scrolling."
+msgstr "스크롤 시 저장, 적용 및 초기화 작업을 화면 하단에 고정합니다."
 
 msgid "Large"
 msgstr "큼"

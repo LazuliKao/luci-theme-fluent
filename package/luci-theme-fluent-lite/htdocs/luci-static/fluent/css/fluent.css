@@ -2721,6 +2721,10 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   bottom: 0;
 }
 
+body[data-sticky-action-bar="0"] .cbi-page-actions {
+  position: static;
+}
+
 .cbi-page-actions > form[method="post"] {
   display: inline-flex;
 }

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-13 21:39+0800\n"
+"POT-Creation-Date: 2026-09-05 23:38+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -402,6 +402,16 @@ msgstr "Version installée"
 
 msgid "Installing package"
 msgstr "Installation du paquet"
+
+msgid "Keep action bar visible while scrolling"
+msgstr "Garder la barre d'actions visible pendant le défilement"
+
+msgid ""
+"Keep Save, Apply, and Reset actions fixed at the bottom of the viewport "
+"while scrolling."
+msgstr ""
+"Afficher les boutons Enregistrer, Appliquer et Réinitialiser en bas de "
+"l'écran pendant le défilement."
 
 msgid "Large"
 msgstr "Grand"

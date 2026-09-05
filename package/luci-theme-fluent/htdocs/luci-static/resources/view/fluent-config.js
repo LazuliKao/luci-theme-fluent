@@ -44,7 +44,7 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
     let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
@@ -89,7 +89,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/utils/update.ts
@@ -611,6 +611,7 @@ const FLUENT_DEFAULTS = {
     tab_animation: "1",
     prefers_reduced_motion: "1",
     loading_bar: "1",
+    sticky_action_bar: "1",
     uci_changes_preview: "1",
     direction_mode: "auto",
     progressbar_text_position: "top-start"
@@ -869,6 +870,10 @@ const registerGeneralTab = (l, r = !0)=>{
     if (r) {
         let r = l.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
         r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, omitDefaultValue(r);
+    }
+    {
+        let r = l.taboption("general", general_e.Flag, "sticky_action_bar", _("Keep action bar visible while scrolling"), _("Keep Save, Apply, and Reset actions fixed at the bottom of the viewport while scrolling."));
+        r.default = fluentFlagDefault(FLUENT_DEFAULTS.sticky_action_bar) ? r.enabled : r.disabled, omitDefaultValue(r);
     }
     {
         let o = l.taboption("general", general_e.ListValue, "progressbar_text_position", _("Progress bar text position"));

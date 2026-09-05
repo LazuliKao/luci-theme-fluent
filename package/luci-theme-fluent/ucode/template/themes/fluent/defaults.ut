@@ -29,6 +29,7 @@
   defaults.tab_animation = "1";
   defaults.prefers_reduced_motion = "1";
   defaults.loading_bar = "1";
+  defaults.sticky_action_bar = "1";
   defaults.uci_changes_preview = "1";
   defaults.direction_mode = "auto";
   defaults.progressbar_text_position = "top-start";

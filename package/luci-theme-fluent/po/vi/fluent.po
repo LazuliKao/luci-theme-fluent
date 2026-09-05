@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-13 21:39+0800\n"
+"POT-Creation-Date: 2026-09-05 23:38+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -399,6 +399,14 @@ msgstr "Phiên bản đã cài đặt"
 
 msgid "Installing package"
 msgstr "Đang cài đặt gói"
+
+msgid "Keep action bar visible while scrolling"
+msgstr "Giữ thanh điều khiển hiển thị khi cuộn trang."
+
+msgid ""
+"Keep Save, Apply, and Reset actions fixed at the bottom of the viewport "
+"while scrolling."
+msgstr "Giữ các nút Lưu, Áp dụng và Khôi phục cố định ở cuối màn hình khi cuộn."
 
 msgid "Large"
 msgstr "Lớn"

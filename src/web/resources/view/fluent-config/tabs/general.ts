@@ -53,6 +53,18 @@ export const registerGeneralTab = (section: LuCI.form.TypedSection, includeCusto
   }
 
   {
+    const option = section.taboption(
+      "general",
+      form.Flag,
+      "sticky_action_bar",
+      _("Keep action bar visible while scrolling"),
+      _("Keep Save, Apply, and Reset actions fixed at the bottom of the viewport while scrolling."),
+    );
+    option.default = fluentFlagDefault(FLUENT_DEFAULTS.sticky_action_bar) ? option.enabled : option.disabled;
+    omitDefaultValue(option);
+  }
+
+  {
     const option = section.taboption("general", form.ListValue, "progressbar_text_position", _("Progress bar text position"));
     option.value("top-start", _("Above bar, start"));
     option.value("bottom-start", _("Below bar, start"));

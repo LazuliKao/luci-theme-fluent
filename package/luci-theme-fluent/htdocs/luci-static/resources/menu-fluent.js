@@ -44,7 +44,7 @@ __webpack_require__.d(__webpack_exports__, {
   main: () => (/* binding */ main)
 });
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-factory.ts
 const Fragment = Symbol.for("jsx.fragment");
 function jsx_factory_e(e, t) {
     let { children: n, ...r } = null === t || "object" != typeof t || Array.isArray(t) ? {} : t, o = function e(t, n = []) {
@@ -89,7 +89,7 @@ function jsxDEV(t, n) {
     return jsx_factory_e(t, n);
 }
 
-;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_cfc1ec583b455be203cca2d0660c10a7/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
+;// CONCATENATED MODULE: ../node_modules/.pnpm/@lazulikao+luci-types@https_685a81b9ead15f36368ce6e6ebcf4a27/node_modules/@lazulikao/luci-types/src/jsx/jsx-runtime.ts
 
 
 ;// CONCATENATED MODULE: ./web/resources/menu-layout.ts

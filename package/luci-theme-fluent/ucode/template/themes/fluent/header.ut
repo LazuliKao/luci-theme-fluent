@@ -49,6 +49,7 @@
   let tab_animation = defaults.tab_animation;
   let prefers_reduced_motion = defaults.prefers_reduced_motion;
   let loading_bar = defaults.loading_bar;
+  let sticky_action_bar = defaults.sticky_action_bar;
   let page_bg = defaults.page_bg;
   let card_bg = defaults.card_bg;
   let sidebar_bg = defaults.sidebar_bg;
@@ -106,6 +107,7 @@
     tab_animation = cfg.get_first('fluent', 'global', 'tab_animation') || tab_animation;
     prefers_reduced_motion = cfg.get_first('fluent', 'global', 'prefers_reduced_motion') || prefers_reduced_motion;
     loading_bar = cfg.get_first('fluent', 'global', 'loading_bar') || loading_bar;
+    sticky_action_bar = cfg.get_first('fluent', 'global', 'sticky_action_bar') || sticky_action_bar;
     progressbar_text_position = cfg.get_first('fluent', 'global', 'progressbar_text_position') || progressbar_text_position;
     menu_layout = cfg.get_first('fluent', 'global', 'menu_layout') || null;
 
@@ -327,6 +329,7 @@
   data-tab-animation="{{ tab_animation }}"
   data-prefers-reduced-motion="{{ prefers_reduced_motion }}"
   data-loading-bar="{{ loading_bar }}"
+  data-sticky-action-bar="{{ sticky_action_bar }}"
   data-progressbar-text="{{ progressbar_text_position }}"
   data-sidebar-state="expanded">
   {% if (ctx.authsession) { %}

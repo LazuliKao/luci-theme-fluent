@@ -76,6 +76,7 @@ const FLUENT_DEFAULTS = {
     tab_animation: "1",
     prefers_reduced_motion: "1",
     loading_bar: "1",
+    sticky_action_bar: "1",
     uci_changes_preview: "1",
     direction_mode: "auto",
     progressbar_text_position: "top-start"
@@ -306,6 +307,10 @@ const registerGeneralTab = (l, r = !0)=>{
     if (r) {
         let r = l.taboption("general", general_e.Flag, "custom_select", _("Use Fluent custom select dropdowns"), _("Replace native select elements with the theme's custom dropdown widget."));
         r.default = fluentFlagDefault(FLUENT_DEFAULTS.custom_select) ? r.enabled : r.disabled, omitDefaultValue(r);
+    }
+    {
+        let r = l.taboption("general", general_e.Flag, "sticky_action_bar", _("Keep action bar visible while scrolling"), _("Keep Save, Apply, and Reset actions fixed at the bottom of the viewport while scrolling."));
+        r.default = fluentFlagDefault(FLUENT_DEFAULTS.sticky_action_bar) ? r.enabled : r.disabled, omitDefaultValue(r);
     }
     {
         let o = l.taboption("general", general_e.ListValue, "progressbar_text_position", _("Progress bar text position"));

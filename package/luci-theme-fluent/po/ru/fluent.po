@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-theme-fluent\n"
-"POT-Creation-Date: 2026-08-13 21:39+0800\n"
+"POT-Creation-Date: 2026-09-05 23:37+0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: TranslateGemma\n"
 "Language-Team: LuCI Theme Fluent\n"
@@ -393,6 +393,16 @@ msgstr "Установленная версия"
 
 msgid "Installing package"
 msgstr "Установка пакета"
+
+msgid "Keep action bar visible while scrolling"
+msgstr "Оставлять панель действий видимой при прокрутке"
+
+msgid ""
+"Keep Save, Apply, and Reset actions fixed at the bottom of the viewport "
+"while scrolling."
+msgstr ""
+"Фиксировать кнопки 'Сохранить', 'Применить' и 'Сброс' внизу экрана во время "
+"прокрутки."
 
 msgid "Large"
 msgstr "Большой"
