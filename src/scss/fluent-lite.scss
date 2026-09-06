@@ -7,3 +7,18 @@
 @use "layouts/main";
 @use "themes/light";
 @use "themes/dark";
+
+// Lite omits optional navigation feedback and menu search affordances.
+.fluent-loading-bar {
+  display: none;
+}
+
+body > div.main > div.main-right > header {
+  .header__brand {
+    flex: 1 1 auto;
+  }
+
+  .header__search-slot {
+    display: none;
+  }
+}
