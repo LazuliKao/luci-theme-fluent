@@ -106,7 +106,7 @@ jobs:
           test -s package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css
           test -s package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js
           test -s package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js
-          test -s package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css
+          test -s package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css.gz
           test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
           test -s package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
           test -s package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
@@ -114,7 +114,7 @@ jobs:
           grep -q '"require network"' package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
           grep -q 'return main;' package/luci-mod-fluentdashboard/htdocs/luci-static/resources/view/fluentdashboard/index.js
           full_size=$(cat package/luci-theme-fluent/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
-          lite_size=$(cat package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
+          lite_size=$(cat package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css.gz package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js | wc -c)
           test "${lite_size}" -lt "${full_size}"
           echo "Full assets: ${full_size} bytes"
           echo "Lite assets: ${lite_size} bytes"
@@ -133,7 +133,7 @@ jobs:
         with:
           name: fluent-assets-lite-${{ env.TAG }}
           path: |
-            package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css
+            package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css.gz
             package/luci-theme-fluent-lite/htdocs/luci-static/resources/menu-fluent.js
             package/luci-theme-fluent-lite/htdocs/luci-static/resources/view/fluent-config.js
 
