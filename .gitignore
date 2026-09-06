@@ -143,3 +143,4 @@ vite.config.ts.timestamp-*
 .vite/
 src/scss/_fluent-icons.scss
 /.omo
+package/luci-theme-fluent-lite/htdocs/luci-static/fluent/css/fluent.css.gz

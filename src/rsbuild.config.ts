@@ -1,6 +1,7 @@
 import { defineConfig, rspack } from "@rsbuild/core";
 import { pluginSass } from "@rsbuild/plugin-sass";
 import { type Compiler, SwcJsMinimizerRspackPlugin } from "@rspack/core";
+import { gzipSync } from "node:zlib";
 import { generateIcons } from "./script/generate-fluent-icons";
 import { generateThemeDefaults } from "./script/generate-theme-defaults";
 
@@ -177,6 +178,35 @@ export default defineConfig(({ envMode }) => {
                 });
               },
             });
+            if (variant === "lite") {
+              config.plugins.push({
+                name: "GzipLiteCssPlugin",
+                apply(compiler: Compiler) {
+                  compiler.hooks.emit.tapAsync("GzipLiteCssPlugin", (compilation, callback) => {
+                    const asset = compilation.assets["fluent.css"];
+                    if (!asset) {
+                      callback(new Error("Expected fluent.css in lite CSS build output"));
+                      return;
+                    }
+
+                    const source = asset.source();
+                    const compressed = gzipSync(Buffer.isBuffer(source) ? source : Buffer.from(source), { level: 9 });
+                    compilation.assets["fluent.css.gz"] = {
+                      source: () => compressed,
+                      buffer: () => compressed,
+                      size: () => compressed.length,
+                      map: () => null,
+                      sourceAndMap: () => ({ source: compressed, map: null }),
+                      updateHash: (hash: { update(value: Buffer): void }) => hash.update(compressed),
+                      buffers: () => [compressed],
+                      clearCache: () => undefined,
+                    };
+                    delete compilation.assets["fluent.css"];
+                    callback();
+                  });
+                },
+              });
+            }
             config.plugins.push({
               name: "GenerateFluentIconsPlugin",
               apply(compiler: Compiler) {

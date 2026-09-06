@@ -162,7 +162,26 @@
   <meta name="theme-color" content="{{ bar_color }}">
   {% } %}
 
+  {% if (access('/www/luci-static/fluent/css/fluent.css.gz')) { %}
+  <style id="fluent-compressed-css"></style>
+  <script>
+    (function () {
+      const style = document.getElementById('fluent-compressed-css');
+      if (!style || typeof DecompressionStream === 'undefined') return;
+
+      fetch('{{ media }}/css/fluent.css.gz?v=@VERSION@').then((response) => {
+        if (!response.ok || !response.body) throw new Error('Unable to load Fluent CSS');
+        return new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).text();
+      }).then((css) => {
+        style.textContent = css;
+      }).catch(() => {
+        style.remove();
+      });
+    })();
+  </script>
+  {% } else { %}
   <link rel="stylesheet" href="{{ media }}/css/fluent.css?v=@VERSION@">
+  {% } %}
   <style title="text/css">
     {# Default light values #}
     :root {
