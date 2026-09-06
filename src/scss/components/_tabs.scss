@@ -146,7 +146,9 @@ ul.cbi-tabmenu {
       background-color: transparent !important;
 
       &::after {
-        display: none !important; // Handled by sliding .fluent-tab-slider
+        // Lite does not load the optional sliding indicator enhancement.
+        transform: scaleX(1);
+        background-color: var(--fluent-primary);
       }
 
       &:hover {
@@ -154,7 +156,8 @@ ul.cbi-tabmenu {
         background-color: transparent !important;
 
         &::after {
-          display: none !important;
+          transform: scaleX(1);
+          background-color: var(--fluent-primary);
         }
       }
     }
@@ -183,6 +186,17 @@ ul.cbi-tabmenu {
     }
   }
 }
+
+// The full theme replaces the static selected state with its sliding indicator.
+// Lite intentionally has no slider and keeps the static underline above.
+ul.tabs:has(> .fluent-tab-slider),
+ul.cbi-tabmenu:has(> .fluent-tab-slider) {
+  > li.cbi-tab > a::after,
+  > li.active > a::after {
+    display: none;
+  }
+}
+
 .cbi-section {
   > .cbi-tabmenu + .cbi-section-node {
     padding-top: 0;
