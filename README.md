@@ -120,7 +120,7 @@ Choose `LuCI -> Themes -> luci-theme-fluent`, then build your firmware or packag
 
 ### Fluent Dashboard
 
-`luci-mod-fluentdashboard` is an optional fixed-card status dashboard for OpenWrt 24.10 and 25.12. It uses its own `admin/fluentdashboard` route and works with any LuCI theme. It can be installed alongside the official `luci-mod-dashboard` package.
+`luci-mod-fluentdashboard` is an optional fixed-card status dashboard for OpenWrt 24.10 and 25.12. It uses its own `admin/fluentdashboard` route and works with any LuCI theme.
 
 ```bash
 # OpenWrt 24.10.x

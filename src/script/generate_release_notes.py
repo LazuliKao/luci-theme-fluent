@@ -168,7 +168,7 @@ def main():
     md.append("apk add luci-theme-fluent-lite-*.apk  # Lite")
     md.append("apk add luci-mod-fluentdashboard-*.apk")
     md.append("```")
-    md.append("\nInstall only one theme variant at a time. The Fluent dashboard uses its own route and can coexist with the official `luci-mod-dashboard` package.")
+    md.append("\nInstall only one theme variant at a time.")
 
     with open(args.output, 'w', encoding='utf-8') as f:
         f.write('\n'.join(md))
