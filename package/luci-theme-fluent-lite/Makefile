@@ -21,8 +21,6 @@ define Build/Prepare/$(PKG_NAME)
 	$(CP) $(FLUENT_FULL_SOURCE_DIR)/root/* $(PKG_BUILD_DIR)/root/
 	$(CP) $(FLUENT_LITE_SOURCE_DIR)/htdocs/* $(PKG_BUILD_DIR)/htdocs/
 	$(CP) $(FLUENT_LITE_SOURCE_DIR)/root/* $(PKG_BUILD_DIR)/root/
-	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header.ut
-	$(SED) 's/@VERSION@/$(PKG_VERSION)/g' $(PKG_BUILD_DIR)/ucode/template/themes/fluent/header_login.ut
 endef
 
 define Package/$(PKG_NAME)/conffiles
