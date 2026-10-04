@@ -5,6 +5,9 @@ import { getEffectiveDocumentDirection, getRectInlineStart, getViewportInlineSiz
  * into FluentUI-style custom dropdowns (using standard .cbi-dropdown classes).
  */
 let selectDropdownListenersRegistered = false;
+let selectsInitialized = false;
+const selectLifecycles = new WeakMap<HTMLSelectElement, { dropdown: HTMLElement; dispose: () => void; refreshAncestors: () => void }>();
+let nextSelectId = 0;
 
 function updateOpenDropdownPositions() {
   document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((dropdown) => {
@@ -45,6 +48,15 @@ function registerSelectDropdownListeners() {
   selectDropdownListenersRegistered = true;
   window.addEventListener("scroll", updateOpenDropdownPositions, true);
   window.addEventListener("resize", updateOpenDropdownPositions);
+  document.addEventListener(
+    "click",
+    (event) => {
+      document.querySelectorAll<HTMLElement>(".fluent-custom-select[open]").forEach((dropdown) => {
+        if (!dropdown.contains(event.target as Node) && event.target !== dropdown.previousElementSibling) closeCustomDropdown(dropdown);
+      });
+    },
+    true,
+  );
 
   const dropdownObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -74,15 +86,25 @@ function registerSelectDropdownListeners() {
 export function setupFluentSelects() {
   registerSelectDropdownListeners();
   const isEnabled = document.body.getAttribute("data-theme-custom-select") !== "0";
-  if (!isEnabled) return;
+  if (!isEnabled || selectsInitialized) return;
+  selectsInitialized = true;
 
   // 1. Transform existing selects & upgrade native dropdown chevrons
   transformAllSelects();
   upgradeNativeDropdowns();
 
-  // 2. Observe dynamic node additions
+  // 2. Discover additions and dispose removed subtrees after connected moves settle.
   const observer = new MutationObserver((mutations) => {
+    const removedSelects = new Set<HTMLSelectElement>();
     mutations.forEach((mutation) => {
+      mutation.removedNodes.forEach((node) => {
+        if (node instanceof HTMLSelectElement) removedSelects.add(node);
+        else if (node instanceof Element) {
+          node.querySelectorAll("select").forEach((select) => {
+            removedSelects.add(select);
+          });
+        }
+      });
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
           const el = node as HTMLElement;
@@ -104,6 +126,18 @@ export function setupFluentSelects() {
           }
         }
       });
+    });
+    removedSelects.forEach((select) => {
+      const lifecycle = selectLifecycles.get(select);
+      if (!lifecycle) return;
+      if (!select.isConnected) lifecycle.dispose();
+      else {
+        if (select.nextElementSibling !== lifecycle.dropdown) {
+          closeCustomDropdown(lifecycle.dropdown);
+          select.after(lifecycle.dropdown);
+        }
+        lifecycle.refreshAncestors();
+      }
     });
   });
 
@@ -270,6 +304,8 @@ function updateDropdownPosition(customDropdown: HTMLElement, selectEl: HTMLSelec
 
 function closeCustomDropdown(customDropdown: HTMLElement) {
   customDropdown.removeAttribute("open");
+  customDropdown.setAttribute("aria-expanded", "false");
+  customDropdown.removeAttribute("aria-activedescendant");
   customDropdown.removeAttribute("data-fluent-floating");
   customDropdown.style.removeProperty("--fluent-dropdown-left");
   customDropdown.style.removeProperty("--fluent-dropdown-top");
@@ -283,7 +319,7 @@ function closeCustomDropdown(customDropdown: HTMLElement) {
 }
 function transformSelect(selectEl: HTMLSelectElement) {
   // Safety checks
-  if (selectEl?.tagName !== "SELECT") return;
+  if (selectEl?.tagName !== "SELECT" || !selectEl.isConnected) return;
   if (selectEl.getAttribute("data-fluent-transformed") === "true") return;
   if (selectEl.closest(".cbi-dropdown")) return;
   if (selectEl.multiple) return; // Only transform single-select dropdowns
@@ -291,6 +327,8 @@ function transformSelect(selectEl: HTMLSelectElement) {
 
   // Copy style/classes if applicable (read before hiding to avoid copying our own display: none)
   const nativeStyle = selectEl.getAttribute("style");
+  const nativeDisplay = selectEl.style.getPropertyValue("display");
+  const nativeDisplayPriority = selectEl.style.getPropertyPriority("display");
 
   // Mark native select as transformed and hide it
   selectEl.setAttribute("data-fluent-transformed", "true");
@@ -300,6 +338,8 @@ function transformSelect(selectEl: HTMLSelectElement) {
   const previewLi = (<li></li>) as HTMLElement;
   previewLi.setAttribute("selected", "");
   const listbox = (<ul class="dropdown"></ul>) as HTMLElement;
+  listbox.id = `fluent-select-list-${++nextSelectId}`;
+  listbox.setAttribute("role", "listbox");
 
   // Insert the SVG element via HTML string since LuCI's JSX types do not support SVG elements natively
   const openSpan = (<span class="open"></span>) as HTMLElement;
@@ -312,6 +352,13 @@ function transformSelect(selectEl: HTMLSelectElement) {
     </div>
   ) as HTMLElement;
   customDropdown.setAttribute("tabindex", "0");
+  customDropdown.setAttribute("role", "combobox");
+  customDropdown.setAttribute("aria-haspopup", "listbox");
+  customDropdown.setAttribute("aria-controls", listbox.id);
+  customDropdown.setAttribute("aria-expanded", "false");
+  customDropdown.setAttribute("aria-required", String(selectEl.required));
+  customDropdown.querySelector("ul:not(.dropdown)")?.setAttribute("aria-hidden", "true");
+  openSpan.setAttribute("aria-hidden", "true");
 
   if (nativeStyle) {
     const cleanStyle = nativeStyle.replace(/\bdisplay\s*:\s*[^;]+(;|$)/gi, "").trim();
@@ -319,43 +366,157 @@ function transformSelect(selectEl: HTMLSelectElement) {
       customDropdown.setAttribute("style", cleanStyle);
     }
   }
-  // Set initial disabled state
-  if (selectEl.disabled) {
-    customDropdown.setAttribute("disabled", "");
-    customDropdown.removeAttribute("tabindex");
-  }
+  let items = new Map<HTMLOptionElement, HTMLElement>();
+  let active: HTMLOptionElement | null = null;
+  let openFrame = 0;
+  let resetTimer = 0;
+  let typeahead = "";
+  let typeaheadTimer = 0;
+  let form: HTMLFormElement | null = null;
+  let labels: HTMLLabelElement[] = [];
+  let fieldsets: HTMLFieldSetElement[] = [];
 
-  // Populate choices/options
-  const rebuildOptions = () => {
-    listbox.innerHTML = "";
-    let selectedText = "";
-    let hasSelected = false;
-
-    Array.from(selectEl.options).forEach((opt) => {
-      const li = (<li>{opt.text}</li>) as HTMLElement;
-      li.setAttribute("data-value", opt.value);
-      if (opt.selected) {
-        li.setAttribute("selected", "");
-        selectedText = opt.text;
-        hasSelected = true;
+  const isDisabled = () => selectEl.matches(":disabled");
+  const usable = (option: HTMLOptionElement) => !option.hidden && !option.closest("[hidden]") && !option.matches(":disabled");
+  const available = () => Array.from(selectEl.options).filter((option) => usable(option));
+  const setActive = (option: HTMLOptionElement | null) => {
+    active = option && items.has(option) && usable(option) ? option : null;
+    if (active && customDropdown.hasAttribute("open")) {
+      const item = items.get(active);
+      if (item) {
+        customDropdown.setAttribute("aria-activedescendant", item.id);
+        scrollOptionIntoDropdown(listbox, item);
       }
-      if (opt.disabled) {
-        li.setAttribute("disabled", "");
-      }
-      listbox.appendChild(li);
-    });
+    } else customDropdown.removeAttribute("aria-activedescendant");
+  };
+  const sync = () => {
+    const disabled = isDisabled();
+    customDropdown.toggleAttribute("disabled", disabled);
+    customDropdown.setAttribute("aria-disabled", String(disabled));
+    customDropdown.setAttribute("aria-required", String(selectEl.required));
+    if (disabled) {
+      customDropdown.removeAttribute("tabindex");
+      closeCustomDropdown(customDropdown);
+    } else customDropdown.setAttribute("tabindex", "0");
 
-    // Fallback if no option is explicitly marked selected
-    if (!hasSelected && selectEl.options.length > 0) {
-      const defaultOpt = selectEl.options[selectEl.selectedIndex >= 0 ? selectEl.selectedIndex : 0];
-      selectedText = defaultOpt.text;
-      const matchingLi = listbox.querySelector(`li[data-value="${defaultOpt.value}"]`);
-      matchingLi?.setAttribute("selected", "");
+    const labelIds = labels.map((label) => label.id).filter(Boolean);
+    const labelledBy = selectEl.getAttribute("aria-labelledby");
+    if (labelledBy || labelIds.length) {
+      customDropdown.setAttribute("aria-labelledby", labelledBy || labelIds.join(" "));
+      customDropdown.removeAttribute("aria-label");
+    } else {
+      customDropdown.removeAttribute("aria-labelledby");
+      const name =
+        selectEl.getAttribute("aria-label") ||
+        labels
+          .map((label) => label.textContent?.trim())
+          .filter(Boolean)
+          .join(" ") ||
+        selectEl.title;
+      if (name) customDropdown.setAttribute("aria-label", name);
+      else customDropdown.removeAttribute("aria-label");
     }
-
-    previewLi.textContent = selectedText;
+    const selected = selectEl.options[selectEl.selectedIndex];
+    previewLi.textContent = selected?.text ?? "";
+    for (const [option, item] of items) {
+      const chosen = option === selected;
+      item.toggleAttribute("selected", chosen);
+      item.setAttribute("aria-selected", String(chosen));
+      const unavailable = !usable(option);
+      item.toggleAttribute("disabled", unavailable);
+      item.setAttribute("aria-disabled", String(unavailable));
+    }
+    if (active && !usable(active)) setActive(selected && usable(selected) ? selected : null);
+    if (customDropdown.hasAttribute("open") && !active) setActive(selected && usable(selected) ? selected : available()[0] || null);
+  };
+  const rebuildOptions = () => {
+    const newItems = new Map<HTMLOptionElement, HTMLElement>();
+    let group: HTMLOptGroupElement | null = null;
+    let groupList: HTMLElement | null = null;
+    listbox.replaceChildren();
+    Array.from(selectEl.options).forEach((option, index) => {
+      const parent = option.parentElement instanceof HTMLOptGroupElement ? option.parentElement : null;
+      if (parent !== group) {
+        group = parent;
+        groupList = null;
+      }
+      if (parent && !groupList) {
+        const wrapper = (<li class="fluent-select-group"></li>) as HTMLElement;
+        wrapper.setAttribute("role", "group");
+        wrapper.setAttribute("aria-label", parent.label);
+        wrapper.hidden = parent.hidden;
+        const heading = (<span class="fluent-select-group__label"></span>) as HTMLElement;
+        heading.textContent = parent.label;
+        heading.setAttribute("aria-hidden", "true");
+        groupList = (<ul></ul>) as HTMLElement;
+        groupList.setAttribute("role", "presentation");
+        wrapper.append(heading, groupList);
+        listbox.append(wrapper);
+      }
+      const item = (<li></li>) as HTMLElement;
+      item.id = `${listbox.id}-option-${index}`;
+      item.textContent = option.text;
+      item.setAttribute("role", "option");
+      item.hidden = option.hidden || !!parent?.hidden;
+      (groupList || listbox).append(item);
+      newItems.set(option, item);
+    });
+    items = newItems;
+    if (active && !items.has(active)) active = null;
+    sync();
   };
 
+  const selectOption = (option: HTMLOptionElement) => {
+    if (isDisabled() || !usable(option)) return;
+    selectEl.selectedIndex = Array.from(selectEl.options).indexOf(option);
+    sync();
+    selectEl.dispatchEvent(new Event("input", { bubbles: true }));
+    selectEl.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+  const onLabelClick = (event: MouseEvent) => {
+    if (event.target instanceof Element && event.target.closest("a, button, input, select, textarea")) return;
+    if (!isDisabled()) customDropdown.focus();
+  };
+  const onReset = () => {
+    window.clearTimeout(resetTimer);
+    resetTimer = window.setTimeout(() => {
+      if (selectEl.isConnected) {
+        rebuildOptions();
+        setActive(null);
+      }
+    }, 0);
+  };
+  const ancestorObserver = new MutationObserver(() => sync());
+  const refreshAncestors = () => {
+    ancestorObserver.disconnect();
+    fieldsets = Array.from(
+      (function* () {
+        let parent = selectEl.parentElement;
+        while (parent) {
+          if (parent instanceof HTMLFieldSetElement) yield parent;
+          parent = parent.parentElement;
+        }
+      })(),
+    );
+    fieldsets.forEach((fieldset) => {
+      ancestorObserver.observe(fieldset, { attributes: true, attributeFilter: ["disabled"] });
+    });
+    const nextForm = selectEl.form;
+    if (form !== nextForm) {
+      form?.removeEventListener("reset", onReset);
+      form = nextForm;
+      form?.addEventListener("reset", onReset);
+    }
+    const nextLabels = Array.from(selectEl.labels || []);
+    labels.forEach((label) => {
+      label.removeEventListener("click", onLabelClick);
+    });
+    labels = nextLabels;
+    labels.forEach((label) => {
+      label.addEventListener("click", onLabelClick);
+    });
+    sync();
+  };
   rebuildOptions();
 
   // Insert custom dropdown into DOM right next to native select
@@ -367,20 +528,16 @@ function transformSelect(selectEl: HTMLSelectElement) {
   customDropdown.addEventListener("click", (e) => {
     if (customDropdown.hasAttribute("disabled")) return;
 
-    const targetLi = (e.target as HTMLElement).closest("ul.dropdown > li");
-    if (targetLi) {
-      const val = targetLi.getAttribute("data-value");
-      if (val !== null && !targetLi.hasAttribute("disabled")) {
-        selectEl.value = val;
-        // Dispatch standard change events for LuCI to catch the change
-        selectEl.dispatchEvent(new Event("change", { bubbles: true }));
-        selectEl.dispatchEvent(new Event("input", { bubbles: true }));
-      }
+    const targetLi = (e.target as HTMLElement).closest('[role="option"]');
+    if (targetLi && listbox.contains(targetLi)) {
+      const option = Array.from(items).find(([, item]) => item === targetLi)?.[0];
+      if (option && usable(option)) selectOption(option);
       closeCustomDropdown(customDropdown);
       e.stopPropagation();
       return;
     }
 
+    if ((e.target as HTMLElement).closest('[role="group"]')) return;
     // Header click toggle
     const isOpen = customDropdown.hasAttribute("open");
     if (isOpen) {
@@ -396,33 +553,32 @@ function transformSelect(selectEl: HTMLSelectElement) {
         }
       });
 
+      rebuildOptions();
       updateDropdownPosition(customDropdown, selectEl);
       customDropdown.setAttribute("open", "");
+      customDropdown.setAttribute("aria-expanded", "true");
       customDropdown.closest(".cbi-value-field, .cbi-value")?.classList.add("cbi-dropdown-open");
-      // Scroll selected item into view
-      const selectedItem = listbox.querySelector("li[selected]") as HTMLElement;
-      if (selectedItem) {
-        scrollOptionIntoDropdown(listbox, selectedItem);
-      }
+      setActive(usable(selectEl.options[selectEl.selectedIndex]) ? selectEl.options[selectEl.selectedIndex] : available()[0] || null);
+      const watchOpen = () => {
+        if (!customDropdown.hasAttribute("open")) {
+          openFrame = 0;
+          return;
+        }
+        sync();
+        openFrame = requestAnimationFrame(watchOpen);
+      };
+      if (!openFrame) openFrame = requestAnimationFrame(watchOpen);
     }
     e.stopPropagation();
   });
-
-  // Close dropdown on click outside
-  const clickOutsideHandler = (e: MouseEvent) => {
-    if (!customDropdown.contains(e.target as Node) && e.target !== selectEl && customDropdown.hasAttribute("open")) {
-      closeCustomDropdown(customDropdown);
-    }
-  };
-  document.addEventListener("click", clickOutsideHandler, true);
 
   // Keyboard navigation
   customDropdown.addEventListener("keydown", (e) => {
     if (customDropdown.hasAttribute("disabled")) return;
 
     const isOpen = customDropdown.hasAttribute("open");
-    const options = Array.from(listbox.querySelectorAll("li:not([disabled])")) as HTMLElement[];
-    const activeIndex = options.findIndex((opt) => opt.hasAttribute("selected"));
+    const options = available();
+    const activeIndex = active ? options.indexOf(active) : -1;
 
     switch (e.key) {
       case "Enter":
@@ -431,9 +587,9 @@ function transformSelect(selectEl: HTMLSelectElement) {
         if (!isOpen) {
           customDropdown.click();
         } else {
-          const currentSelected = options[activeIndex];
-          if (currentSelected) {
-            currentSelected.click();
+          if (active) {
+            selectOption(active);
+            closeCustomDropdown(customDropdown);
           }
         }
         break;
@@ -448,21 +604,7 @@ function transformSelect(selectEl: HTMLSelectElement) {
         if (!isOpen) {
           customDropdown.click();
         } else if (options.length > 0) {
-          const nextIndex = (activeIndex + 1) % options.length;
-          options.forEach((opt, idx) => {
-            if (idx === nextIndex) {
-              opt.setAttribute("selected", "");
-              scrollOptionIntoDropdown(listbox, opt);
-              const val = opt.getAttribute("data-value");
-              if (val !== null) {
-                selectEl.value = val;
-                selectEl.dispatchEvent(new Event("change", { bubbles: true }));
-                selectEl.dispatchEvent(new Event("input", { bubbles: true }));
-              }
-            } else {
-              opt.removeAttribute("selected");
-            }
-          });
+          setActive(options[(activeIndex + 1) % options.length]);
         }
         break;
       case "ArrowUp":
@@ -470,89 +612,83 @@ function transformSelect(selectEl: HTMLSelectElement) {
         if (!isOpen) {
           customDropdown.click();
         } else if (options.length > 0) {
-          const prevIndex = (activeIndex - 1 + options.length) % options.length;
-          options.forEach((opt, idx) => {
-            if (idx === prevIndex) {
-              opt.setAttribute("selected", "");
-              scrollOptionIntoDropdown(listbox, opt);
-              const val = opt.getAttribute("data-value");
-              if (val !== null) {
-                selectEl.value = val;
-                selectEl.dispatchEvent(new Event("change", { bubbles: true }));
-                selectEl.dispatchEvent(new Event("input", { bubbles: true }));
-              }
-            } else {
-              opt.removeAttribute("selected");
-            }
-          });
+          setActive(options[(activeIndex - 1 + options.length) % options.length]);
         }
+        break;
+      case "Home":
+      case "End":
+        e.preventDefault();
+        if (!isOpen) customDropdown.click();
+        setActive(e.key === "Home" ? options[0] || null : options[options.length - 1] || null);
         break;
       case "Tab":
         if (isOpen) {
           closeCustomDropdown(customDropdown);
         }
         break;
+      default:
+        if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          typeahead += e.key.toLocaleLowerCase();
+          window.clearTimeout(typeaheadTimer);
+          typeaheadTimer = window.setTimeout(() => {
+            typeahead = "";
+          }, 700);
+          const match = options.find((option) => option.text.trim().toLocaleLowerCase().startsWith(typeahead));
+          if (match) {
+            if (!isOpen) customDropdown.click();
+            setActive(match);
+          }
+        }
     }
   });
 
   // --- STATE SYNCHRONIZATION FROM NATIVE SELECT ---
 
-  // 1. Sync value changes programmatically done to the native select
-  const syncValueHandler = () => {
-    const currentVal = selectEl.value;
-    const items = Array.from(listbox.querySelectorAll("li")) as HTMLElement[];
-    let selectedText = "";
-    items.forEach((li) => {
-      if (li.getAttribute("data-value") === currentVal) {
-        li.setAttribute("selected", "");
-        selectedText = li.textContent || "";
-      } else {
-        li.removeAttribute("selected");
-      }
-    });
-    previewLi.textContent = selectedText;
+  const syncSelection = () => {
+    sync();
+    setActive(null);
   };
-  selectEl.addEventListener("change", syncValueHandler);
-
-  // 2. Sync options change (e.g. options added/removed dynamically)
-  const childObserver = new MutationObserver(() => {
+  selectEl.addEventListener("change", syncSelection);
+  selectEl.addEventListener("input", syncSelection);
+  customDropdown.addEventListener("focus", () => {
+    refreshAncestors();
     rebuildOptions();
   });
-  childObserver.observe(selectEl, { childList: true });
-
-  // 3. Sync disabled attribute changes
-  const attrObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === "disabled") {
-        const isDisabled = selectEl.disabled;
-        if (isDisabled) {
-          customDropdown.setAttribute("disabled", "");
-          customDropdown.removeAttribute("tabindex");
-          closeCustomDropdown(customDropdown);
-        } else {
-          customDropdown.removeAttribute("disabled");
-          customDropdown.setAttribute("tabindex", "0");
-        }
-      }
-    });
+  const optionObserver = new MutationObserver((mutations) => {
+    if (mutations.some((mutation) => mutation.type === "childList" || mutation.target !== selectEl)) rebuildOptions();
+    else sync();
+    if (mutations.some((mutation) => mutation.attributeName === "form" || mutation.attributeName === "id")) refreshAncestors();
   });
-  attrObserver.observe(selectEl, { attributes: true, attributeFilter: ["disabled"] });
+  optionObserver.observe(selectEl, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ["disabled", "hidden", "label", "selected", "value", "required", "aria-label", "aria-labelledby", "id", "form"],
+  });
+  refreshAncestors();
 
-  // Cleanup references on DOM removal to avoid leaks
-  const disconnectObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.removedNodes.forEach((node) => {
-        if (node === selectEl || node.contains?.(selectEl)) {
-          document.removeEventListener("click", clickOutsideHandler, true);
-          childObserver.disconnect();
-          attrObserver.disconnect();
-          disconnectObserver.disconnect();
-          customDropdown.remove();
-        }
+  selectLifecycles.set(selectEl, {
+    dropdown: customDropdown,
+    refreshAncestors,
+    dispose: () => {
+      closeCustomDropdown(customDropdown);
+      if (openFrame) cancelAnimationFrame(openFrame);
+      window.clearTimeout(resetTimer);
+      window.clearTimeout(typeaheadTimer);
+      optionObserver.disconnect();
+      ancestorObserver.disconnect();
+      form?.removeEventListener("reset", onReset);
+      labels.forEach((label) => {
+        label.removeEventListener("click", onLabelClick);
       });
-    });
+      selectEl.removeEventListener("change", syncSelection);
+      selectEl.removeEventListener("input", syncSelection);
+      customDropdown.remove();
+      selectEl.removeAttribute("data-fluent-transformed");
+      if (nativeDisplay) selectEl.style.setProperty("display", nativeDisplay, nativeDisplayPriority);
+      else selectEl.style.removeProperty("display");
+      selectLifecycles.delete(selectEl);
+    },
   });
-  if (selectEl.parentNode) {
-    disconnectObserver.observe(selectEl.parentNode, { childList: true });
-  }
 }

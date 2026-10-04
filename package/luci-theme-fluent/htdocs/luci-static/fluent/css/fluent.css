@@ -6676,6 +6676,52 @@ cbi-dropdown[open] > ul.dropdown:not(.preview) > li .create-item-input, .cbi-dro
   outline: none;
 }
 
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group {
+  cursor: default;
+  padding: 0;
+  display: block;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > .fluent-select-group__label, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > .fluent-select-group__label, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > .fluent-select-group__label {
+  padding: var(--fluent-space-xxs) var(--fluent-space-xs);
+  color: var(--fluent-text-secondary);
+  display: block;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"], .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"], .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"] {
+  min-height: var(--fluent-input-height);
+  padding: 5px var(--fluent-space-xs);
+  border-radius: var(--fluent-radius-md);
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:hover, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:hover, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:hover {
+  background-color: var(--fluent-dropdown-option-hover);
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected], .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected], .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected] {
+  background-color: var(--fluent-dropdown-option-selected);
+  font-weight: var(--fluent-font-weight-semibold);
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled], .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled], .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled] {
+  color: var(--fluent-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown [hidden], .cbi-dropdown.fluent-custom-select > ul.dropdown [hidden], .fluent-custom-select.fluent-custom-select > ul.dropdown [hidden] {
+  display: none;
+}
+
 cbi-dropdown > select, .cbi-dropdown > select, .fluent-custom-select > select {
   box-sizing: border-box;
   width: 100%;
@@ -6841,12 +6887,12 @@ cbi-dropdown ul.dropdown:not(.preview) > li[selected] input[type="checkbox"]:dis
   background-size: 12px 12px !important;
 }
 
-cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li {
+cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li, cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"], .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"], .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"] {
   padding-inline-start: 32px;
   position: relative !important;
 }
 
-cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li:before {
+cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li:before, cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li:before, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li:before, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"]:before {
   --icon-check: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+CiAgPHBhdGggZD0iTTEzLjg1NCAzLjY0NmEuNS41IDAgMCAxIDAgLjcwOGwtNyA3YS41LjUgMCAwIDEtLjcwOCAwbC0zLjUtMy41YS41LjUgMCAxIDEgLjcwOC0uNzA4TDYuNSAxMC4yOTNsNi42NDYtNi42NDdhLjUuNSAwIDAgMSAuNzA4IDB6Ii8+Cjwvc3ZnPgo=);
   content: "" !important;
   inset-inline-start: 8px !important;
@@ -6868,12 +6914,16 @@ cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li:before, .cbi-dropd
   mask-repeat: no-repeat !important;
 }
 
-cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before {
+cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before, cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[selected]:before, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][selected]:before {
   background-color: var(--fluent-text) !important;
 }
 
-cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before {
+cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before, cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled][selected]:before, cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][unselectable][selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, .cbi-dropdown:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled][selected]:before, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][unselectable][selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[disabled][selected]:before, .fluent-custom-select:not([multiple]) > ul.dropdown:not(.preview) > li[unselectable][selected]:before, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][disabled][selected]:before, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"][unselectable][selected]:before {
   background-color: var(--fluent-text-disabled) !important;
+}
+
+cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group:before, .cbi-dropdown.fluent-custom-select > ul.dropdown > .fluent-select-group:before, .fluent-custom-select.fluent-custom-select > ul.dropdown > .fluent-select-group:before {
+  display: none !important;
 }
 
 cbi-dropdown[open] > ul:not(.preview) > li:has(.zonebadge) {
@@ -10048,6 +10098,17 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
   display: flex;
 }
 
+.fluent-about-manager [hidden] {
+  display: none;
+}
+
+.fluent-about-manager > .fluent-update-changelog {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 12rem;
+  overflow: auto;
+}
+
 .fluent-about-manager h3 {
   color: var(--fluent-text);
   margin: 8px 0 4px;
@@ -10124,23 +10185,6 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
   display: flex;
 }
 
-.fluent-update-controls .fluent-update-channel-selector {
-  color: var(--fluent-text);
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  display: flex;
-}
-
-.fluent-update-controls .fluent-update-channel-selector label {
-  color: var(--fluent-text-secondary);
-}
-
-.fluent-update-controls .fluent-update-channel-selector select {
-  min-width: 140px;
-  padding: 4px 8px;
-}
-
 .fluent-update-status {
   border-radius: var(--fluent-radius-sm);
   background-color: var(--fluent-bg);
@@ -10212,71 +10256,6 @@ html[dir="rtl"] .fluent-menu-editor__category-header:after, body[data-fluent-dir
   font-family: inherit;
   font-size: 12px;
   overflow-y: auto;
-}
-
-.fluent-update-card .fluent-update-footer {
-  justify-content: flex-end;
-  display: flex;
-}
-
-.fluent-update-card .fluent-update-success {
-  text-align: center;
-  padding: 8px 0;
-}
-
-.fluent-update-card .fluent-update-success h4 {
-  color: #107c41;
-  margin: 0 0 8px;
-  font-weight: 600;
-}
-
-.fluent-update-card .fluent-update-success p {
-  color: var(--fluent-text-secondary);
-  margin: 0;
-  font-size: 13px;
-}
-
-.fluent-progress-bar {
-  background-color: var(--fluent-border);
-  border-radius: 2px;
-  width: 100%;
-  height: 4px;
-  position: relative;
-  overflow: hidden;
-}
-
-.fluent-progress-bar__fill {
-  background-color: var(--fluent-primary);
-  border-radius: 2px;
-  height: 100%;
-  transition: width .2s ease-in-out;
-}
-
-.fluent-progress-bar__fill.fill-verify, .fluent-progress-bar__fill.fill-install {
-  transform-origin: 0;
-  animation: 1.5s linear infinite fluent-indeterminate-progress;
-  width: 100% !important;
-}
-
-.fluent-progress-text {
-  color: var(--fluent-text-secondary);
-  text-align: center;
-  margin-top: -8px;
-  font-size: 12px;
-}
-
-@keyframes fluent-indeterminate-progress {
-  0% {
-    transform: translateX(-100%) scaleX(.2);
-  }
-
-  50% {
-    transform: translateX(-20%) scaleX(.5);
-  }
-
-  100% {
-    transform: translateX(100%) scaleX(.2);
-  }
 }
 
 .fluent-mac-selector-group {

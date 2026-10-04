@@ -537,6 +537,52 @@ cbi-dropdown,
     }
   }
 
+  &.fluent-custom-select > ul.dropdown {
+    > .fluent-select-group {
+      display: block;
+      padding: 0;
+      cursor: default;
+
+      > .fluent-select-group__label {
+        display: block;
+        padding: var(--fluent-space-xxs) var(--fluent-space-xs);
+        color: var(--fluent-text-secondary);
+      }
+
+      > ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+
+        > li[role="option"] {
+          display: flex;
+          align-items: center;
+          min-height: var(--fluent-input-height);
+          padding: 5px var(--fluent-space-xs);
+          border-radius: var(--fluent-radius-md);
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--fluent-dropdown-option-hover);
+          }
+          &[selected] {
+            background-color: var(--fluent-dropdown-option-selected);
+            font-weight: var(--fluent-font-weight-semibold);
+          }
+          &[disabled] {
+            color: var(--fluent-text-disabled);
+            cursor: not-allowed;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+
+    [hidden] {
+      display: none;
+    }
+  }
+
   // ----------------------------------------------------------
   // LEGACY SELECT / INPUT-SELECT (kept for compatibility)
   // ----------------------------------------------------------
@@ -708,7 +754,8 @@ cbi-dropdown,
   }
 
   // Single-select dropdown option checkmark (FluentUI style)
-  &:not([multiple]) > ul.dropdown:not(.preview) > li {
+  &:not([multiple]) > ul.dropdown:not(.preview) > li,
+  &.fluent-custom-select > ul.dropdown > .fluent-select-group > ul > li[role="option"] {
     position: relative !important;
     padding-inline-start: 32px;
 
@@ -738,6 +785,10 @@ cbi-dropdown,
     &[unselectable][selected]::before {
       background-color: var(--fluent-text-disabled) !important;
     }
+  }
+
+  &.fluent-custom-select > ul.dropdown > .fluent-select-group::before {
+    display: none !important;
   }
 
   // ----------------------------------------------------------

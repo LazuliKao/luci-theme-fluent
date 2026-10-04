@@ -1670,28 +1670,32 @@ function setupSelectionPause() {
 ;// CONCATENATED MODULE: ./web/resources/utils/select-dropdown.tsx
 
 
-let select_dropdown_r = !1;
-function select_dropdown_s() {
+let select_dropdown_l = !1, select_dropdown_a = !1, select_dropdown_s = new WeakMap(), select_dropdown_d = 0;
+function select_dropdown_c() {
     document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((e)=>{
         if (e instanceof HTMLElement) if (e.classList.contains("fluent-custom-select")) {
             let t = e.previousElementSibling;
-            t instanceof HTMLSelectElement && select_dropdown_f(e, t);
-        } else select_dropdown_a(e);
+            t instanceof HTMLSelectElement && select_dropdown_h(e, t);
+        } else select_dropdown_u(e);
     });
 }
-function select_dropdown_a(e) {
-    let t = e.getBoundingClientRect(), n = window.innerHeight - t.bottom, o = t.top, l = e.querySelector("ul.dropdown, ul:not(.preview)"), i = l ? l.querySelectorAll("li").length : 8, r = l ? l.scrollHeight : 0, s = Math.min(r > 0 ? r + 8 : 36 * i + 10, select_dropdown_c), a = n < s && o > n, d = a ? Math.max(64, o - select_dropdown_u - select_dropdown_p) : Math.max(64, n - select_dropdown_u - select_dropdown_p);
-    e.setAttribute("data-open-direction", a ? "up" : "down"), e.style.setProperty("--fluent-dropdown-max-height", `${Math.min(select_dropdown_c, s, d)}px`);
+function select_dropdown_u(e) {
+    let t = e.getBoundingClientRect(), n = window.innerHeight - t.bottom, r = t.top, i = e.querySelector("ul.dropdown, ul:not(.preview)"), o = i ? i.querySelectorAll("li").length : 8, l = i ? i.scrollHeight : 0, a = Math.min(l > 0 ? l + 8 : 36 * o + 10, select_dropdown_b), s = n < a && r > n, d = s ? Math.max(64, r - select_dropdown_m - select_dropdown_f) : Math.max(64, n - select_dropdown_m - select_dropdown_f);
+    e.setAttribute("data-open-direction", s ? "up" : "down"), e.style.setProperty("--fluent-dropdown-max-height", `${Math.min(select_dropdown_b, a, d)}px`);
 }
 function setupFluentSelects() {
-    select_dropdown_r || (select_dropdown_r = !0, window.addEventListener("scroll", select_dropdown_s, !0), window.addEventListener("resize", select_dropdown_s), new MutationObserver((e)=>{
+    select_dropdown_l || (select_dropdown_l = !0, window.addEventListener("scroll", select_dropdown_c, !0), window.addEventListener("resize", select_dropdown_c), document.addEventListener("click", (e)=>{
+        document.querySelectorAll(".fluent-custom-select[open]").forEach((t)=>{
+            t.contains(e.target) || e.target === t.previousElementSibling || select_dropdown_y(t);
+        });
+    }, !0), new MutationObserver((e)=>{
         e.forEach((e)=>{
             if ("attributes" === e.type && "open" === e.attributeName) {
                 let t = e.target;
                 if (t.hasAttribute("open")) if (t.classList.contains("fluent-custom-select")) {
                     let e = t.previousElementSibling;
-                    e instanceof HTMLSelectElement && select_dropdown_f(t, e);
-                } else ("CBI-DROPDOWN" === t.tagName || t.classList.contains("cbi-dropdown")) && select_dropdown_a(t);
+                    e instanceof HTMLSelectElement && select_dropdown_h(t, e);
+                } else ("CBI-DROPDOWN" === t.tagName || t.classList.contains("cbi-dropdown")) && select_dropdown_u(t);
             }
         });
     }).observe(document.body, {
@@ -1700,55 +1704,59 @@ function setupFluentSelects() {
             "open"
         ],
         subtree: !0
-    })), "0" === document.body.getAttribute("data-theme-custom-select") || (document.querySelectorAll("select").forEach((e)=>{
-        select_dropdown_h(e);
+    })), "0" === document.body.getAttribute("data-theme-custom-select") || select_dropdown_a || (select_dropdown_a = !0, document.querySelectorAll("select").forEach((e)=>{
+        select_dropdown_v(e);
     }), document.querySelectorAll("cbi-dropdown, .cbi-dropdown").forEach((e)=>{
-        e.classList.contains("fluent-custom-select") || select_dropdown_d(e);
+        e.classList.contains("fluent-custom-select") || select_dropdown_p(e);
     }), new MutationObserver((e)=>{
+        let t = new Set();
         e.forEach((e)=>{
-            e.addedNodes.forEach((e)=>{
-                e.nodeType === Node.ELEMENT_NODE && ("SELECT" === e.tagName ? select_dropdown_h(e) : "CBI-DROPDOWN" === e.tagName || e.classList.contains("cbi-dropdown") ? e.classList.contains("fluent-custom-select") || select_dropdown_d(e) : (e.querySelectorAll("select").forEach((e)=>{
-                    select_dropdown_h(e);
+            e.removedNodes.forEach((e)=>{
+                e instanceof HTMLSelectElement ? t.add(e) : e instanceof Element && e.querySelectorAll("select").forEach((e)=>{
+                    t.add(e);
+                });
+            }), e.addedNodes.forEach((e)=>{
+                e.nodeType === Node.ELEMENT_NODE && ("SELECT" === e.tagName ? select_dropdown_v(e) : "CBI-DROPDOWN" === e.tagName || e.classList.contains("cbi-dropdown") ? e.classList.contains("fluent-custom-select") || select_dropdown_p(e) : (e.querySelectorAll("select").forEach((e)=>{
+                    select_dropdown_v(e);
                 }), e.querySelectorAll("cbi-dropdown, .cbi-dropdown").forEach((e)=>{
-                    e.classList.contains("fluent-custom-select") || select_dropdown_d(e);
+                    e.classList.contains("fluent-custom-select") || select_dropdown_p(e);
                 })));
             });
+        }), t.forEach((e)=>{
+            let t = select_dropdown_s.get(e);
+            t && (e.isConnected ? (e.nextElementSibling !== t.dropdown && (select_dropdown_y(t.dropdown), e.after(t.dropdown)), t.refreshAncestors()) : t.dispose());
         });
     }).observe(document.body, {
         childList: !0,
         subtree: !0
     }));
 }
-function select_dropdown_d(e) {
+function select_dropdown_p(e) {
     let t;
     (t = e.querySelector("span.open")) && "true" !== t.getAttribute("data-chevron-upgraded") && (t.setAttribute("data-chevron-upgraded", "true"), t.innerHTML = "");
     let n = e.querySelector("ul:not(.preview)");
     n && !n.classList.contains("dropdown") && n.classList.add("dropdown");
 }
-let select_dropdown_c = 350, select_dropdown_u = 8, select_dropdown_p = 2;
-function select_dropdown_b(e, t) {
-    let n = t.offsetTop, o = n + t.offsetHeight, l = e.scrollTop, i = l + e.clientHeight;
-    n < l ? e.scrollTop = n : o > i && (e.scrollTop = o - e.clientHeight);
-}
-function select_dropdown_f(e, t) {
-    let r = e.getBoundingClientRect(), s = getEffectiveDocumentDirection(), a = getViewportInlineSize(), d = window.innerHeight, b = d - r.bottom, f = r.top;
-    if (b < Math.min(32 * t.options.length + 10, select_dropdown_c) && f > b ? e.setAttribute("data-open-direction", "up") : e.setAttribute("data-open-direction", "down"), !e.closest("#modal_overlay .modal, .fluent-mac-overlay-card, [class*='overlay']")) return void e.removeAttribute("data-fluent-floating");
-    let m = Math.min(32 * t.options.length + 10, select_dropdown_c, 0.45 * d), h = b < m && f > b, v = Math.min(m, Math.max(64, h ? f - select_dropdown_u - select_dropdown_p : b - select_dropdown_u - select_dropdown_p)), w = Math.min(r.width, a - 2 * select_dropdown_u), y = Math.min(Math.max(select_dropdown_u, getRectInlineStart(r, s, a)), a - w - select_dropdown_u), A = h ? Math.max(select_dropdown_u, r.top - v - select_dropdown_p) : Math.min(d - select_dropdown_u - v, r.bottom + select_dropdown_p);
+let select_dropdown_b = 350, select_dropdown_m = 8, select_dropdown_f = 2;
+function select_dropdown_h(e, t) {
+    let l = e.getBoundingClientRect(), a = getEffectiveDocumentDirection(), s = getViewportInlineSize(), d = window.innerHeight, c = d - l.bottom, u = l.top;
+    if (c < Math.min(32 * t.options.length + 10, select_dropdown_b) && u > c ? e.setAttribute("data-open-direction", "up") : e.setAttribute("data-open-direction", "down"), !e.closest("#modal_overlay .modal, .fluent-mac-overlay-card, [class*='overlay']")) return void e.removeAttribute("data-fluent-floating");
+    let p = Math.min(32 * t.options.length + 10, select_dropdown_b, 0.45 * d), h = c < p && u > c, y = Math.min(p, Math.max(64, h ? u - select_dropdown_m - select_dropdown_f : c - select_dropdown_m - select_dropdown_f)), v = Math.min(l.width, s - 2 * select_dropdown_m), w = Math.min(Math.max(select_dropdown_m, getRectInlineStart(l, a, s)), s - v - select_dropdown_m), A = h ? Math.max(select_dropdown_m, l.top - y - select_dropdown_f) : Math.min(d - select_dropdown_m - y, l.bottom + select_dropdown_f);
     e.setAttribute("data-open-direction", h ? "up" : "down"), e.setAttribute("data-fluent-floating", "modal"), setInlineCssCustomProperties(e.style, {
-        inlineStart: y,
-        inlineSize: w
-    }, s, a, {
+        inlineStart: w,
+        inlineSize: v
+    }, a, s, {
         inlineStart: "--fluent-dropdown-left",
         inlineSize: "--fluent-dropdown-width"
-    }), e.style.setProperty("--fluent-dropdown-top", `${A}px`), e.style.setProperty("--fluent-dropdown-max-height", `${v}px`);
+    }), e.style.setProperty("--fluent-dropdown-top", `${A}px`), e.style.setProperty("--fluent-dropdown-max-height", `${y}px`);
 }
-function select_dropdown_m(e) {
-    e.removeAttribute("open"), e.removeAttribute("data-fluent-floating"), e.style.removeProperty("--fluent-dropdown-left"), e.style.removeProperty("--fluent-dropdown-top"), e.style.removeProperty("--fluent-dropdown-width"), e.style.removeProperty("--fluent-dropdown-max-height"), e.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
+function select_dropdown_y(e) {
+    e.removeAttribute("open"), e.setAttribute("aria-expanded", "false"), e.removeAttribute("aria-activedescendant"), e.removeAttribute("data-fluent-floating"), e.style.removeProperty("--fluent-dropdown-left"), e.style.removeProperty("--fluent-dropdown-top"), e.style.removeProperty("--fluent-dropdown-width"), e.style.removeProperty("--fluent-dropdown-max-height"), e.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open");
     let t = e.querySelector("ul.dropdown");
     t instanceof HTMLElement && "function" == typeof t.hidePopover && t.matches(":popover-open") && t.hidePopover();
 }
-function select_dropdown_h(n) {
-    if (n?.tagName !== "SELECT" || "true" === n.getAttribute("data-fluent-transformed") || n.closest(".cbi-dropdown") || n.multiple || function(e) {
+function select_dropdown_v(n) {
+    if (n?.tagName !== "SELECT" || !n.isConnected || "true" === n.getAttribute("data-fluent-transformed") || n.closest(".cbi-dropdown") || n.multiple || function(e) {
         let t = e.getAttribute("style") || "";
         if (/\bdisplay\s*:\s*none/i.test(t) || "none" === e.style.display) return !0;
         if (!e.isConnected) return !1;
@@ -1765,163 +1773,207 @@ function select_dropdown_h(n) {
                     t = t.parentElement;
                 }
                 if (!n) return !0;
-                let o = e.cloneNode(!1);
-                o.style.display = "", document.body.appendChild(o);
-                let l = window.getComputedStyle(o), i = "none" === l.display;
-                return document.body.removeChild(o), i;
+                let r = e.cloneNode(!1);
+                r.style.display = "", document.body.appendChild(r);
+                let i = window.getComputedStyle(r), o = "none" === i.display;
+                return document.body.removeChild(r), o;
             }
         } catch (e) {}
         return !1;
     }(n)) return;
-    let o = n.getAttribute("style");
+    let r = n.getAttribute("style"), i = n.style.getPropertyValue("display"), o = n.style.getPropertyPriority("display");
     n.setAttribute("data-fluent-transformed", "true"), n.style.setProperty("display", "none", "important");
     let l = jsx("li", {});
     l.setAttribute("selected", "");
-    let i = jsx("ul", {
+    let a = jsx("ul", {
         class: "dropdown"
-    }), r = jsx("span", {
+    });
+    a.id = `fluent-select-list-${++select_dropdown_d}`, a.setAttribute("role", "listbox");
+    let c = jsx("span", {
         class: "open"
-    }), s = jsxs("div", {
+    }), u = jsxs("div", {
         class: "fluent-custom-select",
         children: [
             jsx("ul", {
                 children: l
             }),
-            r,
-            i
+            c,
+            a
         ]
     });
-    if (s.setAttribute("tabindex", "0"), o) {
-        let e = o.replace(/\bdisplay\s*:\s*[^;]+(;|$)/gi, "").trim();
-        e && s.setAttribute("style", e);
+    if (u.setAttribute("tabindex", "0"), u.setAttribute("role", "combobox"), u.setAttribute("aria-haspopup", "listbox"), u.setAttribute("aria-controls", a.id), u.setAttribute("aria-expanded", "false"), u.setAttribute("aria-required", String(n.required)), u.querySelector("ul:not(.dropdown)")?.setAttribute("aria-hidden", "true"), c.setAttribute("aria-hidden", "true"), r) {
+        let e = r.replace(/\bdisplay\s*:\s*[^;]+(;|$)/gi, "").trim();
+        e && u.setAttribute("style", e);
     }
-    n.disabled && (s.setAttribute("disabled", ""), s.removeAttribute("tabindex"));
-    let a = ()=>{
-        i.innerHTML = "";
-        let t = "", o = !1;
-        if (Array.from(n.options).forEach((n)=>{
-            let l = jsx("li", {
-                children: n.text
-            });
-            l.setAttribute("data-value", n.value), n.selected && (l.setAttribute("selected", ""), t = n.text, o = !0), n.disabled && l.setAttribute("disabled", ""), i.appendChild(l);
-        }), !o && n.options.length > 0) {
-            let e = n.options[n.selectedIndex >= 0 ? n.selectedIndex : 0];
-            t = e.text;
-            let o = i.querySelector(`li[data-value="${e.value}"]`);
-            o?.setAttribute("selected", "");
+    let p = new Map(), b = null, m = 0, f = 0, v = "", w = 0, A = null, g = [], E = (e)=>!e.hidden && !e.closest("[hidden]") && !e.matches(":disabled"), L = ()=>Array.from(n.options).filter((e)=>E(e)), x = (e)=>{
+        if ((b = e && p.has(e) && E(e) ? e : null) && u.hasAttribute("open")) {
+            let e = p.get(b);
+            if (e) {
+                let t, n, r, i;
+                u.setAttribute("aria-activedescendant", e.id), n = (t = e.offsetTop) + e.offsetHeight, i = (r = a.scrollTop) + a.clientHeight, t < r ? a.scrollTop = t : n > i && (a.scrollTop = n - a.clientHeight);
+            }
+        } else u.removeAttribute("aria-activedescendant");
+    }, S = ()=>{
+        let e = n.matches(":disabled");
+        u.toggleAttribute("disabled", e), u.setAttribute("aria-disabled", String(e)), u.setAttribute("aria-required", String(n.required)), e ? (u.removeAttribute("tabindex"), select_dropdown_y(u)) : u.setAttribute("tabindex", "0");
+        let t = g.map((e)=>e.id).filter(Boolean), r = n.getAttribute("aria-labelledby");
+        if (r || t.length) u.setAttribute("aria-labelledby", r || t.join(" ")), u.removeAttribute("aria-label");
+        else {
+            u.removeAttribute("aria-labelledby");
+            let e = n.getAttribute("aria-label") || g.map((e)=>e.textContent?.trim()).filter(Boolean).join(" ") || n.title;
+            e ? u.setAttribute("aria-label", e) : u.removeAttribute("aria-label");
         }
-        l.textContent = t;
+        let i = n.options[n.selectedIndex];
+        for (let [e, t] of (l.textContent = i?.text ?? "", p)){
+            let n = e === i;
+            t.toggleAttribute("selected", n), t.setAttribute("aria-selected", String(n));
+            let r = !E(e);
+            t.toggleAttribute("disabled", r), t.setAttribute("aria-disabled", String(r));
+        }
+        b && !E(b) && x(i && E(i) ? i : null), u.hasAttribute("open") && !b && x(i && E(i) ? i : L()[0] || null);
+    }, M = ()=>{
+        let t = new Map(), r = null, i = null;
+        a.replaceChildren(), Array.from(n.options).forEach((n, o)=>{
+            let l = n.parentElement instanceof HTMLOptGroupElement ? n.parentElement : null;
+            if (l !== r && (r = l, i = null), l && !i) {
+                let t = jsx("li", {
+                    class: "fluent-select-group"
+                });
+                t.setAttribute("role", "group"), t.setAttribute("aria-label", l.label), t.hidden = l.hidden;
+                let n = jsx("span", {
+                    class: "fluent-select-group__label"
+                });
+                n.textContent = l.label, n.setAttribute("aria-hidden", "true"), (i = jsx("ul", {})).setAttribute("role", "presentation"), t.append(n, i), a.append(t);
+            }
+            let s = jsx("li", {});
+            s.id = `${a.id}-option-${o}`, s.textContent = n.text, s.setAttribute("role", "option"), s.hidden = n.hidden || !!l?.hidden, (i || a).append(s), t.set(n, s);
+        }), p = t, b && !p.has(b) && (b = null), S();
+    }, k = (e)=>{
+        !n.matches(":disabled") && E(e) && (n.selectedIndex = Array.from(n.options).indexOf(e), S(), n.dispatchEvent(new Event("input", {
+            bubbles: !0
+        })), n.dispatchEvent(new Event("change", {
+            bubbles: !0
+        })));
+    }, T = (e)=>{
+        !(e.target instanceof Element && e.target.closest("a, button, input, select, textarea")) && (n.matches(":disabled") || u.focus());
+    }, C = ()=>{
+        window.clearTimeout(f), f = window.setTimeout(()=>{
+            n.isConnected && (M(), x(null));
+        }, 0);
+    }, q = new MutationObserver(()=>S()), P = ()=>{
+        q.disconnect(), Array.from(function*() {
+            let e = n.parentElement;
+            for(; e;)e instanceof HTMLFieldSetElement && (yield e), e = e.parentElement;
+        }()).forEach((e)=>{
+            q.observe(e, {
+                attributes: !0,
+                attributeFilter: [
+                    "disabled"
+                ]
+            });
+        });
+        let e = n.form;
+        A !== e && (A?.removeEventListener("reset", C), A = e, A?.addEventListener("reset", C));
+        let t = Array.from(n.labels || []);
+        g.forEach((e)=>{
+            e.removeEventListener("click", T);
+        }), (g = t).forEach((e)=>{
+            e.addEventListener("click", T);
+        }), S();
     };
-    a(), n.parentNode?.insertBefore(s, n.nextSibling), s.addEventListener("click", (e)=>{
-        if (s.hasAttribute("disabled")) return;
-        let t = e.target.closest("ul.dropdown > li");
-        if (t) {
-            let o = t.getAttribute("data-value");
-            null === o || t.hasAttribute("disabled") || (n.value = o, n.dispatchEvent(new Event("change", {
-                bubbles: !0
-            })), n.dispatchEvent(new Event("input", {
-                bubbles: !0
-            }))), select_dropdown_m(s), e.stopPropagation();
+    M(), n.parentNode?.insertBefore(u, n.nextSibling), u.addEventListener("click", (e)=>{
+        if (u.hasAttribute("disabled")) return;
+        let t = e.target.closest('[role="option"]');
+        if (t && a.contains(t)) {
+            let n = Array.from(p).find(([, e])=>e === t)?.[0];
+            n && E(n) && k(n), select_dropdown_y(u), e.stopPropagation();
             return;
         }
-        if (s.hasAttribute("open")) select_dropdown_m(s);
-        else {
-            document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((e)=>{
-                e instanceof HTMLElement && e.classList.contains("fluent-custom-select") ? select_dropdown_m(e) : (e.removeAttribute("open"), e.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open"));
-            }), select_dropdown_f(s, n), s.setAttribute("open", ""), s.closest(".cbi-value-field, .cbi-value")?.classList.add("cbi-dropdown-open");
-            let e = i.querySelector("li[selected]");
-            e && select_dropdown_b(i, e);
+        if (!e.target.closest('[role="group"]')) {
+            if (u.hasAttribute("open")) select_dropdown_y(u);
+            else {
+                document.querySelectorAll("cbi-dropdown[open], .cbi-dropdown[open], .fluent-custom-select[open]").forEach((e)=>{
+                    e instanceof HTMLElement && e.classList.contains("fluent-custom-select") ? select_dropdown_y(e) : (e.removeAttribute("open"), e.closest(".cbi-value-field, .cbi-value")?.classList.remove("cbi-dropdown-open"));
+                }), M(), select_dropdown_h(u, n), u.setAttribute("open", ""), u.setAttribute("aria-expanded", "true"), u.closest(".cbi-value-field, .cbi-value")?.classList.add("cbi-dropdown-open"), x(E(n.options[n.selectedIndex]) ? n.options[n.selectedIndex] : L()[0] || null);
+                let e = ()=>{
+                    if (!u.hasAttribute("open")) {
+                        m = 0;
+                        return;
+                    }
+                    S(), m = requestAnimationFrame(e);
+                };
+                m || (m = requestAnimationFrame(e));
+            }
+            e.stopPropagation();
         }
-        e.stopPropagation();
-    });
-    let d = (e)=>{
-        !s.contains(e.target) && e.target !== n && s.hasAttribute("open") && select_dropdown_m(s);
-    };
-    document.addEventListener("click", d, !0), s.addEventListener("keydown", (e)=>{
-        if (s.hasAttribute("disabled")) return;
-        let t = s.hasAttribute("open"), o = Array.from(i.querySelectorAll("li:not([disabled])")), l = o.findIndex((e)=>e.hasAttribute("selected"));
+    }), u.addEventListener("keydown", (e)=>{
+        if (u.hasAttribute("disabled")) return;
+        let t = u.hasAttribute("open"), n = L(), r = b ? n.indexOf(b) : -1;
         switch(e.key){
             case "Enter":
             case " ":
-                if (e.preventDefault(), t) {
-                    let e = o[l];
-                    e && e.click();
-                } else s.click();
+                e.preventDefault(), t ? b && (k(b), select_dropdown_y(u)) : u.click();
                 break;
             case "Escape":
-                t && (e.preventDefault(), select_dropdown_m(s));
+                t && (e.preventDefault(), select_dropdown_y(u));
                 break;
             case "ArrowDown":
-                if (e.preventDefault(), t) {
-                    if (o.length > 0) {
-                        let e = (l + 1) % o.length;
-                        o.forEach((t, o)=>{
-                            if (o === e) {
-                                t.setAttribute("selected", ""), select_dropdown_b(i, t);
-                                let e = t.getAttribute("data-value");
-                                null !== e && (n.value = e, n.dispatchEvent(new Event("change", {
-                                    bubbles: !0
-                                })), n.dispatchEvent(new Event("input", {
-                                    bubbles: !0
-                                })));
-                            } else t.removeAttribute("selected");
-                        });
-                    }
-                } else s.click();
+                e.preventDefault(), t ? n.length > 0 && x(n[(r + 1) % n.length]) : u.click();
                 break;
             case "ArrowUp":
-                if (e.preventDefault(), t) {
-                    if (o.length > 0) {
-                        let e = (l - 1 + o.length) % o.length;
-                        o.forEach((t, o)=>{
-                            if (o === e) {
-                                t.setAttribute("selected", ""), select_dropdown_b(i, t);
-                                let e = t.getAttribute("data-value");
-                                null !== e && (n.value = e, n.dispatchEvent(new Event("change", {
-                                    bubbles: !0
-                                })), n.dispatchEvent(new Event("input", {
-                                    bubbles: !0
-                                })));
-                            } else t.removeAttribute("selected");
-                        });
-                    }
-                } else s.click();
+                e.preventDefault(), t ? n.length > 0 && x(n[(r - 1 + n.length) % n.length]) : u.click();
+                break;
+            case "Home":
+            case "End":
+                e.preventDefault(), t || u.click(), x("Home" === e.key ? n[0] || null : n[n.length - 1] || null);
                 break;
             case "Tab":
-                t && select_dropdown_m(s);
+                t && select_dropdown_y(u);
+                break;
+            default:
+                if (1 === e.key.length && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                    v += e.key.toLocaleLowerCase(), window.clearTimeout(w), w = window.setTimeout(()=>{
+                        v = "";
+                    }, 700);
+                    let r = n.find((e)=>e.text.trim().toLocaleLowerCase().startsWith(v));
+                    r && (t || u.click(), x(r));
+                }
         }
-    }), n.addEventListener("change", ()=>{
-        let e = n.value, t = Array.from(i.querySelectorAll("li")), o = "";
-        t.forEach((t)=>{
-            t.getAttribute("data-value") === e ? (t.setAttribute("selected", ""), o = t.textContent || "") : t.removeAttribute("selected");
-        }), l.textContent = o;
     });
-    let c = new MutationObserver(()=>{
-        a();
+    let H = ()=>{
+        S(), x(null);
+    };
+    n.addEventListener("change", H), n.addEventListener("input", H), u.addEventListener("focus", ()=>{
+        P(), M();
     });
-    c.observe(n, {
-        childList: !0
+    let N = new MutationObserver((e)=>{
+        e.some((e)=>"childList" === e.type || e.target !== n) ? M() : S(), e.some((e)=>"form" === e.attributeName || "id" === e.attributeName) && P();
     });
-    let u = new MutationObserver((e)=>{
-        e.forEach((e)=>{
-            "disabled" === e.attributeName && (n.disabled ? (s.setAttribute("disabled", ""), s.removeAttribute("tabindex"), select_dropdown_m(s)) : (s.removeAttribute("disabled"), s.setAttribute("tabindex", "0")));
-        });
-    });
-    u.observe(n, {
+    N.observe(n, {
+        childList: !0,
+        subtree: !0,
+        characterData: !0,
         attributes: !0,
         attributeFilter: [
-            "disabled"
+            "disabled",
+            "hidden",
+            "label",
+            "selected",
+            "value",
+            "required",
+            "aria-label",
+            "aria-labelledby",
+            "id",
+            "form"
         ]
-    });
-    let p = new MutationObserver((e)=>{
-        e.forEach((e)=>{
-            e.removedNodes.forEach((e)=>{
-                (e === n || e.contains?.(n)) && (document.removeEventListener("click", d, !0), c.disconnect(), u.disconnect(), p.disconnect(), s.remove());
-            });
-        });
-    });
-    n.parentNode && p.observe(n.parentNode, {
-        childList: !0
+    }), P(), select_dropdown_s.set(n, {
+        dropdown: u,
+        refreshAncestors: P,
+        dispose: ()=>{
+            select_dropdown_y(u), m && cancelAnimationFrame(m), window.clearTimeout(f), window.clearTimeout(w), N.disconnect(), q.disconnect(), A?.removeEventListener("reset", C), g.forEach((e)=>{
+                e.removeEventListener("click", T);
+            }), n.removeEventListener("change", H), n.removeEventListener("input", H), u.remove(), n.removeAttribute("data-fluent-transformed"), i ? n.style.setProperty("display", i, o) : n.style.removeProperty("display"), select_dropdown_s.delete(n);
+        }
     });
 }
 
