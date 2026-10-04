@@ -6,18 +6,16 @@
 				"/www/luci-static/fluent/background/*": [ "list" ]
 			},
 			"ubus": {
-				"luci.fluent": [ "avail", "remove", "rename", "set_mode", "get_version", "check_download", "get_install_log" ]
+				"luci.fluent": [ "avail", "get_version", "update_status" ]
 			},
 			"uci": [ "fluent" ]
 		},
 		"write": {
 			"file": {
-				"/tmp/fluent_background.tmp": [ "write" ],
-				"/tmp/fluent-update.ipk": [ "write" ],
-				"/tmp/fluent-update.apk": [ "write" ]
+				"/tmp/fluent_background.tmp": [ "write" ]
 			},
 			"ubus": {
-				"luci.fluent": [ "set_mode", "do_install", "start_download" ]
+				"luci.fluent": [ "remove", "rename", "set_mode", "start_update" ]
 			},
 			"uci": [ "fluent" ]
 		}

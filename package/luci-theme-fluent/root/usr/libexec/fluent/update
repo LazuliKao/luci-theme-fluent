@@ -1,0 +1,125 @@
+#!/bin/sh
+
+# The worker is copied into its job directory before launch: upgrading this
+# package must not replace the script while the shell is still reading it.
+if [ "$1" = worker ]; then
+	job="$2"
+	stage() { printf '%s\n' "$1" > "$job/state.tmp" && mv "$job/state.tmp" "$job/state"; }
+	finish() {
+		code=$?
+		trap - EXIT
+		if [ "$code" -ne 0 ]; then
+			printf 'Update failed (exit %s).\n' "$code"
+			stage error
+		fi
+		rm -f "$job"/*.ipk "$job"/*.apk
+		exit "$code"
+	}
+	trap finish EXIT
+	trap 'exit 1' HUP INT TERM
+	set -e
+	stage downloading
+	set --
+	i=0
+	while IFS="$(printf '\t')" read -r hash url; do
+		i=$((i + 1))
+		file="$job/$i.$(cat "$job/format")"
+		printf 'Downloading package %s...\n' "$i"
+		if command -v uclient-fetch >/dev/null 2>&1; then
+			uclient-fetch -T 60 -O "$file" "$url"
+		else
+			wget -T 60 -O "$file" "$url"
+		fi
+		printf '%s  %s\n' "$hash" "$file" | sha256sum -c -
+		set -- "$@" "$file"
+	done < "$job/packages"
+	[ "$#" -gt 0 ]
+	stage installing
+	if [ "$(cat "$job/format")" = apk ]; then
+		apk add --allow-untrusted "$@"
+	else
+		opkg install "$@"
+	fi
+	stage done
+	exit 0
+fi
+
+. /usr/share/libubox/jshn.sh
+umask 077
+work=/tmp/fluent-updater
+
+error() {
+	json_init
+	json_add_int result 1
+	json_add_string message "$1"
+	json_dump
+	exit 0
+}
+
+read -r input
+json_load "$input" || error 'Invalid request'
+
+case "$1" in
+	start_update)
+		json_get_var manifest manifest
+		json_load "$manifest" || error 'Invalid package manifest'
+		json_select packages || error 'Missing packages'
+		json_get_keys keys
+		[ -n "$keys" ] || error 'Missing packages'
+		mkdir -p "$work" || error 'Unable to create update directory'
+		exec 9>"$work/lock"
+		flock -n 9 || error 'An update is already running'
+		job=$(mktemp -d "$work/job.XXXXXX") || error 'Unable to create update job'
+		trap 'rm -rf "$job"' EXIT
+		count=0
+		for key in $keys; do
+			count=$((count + 1))
+			[ "$count" -le 32 ] || error 'Too many packages'
+			json_select "$key" || error 'Invalid package'
+			json_get_var url url
+			json_get_var hash sha256
+			case "$url" in https://?*) ;; *) error 'Package URLs must use HTTPS' ;; esac
+			case "$url" in *[[:space:]]*) error 'Invalid package URL' ;; esac
+			case "$hash" in ''|*[!a-fA-F0-9]*) error 'Invalid SHA-256 digest' ;; esac
+			[ "${#hash}" -eq 64 ] || error 'Missing SHA-256 digest'
+			printf '%s\t%s\n' "$hash" "$url" >> "$job/packages" || error 'Unable to write package manifest'
+			json_select ..
+		done
+		if command -v apk >/dev/null 2>&1; then echo apk; else echo ipk; fi > "$job/format" || error 'Unable to write package format'
+		cp "$0" "$job/worker" || error 'Unable to prepare update worker'
+		echo downloading > "$job/state" || error 'Unable to write update state'
+		# Keep only the latest job, under the same lock as the worker.
+		for old in "$work"/job.*; do
+			[ "$old" = "$job" ] || rm -rf "$old"
+		done
+		printf '%s\n' "${job##*/}" > "$work/latest.tmp" && mv "$work/latest.tmp" "$work/latest" || error 'Unable to publish update job'
+		nohup setsid /bin/sh "$job/worker" worker "$job" > "$job/log" 2>&1 < /dev/null &
+		echo "$!" > "$job/pid"
+		trap - EXIT
+		json_init
+		json_add_int result 0
+		json_add_string job "${job##*/}"
+		json_dump
+		;;
+	update_status)
+		json_get_var id job
+		[ -n "$id" ] || id=$(cat "$work/latest" 2>/dev/null)
+		case "$id" in job.*) ;; '') echo '{"result":0,"stage":"idle"}'; exit 0 ;; *) error 'Invalid job' ;; esac
+		case "$id" in *[!a-zA-Z0-9.]*) error 'Invalid job' ;; esac
+		job="$work/$id"
+		[ -f "$job/state" ] || error 'Update job no longer available'
+		state=$(cat "$job/state")
+		case "$state" in
+			downloading|installing)
+				pid=$(cat "$job/pid" 2>/dev/null)
+				[ -z "$pid" ] || kill -0 "$pid" 2>/dev/null || state=error
+				;;
+		esac
+		json_init
+		json_add_int result 0
+		json_add_string job "$id"
+		json_add_string stage "$state"
+		json_add_string log "$(tail -n 100 "$job/log" 2>/dev/null)"
+		json_dump
+		;;
+esac

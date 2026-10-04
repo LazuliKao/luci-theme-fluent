@@ -1,442 +1,173 @@
-const form = L.form;
-const ghmirror = "https://ghfast.top/"; // Use GHProxy to bypass GitHub API rate limits
+import { callGetVersion, callStartUpdate, callUpdateStatus, fetchLatestRelease, GitHubAPIError, type UpdateStatus, updateManifest } from "../../../utils/update";
 
-import { callCheckDownload, callDoInstall, callGetVersion, callStartDownload, fetchLatestRelease, GitHubAPIError } from "../../../utils/update";
-
-const CBIAboutManager = form.DummyValue.extend({
-  renderWidget: (_section_id: string, _option_index: number, _cfgvalue: string) => {
-    // Current details from RPCD
-    let currentVersion = "1.0.1";
-    let pkgType: "ipk" | "apk" = "ipk";
-    let installedI18n: string[] = [];
-
-    // UI state elements
-    const logoEl = (
-      <div class="fluent-about-logo">
-        <img src={`${L.media()}/img/fluent.svg`} alt="Fluent Theme Logo" />
-        <h2>Fluent Theme</h2>
-        <p class="fluent-about-subtitle">{_("Fluent Design 2 theme for LuCI")}</p>
-      </div>
-    );
-
-    const detailsEl = (
-      <div class="fluent-about-details">
-        <div class="fluent-about-detail-row">
-          <strong>{_("Author")}:</strong>
-          <span>LazuliKao</span>
-        </div>
-        <div class="fluent-about-detail-row">
-          <strong>{_("Installed version")}:</strong>
-          <span class="fluent-about-current-version">v...</span>
-        </div>
-        <div class="fluent-about-detail-row">
-          <strong>{_("Package format")}:</strong>
-          <span class="fluent-about-pkg-type">...</span>
-        </div>
-        <div class="fluent-about-detail-row">
-          <strong>{_("Source code")}:</strong>
-          <span>
-            <a href="https://github.com/LazuliKao/luci-theme-fluent" target="_blank" rel="noreferrer">
-              GitHub Repository
-            </a>
-          </span>
-        </div>
-      </div>
-    );
-
-    // Update section elements
-    const channelSelect = (
-      <select class="cbi-input-select" id="update-channel-select">
+const CBIAboutManager = L.form.DummyValue.extend({
+  renderWidget: () => {
+    let version: Awaited<ReturnType<typeof callGetVersion>>;
+    const versionEl = <span>…</span>;
+    const formatEl = <span>…</span>;
+    const channel = (
+      <select id="fluent-update-channel" class="cbi-input-select">
         <option value="stable">{_("Stable Channel")}</option>
         <option value="nightly">{_("Nightly Channel (Prerelease)")}</option>
       </select>
     ) as HTMLSelectElement;
-
-    const methodSelect = (
-      <select class="cbi-input-select" id="update-method-select">
-        <option value="backend_official">{_("Backend (Official GitHub)")}</option>
-        <option value="backend_ghproxy">{_("Backend (GHProxy Acceleration)")}</option>
+    const method = (
+      <select id="fluent-update-method" class="cbi-input-select">
+        <option value="">{_("Backend (Official GitHub)")}</option>
+        <option value="https://ghfast.top/">{_("Backend (GHProxy Acceleration)")}</option>
       </select>
     ) as HTMLSelectElement;
-
-    const checkBtn = (
-      <button class="btn cbi-button cbi-button-action" type="button">
+    const check = (
+      <button type="button" class="btn cbi-button-action">
         {_("Check for updates")}
       </button>
     ) as HTMLButtonElement;
-
-    const updateControlsEl = (
-      <div class="fluent-update-controls" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-        <div class="fluent-update-channel-selector">
-          <label htmlFor="update-channel-select">{_("Update channel")}: </label>
-          {channelSelect}
-        </div>
-        {checkBtn}
-      </div>
+    const status = <p class="fluent-update-status" role="status" />;
+    const card = <div class="fluent-update-card" hidden />;
+    const log = <pre class="fluent-update-changelog" hidden />;
+    const reload = (
+      <button type="button" class="btn cbi-button-action" hidden onclick={() => window.location.reload()}>
+        {_("Reload Web Interface")}
+      </button>
     );
-
-    const statusMsgEl = <div class="fluent-update-status" style="display: none" />;
-
-    // Progress Bar element
-    const progressBarFill = <div class="fluent-progress-bar__fill" style="width: 0%" />;
-    const progressBarEl = (
-      <div class="fluent-progress-bar" style="display: none">
-        {progressBarFill}
-      </div>
-    );
-
-    const progressTextEl = <div class="fluent-progress-text" style="display: none" />;
-
-    // New version card container
-    const updateCardEl = <div class="fluent-update-card" style="display: none" />;
-
-    const managerContainer = (
+    const container = (
       <div class="fluent-about-manager">
-        {logoEl}
-        {detailsEl}
+        <div class="fluent-about-logo">
+          <img src={`${L.media()}/img/fluent.svg`} alt="" />
+          <h2>Fluent Theme</h2>
+          <p class="fluent-about-subtitle">{_("Fluent Design 2 theme for LuCI")}</p>
+        </div>
+        <div class="fluent-about-details">
+          <div class="fluent-about-detail-row">
+            <strong>{_("Author")}:</strong>
+            <span>LazuliKao</span>
+          </div>
+          <div class="fluent-about-detail-row">
+            <strong>{_("Installed version")}:</strong>
+            {versionEl}
+          </div>
+          <div class="fluent-about-detail-row">
+            <strong>{_("Package format")}:</strong>
+            {formatEl}
+          </div>
+          <div class="fluent-about-detail-row">
+            <strong>{_("Source code")}:</strong>
+            <a href="https://github.com/LazuliKao/luci-theme-fluent" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          </div>
+        </div>
         <hr class="fluent-about-divider" />
         <h3>{_("Software Update")}</h3>
-        {updateControlsEl}
-        {statusMsgEl}
-        {updateCardEl}
-        {progressBarEl}
-        {progressTextEl}
+        <div class="fluent-update-controls">
+          <label htmlFor="fluent-update-channel">{_("Update channel")}</label>
+          {channel}
+          <label htmlFor="fluent-update-method">{_("Download method")}</label>
+          {method}
+          {check}
+        </div>
+        {status}
+        {card}
+        {log}
+        {reload}
       </div>
     );
 
-    const setStatus = (msg: string, type: "info" | "success" | "error" | "warn" = "info") => {
-      dom.content(statusMsgEl, [document.createTextNode(msg)]);
-      statusMsgEl.className = `fluent-update-status status-${type}`;
-      statusMsgEl.style.display = "block";
-    };
+    function setStatus(message: string, type = "info") {
+      status.textContent = message;
+      status.className = `fluent-update-status status-${type}`;
+    }
 
-    const updateProgress = (stage: string, percent: number, detailMsg: string) => {
-      progressBarEl.style.display = "block";
-      progressTextEl.style.display = "block";
-      progressBarFill.style.width = `${percent}%`;
-      progressBarFill.className = `fluent-progress-bar__fill fill-${stage}`;
-      dom.content(progressTextEl, [document.createTextNode(`${detailMsg} (${percent}%)`)]);
-    };
+    function setBusy(busy: boolean) {
+      channel.disabled = method.disabled = check.disabled = busy;
+      card.querySelectorAll("button").forEach((button) => {
+        button.disabled = busy;
+      });
+    }
 
-    const hideProgress = () => {
-      progressBarEl.style.display = "none";
-      progressTextEl.style.display = "none";
-    };
-
-    // Load initial version info
-    const loadVersionInfo = async () => {
+    async function monitor(initial: UpdateStatus) {
+      let state = initial;
+      const deadline = Date.now() + 20 * 60 * 1000;
+      setBusy(true);
       try {
-        const res = await callGetVersion();
-        currentVersion = res.version;
-        pkgType = res.pkg_type;
-        installedI18n = res.installed_i18n || (res.i18n_zh_cn_installed ? ["zh-cn"] : []);
-
-        const currentVerSpan = detailsEl.querySelector(".fluent-about-current-version");
-        if (currentVerSpan) {
-          currentVerSpan.textContent = `v${currentVersion}`;
-        }
-
-        const pkgTypeSpan = detailsEl.querySelector(".fluent-about-pkg-type");
-        if (pkgTypeSpan) {
-          pkgTypeSpan.textContent = pkgType === "apk" ? "APK (OpenWrt 25.12+)" : "IPK (OpenWrt 24.10)";
-        }
-      } catch (err) {
-        console.error("Failed to fetch version", err);
-        setStatus(_("Failed to fetch current theme version."), "error");
-      }
-    };
-    void loadVersionInfo();
-
-    const doCheckUpdate = async (token?: string) => {
-      const channel = channelSelect.value as "stable" | "nightly";
-
-      try {
-        const release = await fetchLatestRelease(channel, pkgType, installedI18n, token);
-        console.log(release);
-        checkBtn.disabled = false;
-
-        const localVerClean = currentVersion.replace(/^v/, "").trim();
-        const remoteVerClean = release.tag_name.replace(/^v/, "").trim();
-
-        const isNewer = L.naturalCompare(remoteVerClean, localVerClean) > 0;
-
-        const isUpToDate = !isNewer && channel !== "nightly";
-
-        if (isUpToDate) {
-          setStatus(_("Your theme is up to date!"), "success");
-        } else {
-          setStatus(isNewer ? _("A new version is available!") : _("Nightly build available (reinstallation check)."), isNewer ? "warn" : "info");
-        }
-
-        if (!release.package_asset) {
-          setStatus(_("No matching package asset found for your system architecture in this release."), "error");
-          return;
-        }
-
-        // Build changelog preview
-        const changelogHtml = release.body ? release.body : "";
-
-        const installBtn = (
-          <button class="btn cbi-button cbi-button-save" type="button" style="white-space: nowrap;">
-            {_("Download and Install")}
-          </button>
-        ) as HTMLButtonElement;
-
-        const contentList: (Node | HTMLElement | DocumentFragment)[] = [
-          <div class="fluent-update-header">
-            <span class="fluent-update-badge">{remoteVerClean === "nightly" ? "Nightly" : `v${remoteVerClean}`}</span>
-            <span class="fluent-update-date">{release.published_at.split("T")[0]}</span>
-          </div>,
-        ];
-
-        if (changelogHtml) {
-          contentList.push(<pre class="fluent-update-changelog">{changelogHtml}</pre>);
-        }
-
-        if (!isUpToDate) {
-          contentList.push(
-            <div class="fluent-update-footer" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-              {methodSelect}
-              {installBtn}
-            </div>,
-          );
-        }
-
-        dom.content(updateCardEl, contentList);
-
-        updateCardEl.style.display = "block";
-
-        // Install package execution
-        installBtn.addEventListener("click", async () => {
-          const packageAsset = release.package_asset;
-
-          if (!packageAsset) {
-            setStatus(_("No matching package asset found for your system architecture in this release."), "error");
+        while (container.isConnected) {
+          if (state.result !== 0) throw new Error(state.message || _("Unable to read update status."));
+          log.hidden = !state.log;
+          if (log.textContent !== state.log) log.textContent = state.log ?? "";
+          if (state.stage === "done") {
+            setStatus(_("Theme successfully updated. Reload the web interface to use the new version."), "success");
+            reload.hidden = false;
             return;
           }
-          installBtn.disabled = true;
-          channelSelect.disabled = true;
-          methodSelect.disabled = true;
-          checkBtn.disabled = true;
-          setStatus(_("Starting update process..."), "info");
-
-          const i18nAssets = release.i18n_assets || [];
-
-          let expectedHash: string | null = null;
-          const expectedI18nHashes: string[] = [];
-
-          if (packageAsset.digest?.startsWith("sha256:")) {
-            expectedHash = packageAsset.digest.replace("sha256:", "");
-          } else {
-            console.warn("Unable to determine expected package hash from digest. Skipping verification.");
-            expectedHash = "skip";
+          if (state.stage === "error") {
+            setStatus(_("Update failed. Check the installation log below."), "error");
+            return;
           }
+          if (state.stage !== "downloading" && state.stage !== "installing") throw new Error(_("Unexpected update status."));
+          setStatus(state.stage === "downloading" ? _("Downloading and verifying packages...") : _("Installing packages..."));
+          if (Date.now() >= deadline) throw new Error(_("Timed out waiting for update status."));
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          if (!container.isConnected) return;
+          if (!state.job) throw new Error(_("Missing update job."));
+          state = await callUpdateStatus(state.job);
+        }
+      } catch (error) {
+        setStatus(`${_("Update status unavailable. Reload and sign in again to check the result.")} ${String(error)}`, "warn");
+        reload.hidden = false;
+      } finally {
+        setBusy(false);
+      }
+    }
 
-          for (const asset of i18nAssets) {
-            if (asset.digest?.startsWith("sha256:")) {
-              expectedI18nHashes.push(asset.digest.replace("sha256:", ""));
-            } else {
-              expectedI18nHashes.push("skip");
-            }
-          }
-
-          // Step 1: Backend download and verify
-          const downloadStep = async () => {
-            const method = methodSelect.value;
-            const useProxy = method.includes("ghproxy");
-
-            const confirmInstallation = () => {
-              return new Promise<boolean>((resolve) => {
-                L.ui.showModal(
-                  _("Confirm Installation"),
-                  <>
-                    <div>
-                      <p>{_("The theme package is ready. Are you sure you want to proceed with the installation?")}</p>
-                    </div>
-                    <div class="right">
-                      <button
-                        type="button"
-                        class="btn"
-                        onclick={() => {
-                          L.ui.hideModal();
-                          resolve(false);
-                        }}
-                      >
-                        {_("Cancel")}
-                      </button>
-                      <button
-                        type="button"
-                        class="btn cbi-button-action"
-                        onclick={() => {
-                          L.ui.hideModal();
-                          resolve(true);
-                        }}
-                      >
-                        {_("Continue")}
-                      </button>
-                    </div>
-                  </>,
-                );
-              });
-            };
-
-            // Pass URL to router for background download
-            setStatus(_("Starting backend download..."), "info");
-            updateProgress("download", 0, _("Downloading on router"));
-
-            const dlUrl = useProxy ? ghmirror + packageAsset.browser_download_url : packageAsset.browser_download_url;
-            const i18nDlUrls = i18nAssets.map((a) => (useProxy ? ghmirror + a.browser_download_url : a.browser_download_url)).join(" ");
-
-            const startRes = await callStartDownload(dlUrl, i18nDlUrls.split(" ")[0] || "", i18nDlUrls);
-            if (startRes.result !== 0) {
-              throw new Error(startRes.message || "Failed to start router download.");
-            }
-
-            // Poll check_download
-            while (true) {
-              const checkRes = await callCheckDownload();
-              const size = checkRes.size || 0;
-              const i18nTotalSize = i18nAssets.reduce((sum, a) => sum + (a.size || 0), 0);
-              const totalSize = packageAsset.size + i18nTotalSize;
-              const percent = totalSize > 0 ? Math.min(Math.round((size / totalSize) * 100), 100) : 0;
-              updateProgress("download", percent, `${_("Downloading on router")} (${(size / 1024).toFixed(0)} / ${(totalSize / 1024).toFixed(0)} KB)`);
-
-              if (!checkRes.running) {
-                if (checkRes.code !== 0) {
-                  throw new Error("Router background download failed or file is empty.");
-                } else {
-                  break;
-                }
-              }
-              await new Promise((resolve) => setTimeout(resolve, 1000));
-            }
-
-            if (!(await confirmInstallation())) {
-              throw new Error(_("Installation cancelled by user."));
-            }
-
-            setStatus(_("Triggering installation on router..."), "info");
-            updateProgress("install", 100, _("Installing package"));
-
-            const installRes = await callDoInstall(expectedHash, expectedI18nHashes[0] || "", expectedI18nHashes.join(" "));
-            if (installRes.result !== 0) {
-              throw new Error(installRes.message || "Router installation failed.");
-            }
-
-            // Create log container
-            const logPre = (
-              <pre style="background: var(--fluent-code-bg, #1a1a1a); color: var(--fluent-text, #fff); padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 200px; overflow-y: auto; margin-top: 15px;"></pre>
-            ) as HTMLPreElement;
-
-            const pollLog = async () => {
-              const ubusUrl = L.env.ubuspath || "/ubus";
-              const sid = L.env.sessionid;
-
-              while (true) {
-                try {
-                  const res = await fetch(ubusUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      jsonrpc: "2.0",
-                      id: 1,
-                      method: "call",
-                      params: [sid, "luci.fluent", "get_install_log", {}],
-                    }),
-                  });
-                  const data = await res.json();
-
-                  // If error (like Access Denied after rpcd restarts), break the polling silently
-                  if (data.error) break;
-
-                  if (data.result?.[1]?.log) {
-                    logPre.textContent = data.result[1].log;
-                    logPre.scrollTop = logPre.scrollHeight;
-                  }
-
-                  await new Promise((r) => setTimeout(r, 1000));
-                } catch {
-                  break;
-                }
-              }
-            };
-            pollLog();
-
-            // Finished successfully
-            setStatus(_("Theme successfully updated! Reloading RPC service, please refresh the page in 5 seconds."), "success");
-            updateProgress("done", 100, _("Finished"));
-
-            dom.content(updateCardEl, [
-              <div class="fluent-update-success">
-                <h3 style="color: var(--fluent-success); text-align: center;">{_("Upgrade Successful!")}</h3>
-                <p style="text-align: center; margin: 15px 0;">
-                  {_("The theme is being installed on your router. The logs are displayed below. Reloading the web interface will apply the changes once RPCD restarts.")}
-                </p>
-                {logPre}
-                <div style="display: flex; justify-content: center; margin-top: 20px;">
-                  <button
-                    class="btn cbi-button-action"
-                    type="button"
-                    style="margin-top: 15px"
-                    onclick={() => {
-                      window.location.reload();
-                    }}
-                  >
-                    {_("Reload Web Interface")}
-                  </button>
-                </div>
-              </div>,
-            ]);
-          };
-
+    async function checkRelease(token?: string) {
+      setBusy(true);
+      card.hidden = true;
+      setStatus(_("Checking for updates..."));
+      try {
+        const release = await fetchLatestRelease(channel.value as "stable" | "nightly", version.pkg_type, version.installed_i18n, token);
+        const asset = release.package_asset;
+        if (!asset) throw new Error(_("No matching theme package found in this release."));
+        const current = version.version.replace(/^v/, "");
+        const remote = release.tag_name.replace(/^v/, "");
+        const upToDate = channel.value === "stable" && L.naturalCompare(remote, current) <= 0;
+        const install = (
+          <button type="button" class="btn cbi-button-save">
+            {_("Download and Install")}
+          </button>
+        );
+        dom.content(card, [
+          <div class="fluent-update-header">
+            <span class="fluent-update-badge">{release.tag_name}</span>
+            <span>{release.published_at.split("T")[0]}</span>
+          </div>,
+          <pre class="fluent-update-changelog">{release.body}</pre>,
+          ...(upToDate ? [] : [install]),
+        ]);
+        card.hidden = false;
+        setStatus(upToDate ? _("Your theme is up to date!") : _("A new version is available!"), upToDate ? "success" : "info");
+        install.addEventListener("click", async () => {
+          setBusy(true);
+          log.hidden = reload.hidden = true;
           try {
-            await downloadStep();
-          } catch (err) {
-            console.error("Update failed", err);
-            setStatus(`${_("Update failed")}: ${err instanceof Error ? err.message : String(err)}`, "error");
-            installBtn.disabled = false;
-            installBtn.removeAttribute("disabled");
-            channelSelect.disabled = false;
-            channelSelect.removeAttribute("disabled");
-            methodSelect.disabled = false;
-            methodSelect.removeAttribute("disabled");
-            checkBtn.disabled = false;
-            checkBtn.removeAttribute("disabled");
-            hideProgress();
+            const manifest = updateManifest([asset, ...release.i18n_assets], method.value);
+            const result = await callStartUpdate(manifest);
+            if (result.result !== 0 || !result.job) throw new Error(result.message || _("Unable to start update."));
+            await monitor({ result: 0, job: result.job, stage: "downloading" });
+          } catch (error) {
+            setStatus(`${_("Unable to start update.")} ${String(error)}`, "error");
+          } finally {
+            setBusy(false);
           }
         });
-      } catch (err) {
-        checkBtn.disabled = false;
-        console.error("Failed checking updates", err);
-
-        if (err instanceof GitHubAPIError && err.status === 403) {
-          const inputEl = (<input type="text" class="cbi-input-text" style="width: 100%" placeholder="ghp_..." />) as HTMLInputElement;
-          const msgEl = <p>{_("API rate limit exceeded. Please enter a GitHub Token to continue. This token is only used for frontend requests and will not be saved on the router backend.")}</p>;
-
-          const createTokenPromptEl = (
-            <p style="margin-top: 10px; font-size: 13px; color: var(--fluent-text-secondary);">
-              {_("You can create a new token at")}{" "}
-              <a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">
-                https://github.com/settings/personal-access-tokens/new
-              </a>
-              {"."}
-              {_("The token does NOT require any permissions/scopes to be granted (read-only public access is sufficient).")}
-            </p>
-          );
-
-          const rawErrorEl = (
-            <pre style="margin-top: 10px; margin-bottom: 15px; font-size: 12px; white-space: pre-wrap; word-break: break-word; color: var(--fluent-error-text); background: var(--fluent-card-bg); padding: 8px; border-radius: var(--fluent-border-radius);">
-              {err instanceof Error ? err.message : String(err)}
-            </pre>
-          );
-
+      } catch (error) {
+        setStatus(String(error), "error");
+        if (error instanceof GitHubAPIError && (error.status === 403 || error.status === 429)) {
+          const input = (<input type="password" class="cbi-input-text" aria-label={_("GitHub token")} autocomplete="off" />) as HTMLInputElement;
           L.ui.showModal(
             _("GitHub Token Required"),
             <>
-              {msgEl}
-              {createTokenPromptEl}
-              {rawErrorEl}
-              {inputEl}
+              <p>{_("API rate limit exceeded. Please enter a GitHub Token to continue. This token is only used for frontend requests and will not be saved on the router backend.")}</p>
+              {input}
               <div class="right">
                 <button type="button" class="btn" onclick={() => L.ui.hideModal()}>
                   {_("Cancel")}
@@ -445,13 +176,9 @@ const CBIAboutManager = form.DummyValue.extend({
                   type="button"
                   class="btn cbi-button-save"
                   onclick={() => {
-                    const newToken = inputEl.value.trim();
+                    const token = input.value.trim();
                     L.ui.hideModal();
-                    if (newToken) {
-                      setStatus(_("Retrying with token..."), "info");
-                      checkBtn.disabled = true;
-                      doCheckUpdate(newToken);
-                    }
+                    if (token) void checkRelease(token);
                   }}
                 >
                   {_("Submit")}
@@ -459,27 +186,35 @@ const CBIAboutManager = form.DummyValue.extend({
               </div>
             </>,
           );
-        } else {
-          setStatus(`${_("Failed to check for updates")}: ${err instanceof Error ? err.message : String(err)}`, "error");
         }
+      } finally {
+        setBusy(false);
       }
-    };
+    }
 
-    // Check update click logic
-    checkBtn.addEventListener("click", () => {
-      setStatus(_("Checking for updates..."), "info");
-      checkBtn.disabled = true;
-      updateCardEl.style.display = "none";
-      hideProgress();
-      doCheckUpdate();
-    });
-
-    return managerContainer;
+    setBusy(true);
+    void (async () => {
+      try {
+        version = await callGetVersion();
+        if (!version.version || !["ipk", "apk"].includes(version.pkg_type)) throw new Error(_("Unable to determine installed theme version."));
+        versionEl.textContent = version.version;
+        formatEl.textContent = version.pkg_type.toUpperCase();
+        check.addEventListener("click", () => {
+          void checkRelease();
+        });
+        const state = await callUpdateStatus("");
+        if (state.result !== 0) throw new Error(state.message);
+        if (state.stage !== "idle") await monitor(state);
+        setBusy(false);
+      } catch (error) {
+        setStatus(String(error), "error");
+      }
+    })();
+    return container;
   },
 });
 
 export const registerAboutTab = (section: LuCI.form.TypedSection): void => {
   section.tab("about", _("About"));
-
   section.taboption("about", CBIAboutManager, "_about_mgr");
 };

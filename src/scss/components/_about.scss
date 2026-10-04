@@ -11,6 +11,17 @@
   flex-direction: column;
   gap: 16px;
 
+  [hidden] {
+    display: none;
+  }
+
+  > .fluent-update-changelog {
+    max-height: 12rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
   h3 {
     margin: 8px 0 4px;
     font-size: 16px;
@@ -87,22 +98,6 @@
   gap: 16px;
   flex-wrap: wrap;
 
-  .fluent-update-channel-selector {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--fluent-text);
-
-    label {
-      color: var(--fluent-text-secondary);
-    }
-
-    select {
-      padding: 4px 8px;
-      min-width: 140px;
-    }
-  }
 }
 
 .fluent-update-status {
@@ -177,68 +172,4 @@
     white-space: pre-wrap;
   }
 
-  .fluent-update-footer {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .fluent-update-success {
-    text-align: center;
-    padding: 8px 0;
-
-    h4 {
-      margin: 0 0 8px 0;
-      color: #107c41;
-      font-weight: 600;
-    }
-
-    p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--fluent-text-secondary);
-    }
-  }
-}
-
-// Fluent styling for progress bar
-.fluent-progress-bar {
-  width: 100%;
-  height: 4px;
-  background-color: var(--fluent-border);
-  border-radius: 2px;
-  overflow: hidden;
-  position: relative;
-}
-
-.fluent-progress-bar__fill {
-  height: 100%;
-  background-color: var(--fluent-primary);
-  border-radius: 2px;
-  transition: width 0.2s ease-in-out;
-
-  &.fill-verify,
-  &.fill-install {
-    width: 100% !important;
-    animation: fluent-indeterminate-progress 1.5s infinite linear;
-    transform-origin: left;
-  }
-}
-
-.fluent-progress-text {
-  font-size: 12px;
-  color: var(--fluent-text-secondary);
-  text-align: center;
-  margin-top: -8px;
-}
-
-@keyframes fluent-indeterminate-progress {
-  0% {
-    transform: translateX(-100%) scaleX(0.2);
-  }
-  50% {
-    transform: translateX(-20%) scaleX(0.5);
-  }
-  100% {
-    transform: translateX(100%) scaleX(0.2);
-  }
 }
