@@ -49,8 +49,8 @@
       word-break: break-all;
       display: flex;
       align-items: center;
-      height: var(--fluent-input-height);
-      padding-block: 0;
+      min-height: var(--fluent-input-height);
+      padding-block: var(--fluent-space-xs);
       padding-inline: var(--fluent-space-sm) 42px; // extra padding on the inline end for absolute delete button
       color: var(--fluent-text);
       background: var(--fluent-bg-hover);

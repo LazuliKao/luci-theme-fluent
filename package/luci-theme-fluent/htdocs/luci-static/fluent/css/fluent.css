@@ -4316,7 +4316,8 @@ ul.tabs > li.cbi-tab > a, ul.tabs > li.active > a, ul.cbi-tabmenu > li.cbi-tab >
 }
 
 ul.tabs > li.cbi-tab > a:after, ul.tabs > li.active > a:after, ul.cbi-tabmenu > li.cbi-tab > a:after, ul.cbi-tabmenu > li.active > a:after {
-  display: none !important;
+  background-color: var(--fluent-primary);
+  transform: scaleX(1);
 }
 
 ul.tabs > li.cbi-tab > a:hover, ul.tabs > li.active > a:hover, ul.cbi-tabmenu > li.cbi-tab > a:hover, ul.cbi-tabmenu > li.active > a:hover {
@@ -4325,7 +4326,8 @@ ul.tabs > li.cbi-tab > a:hover, ul.tabs > li.active > a:hover, ul.cbi-tabmenu > 
 }
 
 ul.tabs > li.cbi-tab > a:hover:after, ul.tabs > li.active > a:hover:after, ul.cbi-tabmenu > li.cbi-tab > a:hover:after, ul.cbi-tabmenu > li.active > a:hover:after {
-  display: none !important;
+  background-color: var(--fluent-primary);
+  transform: scaleX(1);
 }
 
 ul.tabs > li.cbi-tab-disabled > a, ul.cbi-tabmenu > li.cbi-tab-disabled > a {
@@ -4346,6 +4348,22 @@ ul.tabs > li.disabled > a, ul.tabs > li[disabled] > a, ul.cbi-tabmenu > li.disab
 
 ul.tabs > li.disabled > a:after, ul.tabs > li[disabled] > a:after, ul.cbi-tabmenu > li.disabled > a:after, ul.cbi-tabmenu > li[disabled] > a:after {
   display: none !important;
+}
+
+ul.tabs:has( > .fluent-tab-slider) > li.cbi-tab > a:after {
+  display: none;
+}
+
+ul.tabs:has( > .fluent-tab-slider) > li.active > a:after {
+  display: none;
+}
+
+ul.cbi-tabmenu:has( > .fluent-tab-slider) > li.cbi-tab > a:after {
+  display: none;
+}
+
+ul.cbi-tabmenu:has( > .fluent-tab-slider) > li.active > a:after {
+  display: none;
 }
 
 .cbi-section > .cbi-tabmenu + .cbi-section-node {
@@ -8058,8 +8076,8 @@ html[dir="rtl"] .cbi-dropdown.cbi-button, body[data-fluent-dir="rtl"] .cbi-dropd
   pointer-events: none;
   white-space: normal;
   word-break: break-all;
-  height: var(--fluent-input-height);
-  padding-block: 0;
+  min-height: var(--fluent-input-height);
+  padding-block: var(--fluent-space-xs);
   padding-inline: var(--fluent-space-sm) 42px;
   color: var(--fluent-text);
   background: var(--fluent-bg-hover);
