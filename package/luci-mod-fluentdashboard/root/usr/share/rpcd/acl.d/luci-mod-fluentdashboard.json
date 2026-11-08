@@ -6,7 +6,16 @@
 				"iwinfo": [ "assoclist" ],
 				"luci": [ "getVersion" ],
 				"luci-rpc": [ "getDHCPLeases" ],
+				"luci.fluentdashboard": [ "load" ],
 				"system": [ "board", "info" ]
+			}
+		}
+	},
+	"luci-mod-fluentdashboard-edit": {
+		"description": "Grant permission to publish the shared Fluent dashboard layout",
+		"write": {
+			"ubus": {
+				"luci.fluentdashboard": [ "save" ]
 			}
 		}
 	}

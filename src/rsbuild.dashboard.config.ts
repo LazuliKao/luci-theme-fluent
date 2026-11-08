@@ -121,7 +121,7 @@ export default defineConfig({
       plugins: [pluginSass()],
       source: {
         entry: {
-          "view/fluentdashboard/index": "./web/fluentdashboard/index.css",
+          "view/fluentdashboard/index": "./web/fluentdashboard/styles.scss",
         },
       },
       output: {

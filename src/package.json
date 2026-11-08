@@ -12,11 +12,14 @@
   },
   "devDependencies": {
     "@lazulikao/luci-types": "github:LazuliKao/luci-types#90a8e40b9bd5258262394209bccac6b0320549db",
-    "@rspack/core": "^2.1.7",
     "@rsbuild/core": "^2.1.9",
     "@rsbuild/plugin-sass": "^2.0.1",
+    "@rspack/core": "^2.1.7",
     "@types/node": "^22.19.19",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "gridstack": "12.3.3"
   }
 }

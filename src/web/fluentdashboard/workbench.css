@@ -1,0 +1,48 @@
+.fluent-dashboard {
+  --dash-card-bg: var(--fluent-card-bg, Canvas);
+  --dash-text: var(--fluent-text, CanvasText);
+  --dash-border: var(--fluent-card-border, color-mix(in srgb, CanvasText 18%, transparent));
+  --dash-gap: 0.75rem;
+  --dash-radius: var(--fluent-border-radius, 0.5rem);
+  color: var(--dash-text);
+}
+.fluent-dashboard__toolbar { display: flex; flex-wrap: wrap; gap: var(--dash-gap); border: 0; padding: 0; margin-block: var(--dash-gap); }
+.fluent-dashboard__workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--dash-gap); }
+.fluent-dashboard__canvas { min-width: 0; min-height: 12rem; }
+.fluent-dashboard__library, .fluent-dashboard__properties { min-width: 0; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); padding: var(--dash-gap); }
+.fluent-dashboard__library > button, .fluent-dashboard__properties > button { margin: 0.2rem; }
+.fluent-dashboard__field { display: block; margin-block: var(--dash-gap); }
+.fluent-dashboard__field > input { display: block; width: 100%; }
+.fluent-dashboard .grid-stack-item-content > .fluent-dashboard__card { height: 100%; display: flex; flex-direction: column; }
+.fluent-dashboard__card-header { display: flex; align-items: center; justify-content: space-between; flex: none; min-height: 2rem; }
+.fluent-dashboard__card-header > .fluent-dashboard__card-title { flex: 1; border: 0; padding-block: 0.5rem; }
+.fluent-dashboard__card-header > button { flex: none; font-size: 0.75rem; margin-inline-end: 0.5rem; }
+.fluent-dashboard__card-content { overflow: auto; min-height: 0; }
+.fluent-dashboard__widget-status { margin: 0; padding-inline: var(--dash-gap); font-size: 0.85rem; }
+.fluent-dashboard__card--editing .fluent-dashboard__card-header { cursor: move; }
+.fluent-dashboard__card--hidden { opacity: 0.5; }
+.fluent-dashboard__card--locked .fluent-dashboard__card-header { cursor: default; }
+.fluent-dashboard__tile--selected > .grid-stack-item-content { outline: 2px solid Highlight; outline-offset: -2px; }
+.fluent-dashboard__group { height: 100%; display: flex; flex-direction: column; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); background: var(--dash-card-bg); }
+.fluent-dashboard__group > .fluent-dashboard__card-header { height: 40px; }
+.fluent-dashboard__group-description { margin: 0; padding: 0.25rem var(--dash-gap); font-size: 0.85rem; }
+.fluent-dashboard__group-body { min-height: 80px; flex: 1; }
+.fluent-dashboard__metric, .fluent-dashboard__traffic { display: flex; flex-direction: column; gap: 0.4rem; padding: var(--dash-gap); overflow: auto; }
+.fluent-dashboard__metric-value { font-size: clamp(1rem, 1.5vw, 1.6rem); overflow-wrap: anywhere; }
+.fluent-dashboard__metric-detail { color: var(--dash-text); opacity: 0.7; overflow-wrap: anywhere; }
+.fluent-dashboard__metric progress { width: 100%; accent-color: var(--fluent-primary, Highlight); }
+.fluent-dashboard__traffic svg { width: 100%; height: 5rem; min-height: 2rem; }
+.fluent-dashboard__traffic polyline { fill: none; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.fluent-dashboard__traffic-rx { stroke: var(--fluent-primary, Highlight); }
+.fluent-dashboard__traffic-tx { stroke: var(--fluent-success, #26884a); }
+.fluent-dashboard__shortcuts { display: flex; flex-wrap: wrap; gap: var(--dash-gap); padding: var(--dash-gap); }
+.fluent-dashboard__shortcuts a { display: inline-flex; align-items: center; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); padding: 0.5rem; color: var(--dash-text); }
+.fluent-dashboard__notice:empty { display: none; }
+.fluent-dashboard [hidden] { display: none; }
+.fluent-dashboard .grid-stack-item-content { min-width: 0; overflow: hidden; }
+.fluent-dashboard__canvas .grid-stack-item > .grid-stack-item-content { overflow: visible; }
+.fluent-dashboard__group-body.grid-stack { min-width: 0; width: 100%; }
+.fluent-dashboard__workspace--editing .fluent-dashboard__canvas > .grid-stack-item { touch-action: auto; }
+@media (min-width: 1400px) {
+  .fluent-dashboard__workspace--editing { grid-template-columns: 12rem minmax(0, 1fr) 15rem; align-items: start; }
+}

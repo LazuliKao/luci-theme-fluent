@@ -1,0 +1,120 @@
+'use strict';
+
+import { open, readfile, writefile, rename, unlink, mkdtemp, rmdir } from 'fs';
+import { cursor } from 'uci';
+
+const config = '/etc/config/fluentdashboard';
+const max_size = 262144;
+function require_value(ok, message) { if (!ok) die(message); }
+function integer(v, min, max) { return type(v) == 'int' && v >= min && v <= max; }
+function id(v) { return type(v) == 'string' && match(v, /^[A-Za-z0-9_-]{1,64}$/); }
+function safe_json(v, depth) {
+	if (depth > 16) return false;
+	if (type(v) == 'object' || type(v) == 'array') {
+		for (let k, item in v) {
+			if (k in [ '__proto__', 'constructor', 'prototype' ] || !safe_json(item, depth + 1)) return false;
+		}
+	}
+	return true;
+}
+function validate(doc) {
+	require_value(type(doc) == 'object' && doc.schemaVersion == 1 && safe_json(doc, 0), 'Invalid schema');
+	require_value(integer(doc.revision, 0, 9007199254740990), 'Invalid revision');
+	require_value(type(doc.dashboards) == 'array' && length(doc.dashboards) >= 1 && length(doc.dashboards) <= 16, 'Invalid dashboards');
+	let dashboards = {};
+	for (let dashboard in doc.dashboards) {
+		require_value(type(dashboard) == 'object' && id(dashboard.id) && !exists(dashboards, dashboard.id), 'Invalid dashboard id');
+		dashboards[dashboard.id] = true;
+		require_value(type(dashboard.name) == 'string' && length(trim(dashboard.name)) && length(dashboard.name) <= 128, 'Invalid name');
+		require_value(type(dashboard.nodes) == 'array' && length(dashboard.nodes) <= 120, 'Too many nodes');
+		let nodes = {};
+		for (let node in dashboard.nodes) {
+			require_value(type(node) == 'object' && id(node.id) && !exists(nodes, node.id), 'Invalid node id');
+			nodes[node.id] = node;
+			require_value(node.kind in [ 'widget', 'group' ] && exists(node, 'parentId') && (node.parentId == null || id(node.parentId)), 'Invalid node');
+			for (let flag in [ 'hidden', 'locked', 'collapsed' ]) require_value(!exists(node, flag) || type(node[flag]) == 'bool', 'Invalid flag');
+			require_value(!exists(node, 'title') || (type(node.title) == 'string' && length(node.title) <= 256), 'Invalid title');
+			let t = node.tile;
+			require_value(type(t) == 'object' && t.size in [ 'small', 'medium', 'wide', 'large', 'xlarge', 'full', 'custom' ], 'Invalid tile');
+			require_value(integer(t.x, 0, 11) && integer(t.y, 0, 10000) && integer(t.w, 1, 12) && integer(t.h, 1, 48) && integer(t.order, 0, 100000), 'Invalid coordinates');
+			if (node.kind == 'widget')
+				require_value(type(node.widgetType) == 'string' && match(node.widgetType, /^[A-Za-z0-9_.-]{1,128}$/) && integer(node.widgetVersion, 1, 100000) && type(node.config) == 'object', 'Invalid widget');
+			else {
+				require_value(type(node.title) == 'string', 'Invalid group title');
+				require_value(!exists(node, 'description') || (type(node.description) == 'string' && length(node.description) <= 2048), 'Invalid description');
+			}
+		}
+		for (let node in dashboard.nodes) {
+			let seen = {}; seen[node.id] = true;
+			let parent = node.parentId, depth = node.kind == 'group' ? 1 : 0;
+			while (parent != null) {
+				require_value(!exists(seen, parent) && nodes[parent]?.kind == 'group', 'Invalid parent graph');
+				seen[parent] = true;
+				require_value(++depth <= 2, 'Too many group levels');
+				parent = nodes[parent].parentId;
+			}
+			require_value(node.tile.x + node.tile.w <= (node.parentId == null ? 12 : nodes[node.parentId].tile.w), 'Tile outside parent');
+		}
+	}
+	require_value(type(doc.defaultDashboardId) == 'string' && exists(dashboards, doc.defaultDashboardId), 'Invalid default dashboard');
+	require_value(!exists(doc, 'meta') || type(doc.meta) == 'object', 'Invalid metadata');
+}
+
+function load_document() {
+	const uci = cursor('/etc/config', '/var/lock', '');
+	require_value(uci.load('fluentdashboard'), 'Cannot read dashboard configuration');
+	let raw = uci.get('fluentdashboard', 'global', 'layout');
+	let revision = int(uci.get('fluentdashboard', 'global', 'revision'));
+	require_value(integer(revision, 0, 9007199254740990), 'Invalid stored revision');
+	if (!raw && revision == 0) return { document: null, revision: 0 };
+	require_value(type(raw) == 'string' && length(raw) <= max_size, 'Invalid stored layout');
+	let doc = json(raw);
+	validate(doc);
+	require_value(doc.revision == revision, 'Stored revision mismatch');
+	return { document: doc, revision };
+}
+
+function save_document(args) {
+	require_value(type(args.layout) == 'string' && length(args.layout) <= max_size, 'Layout too large');
+	let doc = json(args.layout);
+	validate(doc);
+	require_value(integer(args.expectedRevision, 0, 9007199254740989) && doc.revision == args.expectedRevision, 'Invalid expected revision');
+	const current = load_document();
+	if (current.revision != args.expectedRevision) return { error: 'conflict', revision: current.revision };
+	doc.revision = current.revision + 1;
+	// Isolated UCI cursor: no global /tmp/.uci deltas, commit then atomic same-filesystem rename.
+	const staging = mkdtemp('/etc/config/.fluentdashboard-XXXXXX');
+	require_value(staging, 'Cannot create staging directory');
+	let result;
+	try {
+		const old = readfile(config);
+		require_value(old != null && writefile(staging + '/fluentdashboard', old) == length(old), 'Cannot stage config');
+		const uci = cursor(staging, staging, '');
+		require_value(uci.load('fluentdashboard'), 'Cannot load staged config');
+		require_value(uci.set('fluentdashboard', 'global', 'layout', sprintf('%J', doc)) && uci.set('fluentdashboard', 'global', 'revision', sprintf('%d', doc.revision)) && uci.set('fluentdashboard', 'global', 'schema_version', '1'), 'Cannot set config');
+		require_value(uci.commit('fluentdashboard'), 'Cannot commit config');
+		require_value(writefile(staging + '/previous', old) == length(old) && rename(staging + '/previous', config + '.previous'), 'Cannot preserve previous config');
+		require_value(rename(staging + '/fluentdashboard', config), 'Cannot publish config');
+		result = { document: doc, revision: doc.revision };
+	} catch (error) { result = { error: 'storage', message: `${error}` }; }
+	unlink(staging + '/fluentdashboard'); unlink(staging + '/previous'); rmdir(staging);
+	return result;
+}
+
+return {
+	'luci.fluentdashboard': {
+		load: { call: function() { try { return load_document(); } catch (error) { return { error: 'corrupt', message: `${error}` }; } } },
+		save: {
+			args: { layout: '', expectedRevision: 0 },
+			call: function(request) {
+				const lock = open('/var/lock/fluentdashboard.lock', 'a', 0600);
+				if (!lock) return { error: 'storage', message: 'Cannot open lock' };
+				if (!lock.lock('xn')) { lock.close(); return { error: 'busy', message: 'Another save is in progress' }; }
+				let result;
+				try { result = save_document(request.args); } catch (error) { result = { error: 'invalid', message: `${error}` }; }
+				lock.close();
+				return result;
+			}
+		}
+	}
+};

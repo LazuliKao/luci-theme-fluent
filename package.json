@@ -25,7 +25,7 @@
     "test": "pnpm run test:menu-layout && pnpm run test:apply-change-preview && pnpm run test:dashboard",
     "test:menu-layout": "tsx --test src/web/resources/menu-layout.test.ts",
     "test:apply-change-preview": "tsx --test src/web/resources/utils/apply-change-preview.test.ts",
-    "test:dashboard": "tsx --test src/web/fluentdashboard/model.test.ts",
+    "test:dashboard": "tsx --test src/web/fluentdashboard/model.test.ts src/web/fluentdashboard/core/*.test.ts src/web/fluentdashboard/layout/*.test.ts src/web/fluentdashboard/data/*.test.ts src/web/fluentdashboard/persistence/*.test.ts src/web/fluentdashboard/widgets/*.test.ts",
     "dev:remote": "luci-types dev",
     "dev:dashboard:remote": "tsx src/script/dev-dashboard-remote.ts",
     "dev:lite:remote": "tsx src/script/dev-lite-remote.ts",

@@ -1,0 +1,8 @@
+@use "sass:meta";
+@use "./index.css";
+@use "./workbench.css";
+
+// Third-party grid rules are scoped to this module, including resize handles.
+.fluent-dashboard {
+  @include meta.load-css("gridstack/dist/gridstack.css");
+}

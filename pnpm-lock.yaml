@@ -58,6 +58,10 @@ importers:
         version: 6.0.3
 
   src:
+    dependencies:
+      gridstack:
+        specifier: 12.3.3
+        version: 12.3.3
     devDependencies:
       '@lazulikao/luci-types':
         specifier: github:LazuliKao/luci-types#90a8e40b9bd5258262394209bccac6b0320549db
@@ -937,6 +941,9 @@ packages:
   global-directory@5.0.0:
     resolution: {integrity: sha512-1pgFdhK3J2LeM+dVf2Pd424yHx2ou338lC0ErNP2hPx4j8eW1Sp0XqSjNxtk6Tc4Kr5wlWtSvz8cn2yb7/SG/w==}
     engines: {node: '>=20'}
+
+  gridstack@12.3.3:
+    resolution: {integrity: sha512-Bboi4gj7HXGnx1VFXQNde4Nwi5srdUSuCCnOSszKhFjBs8EtMEWhsKX02BjIKkErq/FjQUkNUbXUYeQaVMQ0jQ==}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -2053,6 +2060,8 @@ snapshots:
   global-directory@5.0.0:
     dependencies:
       ini: 6.0.0
+
+  gridstack@12.3.3: {}
 
   has-flag@4.0.0: {}
 
