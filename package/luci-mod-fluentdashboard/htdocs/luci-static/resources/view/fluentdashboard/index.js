@@ -8746,24 +8746,6 @@ function registerBuiltins(l) {
     ], (e, t)=>renderClients(filtered(e.get("wireless.clients")?.data, t)));
 }
 
-;// CONCATENATED MODULE: ./web/fluentdashboard/widgets/registry.ts
-class WidgetRegistry {
-    definitions = new Map();
-    register(i) {
-        if (this.definitions.has(i.type)) throw Error(`Duplicate widget: ${i.type}`);
-        if (!i.validateConfig(i.defaultConfig)) throw Error(`Invalid default config: ${i.type}`);
-        this.definitions.set(i.type, i);
-    }
-    get(i) {
-        return this.definitions.get(i);
-    }
-    list() {
-        return [
-            ...this.definitions.values()
-        ];
-    }
-}
-
 ;// CONCATENATED MODULE: ./web/fluentdashboard/widgets/traffic.ts
 function trafficRate(t, x) {
     let r = (x.at - t.at) / 1000;
@@ -8892,35 +8874,35 @@ class metrics_f {
     }
     paint() {
         if (!this.body || (this.ctx.setStatus(this.state?.status === "error" ? _("Data is stale or unavailable.") : this.state?.data ? "" : _("Loading\u2026")), !this.state?.data)) return;
-        let t = this.body.querySelector(":scope > .fluent-dashboard__traffic");
-        t || (t = metrics_l("div", "fluent-dashboard__traffic", ""), this.body.replaceChildren(t));
-        let i = metrics_c(this.state.data, this.config), s = t.querySelector(".fluent-dashboard__metric-detail");
-        s || (s = metrics_l("span", "fluent-dashboard__metric-detail", ""), t.append(s)), s.textContent = i?.name ?? _("No interface available");
-        let a = this.samples.at(-1), r = t.querySelector(".fluent-dashboard__metric-value");
-        if (r || (r = metrics_l("strong", "fluent-dashboard__metric-value", ""), t.append(r)), r.textContent = a ? `${_('Down')} ${formatBytes(a.rx)}/s \xb7 ${_('Up')} ${formatBytes(a.tx)}/s` : _("Waiting for second sample\u2026"), t.querySelector("svg")?.remove(), this.samples.length > 1) {
-            let e = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            e.setAttribute("viewBox", "0 0 100 40"), e.setAttribute("preserveAspectRatio", "none"), e.setAttribute("role", "img"), e.setAttribute("aria-label", _("Receive and transmit throughput history"));
+        let e = this.body.querySelector(":scope > .fluent-dashboard__traffic");
+        e || (e = metrics_l("div", "fluent-dashboard__traffic", ""), this.body.replaceChildren(e));
+        let i = metrics_c(this.state.data, this.config), s = e.querySelector(".fluent-dashboard__metric-detail");
+        s || (s = metrics_l("span", "fluent-dashboard__metric-detail", ""), e.append(s)), s.textContent = i?.name ?? _("No interface available");
+        let a = this.samples.at(-1), r = e.querySelector(".fluent-dashboard__metric-value");
+        if (r || (r = metrics_l("strong", "fluent-dashboard__metric-value", ""), e.append(r)), r.textContent = a ? `${_("Down")} ${formatBytes(a.rx)}/s \xb7 ${_("Up")} ${formatBytes(a.tx)}/s` : _("Waiting for second sample\u2026"), e.querySelector("svg")?.remove(), this.samples.length > 1) {
+            let t = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            t.setAttribute("viewBox", "0 0 100 40"), t.setAttribute("preserveAspectRatio", "none"), t.setAttribute("role", "img"), t.setAttribute("aria-label", _("Receive and transmit throughput history"));
             let i = Math.max(1, ...this.samples.flatMap((e)=>[
                     e.rx,
                     e.tx
                 ]));
-            for (let t of [
+            for (let e of [
                 "rx",
                 "tx"
             ]){
                 let s = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-                s.setAttribute("class", `fluent-dashboard__traffic-${t}`), s.setAttribute("points", this.samples.map((e, s)=>`${(100 * s / (this.samples.length - 1)).toFixed(2)},${(39 - e[t] / i * 38).toFixed(2)}`).join(" ")), e.append(s);
+                s.setAttribute("class", `fluent-dashboard__traffic-${e}`), s.setAttribute("points", this.samples.map((t, s)=>`${(100 * s / (this.samples.length - 1)).toFixed(2)},${(39 - t[e] / i * 38).toFixed(2)}`).join(" ")), t.append(s);
             }
-            t.append(e);
+            e.append(t);
         }
     }
 }
 function registerMetrics(r) {
-    let n = (e, t, i, s, n, l = {})=>r.register({
-            type: e,
-            title: t,
-            description: t,
-            category: i,
+    let n = (t, i, s, a, n, l = {})=>r.register({
+            type: t,
+            title: i,
+            description: i,
+            category: s,
             icon: "",
             version: 1,
             defaultSize: "medium",
@@ -8944,11 +8926,11 @@ function registerMetrics(r) {
             } : l.radio ? {
                 radio: ""
             } : {},
-            requiredData: s,
+            requiredData: a,
             validateConfig: (e)=>(!l.interface || void 0 === e.interface || "string" == typeof e.interface && e.interface.length <= 64) && (!l.radio || void 0 === e.radio || "string" == typeof e.radio && e.radio.length <= 64),
-            createInstance: (e)=>new metrics_u(e, s, n)
+            createInstance: (e)=>new metrics_u(e, a, n)
         });
-    for (let [a, r, l] of (n("system.hostname", _("Device name"), _("System"), [
+    for (let [e, r, l] of (n("system.hostname", _("Device name"), _("System"), [
         "system.board",
         "system.info",
         "system.version"
@@ -8995,10 +8977,10 @@ function registerMetrics(r) {
             _("Temporary storage"),
             "tmp"
         ]
-    ]))n(`system.${a}`, r, _("Resources"), [
+    ]))n(`system.${e}`, r, _("Resources"), [
         "system.info"
-    ], (t)=>{
-        let i = metrics_o(t)[l];
+    ], (e)=>{
+        let i = metrics_o(e)[l];
         return i.total ? {
             value: `${Math.round(usedPercent(i))}%`,
             detail: `${formatBytes(i.total - i.free)} / ${formatBytes(i.total)}`,
@@ -9029,11 +9011,11 @@ function registerMetrics(r) {
         interface: !0
     }), n("network.interface-traffic", _("Interface bytes"), _("Network"), [
         "network.interfaces"
-    ], (t, i)=>{
-        let s = metrics_c(metrics_d(t, "network.interfaces"), i);
+    ], (e, i)=>{
+        let s = metrics_c(metrics_d(e, "network.interfaces"), i);
         return {
             value: s ? `${formatBytes(s.rx)} \u{2193}  ${formatBytes(s.tx)} \u{2191}` : "\u2013",
-            detail: s ? `${s.name} \xb7 ${_('Cumulative counters')}` : void 0
+            detail: s ? `${s.name} \xb7 ${_("Cumulative counters")}` : void 0
         };
     }, {
         interface: !0
@@ -9055,8 +9037,8 @@ function registerMetrics(r) {
             detail: _("Connected network interfaces")
         })), n("network.interface-uptime", _("Interface uptime"), _("Network"), [
         "network.interfaces"
-    ], (e, i)=>{
-        let s = metrics_c(metrics_d(e, "network.interfaces"), i);
+    ], (e, t)=>{
+        let s = metrics_c(metrics_d(e, "network.interfaces"), t);
         return {
             value: s?.up ? formatDuration(s.uptime) : _("Offline"),
             detail: s?.name
@@ -9175,6 +9157,24 @@ function registerMetrics(r) {
         validateConfig: (e)=>"string" == typeof e.interface && e.interface.length <= 64 && Number.isInteger(e.history) && Number(e.history) >= 10 && 120 >= Number(e.history),
         createInstance: (e)=>new metrics_f(e)
     });
+}
+
+;// CONCATENATED MODULE: ./web/fluentdashboard/widgets/registry.ts
+class WidgetRegistry {
+    definitions = new Map();
+    register(i) {
+        if (this.definitions.has(i.type)) throw Error(`Duplicate widget: ${i.type}`);
+        if (!i.validateConfig(i.defaultConfig)) throw Error(`Invalid default config: ${i.type}`);
+        this.definitions.set(i.type, i);
+    }
+    get(i) {
+        return this.definitions.get(i);
+    }
+    list() {
+        return [
+            ...this.definitions.values()
+        ];
+    }
 }
 
 ;// CONCATENATED MODULE: ./web/fluentdashboard/widgets/shortcuts.ts
