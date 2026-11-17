@@ -205,12 +205,12 @@ export function registerSources(data: DataService): void {
   data.register({
     key: "system.telemetry",
     interval: 5000,
-    load: async () => normalizeTelemetry(await Promise.resolve(callDashboardMetrics()).catch(() => ({}))),
+    load: async () => normalizeTelemetry(await callDashboardMetrics()),
   });
   data.register({
     key: "system.mounts",
     interval: 30000,
-    load: async () => normalizeMounts(await Promise.resolve(callMountPoints()).catch(() => [])),
+    load: async () => normalizeMounts(await callMountPoints()),
   });
   let cacheFlight: Promise<unknown> | undefined;
   let cacheTime = 0;

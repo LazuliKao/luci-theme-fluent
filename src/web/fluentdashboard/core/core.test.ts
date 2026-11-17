@@ -8,6 +8,7 @@ import {
   EditCommand,
   MoveNodeCommand,
   RemoveNodeCommand,
+  ResizeNodeCommand,
   ToggleCollapseCommand,
   ToggleLockCommand,
   UpdateConfigCommand,
@@ -193,4 +194,27 @@ test("migrateDocument settles overlapping unlocked tiles and rejects overlapping
   lockedConflict.dashboards[0].nodes[1].tile.x = 0;
   lockedConflict.dashboards[0].nodes[1].tile.y = 0;
   assert.throws(() => migrateDocument(lockedConflict), DocumentValidationError);
+});
+test("ResizeNodeCommand clamps unlocked children when shrinking a group and rejects locked overflow", () => {
+  const doc = createDefaultDocument();
+  doc.dashboards[0].nodes.push(group("g_resize"));
+  const child = doc.dashboards[0].nodes[0];
+  child.parentId = "g_resize";
+  child.tile = { ...child.tile, x: 6, y: 0, w: 6, h: 4 };
+  const resized = new ResizeNodeCommand("overview", "g_resize", 6, 8).execute(doc);
+  const updatedChild = resized.dashboards[0].nodes.find((n) => n.id === child.id);
+  assert.ok(updatedChild);
+  assert.equal(updatedChild.tile.x, 0);
+  assert.equal(updatedChild.tile.w, 6);
+
+  child.locked = true;
+  assert.throws(() => new ResizeNodeCommand("overview", "g_resize", 6, 8).execute(doc));
+});
+test("migrateDocument rejects layouts where settlement grows a group past MAX_TILE_ROWS", () => {
+  const doc = createDefaultDocument();
+  doc.dashboards[0].nodes.push(group("g_tall"));
+  const child = doc.dashboards[0].nodes[0];
+  child.parentId = "g_tall";
+  child.tile = { ...child.tile, x: 0, y: 46, w: 6, h: 4 };
+  assert.throws(() => migrateDocument(doc), DocumentValidationError);
 });

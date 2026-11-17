@@ -89,6 +89,7 @@ export function migrateDocument(value: unknown): DashboardDocument {
   const doc = cloneDocument(value);
   try {
     for (const d of doc.dashboards) settleDashboard(d);
+    validateDocument(doc);
   } catch (error) {
     throw new DocumentValidationError(error instanceof Error ? error.message : String(error));
   }

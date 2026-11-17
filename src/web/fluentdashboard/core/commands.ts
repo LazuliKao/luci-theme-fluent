@@ -80,12 +80,26 @@ export class MoveNodeCommand extends EditCommand {
     });
   }
 }
+function clampChildrenToWidth(d: Dashboard, groupId: string, maxW: number): void {
+  for (const child of d.nodes) {
+    if (child.parentId !== groupId) continue;
+    if (child.locked) {
+      if (child.tile.x + child.tile.w > maxW) throw new Error("A locked child tile does not fit in the new group width");
+    } else {
+      const nextW = Math.min(child.tile.w, maxW);
+      const nextX = Math.min(child.tile.x, maxW - nextW);
+      child.tile = { ...child.tile, x: nextX, w: nextW, size: detectTileSize(nextW, child.tile.h) };
+    }
+    if (child.kind === "group") clampChildrenToWidth(d, child.id, child.tile.w);
+  }
+}
 export class ResizeNodeCommand extends EditCommand {
   constructor(dashboardId: string, id: string, w: number, h: number) {
     super("Resize tile", (doc) => {
       const d = dashboard(doc, dashboardId),
         n = nodeIn(d, id);
       n.tile = { ...n.tile, w, h, size: detectTileSize(w, h) };
+      if (n.kind === "group") clampChildrenToWidth(d, n.id, w);
       settle(d, new Set([id]));
     });
   }

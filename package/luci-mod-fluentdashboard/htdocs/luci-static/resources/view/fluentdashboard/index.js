@@ -608,6 +608,7 @@ function migrateDocument(t) {
     let r = cloneDocument(t);
     try {
         for (let t of r.dashboards)settleDashboard(t);
+        validateDocument(r);
     } catch (e) {
         throw new DocumentValidationError(e instanceof Error ? e.message : String(e));
     }
@@ -791,18 +792,18 @@ function commands_m(t, o) {
     for (let d of [
         ...new Set(t.nodes.map((e)=>e.parentId))
     ].sort((e, t)=>(null === t ? 0 : ancestorsOf(r, t).length + 1) - (null === e ? 0 : ancestorsOf(r, e).length + 1))){
-        let n = t.nodes.filter((e)=>e.parentId === d), l = n.filter((e)=>e.locked || ancestorsOf(r, e.id).some((e)=>e.locked));
-        for(let t = 0; t < l.length; t++)for(let o = 0; o < t; o++)if (engine_collides(l[t].tile, l[o].tile)) throw Error("Locked tiles overlap");
-        for (let t of n.filter((e)=>!l.includes(e)).sort((e, t)=>Number(o.has(t.id)) - Number(o.has(e.id)) || e.tile.y - t.tile.y || e.tile.x - t.tile.x)){
-            for(; l.some((o)=>engine_collides(o.tile, t.tile));){
+        let l = t.nodes.filter((e)=>e.parentId === d), n = l.filter((e)=>e.locked || ancestorsOf(r, e.id).some((e)=>e.locked));
+        for(let t = 0; t < n.length; t++)for(let o = 0; o < t; o++)if (engine_collides(n[t].tile, n[o].tile)) throw Error("Locked tiles overlap");
+        for (let t of l.filter((e)=>!n.includes(e)).sort((e, t)=>Number(o.has(t.id)) - Number(o.has(e.id)) || e.tile.y - t.tile.y || e.tile.x - t.tile.x)){
+            for(; n.some((o)=>engine_collides(o.tile, t.tile));){
                 if (t.tile.y >= 10000) throw Error("Dashboard layout exceeds the row limit");
                 t.tile.y++;
             }
-            l.push(t);
+            n.push(t);
         }
         if (null !== d) {
             let e = r.byId.get(d);
-            e?.kind === "group" && (e.tile.h = Math.max(3, ...n.map((e)=>e.tile.y + e.tile.h + 1)));
+            e?.kind === "group" && (e.tile.h = Math.max(3, ...l.map((e)=>e.tile.y + e.tile.h + 1)));
         }
     }
 }
@@ -828,13 +829,28 @@ class MoveNodeCommand extends EditCommand {
 class ResizeNodeCommand extends EditCommand {
     constructor(e, t, o, r){
         super("Resize tile", (i)=>{
-            let n = commands_s(i, e), l = commands_a(n, t);
-            l.tile = {
-                ...l.tile,
+            let l = commands_s(i, e), n = commands_a(l, t);
+            n.tile = {
+                ...n.tile,
                 w: o,
                 h: r,
                 size: detectTileSize(o, r)
-            }, commands_m(n, new Set([
+            }, "group" === n.kind && function e(t, o, r) {
+                for (let i of t.nodes)if (i.parentId === o) {
+                    if (i.locked) {
+                        if (i.tile.x + i.tile.w > r) throw Error("A locked child tile does not fit in the new group width");
+                    } else {
+                        let e = Math.min(i.tile.w, r), t = Math.min(i.tile.x, r - e);
+                        i.tile = {
+                            ...i.tile,
+                            x: t,
+                            w: e,
+                            size: detectTileSize(e, i.tile.h)
+                        };
+                    }
+                    "group" === i.kind && e(t, i.id, i.tile.w);
+                }
+            }(l, n.id, o), commands_m(l, new Set([
                 t
             ]));
         });
@@ -878,8 +894,8 @@ class DissolveGroupCommand extends EditCommand {
         super("Dissolve group", (o)=>{
             let r = commands_s(o, e), d = commands_a(r, t);
             if ("group" !== d.kind) throw Error("Not a group");
-            let i = r.nodes.filter((e)=>e.parentId === t), n = null === d.parentId ? 12 : commands_a(r, d.parentId, !0).tile.w;
-            if (i.some((e)=>e.tile.w > n)) throw Error("A child tile is wider than the destination group");
+            let i = r.nodes.filter((e)=>e.parentId === t), l = null === d.parentId ? 12 : commands_a(r, d.parentId, !0).tile.w;
+            if (i.some((e)=>e.tile.w > l)) throw Error("A child tile is wider than the destination group");
             for (let e of i){
                 commands_a(r, e.id), e.parentId = d.parentId;
                 let t = null === d.parentId ? void 0 : commands_a(r, d.parentId, !0);
@@ -919,16 +935,16 @@ function settleDashboard(e, t = new Set()) {
 class DuplicateDashboardCommand extends EditCommand {
     constructor(e, o, r){
         super("Duplicate dashboard", (d)=>{
-            let i = commands_s(d, e), n = new Map();
-            for (let e of i.nodes)n.set(e.id, createId(e.kind));
-            let l = i.nodes.map((e)=>{
+            let i = commands_s(d, e), l = new Map();
+            for (let e of i.nodes)l.set(e.id, createId(e.kind));
+            let n = i.nodes.map((e)=>{
                 let o = JSON.parse(JSON.stringify(e));
-                return o.id = n.get(e.id) ?? createId(e.kind), o.parentId = e.parentId ? n.get(e.parentId) ?? null : null, o;
+                return o.id = l.get(e.id) ?? createId(e.kind), o.parentId = e.parentId ? l.get(e.parentId) ?? null : null, o;
             });
             d.dashboards.push({
                 id: o,
                 name: r,
-                nodes: l
+                nodes: n
             });
         });
     }
@@ -7611,9 +7627,9 @@ class WidgetFrame {
         l.type = "button", l.className = "fluent-dashboard__icon-btn", l.title = _("Fullscreen"), l.setAttribute("aria-label", _("Fullscreen")), l.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>', l.addEventListener("click", (e)=>{
             e.stopPropagation(), document.fullscreenElement === this.element ? document.exitFullscreen().catch(()=>{}) : this.element.requestFullscreen().catch(()=>this.setStatus(_("Fullscreen is unavailable.")));
         }), n.append(this.badges, d, l), this.header.append(this.title, n), this.header.addEventListener("click", (e)=>{
-            e.target instanceof Element && e.target.closest("button") || s();
+            e.target instanceof Element && e.target.closest("button") || s(e.shiftKey || e.ctrlKey || e.metaKey);
         }), this.header.addEventListener("keydown", (e)=>{
-            e.target === this.header && ("Enter" === e.key || " " === e.key) && (e.preventDefault(), s());
+            e.target === this.header && ("Enter" === e.key || " " === e.key) && (e.preventDefault(), s(e.shiftKey || e.ctrlKey || e.metaKey));
         }), this.element.append(this.header, this.status, this.body), this.update(e, t, !1);
     }
     update(e, t, a) {
@@ -7646,7 +7662,7 @@ class WidgetRuntime {
         if (s && (s.type !== t.widgetType || s.version !== t.widgetVersion) && (this.remove(t.id), s = void 0), !s) {
             let i = new WidgetFrame(t, n?.title ?? t.widgetType, ()=>{
                 this.data.refresh(n?.requiredData ?? []);
-            }, ()=>this.select(t.id)), o = new ResizeObserver((e)=>{
+            }, (e)=>this.select(t.id, e)), o = new ResizeObserver((e)=>{
                 let i = e[0]?.contentRect;
                 i && this.mounted.get(t.id)?.instance?.resize(i.width, i.height);
             });
@@ -7699,16 +7715,16 @@ class WidgetRuntime {
 
 
 
-function I(e, t = "", i = "") {
+function $(e, t = "", i = "") {
     let s = document.createElement(e);
     return t && (s.className = t), i && (s.textContent = i), s;
 }
-function $(e, t, i = !1, s = "") {
-    let d = I("button", `cbi-button fluent-dashboard__btn${s ? ` fluent-dashboard__btn--${s}` : ""}`, e);
+function A(e, t, i = !1, s = "") {
+    let d = $("button", `cbi-button fluent-dashboard__btn${s ? ` fluent-dashboard__btn--${s}` : ""}`, e);
     return d.type = "button", d.disabled = i, d.addEventListener("click", t), d;
 }
-function A(e, t, i = "text", s = "") {
-    let d = I("label", "fluent-dashboard__field"), a = I("span", "fluent-dashboard__field-label", e), r = I("input", "fluent-dashboard__input");
+function O(e, t, i = "text", s = "") {
+    let d = $("label", "fluent-dashboard__field"), a = $("span", "fluent-dashboard__field-label", e), r = $("input", "fluent-dashboard__input");
     return r.type = i, r.value = t, s && (r.placeholder = s), d.append(a, r), [
         d,
         r
@@ -7731,20 +7747,21 @@ class Workbench {
     data;
     persistence;
     writable;
-    root = I("div", "fluent-dashboard");
+    root = $("div", "fluent-dashboard");
     store;
-    topbar = I("header", "fluent-dashboard__topbar");
-    toolbar = I("fieldset", "fluent-dashboard__toolbar");
-    message = I("p", "fluent-dashboard__notice");
-    workspace = I("div", "fluent-dashboard__workspace");
-    library = I("fieldset", "fluent-dashboard__library");
-    libraryList = I("div", "fluent-dashboard__library-list");
-    canvas = I("div", "fluent-dashboard__canvas");
-    properties = I("fieldset", "fluent-dashboard__properties");
+    topbar = $("header", "fluent-dashboard__topbar");
+    toolbar = $("fieldset", "fluent-dashboard__toolbar");
+    message = $("p", "fluent-dashboard__notice");
+    workspace = $("div", "fluent-dashboard__workspace");
+    library = $("fieldset", "fluent-dashboard__library");
+    libraryList = $("div", "fluent-dashboard__library-list");
+    canvas = $("div", "fluent-dashboard__canvas");
+    properties = $("fieldset", "fluent-dashboard__properties");
     adapter = new GridstackAdapter();
     runtime;
     groups = new Map();
     off = [];
+    inspectorOff = [];
     columns = 12;
     mountedDashboard = "";
     busy = !1;
@@ -7754,7 +7771,7 @@ class Workbench {
     libraryCollapsed = !1;
     propertiesCollapsed = !1;
     constructor(e, t, i, s, d){
-        this.registry = t, this.data = i, this.persistence = s, this.writable = d, this.store = new DashboardStore(e), this.runtime = new WidgetRuntime(t, i, (e)=>this.select(e)), this.message.setAttribute("role", "status"), this.workspace.append(this.library, this.canvas, this.properties), this.root.append(this.topbar, this.toolbar, this.message, this.workspace), this.off.push(this.store.subscribe(()=>this.render())), this.off.push(observeColumns(this.canvas, (e)=>{
+        this.registry = t, this.data = i, this.persistence = s, this.writable = d, this.store = new DashboardStore(e), this.runtime = new WidgetRuntime(t, i, (e, t)=>this.select(e, t)), this.message.setAttribute("role", "status"), this.workspace.append(this.library, this.canvas, this.properties), this.root.append(this.topbar, this.toolbar, this.message, this.workspace), this.off.push(this.store.subscribe(()=>this.render())), this.off.push(observeColumns(this.canvas, (e)=>{
             this.columns = e, this.renderLayout();
         }));
         let a = (e)=>this.onKey(e);
@@ -7785,39 +7802,39 @@ class Workbench {
     }
     renderTopbar() {
         this.topbar.replaceChildren();
-        let e = I("div", "fluent-dashboard__brand"), t = I("h1", "fluent-dashboard__title", _("Fluent Dashboard"));
+        let e = $("div", "fluent-dashboard__brand"), t = $("h1", "fluent-dashboard__title", _("Fluent Dashboard"));
         e.append(t);
-        let i = I("div", "fluent-dashboard__tabs");
+        let i = $("div", "fluent-dashboard__tabs");
         for (let e of (i.setAttribute("role", "tablist"), this.store.document.dashboards)){
-            let t = I("button", `fluent-dashboard__tab${e.id === this.store.activeDashboard.id ? " fluent-dashboard__tab--active" : ""}`, e.name);
+            let t = $("button", `fluent-dashboard__tab${e.id === this.store.activeDashboard.id ? " fluent-dashboard__tab--active" : ""}`, e.name);
             t.type = "button", t.setAttribute("role", "tab"), t.setAttribute("aria-selected", String(e.id === this.store.activeDashboard.id)), t.addEventListener("click", ()=>this.store.switchDashboard(e.id)), i.append(t);
         }
         e.append(i);
-        let s = I("div", "fluent-dashboard__topbar-actions");
-        s.append($(this.paused ? _("Resume") : _("Pause"), ()=>{
+        let s = $("div", "fluent-dashboard__topbar-actions");
+        s.append(A(this.paused ? _("Resume") : _("Pause"), ()=>{
             this.paused = !this.paused, this.data.pause("manual", this.paused), this.render();
-        }, !1, this.paused ? "warning" : "subtle"), $(_("Export"), ()=>this.exportDocument(this.store.document), !1, "subtle"));
+        }, !1, this.paused ? "warning" : "subtle"), A(_("Export"), ()=>this.exportDocument(this.store.document), !1, "subtle"));
         let d = this.persistence.readDraft();
-        d && !this.store.isEditing && this.writable && s.append($(_("Restore draft"), ()=>{
+        d && !this.store.isEditing && this.writable && s.append(A(_("Restore draft"), ()=>{
             if (d.revision !== this.store.document.revision) {
                 this.report(_("This draft belongs to an older revision. It has been exported so you can review it before importing.")), this.exportDocument(d);
                 return;
             }
             this.store.edit(), this.replaceDocument(d);
-        }, !1, "subtle")), !this.store.isEditing && this.writable && s.append($(_("Edit"), ()=>this.store.edit(), !1, "primary")), this.topbar.append(e, s);
+        }, !1, "subtle")), !this.store.isEditing && this.writable && s.append(A(_("Edit"), ()=>this.store.edit(), !1, "primary")), this.topbar.append(e, s);
     }
     renderToolbar() {
         if (this.toolbar.replaceChildren(), this.toolbar.hidden = !this.store.isEditing, !this.store.isEditing) return;
-        let e = I("div", "fluent-dashboard__toolbar-group");
-        e.append($(_("Widget library"), ()=>{
+        let e = $("div", "fluent-dashboard__toolbar-group");
+        e.append(A(_("Widget library"), ()=>{
             this.libraryCollapsed = !this.libraryCollapsed, this.render();
         }, !1, this.libraryCollapsed ? "subtle" : "active"));
-        let t = I("select", "fluent-dashboard__select");
+        let t = $("select", "fluent-dashboard__select");
         for (let e of (t.setAttribute("aria-label", _("Dashboard")), this.store.document.dashboards)){
-            let i = I("option", "", e.name);
+            let i = $("option", "", e.name);
             i.value = e.id, i.selected = e.id === this.store.activeDashboard.id, t.append(i);
         }
-        t.addEventListener("change", ()=>this.store.switchDashboard(t.value)), e.append(t, $(_("New dashboard"), ()=>{
+        t.addEventListener("change", ()=>this.store.switchDashboard(t.value)), e.append(t, A(_("New dashboard"), ()=>{
             let e = createId("dashboard");
             this.command(new EditCommand("New dashboard", (t)=>{
                 t.dashboards.push({
@@ -7826,8 +7843,8 @@ class Workbench {
                     nodes: []
                 });
             })), this.store.document.dashboards.some((t)=>t.id === e) && this.store.switchDashboard(e);
-        }), $(_("Duplicate dashboard"), ()=>this.duplicateDashboard()));
-        let i = I("div", "fluent-dashboard__toolbar-group"), s = I("select", "fluent-dashboard__select");
+        }), A(_("Duplicate dashboard"), ()=>this.duplicateDashboard()));
+        let i = $("div", "fluent-dashboard__toolbar-group"), s = $("select", "fluent-dashboard__select");
         for (let [e, t] of (s.setAttribute("aria-label", _("Preview width")), [
             [
                 "0",
@@ -7846,30 +7863,30 @@ class Workbench {
                 `${_("Phone")} (2)`
             ]
         ])){
-            let i = I("option", "", t);
+            let i = $("option", "", t);
             i.value = e, s.append(i);
         }
         s.value = String(this.store.previewColumns ?? 0), s.addEventListener("change", ()=>{
             this.store.previewColumns = Number(s.value) || null, this.renderLayout();
-        }), i.append($(_("Undo"), ()=>this.store.undo(), !this.store.history.canUndo), $(_("Redo"), ()=>this.store.redo(), !this.store.history.canRedo), s, $(_("Import"), ()=>this.importDocument()), $(_("Restore defaults"), ()=>this.replaceDocument(createDefaultDocument())));
-        let a = I("div", "fluent-dashboard__toolbar-group fluent-dashboard__toolbar-group--end");
-        a.append($(_("Properties"), ()=>{
+        }), i.append(A(_("Undo"), ()=>this.store.undo(), !this.store.history.canUndo), A(_("Redo"), ()=>this.store.redo(), !this.store.history.canRedo), s, A(_("Import"), ()=>this.importDocument()), A(_("Restore defaults"), ()=>this.replaceDocument(createDefaultDocument())));
+        let a = $("div", "fluent-dashboard__toolbar-group fluent-dashboard__toolbar-group--end");
+        a.append(A(_("Properties"), ()=>{
             this.propertiesCollapsed = !this.propertiesCollapsed, this.render();
-        }, !1, this.propertiesCollapsed ? "subtle" : "active"), $(_("Cancel"), ()=>{
+        }, !1, this.propertiesCollapsed ? "subtle" : "active"), A(_("Cancel"), ()=>{
             this.persistence.clearDraft(), this.store.cancel();
-        }), $(_("Save"), ()=>{
+        }), A(_("Save"), ()=>{
             this.save();
         }, !this.store.history.dirty, "primary")), this.toolbar.append(e, i, a);
     }
     buildLibraryShell() {
         this.library.replaceChildren();
-        let e = I("div", "fluent-dashboard__panel-header");
-        e.append(I("h2", "fluent-dashboard__panel-title", _("Widget library")));
-        let t = I("div", "fluent-dashboard__library-search"), i = I("input", "fluent-dashboard__input");
+        let e = $("div", "fluent-dashboard__panel-header");
+        e.append($("h2", "fluent-dashboard__panel-title", _("Widget library")));
+        let t = $("div", "fluent-dashboard__library-search"), i = $("input", "fluent-dashboard__input");
         i.type = "search", i.placeholder = _("Filter widgets\u2026"), i.setAttribute("aria-label", _("Filter widgets\u2026")), i.addEventListener("input", ()=>{
             this.libraryFilter = i.value.trim().toLowerCase(), this.renderLibraryItems();
         }), t.append(i);
-        let s = $(`+ ${_("Add group")}`, ()=>this.addGroupNode(), !1, "block");
+        let s = A(`+ ${_("Add group")}`, ()=>this.addGroupNode(), !1, "block");
         this.library.append(e, t, s, this.libraryList);
     }
     addGroupNode() {
@@ -7945,27 +7962,29 @@ class Workbench {
             let i = e.get(t.category) ?? [];
             i.push(t), e.set(t.category, i);
         }
-        if (!e.size) return void this.libraryList.append(I("p", "fluent-dashboard__empty-hint", _("No matching widgets found.")));
+        if (!e.size) return void this.libraryList.append($("p", "fluent-dashboard__empty-hint", _("No matching widgets found.")));
         for (let [t, i] of e){
-            let e = I("details", "fluent-dashboard__category");
+            let e = $("details", "fluent-dashboard__category");
             e.open = !0;
-            let s = I("summary", "fluent-dashboard__category-header");
-            s.append(I("span", "fluent-dashboard__category-name", t), I("span", "fluent-dashboard__badge fluent-dashboard__badge--count", String(i.length)));
-            let d = I("div", "fluent-dashboard__category-items");
+            let s = $("summary", "fluent-dashboard__category-header");
+            s.append($("span", "fluent-dashboard__category-name", t), $("span", "fluent-dashboard__badge fluent-dashboard__badge--count", String(i.length)));
+            let d = $("div", "fluent-dashboard__category-items");
             for (let e of i){
-                let t = presetDimensions(e.defaultSize, e.constraints), i = I("button", "fluent-dashboard__palette-item");
+                let t = presetDimensions(e.defaultSize, e.constraints), i = $("button", "fluent-dashboard__palette-item");
                 i.type = "button";
-                let s = I("div", "fluent-dashboard__palette-item-top");
-                s.append(I("span", "fluent-dashboard__palette-item-title", e.title), I("span", "fluent-dashboard__badge", N(e.defaultSize, t.w, t.h))), i.append(s), e.description && e.description !== e.title && i.append(I("span", "fluent-dashboard__palette-item-desc", e.description)), i.addEventListener("click", ()=>this.addWidgetFromDefinition(e)), d.append(i);
+                let s = $("div", "fluent-dashboard__palette-item-top");
+                s.append($("span", "fluent-dashboard__palette-item-title", e.title), $("span", "fluent-dashboard__badge", N(e.defaultSize, t.w, t.h))), i.append(s), e.description && e.description !== e.title && i.append($("span", "fluent-dashboard__palette-item-desc", e.description)), i.addEventListener("click", ()=>this.addWidgetFromDefinition(e)), d.append(i);
             }
             e.append(s, d), this.libraryList.append(e);
         }
     }
     renderProperties() {
+        for (let e of this.inspectorOff)e();
+        this.inspectorOff = [];
         let e = this.store.activeDashboard;
         this.properties.replaceChildren();
-        let t = e.nodes.filter((e)=>this.store.selection.has(e.id)), i = I("div", "fluent-dashboard__panel-header"), s = 0 === t.length ? _("Dashboard settings") : 1 === t.length ? "group" === t[0].kind ? _("Group properties") : _("Widget properties") : `${_("Selected tiles")} (${t.length})`;
-        if (i.append(I("h2", "fluent-dashboard__panel-title", s)), t.length > 0 && i.append($(_("Clear"), ()=>{
+        let t = e.nodes.filter((e)=>this.store.selection.has(e.id)), i = $("div", "fluent-dashboard__panel-header"), s = 0 === t.length ? _("Dashboard settings") : 1 === t.length ? "group" === t[0].kind ? _("Group properties") : _("Widget properties") : `${_("Selected tiles")} (${t.length})`;
+        if (i.append($("h2", "fluent-dashboard__panel-title", s)), t.length > 0 && i.append(A(_("Clear"), ()=>{
             this.store.selection.clear(), this.store.emit();
         }, !1, "subtle")), this.properties.append(i), 0 === t.length) return void this.renderDashboardInspector(e);
         if (t.length > 1) return void this.renderBatchInspector(e, t);
@@ -7973,7 +7992,7 @@ class Workbench {
         "group" === d.kind ? this.renderGroupInspector(e, d) : this.renderWidgetInspector(e, d);
     }
     renderDashboardInspector(e) {
-        let t = I("div", "fluent-dashboard__inspector-section"), [i, s] = A(_("Dashboard name"), e.name);
+        let t = $("div", "fluent-dashboard__inspector-section"), [i, s] = O(_("Dashboard name"), e.name);
         s.maxLength = 128;
         let a = ()=>{
             let t = s.value.trim();
@@ -7983,23 +8002,23 @@ class Workbench {
             }));
         };
         s.addEventListener("change", a);
-        let r = this.store.document.defaultDashboardId === e.id, o = I("div", "fluent-dashboard__button-row");
-        o.append($(_("Rename"), a), $(r ? _("Default dashboard") : _("Set as default"), ()=>this.command(new EditCommand("Default dashboard", (t)=>{
+        let r = this.store.document.defaultDashboardId === e.id, o = $("div", "fluent-dashboard__button-row");
+        o.append(A(_("Rename"), a), A(r ? _("Default dashboard") : _("Set as default"), ()=>this.command(new EditCommand("Default dashboard", (t)=>{
                 t.defaultDashboardId = e.id;
-            })), r), $(_("Delete dashboard"), ()=>this.command(new EditCommand("Delete dashboard", (t)=>{
+            })), r), A(_("Delete dashboard"), ()=>this.command(new EditCommand("Delete dashboard", (t)=>{
                 t.dashboards = t.dashboards.filter((t)=>t.id !== e.id), t.defaultDashboardId === e.id && (t.defaultDashboardId = t.dashboards[0]?.id);
             })), this.store.document.dashboards.length <= 1, "danger")), t.append(i, o);
-        let n = I("div", "fluent-dashboard__inspector-section");
-        n.append(I("p", "fluent-dashboard__inspector-hint", _("Select tile headers to edit one or more tiles.")), $(`+ ${_("Add group")}`, ()=>this.addGroupNode(), !1, "block")), this.properties.append(t, n);
+        let n = $("div", "fluent-dashboard__inspector-section");
+        n.append($("p", "fluent-dashboard__inspector-hint", _("Select tile headers to edit one or more tiles.")), A(`+ ${_("Add group")}`, ()=>this.addGroupNode(), !1, "block")), this.properties.append(t, n);
     }
     renderBatchInspector(e, i) {
-        let s = indexNodes(e.nodes), d = i.filter((e)=>!ancestorsOf(s, e.id).some((e)=>this.store.selection.has(e.id))), a = (e)=>this.command(new BatchCommand(d.map((t)=>e(t.id)))), o = I("div", "fluent-dashboard__inspector-section"), n = I("div", "fluent-dashboard__button-row");
-        n.append($(_("Lock / unlock"), ()=>a((t)=>new ToggleLockCommand(e.id, t))), $(_("Show / hide"), ()=>a((t)=>new ToggleHideCommand(e.id, t)))), o.append(n), o.append(this.buildParentMoveControl(e, d)), o.append($(_("Remove selected and contents"), ()=>a((t)=>new RemoveNodeCommand(e.id, t)), !1, "danger")), this.properties.append(o);
+        let s = indexNodes(e.nodes), d = i.filter((e)=>!ancestorsOf(s, e.id).some((e)=>this.store.selection.has(e.id))), a = (e)=>this.command(new BatchCommand(d.map((t)=>e(t.id)))), o = $("div", "fluent-dashboard__inspector-section"), n = $("div", "fluent-dashboard__button-row");
+        n.append(A(_("Lock / unlock"), ()=>a((t)=>new ToggleLockCommand(e.id, t))), A(_("Show / hide"), ()=>a((t)=>new ToggleHideCommand(e.id, t)))), o.append(n), o.append(this.buildParentMoveControl(e, d)), o.append(A(_("Remove selected and contents"), ()=>a((t)=>new RemoveNodeCommand(e.id, t)), !1, "danger")), this.properties.append(o);
     }
     renderGroupInspector(e, t) {
-        let s = I("div", "fluent-dashboard__inspector-section"), [a, p] = A(_("Title"), t.title);
+        let s = $("div", "fluent-dashboard__inspector-section"), [a, p] = O(_("Title"), t.title);
         p.maxLength = 256, p.disabled = !!t.locked;
-        let [c, u] = A(_("Description"), t.description ?? "", "text", _("Optional group subtitle\u2026"));
+        let [c, u] = O(_("Description"), t.description ?? "", "text", _("Optional group subtitle\u2026"));
         u.maxLength = 2048, u.disabled = !!t.locked;
         let b = ()=>{
             if (t.locked) return;
@@ -8010,11 +8029,11 @@ class Workbench {
             }));
         };
         p.addEventListener("change", b), u.addEventListener("change", b);
-        let f = I("label", "fluent-dashboard__checkbox-row"), m = I("input");
-        m.type = "checkbox", m.checked = !!t.collapsed, m.disabled = !!t.locked, m.addEventListener("change", ()=>this.command(new ToggleCollapseCommand(e.id, t.id))), f.append(m, I("span", "", _("Default collapsed / expanded"))), s.append(a, c, f);
-        let g = I("div", "fluent-dashboard__inspector-section");
-        g.append(I("span", "fluent-dashboard__section-title", _("Group width")));
-        let y = I("div", "fluent-dashboard__preset-bar");
+        let f = $("label", "fluent-dashboard__checkbox-row"), m = $("input");
+        m.type = "checkbox", m.checked = !!t.collapsed, m.disabled = !!t.locked, m.addEventListener("change", ()=>this.command(new ToggleCollapseCommand(e.id, t.id))), f.append(m, $("span", "", _("Default collapsed / expanded"))), s.append(a, c, f);
+        let g = $("div", "fluent-dashboard__inspector-section");
+        g.append($("span", "fluent-dashboard__section-title", _("Group width")));
+        let y = $("div", "fluent-dashboard__preset-bar"), v = descendantsOf(indexNodes(e.nodes), t.id).some((e)=>e.locked && e.tile.x + e.tile.w > 6);
         for (let [i, s] of [
             [
                 6,
@@ -8025,51 +8044,51 @@ class Workbench {
                 _("Full (12 col)")
             ]
         ]){
-            let d = $(s, ()=>this.command(new ResizeNodeCommand(e.id, t.id, i, t.tile.h)), !!t.locked, t.tile.w === i ? "active" : "");
+            let d = A(s, ()=>this.command(new ResizeNodeCommand(e.id, t.id, i, t.tile.h)), !!t.locked || 6 === i && v, t.tile.w === i ? "active" : "");
             y.append(d);
         }
         g.append(y);
-        let v = I("div", "fluent-dashboard__inspector-section");
-        v.append(I("span", "fluent-dashboard__section-title", _("Actions"))), v.append(this.buildParentMoveControl(e, [
+        let w = $("div", "fluent-dashboard__inspector-section");
+        w.append($("span", "fluent-dashboard__section-title", _("Actions"))), w.append(this.buildParentMoveControl(e, [
             t
         ]));
-        let w = I("div", "fluent-dashboard__button-row");
-        w.append($(_("Earlier"), ()=>this.reorder(t, -1), !!t.locked), $(_("Later"), ()=>this.reorder(t, 1), !!t.locked), $(_("Duplicate tile"), ()=>this.duplicateNode(t)));
-        let k = I("div", "fluent-dashboard__button-row");
-        k.append($(t.locked ? _("Unlock") : _("Lock / unlock"), ()=>this.command(new ToggleLockCommand(e.id, t.id))), $(t.hidden ? _("Show") : _("Show / hide"), ()=>this.command(new ToggleHideCommand(e.id, t.id)), !!t.locked));
-        let D = I("div", "fluent-dashboard__button-row");
-        D.append($(_("Dissolve and keep contents"), ()=>this.command(new DissolveGroupCommand(e.id, t.id)), !!t.locked), $(_("Remove selected and contents"), ()=>this.command(new RemoveNodeCommand(e.id, t.id)), !!t.locked, "danger")), v.append(w, k, D), this.properties.append(s, g, v);
+        let D = $("div", "fluent-dashboard__button-row");
+        D.append(A(_("Earlier"), ()=>this.reorder(t, -1), !!t.locked), A(_("Later"), ()=>this.reorder(t, 1), !!t.locked), A(_("Duplicate tile"), ()=>this.duplicateNode(t)));
+        let x = $("div", "fluent-dashboard__button-row");
+        x.append(A(t.locked ? _("Unlock") : _("Lock / unlock"), ()=>this.command(new ToggleLockCommand(e.id, t.id))), A(t.hidden ? _("Show") : _("Show / hide"), ()=>this.command(new ToggleHideCommand(e.id, t.id)), !!t.locked));
+        let E = $("div", "fluent-dashboard__button-row");
+        E.append(A(_("Dissolve and keep contents"), ()=>this.command(new DissolveGroupCommand(e.id, t.id)), !!t.locked), A(_("Remove selected and contents"), ()=>this.command(new RemoveNodeCommand(e.id, t.id)), !!t.locked, "danger")), w.append(D, x, E), this.properties.append(s, g, w);
     }
     renderWidgetInspector(e, t) {
-        let i = this.registry.get(t.widgetType), s = I("div", "fluent-dashboard__inspector-meta");
-        s.append(I("span", "fluent-dashboard__badge", i ? `${i.category} \xb7 ${i.title}` : t.widgetType), I("span", "fluent-dashboard__badge fluent-dashboard__badge--muted", N(t.tile.size, t.tile.w, t.tile.h))), this.properties.append(s);
-        let d = I("div", "fluent-dashboard__inspector-section"), [a, n] = A(_("Title"), t.title ?? "", "text", i?.title ?? t.widgetType);
+        let i = this.registry.get(t.widgetType), s = $("div", "fluent-dashboard__inspector-meta");
+        s.append($("span", "fluent-dashboard__badge", i ? `${i.category} \xb7 ${i.title}` : t.widgetType), $("span", "fluent-dashboard__badge fluent-dashboard__badge--muted", N(t.tile.size, t.tile.w, t.tile.h))), this.properties.append(s);
+        let d = $("div", "fluent-dashboard__inspector-section"), [a, n] = O(_("Title"), t.title ?? "", "text", i?.title ?? t.widgetType);
         if (n.maxLength = 256, n.disabled = !!t.locked, n.addEventListener("change", ()=>{
             if (t.locked) return;
             let i = n.value.trim();
             i !== (t.title ?? "") && this.command(new UpdateConfigCommand(e.id, t.id, t.config, i));
         }), d.append(a), i) {
-            d.append(I("span", "fluent-dashboard__field-label", _("Tile size preset")));
-            let s = I("div", "fluent-dashboard__preset-bar");
+            d.append($("span", "fluent-dashboard__field-label", _("Tile size preset")));
+            let s = $("div", "fluent-dashboard__preset-bar");
             for (let d of allowedPresets(i.constraints)){
                 let a = presetDimensions(d, i.constraints);
-                s.append($(`${d} (${a.w}\xd7${a.h})`, ()=>this.command(new ResizeNodeCommand(e.id, t.id, a.w, a.h)), !!t.locked, t.tile.size === d ? "active" : ""));
+                s.append(A(`${d} (${a.w}\xd7${a.h})`, ()=>this.command(new ResizeNodeCommand(e.id, t.id, a.w, a.h)), !!t.locked, t.tile.size === d ? "active" : ""));
             }
             d.append(s);
         }
         if (this.properties.append(d), i?.configFields?.length) {
-            let s = I("div", "fluent-dashboard__inspector-section");
-            for (let d of (s.append(I("span", "fluent-dashboard__section-title", _("Widget parameters"))), i.configFields))s.append(this.renderConfigField(e.id, t, i, d));
+            let s = $("div", "fluent-dashboard__inspector-section");
+            for (let d of (s.append($("span", "fluent-dashboard__section-title", _("Widget parameters"))), i.configFields))s.append(this.renderConfigField(e.id, t, i, d));
             this.properties.append(s);
         }
-        let c = I("div", "fluent-dashboard__inspector-section");
-        c.append(I("span", "fluent-dashboard__section-title", _("Arrangement & actions"))), c.append(this.buildParentMoveControl(e, [
+        let c = $("div", "fluent-dashboard__inspector-section");
+        c.append($("span", "fluent-dashboard__section-title", _("Arrangement & actions"))), c.append(this.buildParentMoveControl(e, [
             t
         ]));
-        let u = I("div", "fluent-dashboard__button-row");
-        u.append($(_("Earlier"), ()=>this.reorder(t, -1), !!t.locked), $(_("Later"), ()=>this.reorder(t, 1), !!t.locked), $(_("Duplicate tile"), ()=>this.duplicateNode(t)));
-        let b = I("div", "fluent-dashboard__button-row");
-        b.append($(t.locked ? _("Unlock") : _("Lock / unlock"), ()=>this.command(new ToggleLockCommand(e.id, t.id))), $(t.hidden ? _("Show") : _("Show / hide"), ()=>this.command(new ToggleHideCommand(e.id, t.id)), !!t.locked), $(_("Remove selected and contents"), ()=>this.command(new RemoveNodeCommand(e.id, t.id)), !!t.locked, "danger")), c.append(u, b), this.properties.append(c);
+        let u = $("div", "fluent-dashboard__button-row");
+        u.append(A(_("Earlier"), ()=>this.reorder(t, -1), !!t.locked), A(_("Later"), ()=>this.reorder(t, 1), !!t.locked), A(_("Duplicate tile"), ()=>this.duplicateNode(t)));
+        let b = $("div", "fluent-dashboard__button-row");
+        b.append(A(t.locked ? _("Unlock") : _("Lock / unlock"), ()=>this.command(new ToggleLockCommand(e.id, t.id))), A(t.hidden ? _("Show") : _("Show / hide"), ()=>this.command(new ToggleHideCommand(e.id, t.id)), !!t.locked), A(_("Remove selected and contents"), ()=>this.command(new RemoveNodeCommand(e.id, t.id)), !!t.locked, "danger")), c.append(u, b), this.properties.append(c);
     }
     resolveDynamicOptions(e, t) {
         if ("interfaces" === e) {
@@ -8117,56 +8136,62 @@ class Workbench {
             i.validateConfig(a) ? this.command(new UpdateConfigCommand(e, t.id, a, t.title)) : this.report(_("Invalid widget configuration."));
         };
         if ("boolean" === s.type) {
-            let e = I("label", "fluent-dashboard__checkbox-row"), i = I("input");
-            return i.type = "checkbox", i.checked = !!t.config[s.key], i.disabled = !!t.locked, i.addEventListener("change", ()=>d(i.checked)), e.append(i, I("span", "", s.label)), e;
+            let e = $("label", "fluent-dashboard__checkbox-row"), i = $("input");
+            return i.type = "checkbox", i.checked = !!t.config[s.key], i.disabled = !!t.locked, i.addEventListener("change", ()=>d(i.checked)), e.append(i, $("span", "", s.label)), e;
         }
         if ("select" === s.type) {
-            let e = I("label", "fluent-dashboard__field");
-            e.append(I("span", "fluent-dashboard__field-label", s.label));
-            let i = I("select", "fluent-dashboard__select");
+            let e = $("label", "fluent-dashboard__field");
+            e.append($("span", "fluent-dashboard__field-label", s.label));
+            let i = $("select", "fluent-dashboard__select");
             i.disabled = !!t.locked;
-            let a = String(t.config[s.key] ?? "");
-            for (let e of s.dynamicOptions ? this.resolveDynamicOptions(s.dynamicOptions, a) : s.options ?? []){
-                let t = I("option", "", e.label);
-                t.value = e.value, t.selected = e.value === a, i.append(t);
+            let a = String(t.config[s.key] ?? ""), r = ()=>{
+                let e = i.options.length ? i.value : a, t = s.dynamicOptions ? this.resolveDynamicOptions(s.dynamicOptions, e) : s.options ?? [];
+                for (let s of (i.replaceChildren(), t)){
+                    let t = $("option", "", s.label);
+                    t.value = s.value, t.selected = s.value === e, i.append(t);
+                }
+            };
+            if (r(), s.dynamicOptions) {
+                let e = "interfaces" === s.dynamicOptions ? "network.interfaces" : "wireless.radios";
+                this.inspectorOff.push(this.data.subscribe(e, ()=>r()));
             }
             return i.addEventListener("change", ()=>d(i.value)), e.append(i), e;
         }
         if ("multiselect" === s.type) {
-            let e = I("div", "fluent-dashboard__field");
-            e.append(I("span", "fluent-dashboard__field-label", s.label));
-            let i = I("div", "fluent-dashboard__multiselect"), a = new Set(Array.isArray(t.config[s.key]) ? t.config[s.key] : []);
+            let e = $("div", "fluent-dashboard__field");
+            e.append($("span", "fluent-dashboard__field-label", s.label));
+            let i = $("div", "fluent-dashboard__multiselect"), a = new Set(Array.isArray(t.config[s.key]) ? t.config[s.key] : []);
             for (let e of s.options ?? []){
-                let s = I("label", "fluent-dashboard__checkbox-row"), r = I("input");
+                let s = $("label", "fluent-dashboard__checkbox-row"), r = $("input");
                 r.type = "checkbox", r.checked = a.has(e.value), r.disabled = !!t.locked, r.addEventListener("change", ()=>{
                     r.checked ? a.add(e.value) : a.delete(e.value), d([
                         ...a
                     ]);
-                }), s.append(r, I("span", "", e.label)), i.append(s);
+                }), s.append(r, $("span", "", e.label)), i.append(s);
             }
             return e.append(i), e;
         }
         if ("number" === s.type) {
-            let e = String(t.config[s.key] ?? ("limit" === s.key ? 200 : s.min ?? 10)), [i, a] = A(s.label, e, "number");
+            let e = String(t.config[s.key] ?? ("limit" === s.key ? 200 : s.min ?? 10)), [i, a] = O(s.label, e, "number");
             return void 0 !== s.min && (a.min = String(s.min)), void 0 !== s.max && (a.max = String(s.max)), a.disabled = !!t.locked, a.addEventListener("change", ()=>{
                 let e = Number(a.value);
                 Number.isFinite(e) && (void 0 !== s.min && (e = Math.max(s.min, e)), void 0 !== s.max && (e = Math.min(s.max, e)), d(Math.round(e)));
             }), i;
         }
-        let a = String(t.config[s.key] ?? ""), [r, o] = A(s.label, a, "text", s.placeholder ?? "");
+        let a = String(t.config[s.key] ?? ""), [r, o] = O(s.label, a, "text", s.placeholder ?? "");
         return o.disabled = !!t.locked, o.addEventListener("change", ()=>d(o.value)), r;
     }
     buildParentMoveControl(e, t) {
-        let i = indexNodes(e.nodes), s = I("label", "fluent-dashboard__field");
-        s.append(I("span", "fluent-dashboard__field-label", _("Container group")));
-        let d = I("select", "fluent-dashboard__select");
+        let i = indexNodes(e.nodes), s = $("label", "fluent-dashboard__field");
+        s.append($("span", "fluent-dashboard__field-label", _("Container group")));
+        let d = $("select", "fluent-dashboard__select");
         d.setAttribute("aria-label", _("Move to group"));
-        let r = I("option", "", _("Root canvas"));
+        let r = $("option", "", _("Root canvas"));
         r.value = "", d.append(r);
         let o = 1 === t.length ? t[0].parentId ?? "" : "";
         for (let s of e.nodes.filter((e)=>"group" === e.kind)){
             if (t.some((e)=>isSelfOrAncestor(i, e.id, s.id) || depthOf(i, s.id) + 1 + groupLevels(i, e.id) > 2 || e.tile.w > s.tile.w)) continue;
-            let e = I("option", "", s.title);
+            let e = $("option", "", s.title);
             e.value = s.id, e.selected = s.id === o, d.append(e);
         }
         return d.value = o, d.disabled = t.some((e)=>!!e.locked), d.addEventListener("change", ()=>{
@@ -8194,19 +8219,19 @@ class Workbench {
         if ("widget" === e.kind) return this.runtime.render(e, this.store.isEditing);
         let t = this.groups.get(e.id);
         if (!t) {
-            t = I("section", "fluent-dashboard__group");
-            let i = I("header", "fluent-dashboard__card-header fluent-dashboard__group-header");
+            t = $("section", "fluent-dashboard__group");
+            let i = $("header", "fluent-dashboard__card-header fluent-dashboard__group-header");
             i.tabIndex = 0;
-            let s = I("div", "fluent-dashboard__group-title-wrap");
-            s.append(I("h2", "fluent-dashboard__card-title"), I("div", "fluent-dashboard__card-badges"));
-            let d = I("div", "fluent-dashboard__card-actions"), a = $(_("Collapse / expand"), ()=>{
+            let s = $("div", "fluent-dashboard__group-title-wrap");
+            s.append($("h2", "fluent-dashboard__card-title"), $("div", "fluent-dashboard__card-badges"));
+            let d = $("div", "fluent-dashboard__card-actions"), a = A(_("Collapse / expand"), ()=>{
                 this.store.isEditing ? this.command(new ToggleCollapseCommand(this.store.activeDashboard.id, e.id)) : (this.store.collapsed.has(e.id) ? this.store.collapsed.delete(e.id) : this.store.collapsed.add(e.id), this.renderLayout());
             }, !1, "subtle");
             a.classList.add("fluent-dashboard__collapse-btn"), d.append(a), i.append(s, d), i.addEventListener("click", (t)=>{
                 t.target instanceof Element && t.target.closest("button") || this.select(e.id, t.shiftKey || t.ctrlKey || t.metaKey);
             }), i.addEventListener("keydown", (t)=>{
                 t.target === i && ("Enter" === t.key || " " === t.key) && (t.preventDefault(), this.select(e.id, t.shiftKey || t.ctrlKey || t.metaKey));
-            }), t.append(i, I("div", "fluent-dashboard__group-body")), this.groups.set(e.id, t);
+            }), t.append(i, $("div", "fluent-dashboard__group-body")), this.groups.set(e.id, t);
         }
         let i = t.querySelector("h2");
         i && (i.textContent = e.title);
@@ -8215,9 +8240,9 @@ class Workbench {
         let d = t.querySelector(".fluent-dashboard__collapse-btn");
         d && (d.textContent = s ? _("Expand") : _("Collapse"));
         let a = t.querySelector(".fluent-dashboard__card-badges");
-        a && (a.replaceChildren(), this.store.isEditing && e.locked && a.append(I("span", "fluent-dashboard__badge", _("Locked"))), this.store.isEditing && e.hidden && a.append(I("span", "fluent-dashboard__badge fluent-dashboard__badge--muted", _("Hidden"))));
+        a && (a.replaceChildren(), this.store.isEditing && e.locked && a.append($("span", "fluent-dashboard__badge", _("Locked"))), this.store.isEditing && e.hidden && a.append($("span", "fluent-dashboard__badge fluent-dashboard__badge--muted", _("Hidden"))));
         let r = t.querySelector(".fluent-dashboard__group-description");
-        return e.description ? (r || (r = I("p", "fluent-dashboard__group-description"), t.querySelector(".fluent-dashboard__card-header")?.after(r)), r.textContent = e.description) : r?.remove(), t;
+        return e.description ? (r || (r = $("p", "fluent-dashboard__group-description"), t.querySelector(".fluent-dashboard__card-header")?.after(r)), r.textContent = e.description) : r?.remove(), t;
     }
     reorder(e, t) {
         this.command(new EditCommand("Reorder tile", (i)=>{
@@ -8261,11 +8286,11 @@ class Workbench {
             JSON.stringify(e, null, 2)
         ], {
             type: "application/json"
-        })), i = I("a");
+        })), i = $("a");
         i.href = t, i.download = "fluentdashboard.json", i.click(), setTimeout(()=>URL.revokeObjectURL(t), 1000);
     }
     importDocument() {
-        let e = I("input");
+        let e = $("input");
         e.type = "file", e.accept = ".json,application/json", e.addEventListener("change", ()=>{
             let t = e.files?.[0];
             if (t) {
@@ -8337,7 +8362,8 @@ class Workbench {
             }))));
     }
     destroy() {
-        for (let e of (this.destroyed = !0, this.off))e();
+        for (let e of (this.destroyed = !0, this.inspectorOff))e();
+        for (let e of (this.inspectorOff = [], this.off))e();
         this.adapter.destroy(), this.runtime.destroy(), this.data.destroy();
     }
 }
@@ -8663,11 +8689,11 @@ function registerSources(e) {
     }), e.register({
         key: "system.telemetry",
         interval: 5000,
-        load: async ()=>normalizeTelemetry(await Promise.resolve(cards_f()).catch(()=>({})))
+        load: async ()=>normalizeTelemetry(await cards_f())
     }), e.register({
         key: "system.mounts",
         interval: 30000,
-        load: async ()=>normalizeMounts(await Promise.resolve(cards_h()).catch(()=>[]))
+        load: async ()=>normalizeMounts(await cards_h())
     });
     let r = 0, a = async ()=>{
         !t && Date.now() - r > 1000 && (t = network.flushCache().then((e)=>(r = Date.now(), e)).finally(()=>{
@@ -8715,7 +8741,7 @@ function cards_A(t) {
         children: t ? _("Online") : _("Offline")
     });
 }
-function cards_I(r, a, n, s = !1) {
+function I(r, a, n, s = !1) {
     return jsxs("div", {
         class: `fluent-dashboard__card${s ? " fluent-dashboard__card--wide" : ""}`,
         "data-dashboard-section": r,
@@ -8762,7 +8788,7 @@ function cards_N(r, a, n) {
     });
 }
 function renderSystem(t) {
-    return cards_I("system", _("System"), jsx("div", {
+    return I("system", _("System"), jsx("div", {
         class: "fluent-dashboard__details",
         children: [
             [
@@ -8836,7 +8862,7 @@ function renderResources(a) {
             a.tmp
         ]
     ];
-    return cards_I("resources", _("Resources"), n.map(([a, n])=>{
+    return I("resources", _("Resources"), n.map(([a, n])=>{
         let s, i;
         return s = Math.max(0, n.total - n.free), i = usedPercent(n), jsxs("div", {
             class: "fluent-dashboard__meter",
@@ -8878,7 +8904,7 @@ function renderInternet(e) {
                 e
             ])
     ];
-    return cards_I("internet", _("Internet"), cards_N([
+    return I("internet", _("Internet"), cards_N([
         _("Family"),
         _("Interface"),
         _("Status"),
@@ -8897,7 +8923,7 @@ function renderInternet(e) {
         ]), _("No Internet connection information is available.")), !0);
 }
 function renderInterfaces(e) {
-    return cards_I("interfaces", _("Interfaces"), cards_N([
+    return I("interfaces", _("Interfaces"), cards_N([
         _("Interface"),
         _("Device"),
         _("Status"),
@@ -8914,7 +8940,7 @@ function renderInterfaces(e) {
         ]), _("No network interfaces were found.")), !0);
 }
 function renderWireless(t) {
-    return cards_I("wireless", _("Wireless"), cards_N([
+    return I("wireless", _("Wireless"), cards_N([
         _("Radio"),
         _("SSID"),
         _("Status"),
@@ -8934,7 +8960,7 @@ function renderWireless(t) {
         ]), _("No wireless radios were found.")), !0);
 }
 function renderLeases(e) {
-    return cards_I("leases", _("Active DHCP Leases"), cards_N([
+    return I("leases", _("Active DHCP Leases"), cards_N([
         _("Family"),
         _("Hostname"),
         _("Address"),
@@ -8951,11 +8977,11 @@ function renderLeases(e) {
         ];
     }), _("There are no active DHCP leases.")), !0);
 }
-function P(e) {
+function S(e) {
     return e > 0 ? `${(e / 1000).toFixed(1)} ${_("Mbit/s")}` : "-";
 }
 function renderClients(e) {
-    return cards_I("clients", _("Wireless Clients"), cards_N([
+    return I("clients", _("Wireless Clients"), cards_N([
         _("Network"),
         _("Host"),
         _("MAC address"),
@@ -8966,11 +8992,11 @@ function renderClients(e) {
             e.hostname,
             e.mac,
             null === e.noise ? `${e.signal} dBm` : `${e.signal} / ${e.noise} dBm`,
-            `${P(e.rxRate)} / ${P(e.txRate)}`
+            `${S(e.rxRate)} / ${S(e.txRate)}`
         ]), _("No wireless clients are connected.")), !0);
 }
 function renderPorts(e) {
-    return cards_I("ports", _("Ethernet Port Status"), cards_N([
+    return I("ports", _("Ethernet Port Status"), cards_N([
         _("Port"),
         _("Status"),
         _("Speed"),
@@ -8983,7 +9009,7 @@ function renderPorts(e) {
         ]), _("No network port status information is available.")), !0);
 }
 function renderMounts(e) {
-    return cards_I("mounts", _("Disk Mount Points"), cards_N([
+    return I("mounts", _("Disk Mount Points"), cards_N([
         _("Mount Point"),
         _("Device"),
         _("Used"),
@@ -9686,8 +9712,7 @@ function registerMetrics(r) {
         let a = i.reduce((e, t)=>t.tempC > e.tempC ? t : e, i[0]);
         return {
             value: `${a.tempC.toFixed(1)} \xb0C`,
-            detail: `${a.type || a.zone}${i.length > 1 ? ` (+${i.length - 1})` : ""}`,
-            percent: Math.min(100, Math.max(0, a.tempC))
+            detail: `${a.type || a.zone}${i.length > 1 ? ` (+${i.length - 1})` : ""}`
         };
     }), n("system.memory-free", _("Available memory"), _("Resources"), [
         "system.info"

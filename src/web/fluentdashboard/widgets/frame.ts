@@ -12,7 +12,7 @@ export class WidgetFrame {
   readonly status = document.createElement("p");
   private title = document.createElement("h2");
   private badges = document.createElement("div");
-  constructor(node: WidgetNode, defaultTitle: string, refresh: () => void, select: () => void) {
+  constructor(node: WidgetNode, defaultTitle: string, refresh: () => void, select: (multi: boolean) => void) {
     this.element.className = "fluent-dashboard__card";
     this.header.className = "fluent-dashboard__card-header";
     this.header.tabIndex = 0;
@@ -47,12 +47,12 @@ export class WidgetFrame {
     actions.append(this.badges, button, fullscreen);
     this.header.append(this.title, actions);
     this.header.addEventListener("click", (e) => {
-      if (!(e.target instanceof Element && e.target.closest("button"))) select();
+      if (!(e.target instanceof Element && e.target.closest("button"))) select(e.shiftKey || e.ctrlKey || e.metaKey);
     });
     this.header.addEventListener("keydown", (e) => {
       if (e.target === this.header && (e.key === "Enter" || e.key === " ")) {
         e.preventDefault();
-        select();
+        select(e.shiftKey || e.ctrlKey || e.metaKey);
       }
     });
     this.element.append(this.header, this.status, this.body);

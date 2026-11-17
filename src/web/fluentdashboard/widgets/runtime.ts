@@ -16,7 +16,7 @@ export class WidgetRuntime {
   constructor(
     private registry: WidgetRegistry,
     private data: DataService,
-    private select: (id: string) => void,
+    private select: (id: string, multi: boolean) => void,
   ) {}
   render(node: WidgetNode, editing: boolean): HTMLElement {
     const definition = this.registry.get(node.widgetType);
@@ -32,7 +32,7 @@ export class WidgetRuntime {
         () => {
           void this.data.refresh(definition?.requiredData ?? []);
         },
-        () => this.select(node.id),
+        (multi) => this.select(node.id, multi),
       );
       const observer = new ResizeObserver((entries) => {
         const rect = entries[0]?.contentRect;

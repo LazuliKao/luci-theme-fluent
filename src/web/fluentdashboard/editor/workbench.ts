@@ -17,7 +17,7 @@ import { createId } from "../core/ids";
 import { createDefaultDocument, migrateDocument } from "../core/schema";
 import { DashboardStore } from "../core/store";
 import { allowedPresets, presetDimensions } from "../core/tiles";
-import { ancestorsOf, childrenOf, depthOf, groupLevels, indexNodes, isSelfOrAncestor } from "../core/tree";
+import { ancestorsOf, childrenOf, depthOf, descendantsOf, groupLevels, indexNodes, isSelfOrAncestor } from "../core/tree";
 import type { DashboardDocument, DashboardNode, GroupNode, TileSize, WidgetConfig, WidgetNode } from "../core/types";
 import type { DataService } from "../data/service";
 import { findFreeSpot } from "../layout/engine";
@@ -82,6 +82,7 @@ export class Workbench {
   private runtime: WidgetRuntime;
   private groups = new Map<string, HTMLElement>();
   private off: Array<() => void> = [];
+  private inspectorOff: Array<() => void> = [];
   private columns: 12 | 6 | 2 = 12;
   private mountedDashboard = "";
   private busy = false;
@@ -99,7 +100,7 @@ export class Workbench {
     private writable: boolean,
   ) {
     this.store = new DashboardStore(document);
-    this.runtime = new WidgetRuntime(registry, data, (id) => this.select(id));
+    this.runtime = new WidgetRuntime(registry, data, (id, multi) => this.select(id, multi));
     this.message.setAttribute("role", "status");
     this.workspace.append(this.library, this.canvas, this.properties);
     this.root.append(this.topbar, this.toolbar, this.message, this.workspace);
@@ -461,6 +462,8 @@ export class Workbench {
   }
 
   private renderProperties(): void {
+    for (const off of this.inspectorOff) off();
+    this.inspectorOff = [];
     const dashboard = this.store.activeDashboard;
     this.properties.replaceChildren();
 
@@ -620,11 +623,13 @@ export class Workbench {
     const sizeSection = element("div", "fluent-dashboard__inspector-section");
     sizeSection.append(element("span", "fluent-dashboard__section-title", _("Group width")));
     const sizeBar = element("div", "fluent-dashboard__preset-bar");
+    const lockedChildrenOverflowHalf = descendantsOf(indexNodes(dashboard.nodes), node.id).some((child) => child.locked && child.tile.x + child.tile.w > 6);
     for (const [w, label] of [
       [6, _("Half (6 col)")],
       [12, _("Full (12 col)")],
     ] as const) {
-      const btn = button(label, () => this.command(new ResizeNodeCommand(dashboard.id, node.id, w, node.tile.h)), Boolean(node.locked), node.tile.w === w ? "active" : "");
+      const disabled = Boolean(node.locked) || (w === 6 && lockedChildrenOverflowHalf);
+      const btn = button(label, () => this.command(new ResizeNodeCommand(dashboard.id, node.id, w, node.tile.h)), disabled, node.tile.w === w ? "active" : "");
       sizeBar.append(btn);
     }
     sizeSection.append(sizeBar);
@@ -770,12 +775,21 @@ export class Workbench {
       const select = element("select", "fluent-dashboard__select");
       select.disabled = Boolean(node.locked);
       const current = String(node.config[field.key] ?? "");
-      const options = field.dynamicOptions ? this.resolveDynamicOptions(field.dynamicOptions, current) : (field.options ?? []);
-      for (const opt of options) {
-        const optionEl = element("option", "", opt.label);
-        optionEl.value = opt.value;
-        optionEl.selected = opt.value === current;
-        select.append(optionEl);
+      const populate = () => {
+        const selectedVal = select.options.length ? select.value : current;
+        const options = field.dynamicOptions ? this.resolveDynamicOptions(field.dynamicOptions, selectedVal) : (field.options ?? []);
+        select.replaceChildren();
+        for (const opt of options) {
+          const optionEl = element("option", "", opt.label);
+          optionEl.value = opt.value;
+          optionEl.selected = opt.value === selectedVal;
+          select.append(optionEl);
+        }
+      };
+      populate();
+      if (field.dynamicOptions) {
+        const sourceKey = field.dynamicOptions === "interfaces" ? "network.interfaces" : "wireless.radios";
+        this.inspectorOff.push(this.data.subscribe(sourceKey, () => populate()));
       }
       select.addEventListener("change", () => applyValue(select.value));
       wrap.append(select);
@@ -1107,6 +1121,8 @@ export class Workbench {
 
   destroy(): void {
     this.destroyed = true;
+    for (const off of this.inspectorOff) off();
+    this.inspectorOff = [];
     for (const off of this.off) off();
     this.adapter.destroy();
     this.runtime.destroy();

@@ -1,6 +1,6 @@
 'use strict';
 
-import { open, readfile, writefile, rename, unlink, mkdtemp, rmdir, glob, basename } from 'fs';
+import { open, readfile, writefile, rename, unlink, mkdtemp, rmdir, glob, basename, stat } from 'fs';
 import { cursor } from 'uci';
 
 const config = '/etc/config/fluentdashboard';
@@ -117,6 +117,9 @@ function collect_metrics() {
 	for (let p in (glob('/sys/class/net/*') || [])) {
 		let dev = basename(p);
 		if (dev == 'lo') continue;
+		if (trim(readfile(p + '/type') || '') != '1') continue;
+		if (stat(p + '/wireless') || stat(p + '/phy80211') || stat(p + '/bridge')) continue;
+		if (!stat(p + '/device') && !stat(p + '/dsa') && !match(dev, /^(eth|lan|wan)[0-9]+$/)) continue;
 		let oper = trim(readfile(p + '/operstate') || 'unknown');
 		let carrier = trim(readfile(p + '/carrier') || '0') == '1' || oper == 'up';
 		let spd = int(trim(readfile(p + '/speed') || '0'));

@@ -382,7 +382,6 @@ export function registerMetrics(registry: WidgetRegistry): void {
     return {
       value: `${hottest.tempC.toFixed(1)} °C`,
       detail: `${hottest.type || hottest.zone}${sensors.length > 1 ? ` (+${sensors.length - 1})` : ""}`,
-      percent: Math.min(100, Math.max(0, hottest.tempC)),
     };
   });
   metric("system.memory-free", _("Available memory"), _("Resources"), ["system.info"], (s) => {
