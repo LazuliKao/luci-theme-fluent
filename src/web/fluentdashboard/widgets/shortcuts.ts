@@ -10,6 +10,10 @@ const routes = [
   { id: "dhcp", label: () => _("DHCP and DNS"), path: ["admin", "network", "dhcp"] },
   { id: "firewall", label: () => _("Firewall"), path: ["admin", "network", "firewall"] },
   { id: "system", label: () => _("System settings"), path: ["admin", "system", "system"] },
+  { id: "routes", label: () => _("Routes"), path: ["admin", "status", "routes"] },
+  { id: "processes", label: () => _("Processes"), path: ["admin", "status", "processes"] },
+  { id: "diagnostics", label: () => _("Diagnostics"), path: ["admin", "network", "diagnostics"] },
+  { id: "reboot", label: () => _("Reboot"), path: ["admin", "system", "reboot"] },
 ] as const;
 
 class ShortcutsWidget implements WidgetInstance {
@@ -52,13 +56,21 @@ export function registerShortcuts(registry: WidgetRegistry): void {
     title: _("Quick links"),
     description: _("Open common LuCI pages"),
     category: _("Navigation"),
-    icon: "",
+    icon: "links",
     version: 1,
     defaultSize: "wide",
     supportedSizes: ["medium", "wide", "large", "xlarge", "full", "custom"],
     constraints: { ...DEFAULT_CONSTRAINTS, min: { w: 2, h: 2 } },
-    defaultConfig: { links: routes.map((route) => route.id) },
+    defaultConfig: { links: routes.slice(0, 6).map((route) => route.id) },
     requiredData: [],
+    configFields: [
+      {
+        key: "links",
+        label: _("Displayed shortcuts"),
+        type: "multiselect",
+        options: routes.map((route) => ({ value: route.id, label: route.label() })),
+      },
+    ],
     validateConfig: (config) =>
       Array.isArray(config.links) &&
       config.links.length <= routes.length &&

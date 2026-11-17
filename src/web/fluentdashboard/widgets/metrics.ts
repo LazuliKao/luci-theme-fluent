@@ -2,9 +2,9 @@ import { DEFAULT_CONSTRAINTS } from "../core/tiles";
 import type { WidgetConfig } from "../core/types";
 import type { SourceState } from "../data/scheduler";
 import { formatBytes, formatDuration, formatLoad, type SystemSnapshot, usedPercent } from "../model";
-import type { ClientRow, LeaseRow, NetworkRow, WirelessRow } from "./cards";
+import type { ClientRow, LeaseRow, NetworkRow, TelemetrySnapshot, WirelessRow } from "./cards";
 import { normalizeSystemSnapshot } from "./cards";
-import type { WidgetContext, WidgetInstance, WidgetRegistry } from "./registry";
+import type { ConfigField, WidgetContext, WidgetInstance, WidgetRegistry } from "./registry";
 import { trafficRate } from "./traffic";
 
 type Value = { value: string; detail?: string; percent?: number };
@@ -207,25 +207,30 @@ export function registerMetrics(registry: WidgetRegistry): void {
     category: string,
     sources: string[],
     calculate: (states: Map<string, SourceState>, config: WidgetConfig) => Value,
-    options: { interface?: boolean; radio?: boolean } = {},
-  ) =>
+    options: { interface?: boolean; radio?: boolean; description?: string; icon?: string } = {},
+  ) => {
+    const configFields: ConfigField[] = [];
+    if (options.interface) configFields.push({ key: "interface", label: _("Network interface"), type: "select", dynamicOptions: "interfaces" });
+    if (options.radio) configFields.push({ key: "radio", label: _("Wireless radio"), type: "select", dynamicOptions: "radios" });
     registry.register({
       type,
       title,
-      description: title,
+      description: options.description ?? title,
       category,
-      icon: "",
+      icon: options.icon ?? "metric",
       version: 1,
       defaultSize: "medium",
       supportedSizes: ["medium", "wide", "large", "xlarge", "full", "custom"],
       constraints: { ...DEFAULT_CONSTRAINTS, min: { w: 2, h: 2 } },
       defaultConfig: options.interface ? { interface: "" } : options.radio ? { radio: "" } : {},
       requiredData: sources,
+      configFields: configFields.length ? configFields : undefined,
       validateConfig: (config) =>
         (!options.interface || config.interface === undefined || (typeof config.interface === "string" && config.interface.length <= 64)) &&
         (!options.radio || config.radio === undefined || (typeof config.radio === "string" && config.radio.length <= 64)),
       createInstance: (ctx) => new MetricWidget(ctx, sources, calculate),
     });
+  };
   const sys = ["system.board", "system.info", "system.version"];
   metric("system.hostname", _("Device name"), _("System"), sys, (s) => ({ value: system(s).hostname || "–", detail: system(s).model }));
   metric("system.uptime", _("Uptime"), _("System"), ["system.info"], (s) => ({ value: formatDuration(system(s).uptime) }));
@@ -369,18 +374,65 @@ export function registerMetrics(registry: WidgetRegistry): void {
     const strongest = clients.reduce<ClientRow | undefined>((best, client) => (!best || client.signal > best.signal ? client : best), undefined);
     return { value: strongest ? `${strongest.signal} dBm` : _("No clients"), detail: strongest?.hostname || strongest?.mac };
   });
+  metric("system.temperature", _("CPU / SoC temperature"), _("System"), ["system.telemetry"], (s) => {
+    const telemetry = s.get("system.telemetry")?.data as TelemetrySnapshot | undefined;
+    const sensors = telemetry?.temperatures ?? [];
+    if (!sensors.length) return { value: _("Not available"), detail: _("No thermal sensors detected") };
+    const hottest = sensors.reduce((a, b) => (b.tempC > a.tempC ? b : a), sensors[0]);
+    return {
+      value: `${hottest.tempC.toFixed(1)} °C`,
+      detail: `${hottest.type || hottest.zone}${sensors.length > 1 ? ` (+${sensors.length - 1})` : ""}`,
+      percent: Math.min(100, Math.max(0, hottest.tempC)),
+    };
+  });
+  metric("system.memory-free", _("Available memory"), _("Resources"), ["system.info"], (s) => {
+    const mem = system(s).memory;
+    return mem.total ? { value: formatBytes(mem.free), detail: `${_("Total")}: ${formatBytes(mem.total)}` } : { value: _("Not available") };
+  });
+  metric("network.conntrack", _("Active connections"), _("Network"), ["system.telemetry"], (s) => {
+    const ct = (s.get("system.telemetry")?.data as TelemetrySnapshot | undefined)?.conntrack;
+    if (!ct || (!ct.count && !ct.max)) return { value: _("Not available"), detail: _("Connection tracking") };
+    const percent = ct.max > 0 ? Math.min(100, Math.max(0, (ct.count / ct.max) * 100)) : undefined;
+    return {
+      value: String(ct.count),
+      detail: ct.max > 0 ? `${ct.count} / ${ct.max} (${Math.round(percent ?? 0)}%)` : _("Tracked flows"),
+      percent,
+    };
+  });
+  metric("network.active-ports", _("Connected Ethernet ports"), _("Network"), ["system.telemetry"], (s) => {
+    const ports = (s.get("system.telemetry")?.data as TelemetrySnapshot | undefined)?.ports ?? [];
+    if (!ports.length) return { value: "0", detail: _("No ports detected") };
+    const up = ports.filter((p) => p.carrier).length;
+    return {
+      value: `${up} / ${ports.length}`,
+      detail:
+        ports
+          .filter((p) => p.carrier)
+          .map((p) => p.device)
+          .join(", ") || _("All ports down"),
+    };
+  });
+  metric("network.wan6-status", _("WAN IPv6 status"), _("Network"), ["network.wan"], (s) => {
+    const wan = s.get("network.wan")?.data as { wan4: NetworkRow[]; wan6: NetworkRow[] } | undefined;
+    const row = wan?.wan6?.[0];
+    return { value: row ? (row.up ? _("Online") : _("Offline")) : _("Not available"), detail: row?.addresses.join(", ") || row?.name };
+  });
   registry.register({
     type: "network.traffic-trend",
     title: _("Live traffic trend"),
     description: _("Receive and transmit bytes per second"),
     category: _("Network"),
-    icon: "",
+    icon: "trend",
     version: 1,
     defaultSize: "wide",
     supportedSizes: ["wide", "large", "xlarge", "full", "custom"],
     constraints: { ...DEFAULT_CONSTRAINTS, min: { w: 3, h: 2 } },
     defaultConfig: { interface: "", history: 40 },
     requiredData: ["network.interfaces"],
+    configFields: [
+      { key: "interface", label: _("Network interface"), type: "select", dynamicOptions: "interfaces" },
+      { key: "history", label: _("History samples (10–120)"), type: "number", min: 10, max: 120 },
+    ],
     validateConfig: (c) => typeof c.interface === "string" && c.interface.length <= 64 && Number.isInteger(c.history) && Number(c.history) >= 10 && Number(c.history) <= 120,
     createInstance: (ctx) => new TrafficWidget(ctx),
   });

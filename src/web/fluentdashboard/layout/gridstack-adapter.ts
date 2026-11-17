@@ -143,11 +143,19 @@ export class GridstackAdapter implements LayoutAdapter {
     // dropped and dragstop can span two grids; collect once after both have settled.
     this.notification = setTimeout(() => {
       const placements: NodePlacement[] = [];
+      const tree = indexNodes(this.nodes);
+      const seen = new Set<string>();
       for (const [parentId, grid] of this.grids)
         for (const n of grid.engine.nodes) {
+          if (n.el && grid.el && n.el.parentElement !== grid.el) continue;
           const source = this.nodes.find((node) => node.id === (n.el?.dataset.nodeId ?? n.id));
-          if (!source || source.locked || ancestorsOf(indexNodes(this.nodes), source.id).some((n) => n.locked)) continue;
-          const p = { id: source.id, parentId, x: n.x ?? 0, y: n.y ?? 0, w: n.w ?? 1, h: source.kind === "group" ? source.tile.h : (n.h ?? 2) };
+          if (!source || seen.has(source.id) || source.locked || ancestorsOf(tree, source.id).some((node) => node.locked)) continue;
+          seen.add(source.id);
+          const parentNode = parentId === null ? undefined : tree.byId.get(parentId);
+          const maxColumns = parentNode ? parentNode.tile.w : 12;
+          const w = Math.max(1, Math.min(n.w ?? source.tile.w, maxColumns));
+          const x = Math.max(0, Math.min(n.x ?? 0, maxColumns - w));
+          const p = { id: source.id, parentId, x, y: Math.max(0, n.y ?? 0), w, h: source.kind === "group" ? source.tile.h : Math.max(1, n.h ?? 2) };
           if (p.parentId !== source.parentId || p.x !== source.tile.x || p.y !== source.tile.y || p.w !== source.tile.w || p.h !== source.tile.h) placements.push(p);
         }
       if (placements.length) for (const listener of this.listeners) listener(placements);

@@ -2,6 +2,21 @@ import type { TileConstraints } from "../core/tiles";
 import type { TileSize, WidgetConfig } from "../core/types";
 import type { DataService } from "../data/service";
 
+export interface SelectOption {
+  value: string;
+  label: string;
+}
+export type DynamicOptionSource = "interfaces" | "radios";
+export interface ConfigField {
+  key: string;
+  label: string;
+  type: "text" | "number" | "boolean" | "select" | "multiselect";
+  placeholder?: string;
+  min?: number;
+  max?: number;
+  options?: readonly SelectOption[];
+  dynamicOptions?: DynamicOptionSource;
+}
 export interface WidgetContext {
   data: DataService;
   config: WidgetConfig;
@@ -26,6 +41,7 @@ export interface WidgetDefinition {
   constraints: TileConstraints;
   defaultConfig: WidgetConfig;
   requiredData: string[];
+  configFields?: readonly ConfigField[];
   validateConfig(config: WidgetConfig): boolean;
   migrateConfig?(config: WidgetConfig, fromVersion: number): WidgetConfig;
   createInstance(context: WidgetContext): WidgetInstance;

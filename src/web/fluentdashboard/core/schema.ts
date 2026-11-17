@@ -1,3 +1,4 @@
+import { settleDashboard } from "./commands";
 import { isValidId } from "./ids";
 import { BASE_COLUMNS, type DashboardDocument, MAX_DASHBOARDS, MAX_GROUP_DEPTH, MAX_NODES_PER_DASHBOARD, MAX_TILE_ROWS, SCHEMA_VERSION } from "./types";
 
@@ -82,10 +83,16 @@ export function cloneDocument(document: DashboardDocument): DashboardDocument {
   return JSON.parse(JSON.stringify(document)) as DashboardDocument;
 }
 
-/** Add sequential migrations here when a second schema exists; never downgrade. */
+/** Add sequential migrations here when a second schema exists; never downgrade. Normalizes any overlapping unlocked tiles. */
 export function migrateDocument(value: unknown): DashboardDocument {
   validateDocument(value);
-  return cloneDocument(value);
+  const doc = cloneDocument(value);
+  try {
+    for (const d of doc.dashboards) settleDashboard(d);
+  } catch (error) {
+    throw new DocumentValidationError(error instanceof Error ? error.message : String(error));
+  }
+  return doc;
 }
 
 export function createDefaultDocument(): DashboardDocument {

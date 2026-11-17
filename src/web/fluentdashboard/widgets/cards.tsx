@@ -1,5 +1,23 @@
 import type { DataService } from "../data/service";
-import { formatBytes, formatDuration, formatLoad, formatLocalTime, normalizeSystemSnapshot, type StorageSnapshot, type SystemSnapshot, usedPercent } from "../model";
+import {
+  formatBytes,
+  formatDuration,
+  formatLoad,
+  formatLocalTime,
+  type MountRow,
+  normalizeMounts,
+  normalizeSystemSnapshot,
+  normalizeTelemetry,
+  type PortStatusRow,
+  type StorageSnapshot,
+  type SystemSnapshot,
+  type TelemetrySnapshot,
+  type ThermalSensor,
+  usedPercent,
+} from "../model";
+
+export type { MountRow, PortStatusRow, TelemetrySnapshot, ThermalSensor };
+export { normalizeMounts, normalizeTelemetry };
 
 export interface NetworkRow {
   name: string;
@@ -57,6 +75,8 @@ const callSystemBoard = rpc.declare<unknown>({ object: "system", method: "board"
 const callSystemInfo = rpc.declare<unknown>({ object: "system", method: "info" });
 const callLuciVersion = rpc.declare<unknown>({ object: "luci", method: "getVersion" });
 const callDHCPLeases = rpc.declare<unknown>({ object: "luci-rpc", method: "getDHCPLeases", expect: { "": {} } });
+const callDashboardMetrics = rpc.declare<unknown>({ object: "luci.fluentdashboard", method: "metrics" });
+const callMountPoints = rpc.declare<unknown>({ object: "luci", method: "getMountPoints", expect: { result: [] } });
 
 function asRecord(value: unknown): UnknownRecord {
   return value !== null && typeof value === "object" && !Array.isArray(value) ? (value as UnknownRecord) : {};
@@ -182,6 +202,16 @@ export function registerSources(data: DataService): void {
   data.register({ key: "system.info", interval: 3000, load: callSystemInfo });
   data.register({ key: "system.version", interval: 60000, load: callLuciVersion });
   data.register({ key: "dhcp.leases", interval: 15000, load: async () => normalizeLeases(await callDHCPLeases()) });
+  data.register({
+    key: "system.telemetry",
+    interval: 5000,
+    load: async () => normalizeTelemetry(await Promise.resolve(callDashboardMetrics()).catch(() => ({}))),
+  });
+  data.register({
+    key: "system.mounts",
+    interval: 30000,
+    load: async () => normalizeMounts(await Promise.resolve(callMountPoints()).catch(() => [])),
+  });
   let cacheFlight: Promise<unknown> | undefined;
   let cacheTime = 0;
   const fresh = async () => {
@@ -430,6 +460,37 @@ export function renderClients(clients: ClientRow[]): HTMLElement {
         `${formatRate(client.rxRate)} / ${formatRate(client.txRate)}`,
       ]),
       _("No wireless clients are connected."),
+    ),
+    true,
+  );
+}
+
+export function renderPorts(ports: PortStatusRow[]): HTMLElement {
+  return card(
+    "ports",
+    _("Ethernet Port Status"),
+    renderTable(
+      [_("Port"), _("Status"), _("Speed"), _("Duplex")],
+      ports.map((port) => [
+        port.device,
+        statusPill(port.carrier),
+        port.speed ? (port.speed >= 1000 ? `${(port.speed / 1000).toFixed(port.speed % 1000 === 0 ? 0 : 1)} Gbps` : `${port.speed} Mbps`) : "-",
+        port.duplex || "-",
+      ]),
+      _("No network port status information is available."),
+    ),
+    true,
+  );
+}
+
+export function renderMounts(mounts: MountRow[]): HTMLElement {
+  return card(
+    "mounts",
+    _("Disk Mount Points"),
+    renderTable(
+      [_("Mount Point"), _("Device"), _("Used"), _("Available"), _("Total")],
+      mounts.map((mount) => [mount.mount, mount.device, `${formatBytes(mount.used)} (${Math.round(mount.percent)}%)`, formatBytes(mount.avail), formatBytes(mount.size)]),
+      _("No storage mount points were found."),
     ),
     true,
   );

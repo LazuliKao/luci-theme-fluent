@@ -7,6 +7,13 @@ export class DataService {
   register<T>(source: Source<T>): void {
     this.scheduler.register(source);
   }
+  state<T>(key: string): SourceState<T> | undefined {
+    try {
+      return this.scheduler.state<T>(key);
+    } catch {
+      return undefined;
+    }
+  }
   subscribe<T>(key: string, listener: (state: SourceState<T>) => void): () => void {
     return this.scheduler.subscribe(key, listener);
   }

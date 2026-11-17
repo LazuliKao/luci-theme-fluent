@@ -1,6 +1,6 @@
 'use strict';
 
-import { open, readfile, writefile, rename, unlink, mkdtemp, rmdir } from 'fs';
+import { open, readfile, writefile, rename, unlink, mkdtemp, rmdir, glob, basename } from 'fs';
 import { cursor } from 'uci';
 
 const config = '/etc/config/fluentdashboard';
@@ -101,9 +101,35 @@ function save_document(args) {
 	return result;
 }
 
+function collect_metrics() {
+	let temperatures = [];
+	for (let z in (glob('/sys/class/thermal/thermal_zone*') || [])) {
+		let raw = trim(readfile(z + '/temp') || '');
+		if (!length(raw)) continue;
+		let n = int(raw);
+		if (type(n) != 'int') continue;
+		let c = n >= 1000 || n <= -1000 ? (n / 1000.0) : n;
+		push(temperatures, { zone: basename(z), type: trim(readfile(z + '/type') || basename(z)), tempC: c });
+	}
+	let ct_count = int(trim(readfile('/proc/sys/net/netfilter/nf_conntrack_count') || readfile('/proc/sys/net/ipv4/netfilter/ip_conntrack_count') || '0')) || 0;
+	let ct_max = int(trim(readfile('/proc/sys/net/netfilter/nf_conntrack_max') || readfile('/proc/sys/net/ipv4/netfilter/ip_conntrack_max') || '0')) || 0;
+	let ports = [];
+	for (let p in (glob('/sys/class/net/*') || [])) {
+		let dev = basename(p);
+		if (dev == 'lo') continue;
+		let oper = trim(readfile(p + '/operstate') || 'unknown');
+		let carrier = trim(readfile(p + '/carrier') || '0') == '1' || oper == 'up';
+		let spd = int(trim(readfile(p + '/speed') || '0'));
+		let dup = trim(readfile(p + '/duplex') || '');
+		push(ports, { device: dev, operstate: oper, carrier, speed: (type(spd) == 'int' && spd > 0) ? spd : null, duplex: dup });
+	}
+	return { temperatures, conntrack: { count: ct_count, max: ct_max }, ports };
+}
+
 return {
 	'luci.fluentdashboard': {
 		load: { call: function() { try { return load_document(); } catch (error) { return { error: 'corrupt', message: `${error}` }; } } },
+		metrics: { call: function() { try { return collect_metrics(); } catch (error) { return { temperatures: [], conntrack: { count: 0, max: 0 }, ports: [] }; } } },
 		save: {
 			args: { layout: '', expectedRevision: 0 },
 			call: function(request) {

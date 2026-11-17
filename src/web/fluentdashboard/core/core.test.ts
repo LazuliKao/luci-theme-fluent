@@ -1,8 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { AddNodeCommand, BatchCommand, DissolveGroupCommand, EditCommand, MoveNodeCommand, RemoveNodeCommand, ToggleLockCommand, UpdateConfigCommand } from "./commands";
+import {
+  AddNodeCommand,
+  BatchCommand,
+  DissolveGroupCommand,
+  DuplicateDashboardCommand,
+  EditCommand,
+  MoveNodeCommand,
+  RemoveNodeCommand,
+  ToggleCollapseCommand,
+  ToggleLockCommand,
+  UpdateConfigCommand,
+} from "./commands";
 import { History } from "./history";
-import { createDefaultDocument, migrateDocument, validateDocument } from "./schema";
+import { createDefaultDocument, DocumentValidationError, migrateDocument, validateDocument } from "./schema";
 import { DashboardStore } from "./store";
 import type { GroupNode } from "./types";
 
@@ -136,4 +147,50 @@ test("mobile order is independent of desktop placement after drag", () => {
     next.dashboards[0].nodes.map((n) => n.tile.order),
     original,
   );
+});
+test("duplicating a dashboard assigns fresh node IDs and remaps parent relationships", () => {
+  const doc = createDefaultDocument();
+  doc.dashboards[0].nodes.push(group("net_group"));
+  doc.dashboards[0].nodes[0].parentId = "net_group";
+  const next = new DuplicateDashboardCommand("overview", "copy_dash", "Overview Copy").execute(doc);
+  assert.equal(next.dashboards.length, 2);
+  const sourceIds = new Set(next.dashboards[0].nodes.map((n) => n.id));
+  const copyNodes = next.dashboards[1].nodes;
+  assert.equal(copyNodes.length, next.dashboards[0].nodes.length);
+  for (const n of copyNodes) assert.equal(sourceIds.has(n.id), false);
+  const copyGroup = copyNodes.find((n) => n.kind === "group");
+  assert.ok(copyGroup);
+  assert.equal(copyNodes[0].parentId, copyGroup.id);
+});
+test("transient collapsed state is isolated per dashboard and synced during edit mode", () => {
+  const doc = createDefaultDocument();
+  doc.dashboards[0].nodes.push(group("g1"));
+  doc.dashboards.push({ id: "second", name: "Second", nodes: [group("g1")] });
+  const store = new DashboardStore(doc);
+  store.collapsed.add("g1");
+  assert.equal(store.collapsed.has("g1"), true);
+  store.switchDashboard("second");
+  assert.equal(store.collapsed.has("g1"), false);
+  store.switchDashboard("overview");
+  assert.equal(store.collapsed.has("g1"), true);
+  store.edit();
+  assert.equal(store.collapsed.has("g1"), false);
+  store.execute(new ToggleCollapseCommand("overview", "g1"));
+  assert.equal(store.collapsed.has("g1"), true);
+  store.undo();
+  assert.equal(store.collapsed.has("g1"), false);
+});
+test("migrateDocument settles overlapping unlocked tiles and rejects overlapping locked tiles", () => {
+  const doc = createDefaultDocument();
+  doc.dashboards[0].nodes[1].tile.x = 0;
+  doc.dashboards[0].nodes[1].tile.y = 0;
+  const settled = migrateDocument(doc);
+  assert.notEqual(settled.dashboards[0].nodes[0].tile.y, settled.dashboards[0].nodes[1].tile.y);
+
+  const lockedConflict = createDefaultDocument();
+  lockedConflict.dashboards[0].nodes[0].locked = true;
+  lockedConflict.dashboards[0].nodes[1].locked = true;
+  lockedConflict.dashboards[0].nodes[1].tile.x = 0;
+  lockedConflict.dashboards[0].nodes[1].tile.y = 0;
+  assert.throws(() => migrateDocument(lockedConflict), DocumentValidationError);
 });

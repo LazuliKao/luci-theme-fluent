@@ -8,12 +8,21 @@ export class DashboardStore {
   isEditing = false;
   previewColumns: 12 | 6 | 2 | null = null;
   readonly selection = new Set<string>();
-  readonly collapsed = new Set<string>();
+  private collapsedByDashboard = new Map<string, Set<string>>();
   private listeners = new Set<() => void>();
   constructor(document: DashboardDocument) {
     this.history = new History(document);
     this.activeDashboardId = document.defaultDashboardId;
     this.resetCollapsed();
+  }
+  get collapsed(): Set<string> {
+    const id = this.activeDashboard.id;
+    let set = this.collapsedByDashboard.get(id);
+    if (!set) {
+      set = new Set<string>();
+      this.collapsedByDashboard.set(id, set);
+    }
+    return set;
   }
   get document(): DashboardDocument {
     return this.history.document;
@@ -34,22 +43,26 @@ export class DashboardStore {
   execute(command: Command): void {
     if (!this.isEditing) throw new Error("Enter edit mode first");
     this.history.execute(command);
+    this.resetCollapsed();
     this.emit();
   }
   undo(): void {
     if (this.isEditing) {
       this.history.undo();
+      this.resetCollapsed();
       this.emit();
     }
   }
   redo(): void {
     if (this.isEditing) {
       this.history.redo();
+      this.resetCollapsed();
       this.emit();
     }
   }
   edit(): void {
     this.isEditing = true;
+    this.resetCollapsed();
     this.emit();
   }
   cancel(): void {
@@ -75,7 +88,11 @@ export class DashboardStore {
     this.emit();
   }
   private resetCollapsed(): void {
-    this.collapsed.clear();
-    for (const d of this.document.dashboards) for (const n of d.nodes) if (n.kind === "group" && n.collapsed) this.collapsed.add(n.id);
+    this.collapsedByDashboard.clear();
+    for (const d of this.document.dashboards) {
+      const set = new Set<string>();
+      for (const n of d.nodes) if (n.kind === "group" && n.collapsed) set.add(n.id);
+      this.collapsedByDashboard.set(d.id, set);
+    }
   }
 }

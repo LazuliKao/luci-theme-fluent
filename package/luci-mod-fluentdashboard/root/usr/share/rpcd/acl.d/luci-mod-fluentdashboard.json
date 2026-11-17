@@ -4,9 +4,9 @@
 		"read": {
 			"ubus": {
 				"iwinfo": [ "assoclist" ],
-				"luci": [ "getVersion" ],
+				"luci": [ "getVersion", "getMountPoints" ],
 				"luci-rpc": [ "getDHCPLeases" ],
-				"luci.fluentdashboard": [ "load" ],
+				"luci.fluentdashboard": [ "load", "metrics" ],
 				"system": [ "board", "info" ]
 			}
 		}

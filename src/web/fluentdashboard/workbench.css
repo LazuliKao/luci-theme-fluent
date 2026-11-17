@@ -1,48 +1,735 @@
 .fluent-dashboard {
   --dash-card-bg: var(--fluent-card-bg, Canvas);
+  --dash-subtle-bg: var(--fluent-subtle-bg, color-mix(in srgb, CanvasText 4%, Canvas));
+  --dash-hover-bg: var(--fluent-subtle-hover, color-mix(in srgb, CanvasText 8%, Canvas));
+  --dash-input-bg: var(--fluent-input-bg, Canvas);
   --dash-text: var(--fluent-text, CanvasText);
-  --dash-border: var(--fluent-card-border, color-mix(in srgb, CanvasText 18%, transparent));
+  --dash-muted: var(--fluent-text-secondary, color-mix(in srgb, CanvasText 64%, transparent));
+  --dash-border: var(--fluent-card-border, color-mix(in srgb, CanvasText 15%, transparent));
+  --dash-primary: var(--fluent-primary, #0078d4);
+  --dash-danger: var(--fluent-danger, #d13438);
+  --dash-warning: var(--fluent-warning, #f7630c);
+  --dash-success: var(--fluent-success, #26884a);
   --dash-gap: 0.75rem;
   --dash-radius: var(--fluent-border-radius, 0.5rem);
+  --dash-control-radius: var(--fluent-control-radius, 0.375rem);
   color: var(--dash-text);
 }
-.fluent-dashboard__toolbar { display: flex; flex-wrap: wrap; gap: var(--dash-gap); border: 0; padding: 0; margin-block: var(--dash-gap); }
-.fluent-dashboard__workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--dash-gap); }
-.fluent-dashboard__canvas { min-width: 0; min-height: 12rem; }
-.fluent-dashboard__library, .fluent-dashboard__properties { min-width: 0; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); padding: var(--dash-gap); }
-.fluent-dashboard__library > button, .fluent-dashboard__properties > button { margin: 0.2rem; }
-.fluent-dashboard__field { display: block; margin-block: var(--dash-gap); }
-.fluent-dashboard__field > input { display: block; width: 100%; }
-.fluent-dashboard .grid-stack-item-content > .fluent-dashboard__card { height: 100%; display: flex; flex-direction: column; }
-.fluent-dashboard__card-header { display: flex; align-items: center; justify-content: space-between; flex: none; min-height: 2rem; }
-.fluent-dashboard__card-header > .fluent-dashboard__card-title { flex: 1; border: 0; padding-block: 0.5rem; }
-.fluent-dashboard__card-header > button { flex: none; font-size: 0.75rem; margin-inline-end: 0.5rem; }
-.fluent-dashboard__card-content { overflow: auto; min-height: 0; }
-.fluent-dashboard__widget-status { margin: 0; padding-inline: var(--dash-gap); font-size: 0.85rem; }
-.fluent-dashboard__card--editing .fluent-dashboard__card-header { cursor: move; }
-.fluent-dashboard__card--hidden { opacity: 0.5; }
-.fluent-dashboard__card--locked .fluent-dashboard__card-header { cursor: default; }
-.fluent-dashboard__tile--selected > .grid-stack-item-content { outline: 2px solid Highlight; outline-offset: -2px; }
-.fluent-dashboard__group { height: 100%; display: flex; flex-direction: column; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); background: var(--dash-card-bg); }
-.fluent-dashboard__group > .fluent-dashboard__card-header { height: 40px; }
-.fluent-dashboard__group-description { margin: 0; padding: 0.25rem var(--dash-gap); font-size: 0.85rem; }
-.fluent-dashboard__group-body { min-height: 80px; flex: 1; }
-.fluent-dashboard__metric, .fluent-dashboard__traffic { display: flex; flex-direction: column; gap: 0.4rem; padding: var(--dash-gap); overflow: auto; }
-.fluent-dashboard__metric-value { font-size: clamp(1rem, 1.5vw, 1.6rem); overflow-wrap: anywhere; }
-.fluent-dashboard__metric-detail { color: var(--dash-text); opacity: 0.7; overflow-wrap: anywhere; }
-.fluent-dashboard__metric progress { width: 100%; accent-color: var(--fluent-primary, Highlight); }
-.fluent-dashboard__traffic svg { width: 100%; height: 5rem; min-height: 2rem; }
-.fluent-dashboard__traffic polyline { fill: none; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-.fluent-dashboard__traffic-rx { stroke: var(--fluent-primary, Highlight); }
-.fluent-dashboard__traffic-tx { stroke: var(--fluent-success, #26884a); }
-.fluent-dashboard__shortcuts { display: flex; flex-wrap: wrap; gap: var(--dash-gap); padding: var(--dash-gap); }
-.fluent-dashboard__shortcuts a { display: inline-flex; align-items: center; border: 1px solid var(--dash-border); border-radius: var(--dash-radius); padding: 0.5rem; color: var(--dash-text); }
-.fluent-dashboard__notice:empty { display: none; }
-.fluent-dashboard [hidden] { display: none; }
-.fluent-dashboard .grid-stack-item-content { min-width: 0; overflow: hidden; }
-.fluent-dashboard__canvas .grid-stack-item > .grid-stack-item-content { overflow: visible; }
-.fluent-dashboard__group-body.grid-stack { min-width: 0; width: 100%; }
-.fluent-dashboard__workspace--editing .fluent-dashboard__canvas > .grid-stack-item { touch-action: auto; }
-@media (min-width: 1400px) {
-  .fluent-dashboard__workspace--editing { grid-template-columns: 12rem minmax(0, 1fr) 15rem; align-items: start; }
+
+/* Topbar & Dashboard Switcher Tabs */
+.fluent-dashboard__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding-block: 0.25rem 0.65rem;
+  margin-block-end: 0.5rem;
+  border-block-end: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  min-width: 0;
+}
+
+.fluent-dashboard__title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.fluent-dashboard__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.fluent-dashboard__tab {
+  appearance: none;
+  background: transparent;
+  color: var(--dash-muted);
+  border: 1px solid transparent;
+  border-radius: var(--dash-control-radius);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.fluent-dashboard__tab:hover {
+  background: var(--dash-hover-bg);
+  color: var(--dash-text);
+}
+
+.fluent-dashboard__tab--active {
+  background: color-mix(in srgb, var(--dash-primary) 14%, transparent);
+  color: var(--dash-primary);
+  border-color: color-mix(in srgb, var(--dash-primary) 38%, transparent);
+  font-weight: 600;
+}
+
+.fluent-dashboard__topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* Edit Mode Toolbar */
+.fluent-dashboard__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  background: var(--dash-card-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  padding: 0.6rem 0.85rem;
+  margin: 0 0 var(--dash-gap) 0;
+  box-shadow: var(--fluent-dashboard-shadow);
+}
+
+.fluent-dashboard__toolbar-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.fluent-dashboard__toolbar-group--end {
+  margin-inline-start: auto;
+}
+
+/* Buttons & Form Controls */
+.fluent-dashboard__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 550;
+  line-height: 1.2;
+  color: var(--dash-text);
+  background: var(--dash-subtle-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.fluent-dashboard__btn:hover:not(:disabled) {
+  background: var(--dash-hover-bg);
+  border-color: color-mix(in srgb, var(--dash-text) 28%, transparent);
+}
+
+.fluent-dashboard__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.fluent-dashboard__btn--primary {
+  background: var(--dash-primary);
+  color: #ffffff;
+  border-color: var(--dash-primary);
+}
+
+.fluent-dashboard__btn--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--dash-primary) 88%, #000000);
+  border-color: color-mix(in srgb, var(--dash-primary) 88%, #000000);
+  color: #ffffff;
+}
+
+.fluent-dashboard__btn--active {
+  background: color-mix(in srgb, var(--dash-primary) 16%, transparent);
+  color: var(--dash-primary);
+  border-color: color-mix(in srgb, var(--dash-primary) 48%, transparent);
+}
+
+.fluent-dashboard__btn--danger {
+  color: var(--dash-danger);
+  border-color: color-mix(in srgb, var(--dash-danger) 35%, var(--dash-border));
+}
+
+.fluent-dashboard__btn--danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--dash-danger) 12%, transparent);
+  border-color: var(--dash-danger);
+}
+
+.fluent-dashboard__btn--warning {
+  color: var(--dash-warning);
+  border-color: color-mix(in srgb, var(--dash-warning) 45%, var(--dash-border));
+}
+
+.fluent-dashboard__btn--subtle {
+  background: transparent;
+  border-color: transparent;
+}
+
+.fluent-dashboard__btn--subtle:hover:not(:disabled) {
+  background: var(--dash-hover-bg);
+  border-color: transparent;
+}
+
+.fluent-dashboard__btn--block {
+  width: 100%;
+}
+
+.fluent-dashboard__select,
+.fluent-dashboard__input {
+  min-height: 2rem;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.85rem;
+  color: var(--dash-text);
+  background: var(--dash-input-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+}
+
+.fluent-dashboard__select:focus,
+.fluent-dashboard__input:focus {
+  outline: 2px solid color-mix(in srgb, var(--dash-primary) 55%, transparent);
+  outline-offset: -1px;
+  border-color: var(--dash-primary);
+}
+
+/* Status Notice */
+.fluent-dashboard__notice {
+  margin: 0 0 var(--dash-gap) 0;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--dash-primary) 12%, var(--dash-card-bg));
+  border: 1px solid color-mix(in srgb, var(--dash-primary) 35%, var(--dash-border));
+  border-radius: var(--dash-control-radius);
+}
+
+.fluent-dashboard__notice:empty {
+  display: none;
+}
+
+/* Workspace Layout */
+.fluent-dashboard__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--dash-gap);
+  align-items: start;
+}
+
+.fluent-dashboard__canvas {
+  min-width: 0;
+  min-height: 14rem;
+}
+
+/* Side Panels (Library & Properties) */
+.fluent-dashboard__library,
+.fluent-dashboard__properties {
+  min-width: 0;
+  margin: 0;
+  background: var(--dash-card-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  padding: 0.85rem;
+  box-shadow: var(--fluent-dashboard-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.fluent-dashboard__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-block-end: 0.5rem;
+  border-block-end: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__panel-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.fluent-dashboard__library-search > .fluent-dashboard__input {
+  width: 100%;
+}
+
+.fluent-dashboard__library-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  max-height: 62vh;
+  padding-inline-end: 0.15rem;
+}
+
+.fluent-dashboard__category {
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+  background: var(--dash-subtle-bg);
+  overflow: hidden;
+}
+
+.fluent-dashboard__category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.fluent-dashboard__category-header::-webkit-details-marker {
+  display: none;
+}
+
+.fluent-dashboard__category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.35rem 0.5rem 0.55rem;
+  border-block-start: 1px solid var(--dash-border);
+  background: var(--dash-card-bg);
+}
+
+.fluent-dashboard__palette-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  text-align: start;
+  color: var(--dash-text);
+  background: var(--dash-subtle-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    transform 100ms ease;
+}
+
+.fluent-dashboard__palette-item:hover {
+  background: var(--dash-hover-bg);
+  border-color: var(--dash-primary);
+}
+
+.fluent-dashboard__palette-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.fluent-dashboard__palette-item-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fluent-dashboard__palette-item-desc {
+  font-size: 0.74rem;
+  color: var(--dash-muted);
+  line-height: 1.3;
+}
+
+/* Badges */
+.fluent-dashboard__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.42rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.3;
+  border-radius: 999px;
+  color: var(--dash-primary);
+  background: color-mix(in srgb, var(--dash-primary) 14%, transparent);
+  white-space: nowrap;
+  flex: none;
+}
+
+.fluent-dashboard__badge--muted,
+.fluent-dashboard__badge--count {
+  color: var(--dash-muted);
+  background: color-mix(in srgb, var(--dash-text) 10%, transparent);
+}
+
+/* Inspector Controls */
+.fluent-dashboard__inspector-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.fluent-dashboard__inspector-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-block-start: 0.65rem;
+  border-block-start: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__panel-header + .fluent-dashboard__inspector-section,
+.fluent-dashboard__inspector-meta + .fluent-dashboard__inspector-section {
+  padding-block-start: 0.25rem;
+  border-block-start: 0;
+}
+
+.fluent-dashboard__section-title {
+  font-size: 0.76rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--dash-muted);
+}
+
+.fluent-dashboard__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin: 0;
+}
+
+.fluent-dashboard__field-label {
+  font-size: 0.8rem;
+  font-weight: 550;
+  color: var(--dash-text);
+}
+
+.fluent-dashboard__field > .fluent-dashboard__input,
+.fluent-dashboard__field > .fluent-dashboard__select {
+  width: 100%;
+}
+
+.fluent-dashboard__checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fluent-dashboard__multiselect {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: var(--dash-subtle-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+  max-height: 11rem;
+  overflow-y: auto;
+}
+
+.fluent-dashboard__preset-bar,
+.fluent-dashboard__button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.fluent-dashboard__inspector-hint,
+.fluent-dashboard__empty-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+  line-height: 1.4;
+}
+
+/* Cards & Grid Tiles */
+.fluent-dashboard .grid-stack-item-content > .fluent-dashboard__card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.fluent-dashboard__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex: none;
+  min-height: 2.5rem;
+  padding-inline-end: 0.55rem;
+  border-block-end: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__card-header .fluent-dashboard__card-title {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0.65rem 0.5rem 0.65rem 1.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fluent-dashboard__card-header .fluent-dashboard__card-title::before {
+  inset: 0.7rem auto 0.7rem 0.65rem;
+  background: var(--dash-primary);
+}
+
+.fluent-dashboard__card-actions,
+.fluent-dashboard__card-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: none;
+}
+
+.fluent-dashboard__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--dash-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dash-control-radius);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.fluent-dashboard__icon-btn:hover {
+  background: var(--dash-hover-bg);
+  color: var(--dash-text);
+}
+
+.fluent-dashboard__card-content {
+  overflow: auto;
+  min-height: 0;
+  flex: 1;
+}
+
+.fluent-dashboard__table th,
+.fluent-dashboard__table td {
+  white-space: nowrap;
+}
+
+.fluent-dashboard__widget-status {
+  margin: 0;
+  padding: 0.35rem var(--dash-gap);
+  font-size: 0.8rem;
+  color: var(--dash-muted);
+  border-block-end: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__card--editing .fluent-dashboard__card-header {
+  cursor: grab;
+}
+
+.fluent-dashboard__card--editing .fluent-dashboard__card-header:active {
+  cursor: grabbing;
+}
+
+.fluent-dashboard__card--hidden {
+  opacity: 0.52;
+}
+
+.fluent-dashboard__card--locked .fluent-dashboard__card-header {
+  cursor: default;
+}
+
+/* Groups */
+.fluent-dashboard__group {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  background: color-mix(in srgb, var(--dash-subtle-bg) 60%, var(--dash-card-bg));
+  box-shadow: var(--fluent-dashboard-shadow);
+}
+
+.fluent-dashboard__tile--selected > .grid-stack-item-content > .fluent-dashboard__card,
+.fluent-dashboard__tile--selected > .grid-stack-item-content > .fluent-dashboard__group {
+  border-color: var(--dash-primary);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--dash-primary) 35%, transparent),
+    var(--fluent-dashboard-shadow);
+}
+
+.fluent-dashboard__group-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.fluent-dashboard__group-description {
+  margin: 0;
+  padding: 0.35rem 1rem;
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+  border-block-end: 1px solid var(--dash-border);
+}
+
+.fluent-dashboard__group-body {
+  min-height: 80px;
+  flex: 1;
+}
+
+/* Metrics, Traffic & Shortcuts */
+.fluent-dashboard__metric,
+.fluent-dashboard__traffic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 100%;
+  padding: var(--dash-gap);
+  overflow: auto;
+}
+
+.fluent-dashboard__metric-value {
+  font-size: clamp(1.15rem, 1.6vw, 1.65rem);
+  font-weight: 650;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.fluent-dashboard__metric-detail {
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+  overflow-wrap: anywhere;
+}
+
+.fluent-dashboard__metric progress {
+  width: 100%;
+  height: 0.45rem;
+  accent-color: var(--dash-primary);
+}
+
+.fluent-dashboard__traffic svg {
+  width: 100%;
+  height: 4.5rem;
+  min-height: 2rem;
+  background: var(--dash-subtle-bg);
+  border-radius: var(--dash-control-radius);
+}
+
+.fluent-dashboard__traffic polyline {
+  fill: none;
+  stroke-width: 1.75;
+  vector-effect: non-scaling-stroke;
+}
+
+.fluent-dashboard__traffic-rx {
+  stroke: var(--dash-primary);
+}
+
+.fluent-dashboard__traffic-tx {
+  stroke: var(--dash-success);
+}
+
+.fluent-dashboard__shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: var(--dash-gap);
+}
+
+.fluent-dashboard__shortcuts a {
+  display: inline-flex;
+  align-items: center;
+  background: var(--dash-subtle-bg);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-control-radius);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 550;
+  color: var(--dash-text);
+  text-decoration: none;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    color 140ms ease;
+}
+
+.fluent-dashboard__shortcuts a:hover {
+  background: var(--dash-hover-bg);
+  border-color: var(--dash-primary);
+  color: var(--dash-primary);
+}
+
+.fluent-dashboard [hidden],
+.fluent-dashboard__workspace > [hidden] {
+  display: none;
+}
+
+.fluent-dashboard .grid-stack-item-content {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.fluent-dashboard__canvas .grid-stack-item > .grid-stack-item-content {
+  overflow: visible;
+}
+
+.fluent-dashboard__group-body.grid-stack {
+  min-width: 0;
+  width: 100%;
+}
+
+.fluent-dashboard__workspace--editing .fluent-dashboard__canvas > .grid-stack-item {
+  touch-action: auto;
+}
+
+@media (min-width: 1180px) {
+  .fluent-dashboard__workspace--editing {
+    grid-template-columns: 16rem minmax(0, 1fr) 18rem;
+  }
+
+  .fluent-dashboard__workspace--editing.fluent-dashboard__workspace--no-library {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+  }
+
+  .fluent-dashboard__workspace--editing.fluent-dashboard__workspace--no-properties {
+    grid-template-columns: 16rem minmax(0, 1fr);
+  }
+
+  .fluent-dashboard__workspace--editing.fluent-dashboard__workspace--no-library.fluent-dashboard__workspace--no-properties {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fluent-dashboard__library,
+  .fluent-dashboard__properties {
+    position: sticky;
+    top: 0.75rem;
+    max-height: calc(100vh - 5.5rem);
+    overflow-y: auto;
+  }
 }

@@ -1,8 +1,9 @@
 import { collides } from "../layout/engine";
+import { createId } from "./ids";
 import { cloneDocument, validateDocument } from "./schema";
 import { detectTileSize } from "./tiles";
 import { ancestorsOf, descendantsOf, indexNodes } from "./tree";
-import type { Dashboard, DashboardDocument, DashboardNode, GroupNode, NodePlacement, WidgetConfig } from "./types";
+import type { Dashboard, DashboardDocument, DashboardNode, NodePlacement, WidgetConfig } from "./types";
 
 export interface Command {
   readonly label: string;
@@ -119,11 +120,7 @@ export class UpdateConfigCommand extends EditCommand {
     });
   }
 }
-export class CreateGroupCommand extends AddNodeCommand {
-  constructor(dashboardId: string, group: GroupNode) {
-    super(dashboardId, group);
-  }
-}
+export class CreateGroupCommand extends AddNodeCommand {}
 export class DissolveGroupCommand extends EditCommand {
   constructor(dashboardId: string, id: string) {
     super("Dissolve group", (doc) => {
@@ -166,6 +163,25 @@ export class ToggleCollapseCommand extends EditCommand {
     super("Toggle collapse", (doc) => {
       const n = nodeIn(dashboard(doc, dashboardId), id);
       if (n.kind === "group") n.collapsed = !n.collapsed;
+    });
+  }
+}
+export function settleDashboard(d: Dashboard, preferred: ReadonlySet<string> = new Set()): void {
+  settle(d, preferred);
+}
+export class DuplicateDashboardCommand extends EditCommand {
+  constructor(sourceDashboardId: string, newDashboardId: string, newName: string) {
+    super("Duplicate dashboard", (doc) => {
+      const source = dashboard(doc, sourceDashboardId);
+      const idMap = new Map<string, string>();
+      for (const n of source.nodes) idMap.set(n.id, createId(n.kind));
+      const nodes: DashboardNode[] = source.nodes.map((n) => {
+        const copy = JSON.parse(JSON.stringify(n)) as DashboardNode;
+        copy.id = idMap.get(n.id) ?? createId(n.kind);
+        copy.parentId = n.parentId ? (idMap.get(n.parentId) ?? null) : null;
+        return copy;
+      });
+      doc.dashboards.push({ id: newDashboardId, name: newName, nodes });
     });
   }
 }

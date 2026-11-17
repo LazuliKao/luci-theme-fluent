@@ -3,6 +3,35 @@ export interface StorageSnapshot {
   free: number;
 }
 
+export interface ThermalSensor {
+  zone: string;
+  type: string;
+  tempC: number;
+}
+
+export interface PortStatusRow {
+  device: string;
+  operstate: string;
+  carrier: boolean;
+  speed: number | null;
+  duplex: string;
+}
+
+export interface TelemetrySnapshot {
+  temperatures: ThermalSensor[];
+  conntrack: { count: number; max: number };
+  ports: PortStatusRow[];
+}
+
+export interface MountRow {
+  device: string;
+  mount: string;
+  size: number;
+  used: number;
+  avail: number;
+  percent: number;
+}
+
 export interface SystemSnapshot {
   hostname: string;
   model: string;
@@ -99,4 +128,59 @@ export function formatLoad(load: number[]): string {
 export function formatLocalTime(timestamp: number): string {
   if (!Number.isFinite(timestamp) || timestamp <= 0) return "-";
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "medium", timeZone: "UTC" }).format(new Date(timestamp * 1000));
+}
+
+export function normalizeTelemetry(value: unknown): TelemetrySnapshot {
+  const data = asRecord(value);
+  const temperatures: ThermalSensor[] = Array.isArray(data.temperatures)
+    ? data.temperatures
+        .map((item) => {
+          const rec = asRecord(item);
+          return { zone: asString(rec.zone), type: asString(rec.type), tempC: asNumber(rec.tempC) };
+        })
+        .filter((item) => Number.isFinite(item.tempC) && item.tempC > -100 && item.tempC < 200)
+    : [];
+  const ct = asRecord(data.conntrack);
+  const ports: PortStatusRow[] = Array.isArray(data.ports)
+    ? data.ports
+        .map((item) => {
+          const rec = asRecord(item);
+          const speed = typeof rec.speed === "number" && rec.speed > 0 ? rec.speed : null;
+          return {
+            device: asString(rec.device),
+            operstate: asString(rec.operstate) || "unknown",
+            carrier: Boolean(rec.carrier),
+            speed,
+            duplex: asString(rec.duplex),
+          };
+        })
+        .filter((item) => item.device.length > 0)
+    : [];
+  return {
+    temperatures,
+    conntrack: { count: Math.max(0, asNumber(ct.count)), max: Math.max(0, asNumber(ct.max)) },
+    ports,
+  };
+}
+
+export function normalizeMounts(value: unknown): MountRow[] {
+  const list = Array.isArray(value) ? value : Array.isArray(asRecord(value).result) ? (asRecord(value).result as unknown[]) : [];
+  return list
+    .map((item) => {
+      const rec = asRecord(item);
+      const size = Math.max(0, asNumber(rec.size));
+      const free = Math.max(0, asNumber(rec.free));
+      const avail = Math.max(0, asNumber(rec.avail ?? rec.free));
+      const used = Math.max(0, size - free);
+      const percent = size > 0 ? Math.min(100, Math.max(0, (used / size) * 100)) : 0;
+      return {
+        device: asString(rec.device),
+        mount: asString(rec.mount),
+        size,
+        used,
+        avail,
+        percent,
+      };
+    })
+    .filter((row) => row.mount.length > 0 && row.size > 0);
 }
