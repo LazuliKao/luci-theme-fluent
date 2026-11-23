@@ -2371,11 +2371,6 @@ body.modal-overlay-active:has(#modal_overlay .modal.spinning) #maincontent a.btn
   padding-top: 0;
 }
 
-.cbi-value[data-widget="CBI.ContainerValue"] {
-  border-bottom: 0;
-  padding: 0;
-}
-
 .cbi-value:has( > .cbi-value-title) {
   gap: var(--fluent-space-xs);
   flex-direction: column;

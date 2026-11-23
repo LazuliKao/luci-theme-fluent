@@ -152,11 +152,6 @@
     padding-top: 0;
   }
 
-  &[data-widget="CBI.ContainerValue"] {
-    padding: 0;
-    border-bottom: 0;
-  }
-
   &:has(> .cbi-value-title) {
     display: flex;
     flex-direction: column;
