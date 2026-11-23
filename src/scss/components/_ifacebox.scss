@@ -146,7 +146,6 @@ $indicator-inline-offset: 10px;
   // Nested SSID cards inside a radio ifacebox
   .ifacebox {
     display: flex;
-    width: 100%;
     border-radius: var(--fluent-radius-md);
     box-shadow: none;
     border: 1px solid var(--fluent-card-border);
@@ -210,7 +209,6 @@ $indicator-inline-offset: 10px;
   text-align: start;
 
   &.left {
-    align-items: flex-start;
     text-align: start;
   }
 
@@ -404,14 +402,14 @@ div[style*="display:grid;grid-template-columns:repeat"] {
   gap: var(--fluent-space-md);
   align-items: stretch;
 
-  .ifacebox {
+  > .ifacebox {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 0;
     border-radius: var(--fluent-radius-md);
 
-    .ifacebox-head {
+    > .ifacebox-head {
       justify-content: center;
       text-align: center;
       background: transparent;
@@ -461,7 +459,7 @@ div[style*="display:grid;grid-template-columns:repeat"] {
       }
     }
 
-    .ifacebox-body {
+    > .ifacebox-body {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -501,7 +499,7 @@ div[style*="display:grid;grid-template-columns:repeat"] {
         }
       }
 
-      > div {
+      > div:not([style*="display: flex"]):not([style*="display:flex"]) {
         display: flex;
         flex-direction: column;
         gap: var(--fluent-space-xs);
